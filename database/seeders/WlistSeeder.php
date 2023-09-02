@@ -44,6 +44,44 @@ class WlistSeeder extends Seeder
                 $this->command->line("{$wlist->id} \t{$wlist->boat_namecomplete} is gonna be inserted in new database \n\twith created_at: {$wlist->created_at} and updated_at: {$wlist->created_at}");
                 if ($wlist->id == $i) {
                     $this->command->line("<info>{$i} is same ID</info>");
+
+                    if ($wlist->assigned == 'root') {
+                        $forRole = 1;
+                        $forUser = 1;
+                    } elseif ($wlist->assigned == 'admin') {
+                        $forRole = 1;
+                        $forUser = 5;
+                    } elseif ($wlist->assigned == 'toni') {
+                        $forRole = 1;
+                        $forUser = 1;
+                    } elseif ($wlist->assigned == 'tech') {
+                        $forRole = 3;
+                        $forUser = null;
+                    } elseif ($wlist->assigned == 'luiso' || $wlist->assigned == 'luis') {
+                        $forRole = 3;
+                        $forUser = 3;
+                    } elseif ($wlist->assigned == 'rodolfo') {
+                        $forRole = 3;
+                        $forUser = 4;
+                    } else{
+                        $forRole = 3;
+                        $forUser = 1;
+                    }
+
+                    //insert in db role_wlist
+                    DB::table('role_wlist')->insert([
+                        'role_id' => $forRole,
+                        'wlist_id' => $i,
+                    ]);
+
+                    //insert in db user_wlist
+                    if ($forUser != null) {
+                        DB::table('user_wlist')->insert([
+                            'user_id' => $forUser,
+                            'wlist_id' => $i,
+                        ]);
+                    }
+                    
                     //insert record in new db
                     DB::table('wlists')->insert([
                         'order_type' => $wlist->type,
@@ -55,6 +93,7 @@ class WlistSeeder extends Seeder
                         'created_at' => $wlist->created_at,
                         'updated_at' => $wlist->created_at,
                         'client_id' => $wlist->client_id,
+                        'deadline' => $wlist->deadline,
                         'boat_id' => $wlist->boat_id,
                         'priority_id' => 4,
                     ]);

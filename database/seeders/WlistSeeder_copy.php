@@ -55,6 +55,7 @@ class WlistSeeder extends Seeder
                         'created_at' => $wlist->created_at,
                         'updated_at' => $wlist->created_at,
                         'client_id' => $wlist->client_id,
+                        'deadline' => $wlist->deadline,
                         'boat_id' => $wlist->boat_id,
                         'priority_id' => 4,
                     ]);
