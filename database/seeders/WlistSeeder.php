@@ -68,19 +68,7 @@ class WlistSeeder extends Seeder
                         $forUser = 1;
                     }
 
-                    //insert in db role_wlist
-                    DB::table('role_wlist')->insert([
-                        'role_id' => $forRole,
-                        'wlist_id' => $i,
-                    ]);
-
-                    //insert in db user_wlist
-                    if ($forUser != null) {
-                        DB::table('user_wlist')->insert([
-                            'user_id' => $forUser,
-                            'wlist_id' => $i,
-                        ]);
-                    }
+                    
                     
                     //insert record in new db
                     DB::table('wlists')->insert([
@@ -97,6 +85,20 @@ class WlistSeeder extends Seeder
                         'boat_id' => $wlist->boat_id,
                         'priority_id' => 4,
                     ]);
+
+                    //insert in db role_wlist
+                    DB::table('role_wlist')->insert([
+                        'role_id' => $forRole,
+                        'wlist_id' => $i,
+                    ]);
+
+                    //insert in db user_wlist
+                    if ($forUser != null) {
+                        DB::table('user_wlist')->insert([
+                            'user_id' => $forUser,
+                            'wlist_id' => $i,
+                        ]);
+                    }
                 } else {
                     $this->command->line("<error>{$i} is not same ID</error>");
                 }
