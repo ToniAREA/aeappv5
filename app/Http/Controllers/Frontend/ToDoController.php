@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyToDoRequest;
 use App\Http\Requests\StoreToDoRequest;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ToDoController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
@@ -26,7 +27,13 @@ class ToDoController extends Controller
 
         $toDos = ToDo::with(['for_roles', 'for_users', 'priority', 'media'])->get();
 
-        return view('frontend.toDos.index', compact('toDos'));
+        $roles = Role::get();
+
+        $users = User::get();
+
+        $priorities = Priority::get();
+
+        return view('frontend.toDos.index', compact('priorities', 'roles', 'toDos', 'users'));
     }
 
     public function create()

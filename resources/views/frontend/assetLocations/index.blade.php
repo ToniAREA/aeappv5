@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.asset-locations.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.assetLocation.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'AssetLocation', 'route' => 'admin.asset-locations.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -29,8 +33,31 @@
                                         {{ trans('cruds.assetLocation.fields.name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetLocation.fields.description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.assetLocation.fields.photo') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,6 +68,16 @@
                                         </td>
                                         <td>
                                             {{ $assetLocation->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $assetLocation->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($assetLocation->photo)
+                                                <a href="{{ $assetLocation->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $assetLocation->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('asset_location_show')
@@ -123,6 +160,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>

@@ -75,7 +75,7 @@
                                         {{ trans('cruds.contentPage.fields.excerpt') }}
                                     </th>
                                     <td>
-                                        {{ $contentPage->excerpt }}
+                                        {!! $contentPage->excerpt !!}
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,6 +86,18 @@
                                         @foreach($contentPage->featured_image as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
                                                 <img src="{{ $media->getUrl('thumb') }}">
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.file') }}
+                                    </th>
+                                    <td>
+                                        @foreach($contentPage->file as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
                                     </td>

@@ -40,6 +40,9 @@ class StoreContentPageRequest extends FormRequest
             'featured_image' => [
                 'array',
             ],
+            'file' => [
+                'array',
+            ],
         ];
     }
 }

@@ -29,16 +29,13 @@
                         {{ trans('cruds.asset.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.asset.fields.category') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.asset.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.asset.fields.description') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.asset.fields.serial_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.asset.fields.category') }}
                     </th>
                     <th>
                         {{ trans('cruds.asset.fields.photos') }}
@@ -53,11 +50,69 @@
                         {{ trans('cruds.asset.fields.notes') }}
                     </th>
                     <th>
+                        {{ trans('cruds.asset.fields.internal_notes') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.asset.fields.assigned_to') }}
                     </th>
                     <th>
                         &nbsp;
                     </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($asset_categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($asset_statuses as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($asset_locations as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
                 </tr>
             </thead>
         </table>
@@ -112,14 +167,14 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'description', name: 'description' },
-{ data: 'serial_number', name: 'serial_number' },
 { data: 'category_name', name: 'category.name' },
+{ data: 'name', name: 'name' },
+{ data: 'serial_number', name: 'serial_number' },
 { data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'status_name', name: 'status.name' },
 { data: 'location_name', name: 'location.name' },
 { data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'assigned_to_name', name: 'assigned_to.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
@@ -133,6 +188,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

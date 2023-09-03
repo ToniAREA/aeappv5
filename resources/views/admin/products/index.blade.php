@@ -35,6 +35,12 @@
                         {{ trans('cruds.product.fields.brand') }}
                     </th>
                     <th>
+                        {{ trans('cruds.product.fields.ref_manu') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.ref_provider') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.product.fields.model') }}
                     </th>
                     <th>
@@ -44,13 +50,16 @@
                         {{ trans('cruds.product.fields.product_slug') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.description') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.product.fields.photos') }}
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.price') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.pro_discount') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.stock') }}
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.tag') }}
@@ -61,6 +70,67 @@
                     <th>
                         &nbsp;
                     </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($product_categories as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($brands as $key => $item)
+                                <option value="{{ $item->brand }}">{{ $item->brand }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($product_tags as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
                 </tr>
             </thead>
         </table>
@@ -117,12 +187,15 @@
 { data: 'id', name: 'id' },
 { data: 'category', name: 'categories.name' },
 { data: 'brand_brand', name: 'brand.brand' },
+{ data: 'ref_manu', name: 'ref_manu' },
+{ data: 'ref_provider', name: 'ref_provider' },
 { data: 'model', name: 'model' },
 { data: 'name', name: 'name' },
 { data: 'product_slug', name: 'product_slug' },
-{ data: 'description', name: 'description' },
 { data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'price', name: 'price' },
+{ data: 'pro_discount', name: 'pro_discount' },
+{ data: 'stock', name: 'stock' },
 { data: 'tag', name: 'tags.name' },
 { data: 'file', name: 'file', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
@@ -137,6 +210,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

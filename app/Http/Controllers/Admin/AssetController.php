@@ -52,19 +52,16 @@ class AssetController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('serial_number', function ($row) {
-                return $row->serial_number ? $row->serial_number : '';
-            });
             $table->addColumn('category_name', function ($row) {
                 return $row->category ? $row->category->name : '';
             });
 
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+            $table->editColumn('serial_number', function ($row) {
+                return $row->serial_number ? $row->serial_number : '';
+            });
             $table->editColumn('photos', function ($row) {
                 if (! $row->photos) {
                     return '';
@@ -87,6 +84,9 @@ class AssetController extends Controller
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
+            });
             $table->addColumn('assigned_to_name', function ($row) {
                 return $row->assigned_to ? $row->assigned_to->name : '';
             });
@@ -96,7 +96,12 @@ class AssetController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.assets.index');
+        $asset_categories = AssetCategory::get();
+        $asset_statuses   = AssetStatus::get();
+        $asset_locations  = AssetLocation::get();
+        $users            = User::get();
+
+        return view('admin.assets.index', compact('asset_categories', 'asset_statuses', 'asset_locations', 'users'));
     }
 
     public function create()

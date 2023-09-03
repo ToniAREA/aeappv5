@@ -21,6 +21,10 @@ class UpdateFaqCategoryRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

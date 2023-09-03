@@ -17,21 +17,17 @@ class UpdateAssetRequest extends FormRequest
     public function rules()
     {
         return [
+            'category_id' => [
+                'required',
+                'integer',
+            ],
             'name' => [
                 'string',
                 'required',
             ],
-            'description' => [
-                'string',
-                'nullable',
-            ],
             'serial_number' => [
                 'string',
                 'nullable',
-            ],
-            'category_id' => [
-                'required',
-                'integer',
             ],
             'photos' => [
                 'array',
@@ -43,6 +39,10 @@ class UpdateAssetRequest extends FormRequest
             'location_id' => [
                 'required',
                 'integer',
+            ],
+            'internal_notes' => [
+                'string',
+                'nullable',
             ],
         ];
     }

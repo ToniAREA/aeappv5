@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyIncomeRequest;
 use App\Http\Requests\StoreIncomeRequest;
 use App\Http\Requests\UpdateIncomeRequest;
@@ -14,13 +15,17 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IncomeController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('income_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $incomes = Income::with(['income_category'])->get();
 
-        return view('frontend.incomes.index', compact('incomes'));
+        $income_categories = IncomeCategory::get();
+
+        return view('frontend.incomes.index', compact('income_categories', 'incomes'));
     }
 
     public function create()

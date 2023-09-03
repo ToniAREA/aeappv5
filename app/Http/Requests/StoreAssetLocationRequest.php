@@ -21,6 +21,10 @@ class StoreAssetLocationRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

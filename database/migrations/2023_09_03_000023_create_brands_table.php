@@ -12,6 +12,7 @@ class CreateBrandsTable extends Migration
             $table->bigIncrements('id');
             $table->string('brand')->unique();
             $table->string('brand_url')->nullable();
+            $table->longText('description')->nullable();
             $table->string('notes')->nullable();
             $table->string('internal_notes')->nullable();
             $table->timestamps();

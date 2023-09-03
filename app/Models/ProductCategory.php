@@ -21,6 +21,10 @@ class ProductCategory extends Model implements HasMedia
 
     public $table = 'product_categories';
 
+    public static $searchable = [
+        'description',
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',

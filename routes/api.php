@@ -7,6 +7,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Boats
     Route::apiResource('boats', 'BoatsApiController');
 
+    // Content Page
+    Route::post('content-pages/media', 'ContentPageApiController@storeMedia')->name('content-pages.storeMedia');
+    Route::apiResource('content-pages', 'ContentPageApiController');
+
     // Wlogs
     Route::apiResource('wlogs', 'WlogsApiController');
 
@@ -55,6 +59,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Payment
     Route::apiResource('payments', 'PaymentApiController');
 
+    // Asset Category
+    Route::apiResource('asset-categories', 'AssetCategoryApiController');
+
+    // Asset Location
+    Route::post('asset-locations/media', 'AssetLocationApiController@storeMedia')->name('asset-locations.storeMedia');
+    Route::apiResource('asset-locations', 'AssetLocationApiController');
+
     // Asset
     Route::post('assets/media', 'AssetApiController@storeMedia')->name('assets.storeMedia');
     Route::apiResource('assets', 'AssetApiController');
@@ -62,6 +73,19 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Assets History
     Route::apiResource('assets-histories', 'AssetsHistoryApiController', ['except' => ['store', 'show', 'update', 'destroy']]);
 
+    // Faq Category
+    Route::apiResource('faq-categories', 'FaqCategoryApiController');
+
+    // Expense
+    Route::apiResource('expenses', 'ExpenseApiController');
+
+    // Income
+    Route::apiResource('incomes', 'IncomeApiController');
+
     // Mat Logs
     Route::apiResource('mat-logs', 'MatLogsApiController');
+
+    // Comments
+    Route::post('comments/media', 'CommentsApiController@storeMedia')->name('comments.storeMedia');
+    Route::apiResource('comments', 'CommentsApiController');
 });

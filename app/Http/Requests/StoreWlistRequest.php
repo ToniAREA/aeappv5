@@ -17,6 +17,9 @@ class StoreWlistRequest extends FormRequest
     public function rules()
     {
         return [
+            'order_type' => [
+                'required',
+            ],
             'boat_id' => [
                 'required',
                 'integer',

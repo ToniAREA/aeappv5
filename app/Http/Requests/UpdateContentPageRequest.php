@@ -40,6 +40,9 @@ class UpdateContentPageRequest extends FormRequest
             'featured_image' => [
                 'array',
             ],
+            'file' => [
+                'array',
+            ],
         ];
     }
 }

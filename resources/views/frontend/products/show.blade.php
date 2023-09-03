@@ -46,6 +46,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.product.fields.ref_manu') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->ref_manu }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.product.fields.ref_provider') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->ref_provider }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.product.fields.model') }}
                                     </th>
                                     <td>
@@ -70,10 +86,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.product.fields.short_desc') }}
+                                    </th>
+                                    <td>
+                                        {!! $product->short_desc !!}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.product.fields.description') }}
                                     </th>
                                     <td>
-                                        {{ $product->description }}
+                                        {!! $product->description !!}
                                     </td>
                                 </tr>
                                 <tr>
@@ -94,6 +118,22 @@
                                     </th>
                                     <td>
                                         {{ $product->price }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.product.fields.pro_discount') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->pro_discount }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.product.fields.stock') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->stock }}
                                     </td>
                                 </tr>
                                 <tr>

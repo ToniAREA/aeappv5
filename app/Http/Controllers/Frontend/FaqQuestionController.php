@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyFaqQuestionRequest;
 use App\Http\Requests\StoreFaqQuestionRequest;
 use App\Http\Requests\UpdateFaqQuestionRequest;
@@ -10,17 +11,22 @@ use App\Models\FaqCategory;
 use App\Models\FaqQuestion;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class FaqQuestionController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('faq_question_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $faqQuestions = FaqQuestion::with(['category'])->get();
 
-        return view('frontend.faqQuestions.index', compact('faqQuestions'));
+        $faq_categories = FaqCategory::get();
+
+        return view('frontend.faqQuestions.index', compact('faqQuestions', 'faq_categories'));
     }
 
     public function create()
@@ -35,6 +41,10 @@ class FaqQuestionController extends Controller
     public function store(StoreFaqQuestionRequest $request)
     {
         $faqQuestion = FaqQuestion::create($request->all());
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $faqQuestion->id]);
+        }
 
         return redirect()->route('frontend.faq-questions.index');
     }
@@ -84,5 +94,17 @@ class FaqQuestionController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('faq_question_create') && Gate::denies('faq_question_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new FaqQuestion();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

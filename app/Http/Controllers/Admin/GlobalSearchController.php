@@ -9,17 +9,25 @@ use Illuminate\Support\Str;
 class GlobalSearchController extends Controller
 {
     private $models = [
-        'Client'         => 'cruds.client.title',
-        'Boat'           => 'cruds.boat.title',
-        'Wlog'           => 'cruds.wlog.title',
-        'Wlist'          => 'cruds.wlist.title',
-        'Product'        => 'cruds.product.title',
-        'Marina'         => 'cruds.marina.title',
-        'ContactCompany' => 'cruds.contactCompany.title',
-        'ContactContact' => 'cruds.contactContact.title',
-        'Employee'       => 'cruds.employee.title',
-        'Provider'       => 'cruds.provider.title',
-        'MatLog'         => 'cruds.matLog.title',
+        'Client'          => 'cruds.client.title',
+        'Boat'            => 'cruds.boat.title',
+        'ContentPage'     => 'cruds.contentPage.title',
+        'Wlog'            => 'cruds.wlog.title',
+        'Wlist'           => 'cruds.wlist.title',
+        'ProductCategory' => 'cruds.productCategory.title',
+        'Product'         => 'cruds.product.title',
+        'Marina'          => 'cruds.marina.title',
+        'ContactCompany'  => 'cruds.contactCompany.title',
+        'ContactContact'  => 'cruds.contactContact.title',
+        'Employee'        => 'cruds.employee.title',
+        'Provider'        => 'cruds.provider.title',
+        'Brand'           => 'cruds.brand.title',
+        'AssetCategory'   => 'cruds.assetCategory.title',
+        'Asset'           => 'cruds.asset.title',
+        'FaqCategory'     => 'cruds.faqCategory.title',
+        'FaqQuestion'     => 'cruds.faqQuestion.title',
+        'MatLog'          => 'cruds.matLog.title',
+        'Comment'         => 'cruds.comment.title',
     ];
 
     public function search(Request $request)

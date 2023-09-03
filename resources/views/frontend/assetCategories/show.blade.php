@@ -34,6 +34,14 @@
                                         {{ $assetCategory->name }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.assetCategory.fields.description') }}
+                                    </th>
+                                    <td>
+                                        {{ $assetCategory->description }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

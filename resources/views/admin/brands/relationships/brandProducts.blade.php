@@ -31,6 +31,12 @@
                                 {{ trans('cruds.product.fields.brand') }}
                             </th>
                             <th>
+                                {{ trans('cruds.product.fields.ref_manu') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.product.fields.ref_provider') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.product.fields.model') }}
                             </th>
                             <th>
@@ -40,13 +46,16 @@
                                 {{ trans('cruds.product.fields.product_slug') }}
                             </th>
                             <th>
-                                {{ trans('cruds.product.fields.description') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.product.fields.photos') }}
                             </th>
                             <th>
                                 {{ trans('cruds.product.fields.price') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.product.fields.pro_discount') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.product.fields.stock') }}
                             </th>
                             <th>
                                 {{ trans('cruds.product.fields.tag') }}
@@ -77,6 +86,12 @@
                                     {{ $product->brand->brand ?? '' }}
                                 </td>
                                 <td>
+                                    {{ $product->ref_manu ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $product->ref_provider ?? '' }}
+                                </td>
+                                <td>
                                     {{ $product->model ?? '' }}
                                 </td>
                                 <td>
@@ -84,9 +99,6 @@
                                 </td>
                                 <td>
                                     {{ $product->product_slug ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $product->description ?? '' }}
                                 </td>
                                 <td>
                                     @foreach($product->photos as $key => $media)
@@ -97,6 +109,12 @@
                                 </td>
                                 <td>
                                     {{ $product->price ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $product->pro_discount ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $product->stock ?? '' }}
                                 </td>
                                 <td>
                                     @foreach($product->tags as $key => $item)

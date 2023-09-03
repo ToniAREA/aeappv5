@@ -29,14 +29,25 @@
                             {{ trans('cruds.faqQuestion.fields.category') }}
                         </th>
                         <th>
-                            {{ trans('cruds.faqQuestion.fields.question') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.faqQuestion.fields.answer') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($faq_categories as $key => $item)
+                                    <option value="{{ $item->category }}">{{ $item->category }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,12 +61,6 @@
                             </td>
                             <td>
                                 {{ $faqQuestion->category->category ?? '' }}
-                            </td>
-                            <td>
-                                {{ $faqQuestion->question ?? '' }}
-                            </td>
-                            <td>
-                                {{ $faqQuestion->answer ?? '' }}
                             </td>
                             <td>
                                 @can('faq_question_show')
@@ -137,6 +142,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>

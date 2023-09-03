@@ -11,6 +11,7 @@ class CreateAssetLocationsTable extends Migration
         Schema::create('asset_locations', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
+            $table->string('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

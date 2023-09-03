@@ -34,6 +34,14 @@
                                         {{ $faqCategory->category }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.faqCategory.fields.description') }}
+                                    </th>
+                                    <td>
+                                        {{ $faqCategory->description }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

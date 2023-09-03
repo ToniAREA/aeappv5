@@ -19,6 +19,14 @@
                 <span class="help-block">{{ trans('cruds.faqCategory.fields.category_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="description">{{ trans('cruds.faqCategory.fields.description') }}</label>
+                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', $faqCategory->description) }}">
+                @if($errors->has('description'))
+                    <span class="text-danger">{{ $errors->first('description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.faqCategory.fields.description_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

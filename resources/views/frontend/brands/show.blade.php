@@ -66,6 +66,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.brand.fields.description') }}
+                                    </th>
+                                    <td>
+                                        {!! $brand->description !!}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.brand.fields.notes') }}
                                     </th>
                                     <td>

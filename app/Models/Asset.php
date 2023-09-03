@@ -21,6 +21,11 @@ class Asset extends Model implements HasMedia
         'photos',
     ];
 
+    public static $searchable = [
+        'description',
+        'internal_notes',
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -28,13 +33,14 @@ class Asset extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'category_id',
         'name',
         'description',
         'serial_number',
-        'category_id',
         'status_id',
         'location_id',
         'notes',
+        'internal_notes',
         'assigned_to_id',
         'created_at',
         'updated_at',

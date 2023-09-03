@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.asset.fields.category') }}
+                        </th>
+                        <td>
+                            {{ $asset->category->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.asset.fields.name') }}
                         </th>
                         <td>
@@ -36,7 +44,7 @@
                             {{ trans('cruds.asset.fields.description') }}
                         </th>
                         <td>
-                            {{ $asset->description }}
+                            {!! $asset->description !!}
                         </td>
                     </tr>
                     <tr>
@@ -45,14 +53,6 @@
                         </th>
                         <td>
                             {{ $asset->serial_number }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.asset.fields.category') }}
-                        </th>
-                        <td>
-                            {{ $asset->category->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -89,6 +89,14 @@
                         </th>
                         <td>
                             {{ $asset->notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.asset.fields.internal_notes') }}
+                        </th>
+                        <td>
+                            {{ $asset->internal_notes }}
                         </td>
                     </tr>
                     <tr>

@@ -21,6 +21,10 @@ class StoreFaqCategoryRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }
