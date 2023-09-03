@@ -36,6 +36,12 @@
                                         {{ trans('cruds.product.fields.brand') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.product.fields.ref_manu') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.ref_provider') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.product.fields.model') }}
                                     </th>
                                     <th>
@@ -45,13 +51,16 @@
                                         {{ trans('cruds.product.fields.product_slug') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.product.fields.description') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.product.fields.photos') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.product.fields.price') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.pro_discount') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.stock') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.product.fields.tag') }}
@@ -62,6 +71,67 @@
                                     <th>
                                         &nbsp;
                                     </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($product_categories as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($brands as $key => $item)
+                                                <option value="{{ $item->brand }}">{{ $item->brand }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($product_tags as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,6 +149,12 @@
                                             {{ $product->brand->brand ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $product->ref_manu ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->ref_provider ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $product->model ?? '' }}
                                         </td>
                                         <td>
@@ -86,9 +162,6 @@
                                         </td>
                                         <td>
                                             {{ $product->product_slug ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $product->description ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($product->photos as $key => $media)
@@ -99,6 +172,12 @@
                                         </td>
                                         <td>
                                             {{ $product->price ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->pro_discount ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->stock ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($product->tags as $key => $item)
@@ -193,6 +272,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>

@@ -21,6 +21,10 @@ class StoreAssetCategoryRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

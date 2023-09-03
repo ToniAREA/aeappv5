@@ -27,7 +27,13 @@ class ProductController extends Controller
 
         $products = Product::with(['categories', 'brand', 'tags', 'media'])->get();
 
-        return view('frontend.products.index', compact('products'));
+        $product_categories = ProductCategory::get();
+
+        $brands = Brand::get();
+
+        $product_tags = ProductTag::get();
+
+        return view('frontend.products.index', compact('brands', 'product_categories', 'product_tags', 'products'));
     }
 
     public function create()
@@ -118,7 +124,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'brand', 'tags', 'productMlogs');
+        $product->load('categories', 'brand', 'tags', 'productMatLogs');
 
         return view('frontend.products.show', compact('product'));
     }

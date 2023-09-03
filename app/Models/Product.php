@@ -22,24 +22,32 @@ class Product extends Model implements HasMedia
         'file',
     ];
 
-    public static $searchable = [
-        'model',
-        'file',
-    ];
-
     protected $dates = [
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    public static $searchable = [
+        'ref_provider',
+        'model',
+        'short_desc',
+        'description',
+        'file',
+    ];
+
     protected $fillable = [
         'brand_id',
+        'ref_manu',
+        'ref_provider',
         'model',
         'name',
         'product_slug',
+        'short_desc',
         'description',
         'price',
+        'pro_discount',
+        'stock',
         'created_at',
         'updated_at',
         'deleted_at',

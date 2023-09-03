@@ -21,6 +21,10 @@ class Brand extends Model implements HasMedia
         'brand_logo',
     ];
 
+    public static $searchable = [
+        'description',
+    ];
+
     protected $dates = [
         'created_at',
         'updated_at',
@@ -30,6 +34,7 @@ class Brand extends Model implements HasMedia
     protected $fillable = [
         'brand',
         'brand_url',
+        'description',
         'notes',
         'internal_notes',
         'created_at',

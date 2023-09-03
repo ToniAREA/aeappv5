@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyContentPageRequest;
 use App\Http\Requests\StoreContentPageRequest;
@@ -14,18 +15,95 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class ContentPageController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('content_page_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contentPages = ContentPage::with(['categories', 'tags', 'media'])->get();
+        if ($request->ajax()) {
+            $query = ContentPage::with(['categories', 'tags'])->select(sprintf('%s.*', (new ContentPage)->table));
+            $table = Datatables::of($query);
 
-        return view('admin.contentPages.index', compact('contentPages'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'content_page_show';
+                $editGate      = 'content_page_edit';
+                $deleteGate    = 'content_page_delete';
+                $crudRoutePart = 'content-pages';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('title', function ($row) {
+                return $row->title ? $row->title : '';
+            });
+            $table->editColumn('slug', function ($row) {
+                return $row->slug ? $row->slug : '';
+            });
+            $table->editColumn('category', function ($row) {
+                $labels = [];
+                foreach ($row->categories as $category) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $category->name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('tag', function ($row) {
+                $labels = [];
+                foreach ($row->tags as $tag) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('featured_image', function ($row) {
+                if (! $row->featured_image) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->featured_image as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
+                }
+
+                return implode(' ', $links);
+            });
+            $table->editColumn('file', function ($row) {
+                if (! $row->file) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->file as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'category', 'tag', 'featured_image', 'file']);
+
+            return $table->make(true);
+        }
+
+        $content_categories = ContentCategory::get();
+        $content_tags       = ContentTag::get();
+
+        return view('admin.contentPages.index', compact('content_categories', 'content_tags'));
     }
 
     public function create()
@@ -46,6 +124,10 @@ class ContentPageController extends Controller
         $contentPage->tags()->sync($request->input('tags', []));
         foreach ($request->input('featured_image', []) as $file) {
             $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
+        }
+
+        foreach ($request->input('file', []) as $file) {
+            $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -84,6 +166,20 @@ class ContentPageController extends Controller
         foreach ($request->input('featured_image', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
+            }
+        }
+
+        if (count($contentPage->file) > 0) {
+            foreach ($contentPage->file as $media) {
+                if (! in_array($media->file_name, $request->input('file', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $contentPage->file->pluck('file_name')->toArray();
+        foreach ($request->input('file', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
             }
         }
 

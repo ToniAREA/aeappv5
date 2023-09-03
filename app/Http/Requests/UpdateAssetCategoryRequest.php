@@ -21,6 +21,10 @@ class UpdateAssetCategoryRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

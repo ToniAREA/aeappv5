@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.content-pages.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.contentPage.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'ContentPage', 'route' => 'admin.content-pages.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -38,14 +42,49 @@
                                         {{ trans('cruds.contentPage.fields.tag') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.contentPage.fields.excerpt') }}
+                                        {{ trans('cruds.contentPage.fields.featured_image') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.contentPage.fields.featured_image') }}
+                                        {{ trans('cruds.contentPage.fields.file') }}
                                     </th>
                                     <th>
                                         &nbsp;
                                     </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($content_categories as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($content_tags as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,12 +110,16 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            {{ $contentPage->excerpt ?? '' }}
-                                        </td>
-                                        <td>
                                             @foreach($contentPage->featured_image as $key => $media)
                                                 <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
                                                     <img src="{{ $media->getUrl('thumb') }}">
+                                                </a>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($contentPage->file as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
                                                 </a>
                                             @endforeach
                                         </td>
@@ -161,6 +204,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>

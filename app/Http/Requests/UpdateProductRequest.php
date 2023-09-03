@@ -23,6 +23,14 @@ class UpdateProductRequest extends FormRequest
             'categories' => [
                 'array',
             ],
+            'ref_manu' => [
+                'string',
+                'nullable',
+            ],
+            'ref_provider' => [
+                'string',
+                'nullable',
+            ],
             'model' => [
                 'string',
                 'nullable',
@@ -40,6 +48,15 @@ class UpdateProductRequest extends FormRequest
             ],
             'price' => [
                 'required',
+            ],
+            'pro_discount' => [
+                'numeric',
+                'min:0',
+                'max:100',
+            ],
+            'stock' => [
+                'string',
+                'nullable',
             ],
             'tags.*' => [
                 'integer',

@@ -34,10 +34,10 @@ class Wlist extends Model implements HasMedia
     ];
 
     public const ORDER_TYPE_RADIO = [
+        'request'  => 'Request',
         'estimate' => 'Estimate',
         'order'    => 'Order',
         'work'     => 'Work',
-        'requests' => 'Requests',
     ];
 
     public const STATUS_RADIO = [
@@ -85,6 +85,11 @@ class Wlist extends Model implements HasMedia
     public function wlistMatLogs()
     {
         return $this->hasMany(MatLog::class, 'wlist_id', 'id');
+    }
+
+    public function wlistComments()
+    {
+        return $this->hasMany(Comment::class, 'wlist_id', 'id');
     }
 
     public function wlistsAppointments()

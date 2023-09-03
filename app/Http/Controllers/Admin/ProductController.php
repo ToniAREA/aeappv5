@@ -63,6 +63,12 @@ class ProductController extends Controller
                 return $row->brand ? $row->brand->brand : '';
             });
 
+            $table->editColumn('ref_manu', function ($row) {
+                return $row->ref_manu ? $row->ref_manu : '';
+            });
+            $table->editColumn('ref_provider', function ($row) {
+                return $row->ref_provider ? $row->ref_provider : '';
+            });
             $table->editColumn('model', function ($row) {
                 return $row->model ? $row->model : '';
             });
@@ -71,9 +77,6 @@ class ProductController extends Controller
             });
             $table->editColumn('product_slug', function ($row) {
                 return $row->product_slug ? $row->product_slug : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
             });
             $table->editColumn('photos', function ($row) {
                 if (! $row->photos) {
@@ -88,6 +91,12 @@ class ProductController extends Controller
             });
             $table->editColumn('price', function ($row) {
                 return $row->price ? $row->price : '';
+            });
+            $table->editColumn('pro_discount', function ($row) {
+                return $row->pro_discount ? $row->pro_discount : '';
+            });
+            $table->editColumn('stock', function ($row) {
+                return $row->stock ? $row->stock : '';
             });
             $table->editColumn('tag', function ($row) {
                 $labels = [];
@@ -114,7 +123,11 @@ class ProductController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.products.index');
+        $product_categories = ProductCategory::get();
+        $brands             = Brand::get();
+        $product_tags       = ProductTag::get();
+
+        return view('admin.products.index', compact('product_categories', 'brands', 'product_tags'));
     }
 
     public function create()

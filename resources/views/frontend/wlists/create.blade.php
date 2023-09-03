@@ -28,10 +28,10 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.client_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label>{{ trans('cruds.wlist.fields.order_type') }}</label>
+                            <label class="required">{{ trans('cruds.wlist.fields.order_type') }}</label>
                             @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $label)
                                 <div>
-                                    <input type="radio" id="order_type_{{ $key }}" name="order_type" value="{{ $key }}" {{ old('order_type', '') === (string) $key ? 'checked' : '' }}>
+                                    <input type="radio" id="order_type_{{ $key }}" name="order_type" value="{{ $key }}" {{ old('order_type', '') === (string) $key ? 'checked' : '' }} required>
                                     <label for="order_type_{{ $key }}">{{ $label }}</label>
                                 </div>
                             @endforeach

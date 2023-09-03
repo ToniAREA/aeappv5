@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyToDoRequest;
 use App\Http\Requests\StoreToDoRequest;
@@ -19,7 +20,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class ToDoController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index(Request $request)
     {
@@ -97,7 +98,11 @@ class ToDoController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.toDos.index');
+        $roles      = Role::get();
+        $users      = User::get();
+        $priorities = Priority::get();
+
+        return view('admin.toDos.index', compact('roles', 'users', 'priorities'));
     }
 
     public function create()

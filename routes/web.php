@@ -44,6 +44,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('content-pages/destroy', 'ContentPageController@massDestroy')->name('content-pages.massDestroy');
     Route::post('content-pages/media', 'ContentPageController@storeMedia')->name('content-pages.storeMedia');
     Route::post('content-pages/ckmedia', 'ContentPageController@storeCKEditorImages')->name('content-pages.storeCKEditorImages');
+    Route::post('content-pages/parse-csv-import', 'ContentPageController@parseCsvImport')->name('content-pages.parseCsvImport');
+    Route::post('content-pages/process-csv-import', 'ContentPageController@processCsvImport')->name('content-pages.processCsvImport');
     Route::resource('content-pages', 'ContentPageController');
 
     // Wlogs
@@ -64,6 +66,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('to-dos/destroy', 'ToDoController@massDestroy')->name('to-dos.massDestroy');
     Route::post('to-dos/media', 'ToDoController@storeMedia')->name('to-dos.storeMedia');
     Route::post('to-dos/ckmedia', 'ToDoController@storeCKEditorImages')->name('to-dos.storeCKEditorImages');
+    Route::post('to-dos/parse-csv-import', 'ToDoController@parseCsvImport')->name('to-dos.parseCsvImport');
+    Route::post('to-dos/process-csv-import', 'ToDoController@processCsvImport')->name('to-dos.processCsvImport');
     Route::resource('to-dos', 'ToDoController');
 
     // Appointments
@@ -155,10 +159,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Asset Category
     Route::delete('asset-categories/destroy', 'AssetCategoryController@massDestroy')->name('asset-categories.massDestroy');
+    Route::post('asset-categories/parse-csv-import', 'AssetCategoryController@parseCsvImport')->name('asset-categories.parseCsvImport');
+    Route::post('asset-categories/process-csv-import', 'AssetCategoryController@processCsvImport')->name('asset-categories.processCsvImport');
     Route::resource('asset-categories', 'AssetCategoryController');
 
     // Asset Location
     Route::delete('asset-locations/destroy', 'AssetLocationController@massDestroy')->name('asset-locations.massDestroy');
+    Route::post('asset-locations/media', 'AssetLocationController@storeMedia')->name('asset-locations.storeMedia');
+    Route::post('asset-locations/ckmedia', 'AssetLocationController@storeCKEditorImages')->name('asset-locations.storeCKEditorImages');
+    Route::post('asset-locations/parse-csv-import', 'AssetLocationController@parseCsvImport')->name('asset-locations.parseCsvImport');
+    Route::post('asset-locations/process-csv-import', 'AssetLocationController@processCsvImport')->name('asset-locations.processCsvImport');
     Route::resource('asset-locations', 'AssetLocationController');
 
     // Asset Status
@@ -178,10 +188,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Faq Category
     Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
+    Route::post('faq-categories/parse-csv-import', 'FaqCategoryController@parseCsvImport')->name('faq-categories.parseCsvImport');
+    Route::post('faq-categories/process-csv-import', 'FaqCategoryController@processCsvImport')->name('faq-categories.processCsvImport');
     Route::resource('faq-categories', 'FaqCategoryController');
 
     // Faq Question
     Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
+    Route::post('faq-questions/media', 'FaqQuestionController@storeMedia')->name('faq-questions.storeMedia');
+    Route::post('faq-questions/ckmedia', 'FaqQuestionController@storeCKEditorImages')->name('faq-questions.storeCKEditorImages');
     Route::resource('faq-questions', 'FaqQuestionController');
 
     // Expense Category
@@ -194,10 +208,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Expense
     Route::delete('expenses/destroy', 'ExpenseController@massDestroy')->name('expenses.massDestroy');
+    Route::post('expenses/parse-csv-import', 'ExpenseController@parseCsvImport')->name('expenses.parseCsvImport');
+    Route::post('expenses/process-csv-import', 'ExpenseController@processCsvImport')->name('expenses.processCsvImport');
     Route::resource('expenses', 'ExpenseController');
 
     // Income
     Route::delete('incomes/destroy', 'IncomeController@massDestroy')->name('incomes.massDestroy');
+    Route::post('incomes/parse-csv-import', 'IncomeController@parseCsvImport')->name('incomes.parseCsvImport');
+    Route::post('incomes/process-csv-import', 'IncomeController@processCsvImport')->name('incomes.processCsvImport');
     Route::resource('incomes', 'IncomeController');
 
     // Expense Report
@@ -217,6 +235,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Priorities
     Route::delete('priorities/destroy', 'PrioritiesController@massDestroy')->name('priorities.massDestroy');
     Route::resource('priorities', 'PrioritiesController');
+
+    // Comments
+    Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
+    Route::post('comments/media', 'CommentsController@storeMedia')->name('comments.storeMedia');
+    Route::post('comments/ckmedia', 'CommentsController@storeCKEditorImages')->name('comments.storeCKEditorImages');
+    Route::post('comments/parse-csv-import', 'CommentsController@parseCsvImport')->name('comments.parseCsvImport');
+    Route::post('comments/process-csv-import', 'CommentsController@processCsvImport')->name('comments.processCsvImport');
+    Route::resource('comments', 'CommentsController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
@@ -354,6 +380,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Asset Location
     Route::delete('asset-locations/destroy', 'AssetLocationController@massDestroy')->name('asset-locations.massDestroy');
+    Route::post('asset-locations/media', 'AssetLocationController@storeMedia')->name('asset-locations.storeMedia');
+    Route::post('asset-locations/ckmedia', 'AssetLocationController@storeCKEditorImages')->name('asset-locations.storeCKEditorImages');
     Route::resource('asset-locations', 'AssetLocationController');
 
     // Asset Status
@@ -375,6 +403,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Faq Question
     Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
+    Route::post('faq-questions/media', 'FaqQuestionController@storeMedia')->name('faq-questions.storeMedia');
+    Route::post('faq-questions/ckmedia', 'FaqQuestionController@storeCKEditorImages')->name('faq-questions.storeCKEditorImages');
     Route::resource('faq-questions', 'FaqQuestionController');
 
     // Expense Category
@@ -404,6 +434,12 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Priorities
     Route::delete('priorities/destroy', 'PrioritiesController@massDestroy')->name('priorities.massDestroy');
     Route::resource('priorities', 'PrioritiesController');
+
+    // Comments
+    Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
+    Route::post('comments/media', 'CommentsController@storeMedia')->name('comments.storeMedia');
+    Route::post('comments/ckmedia', 'CommentsController@storeCKEditorImages')->name('comments.storeCKEditorImages');
+    Route::resource('comments', 'CommentsController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
     Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');

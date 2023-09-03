@@ -28,7 +28,15 @@ class AssetController extends Controller
 
         $assets = Asset::with(['category', 'status', 'location', 'assigned_to', 'media'])->get();
 
-        return view('frontend.assets.index', compact('assets'));
+        $asset_categories = AssetCategory::get();
+
+        $asset_statuses = AssetStatus::get();
+
+        $asset_locations = AssetLocation::get();
+
+        $users = User::get();
+
+        return view('frontend.assets.index', compact('asset_categories', 'asset_locations', 'asset_statuses', 'assets', 'users'));
     }
 
     public function create()

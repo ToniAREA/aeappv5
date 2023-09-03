@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyContentPageRequest;
 use App\Http\Requests\StoreContentPageRequest;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContentPageController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
@@ -25,7 +26,11 @@ class ContentPageController extends Controller
 
         $contentPages = ContentPage::with(['categories', 'tags', 'media'])->get();
 
-        return view('frontend.contentPages.index', compact('contentPages'));
+        $content_categories = ContentCategory::get();
+
+        $content_tags = ContentTag::get();
+
+        return view('frontend.contentPages.index', compact('contentPages', 'content_categories', 'content_tags'));
     }
 
     public function create()
@@ -46,6 +51,10 @@ class ContentPageController extends Controller
         $contentPage->tags()->sync($request->input('tags', []));
         foreach ($request->input('featured_image', []) as $file) {
             $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
+        }
+
+        foreach ($request->input('file', []) as $file) {
+            $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -84,6 +93,20 @@ class ContentPageController extends Controller
         foreach ($request->input('featured_image', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
+            }
+        }
+
+        if (count($contentPage->file) > 0) {
+            foreach ($contentPage->file as $media) {
+                if (! in_array($media->file_name, $request->input('file', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $contentPage->file->pluck('file_name')->toArray();
+        foreach ($request->input('file', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
             }
         }
 

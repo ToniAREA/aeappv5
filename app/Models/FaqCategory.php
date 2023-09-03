@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,9 +10,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FaqCategory extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, Auditable, HasFactory;
 
     public $table = 'faq_categories';
+
+    public static $searchable = [
+        'description',
+    ];
 
     protected $dates = [
         'created_at',
@@ -21,6 +26,7 @@ class FaqCategory extends Model
 
     protected $fillable = [
         'category',
+        'description',
         'created_at',
         'updated_at',
         'deleted_at',

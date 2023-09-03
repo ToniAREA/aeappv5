@@ -52,9 +52,6 @@
                                 {{ trans('cruds.matLog.fields.product') }}
                             </th>
                             <th>
-                                {{ trans('cruds.product.fields.description') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.matLog.fields.description') }}
                             </th>
                             <th>
@@ -115,9 +112,6 @@
                                 </td>
                                 <td>
                                     {{ $matLog->product->name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $matLog->product->description ?? '' }}
                                 </td>
                                 <td>
                                     {{ $matLog->description ?? '' }}

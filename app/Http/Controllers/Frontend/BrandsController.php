@@ -25,7 +25,9 @@ class BrandsController extends Controller
 
         $brands = Brand::with(['providers', 'media'])->get();
 
-        return view('frontend.brands.index', compact('brands'));
+        $providers = Provider::get();
+
+        return view('frontend.brands.index', compact('brands', 'providers'));
     }
 
     public function create()
