@@ -22,7 +22,7 @@ done
 
 # Recupera los cambios más recientes del repositorio remoto
 echo -e "${GREEN}Fetching changes from remote repository...${RESET}"
-git fetch
+git fetch origin master
 
 # Compara el HEAD local con el HEAD remoto
 LOCAL=$(git rev-parse @)
