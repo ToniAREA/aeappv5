@@ -101,7 +101,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">{{ trans('cruds.matLog.fields.description') }}</label>
-                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $matLog->description) }}">
+                            <textarea class="form-control" name="description" id="description">{{ old('description', $matLog->description) }}</textarea>
                             @if($errors->has('description'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('description') }}

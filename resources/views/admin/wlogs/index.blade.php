@@ -32,9 +32,6 @@
                         {{ trans('cruds.wlog.fields.wlist') }}
                     </th>
                     <th>
-                        {{ trans('cruds.wlist.fields.status') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.wlog.fields.boat_namecomplete') }}
                     </th>
                     <th>
@@ -56,6 +53,9 @@
                         {{ trans('cruds.wlog.fields.hours') }}
                     </th>
                     <th>
+                        {{ trans('cruds.wlog.fields.notes') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.wlog.fields.proforma_number') }}
                     </th>
                     <th>
@@ -70,6 +70,70 @@
                     <th>
                         &nbsp;
                     </th>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($wlists as $key => $item)
+                                <option value="{{ $item->description }}">{{ $item->description }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($marinas as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($proformas as $key => $item)
+                                <option value="{{ $item->proforma_number }}">{{ $item->proforma_number }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
                 </tr>
             </thead>
         </table>
@@ -125,7 +189,6 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'wlist_description', name: 'wlist.description' },
-{ data: 'wlist.status', name: 'wlist.status' },
 { data: 'boat_namecomplete', name: 'boat_namecomplete' },
 { data: 'date', name: 'date' },
 { data: 'employee_name', name: 'employee.name' },
@@ -133,6 +196,7 @@
 { data: 'marina_name', name: 'marina.name' },
 { data: 'description', name: 'description' },
 { data: 'hours', name: 'hours' },
+{ data: 'notes', name: 'notes' },
 { data: 'proforma_number_proforma_number', name: 'proforma_number.proforma_number' },
 { data: 'proforma_number.description', name: 'proforma_number.description' },
 { data: 'invoiced_line', name: 'invoiced_line' },
@@ -149,6 +213,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

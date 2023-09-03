@@ -65,10 +65,6 @@ class MatLogsController extends Controller
                 return $row->wlist ? $row->wlist->description : '';
             });
 
-            $table->editColumn('wlist.status', function ($row) {
-                return $row->wlist ? (is_string($row->wlist) ? $row->wlist : $row->wlist->status) : '';
-            });
-
             $table->addColumn('employee_name', function ($row) {
                 return $row->employee ? $row->employee->name : '';
             });
@@ -114,7 +110,13 @@ class MatLogsController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.matLogs.index');
+        $boats     = Boat::get();
+        $wlists    = Wlist::get();
+        $users     = User::get();
+        $products  = Product::get();
+        $proformas = Proforma::get();
+
+        return view('admin.matLogs.index', compact('boats', 'wlists', 'users', 'products', 'proformas'));
     }
 
     public function create()

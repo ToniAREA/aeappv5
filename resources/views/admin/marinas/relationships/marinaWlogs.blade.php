@@ -28,9 +28,6 @@
                                 {{ trans('cruds.wlog.fields.wlist') }}
                             </th>
                             <th>
-                                {{ trans('cruds.wlist.fields.status') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.wlog.fields.boat_namecomplete') }}
                             </th>
                             <th>
@@ -50,6 +47,9 @@
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.hours') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.notes') }}
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.proforma_number') }}
@@ -81,9 +81,6 @@
                                     {{ $wlog->wlist->description ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $wlog->wlist->status ?? '' }}
-                                </td>
-                                <td>
                                     {{ $wlog->boat_namecomplete ?? '' }}
                                 </td>
                                 <td>
@@ -103,6 +100,9 @@
                                 </td>
                                 <td>
                                     {{ $wlog->hours ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlog->notes ?? '' }}
                                 </td>
                                 <td>
                                     {{ $wlog->proforma_number->proforma_number ?? '' }}

@@ -17,6 +17,7 @@ class Wlog extends Model
 
     public static $searchable = [
         'description',
+        'notes',
     ];
 
     protected $dates = [
@@ -34,6 +35,7 @@ class Wlog extends Model
         'marina_id',
         'description',
         'hours',
+        'notes',
         'proforma_number_id',
         'invoiced_line',
         'status',

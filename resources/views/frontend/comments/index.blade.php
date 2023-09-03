@@ -42,6 +42,9 @@
                                         {{ trans('cruds.user.fields.email') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.comment.fields.comment') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -72,6 +75,9 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -92,6 +98,9 @@
                                         </td>
                                         <td>
                                             {{ $comment->from_user->email ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $comment->comment ?? '' }}
                                         </td>
                                         <td>
                                             @can('comment_show')

@@ -37,10 +37,6 @@ class UpdateMatLogRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'description' => [
-                'string',
-                'nullable',
-            ],
             'pvp' => [
                 'numeric',
             ],

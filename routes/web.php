@@ -238,8 +238,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Comments
     Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
-    Route::post('comments/media', 'CommentsController@storeMedia')->name('comments.storeMedia');
-    Route::post('comments/ckmedia', 'CommentsController@storeCKEditorImages')->name('comments.storeCKEditorImages');
     Route::post('comments/parse-csv-import', 'CommentsController@parseCsvImport')->name('comments.parseCsvImport');
     Route::post('comments/process-csv-import', 'CommentsController@processCsvImport')->name('comments.processCsvImport');
     Route::resource('comments', 'CommentsController');
@@ -437,8 +435,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Comments
     Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
-    Route::post('comments/media', 'CommentsController@storeMedia')->name('comments.storeMedia');
-    Route::post('comments/ckmedia', 'CommentsController@storeCKEditorImages')->name('comments.storeCKEditorImages');
     Route::resource('comments', 'CommentsController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');

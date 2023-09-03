@@ -26,7 +26,6 @@ class GlobalSearchController extends Controller
         'Asset'           => 'cruds.asset.title',
         'FaqCategory'     => 'cruds.faqCategory.title',
         'FaqQuestion'     => 'cruds.faqQuestion.title',
-        'MatLog'          => 'cruds.matLog.title',
         'Comment'         => 'cruds.comment.title',
     ];
 

@@ -77,7 +77,7 @@
                         </div>
                         <div class="form-group">
                             <label for="description">{{ trans('cruds.wlog.fields.description') }}</label>
-                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $wlog->description) }}">
+                            <textarea class="form-control" name="description" id="description">{{ old('description', $wlog->description) }}</textarea>
                             @if($errors->has('description'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('description') }}
@@ -94,6 +94,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.wlog.fields.hours_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">{{ trans('cruds.wlog.fields.notes') }}</label>
+                            <textarea class="form-control" name="notes" id="notes">{{ old('notes', $wlog->notes) }}</textarea>
+                            @if($errors->has('notes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('notes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlog.fields.notes_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="proforma_number_id">{{ trans('cruds.wlog.fields.proforma_number') }}</label>

@@ -86,6 +86,5 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('mat-logs', 'MatLogsApiController');
 
     // Comments
-    Route::post('comments/media', 'CommentsApiController@storeMedia')->name('comments.storeMedia');
     Route::apiResource('comments', 'CommentsApiController');
 });

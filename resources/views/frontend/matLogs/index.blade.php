@@ -42,9 +42,6 @@
                                         {{ trans('cruds.matLog.fields.wlist') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.status') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.matLog.fields.date') }}
                                     </th>
                                     <th>
@@ -58,9 +55,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.matLog.fields.product') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.product.fields.description') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.matLog.fields.description') }}
@@ -87,6 +81,83 @@
                                         &nbsp;
                                     </th>
                                 </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($boats as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($wlists as $key => $item)
+                                                <option value="{{ $item->description }}">{{ $item->description }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($products as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($proformas as $key => $item)
+                                                <option value="{{ $item->proforma_number }}">{{ $item->proforma_number }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
                             </thead>
                             <tbody>
                                 @foreach($matLogs as $key => $matLog)
@@ -107,9 +178,6 @@
                                             {{ $matLog->wlist->description ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $matLog->wlist->status ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $matLog->date ?? '' }}
                                         </td>
                                         <td>
@@ -123,9 +191,6 @@
                                         </td>
                                         <td>
                                             {{ $matLog->product->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $matLog->product->description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $matLog->description ?? '' }}
@@ -230,6 +295,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>
