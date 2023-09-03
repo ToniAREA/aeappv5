@@ -33,6 +33,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.wlist.fields.order_type') }}
+                        </th>
+                        <td>
+                            {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.wlist.fields.boat') }}
                         </th>
                         <td>
@@ -41,10 +49,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.wlist.fields.order_type') }}
+                            {{ trans('cruds.wlist.fields.from_user') }}
                         </th>
                         <td>
-                            {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                            {{ $wlist->from_user->name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -116,7 +124,7 @@
                             {{ trans('cruds.wlist.fields.status') }}
                         </th>
                         <td>
-                            {{ $wlist->status }}
+                            {{ App\Models\Wlist::STATUS_RADIO[$wlist->status] ?? '' }}
                         </td>
                     </tr>
                     <tr>

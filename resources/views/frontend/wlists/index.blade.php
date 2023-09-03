@@ -36,10 +36,19 @@
                                         {{ trans('cruds.client.fields.lastname') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.wlist.fields.order_type') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.wlist.fields.boat') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.order_type') }}
+                                        {{ trans('cruds.boat.fields.boat_type') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.from_user') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.email') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.wlist.fields.for_role') }}
@@ -78,6 +87,103 @@
                                         &nbsp;
                                     </th>
                                 </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($clients as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search" strict="true">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($boats as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($priorities as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search" strict="true">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach(App\Models\Wlist::STATUS_RADIO as $key => $item)
+                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
                             </thead>
                             <tbody>
                                 @foreach($wlists as $key => $wlist)
@@ -92,10 +198,19 @@
                                             {{ $wlist->client->lastname ?? '' }}
                                         </td>
                                         <td>
+                                            {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $wlist->boat->name ?? '' }}
                                         </td>
                                         <td>
-                                            {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                                            {{ $wlist->boat->boat_type ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->from_user->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->from_user->email ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($wlist->for_roles as $key => $item)
@@ -130,7 +245,7 @@
                                             {{ $wlist->priority->weight ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $wlist->status ?? '' }}
+                                            {{ App\Models\Wlist::STATUS_RADIO[$wlist->status] ?? '' }}
                                         </td>
                                         <td>
                                             {{ $wlist->url_invoice ?? '' }}
@@ -219,6 +334,27 @@
           .columns.adjust();
   });
   
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 })
 
 </script>

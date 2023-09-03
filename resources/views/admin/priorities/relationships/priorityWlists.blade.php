@@ -31,10 +31,19 @@
                                 {{ trans('cruds.client.fields.lastname') }}
                             </th>
                             <th>
+                                {{ trans('cruds.wlist.fields.order_type') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.wlist.fields.boat') }}
                             </th>
                             <th>
-                                {{ trans('cruds.wlist.fields.order_type') }}
+                                {{ trans('cruds.boat.fields.boat_type') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlist.fields.from_user') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.user.fields.email') }}
                             </th>
                             <th>
                                 {{ trans('cruds.wlist.fields.for_role') }}
@@ -90,10 +99,19 @@
                                     {{ $wlist->client->lastname ?? '' }}
                                 </td>
                                 <td>
+                                    {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                                </td>
+                                <td>
                                     {{ $wlist->boat->name ?? '' }}
                                 </td>
                                 <td>
-                                    {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                                    {{ $wlist->boat->boat_type ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlist->from_user->name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlist->from_user->email ?? '' }}
                                 </td>
                                 <td>
                                     @foreach($wlist->for_roles as $key => $item)
@@ -128,7 +146,7 @@
                                     {{ $wlist->priority->weight ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $wlist->status ?? '' }}
+                                    {{ App\Models\Wlist::STATUS_RADIO[$wlist->status] ?? '' }}
                                 </td>
                                 <td>
                                     {{ $wlist->url_invoice ?? '' }}

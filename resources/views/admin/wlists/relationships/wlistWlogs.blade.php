@@ -28,9 +28,6 @@
                                 {{ trans('cruds.wlog.fields.wlist') }}
                             </th>
                             <th>
-                                {{ trans('cruds.wlist.fields.status') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.wlog.fields.boat_namecomplete') }}
                             </th>
                             <th>
@@ -79,9 +76,6 @@
                                 </td>
                                 <td>
                                     {{ $wlog->wlist->description ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $wlog->wlist->status ?? '' }}
                                 </td>
                                 <td>
                                     {{ $wlog->boat_namecomplete ?? '' }}

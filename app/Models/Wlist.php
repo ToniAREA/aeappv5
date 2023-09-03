@@ -22,6 +22,10 @@ class Wlist extends Model implements HasMedia
         'photos',
     ];
 
+    public static $searchable = [
+        'status',
+    ];
+
     protected $dates = [
         'deadline',
         'created_at',
@@ -36,10 +40,20 @@ class Wlist extends Model implements HasMedia
         'requests' => 'Requests',
     ];
 
+    public const STATUS_RADIO = [
+        'pending'     => 'Pending',
+        'assigned'    => 'Assigned',
+        'progressing' => 'Progressing',
+        'verifying'   => 'Verifying',
+        'completed'   => 'Completed',
+        'billed'      => 'Billed',
+    ];
+
     protected $fillable = [
         'client_id',
-        'boat_id',
         'order_type',
+        'boat_id',
+        'from_user_id',
         'boat_namecomplete',
         'description',
         'deadline',
@@ -91,6 +105,11 @@ class Wlist extends Model implements HasMedia
     public function boat()
     {
         return $this->belongsTo(Boat::class, 'boat_id');
+    }
+
+    public function from_user()
+    {
+        return $this->belongsTo(User::class, 'from_user_id');
     }
 
     public function for_roles()

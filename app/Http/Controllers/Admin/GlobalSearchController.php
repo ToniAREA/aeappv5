@@ -12,6 +12,7 @@ class GlobalSearchController extends Controller
         'Client'         => 'cruds.client.title',
         'Boat'           => 'cruds.boat.title',
         'Wlog'           => 'cruds.wlog.title',
+        'Wlist'          => 'cruds.wlist.title',
         'Product'        => 'cruds.product.title',
         'Marina'         => 'cruds.marina.title',
         'ContactCompany' => 'cruds.contactCompany.title',

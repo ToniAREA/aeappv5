@@ -48,10 +48,6 @@ class UpdateWlistRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'status' => [
-                'string',
-                'nullable',
-            ],
             'url_invoice' => [
                 'string',
                 'nullable',
