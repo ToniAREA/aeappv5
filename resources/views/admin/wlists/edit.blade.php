@@ -23,6 +23,19 @@
                 <span class="help-block">{{ trans('cruds.wlist.fields.client_helper') }}</span>
             </div>
             <div class="form-group">
+                <label>{{ trans('cruds.wlist.fields.order_type') }}</label>
+                @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $label)
+                    <div class="form-check {{ $errors->has('order_type') ? 'is-invalid' : '' }}">
+                        <input class="form-check-input" type="radio" id="order_type_{{ $key }}" name="order_type" value="{{ $key }}" {{ old('order_type', $wlist->order_type) === (string) $key ? 'checked' : '' }}>
+                        <label class="form-check-label" for="order_type_{{ $key }}">{{ $label }}</label>
+                    </div>
+                @endforeach
+                @if($errors->has('order_type'))
+                    <span class="text-danger">{{ $errors->first('order_type') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlist.fields.order_type_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="boat_id">{{ trans('cruds.wlist.fields.boat') }}</label>
                 <select class="form-control select2 {{ $errors->has('boat') ? 'is-invalid' : '' }}" name="boat_id" id="boat_id" required>
                     @foreach($boats as $id => $entry)
@@ -35,17 +48,16 @@
                 <span class="help-block">{{ trans('cruds.wlist.fields.boat_helper') }}</span>
             </div>
             <div class="form-group">
-                <label>{{ trans('cruds.wlist.fields.order_type') }}</label>
-                @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $label)
-                    <div class="form-check {{ $errors->has('order_type') ? 'is-invalid' : '' }}">
-                        <input class="form-check-input" type="radio" id="order_type_{{ $key }}" name="order_type" value="{{ $key }}" {{ old('order_type', $wlist->order_type) === (string) $key ? 'checked' : '' }}>
-                        <label class="form-check-label" for="order_type_{{ $key }}">{{ $label }}</label>
-                    </div>
-                @endforeach
-                @if($errors->has('order_type'))
-                    <span class="text-danger">{{ $errors->first('order_type') }}</span>
+                <label for="from_user_id">{{ trans('cruds.wlist.fields.from_user') }}</label>
+                <select class="form-control select2 {{ $errors->has('from_user') ? 'is-invalid' : '' }}" name="from_user_id" id="from_user_id">
+                    @foreach($from_users as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('from_user_id') ? old('from_user_id') : $wlist->from_user->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('from_user'))
+                    <span class="text-danger">{{ $errors->first('from_user') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.wlist.fields.order_type_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.wlist.fields.from_user_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="for_roles">{{ trans('cruds.wlist.fields.for_role') }}</label>
@@ -125,8 +137,13 @@
                 <span class="help-block">{{ trans('cruds.wlist.fields.priority_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="status">{{ trans('cruds.wlist.fields.status') }}</label>
-                <input class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" type="text" name="status" id="status" value="{{ old('status', $wlist->status) }}">
+                <label>{{ trans('cruds.wlist.fields.status') }}</label>
+                @foreach(App\Models\Wlist::STATUS_RADIO as $key => $label)
+                    <div class="form-check {{ $errors->has('status') ? 'is-invalid' : '' }}">
+                        <input class="form-check-input" type="radio" id="status_{{ $key }}" name="status" value="{{ $key }}" {{ old('status', $wlist->status) === (string) $key ? 'checked' : '' }}>
+                        <label class="form-check-label" for="status_{{ $key }}">{{ $label }}</label>
+                    </div>
+                @endforeach
                 @if($errors->has('status'))
                     <span class="text-danger">{{ $errors->first('status') }}</span>
                 @endif
