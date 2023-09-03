@@ -68,6 +68,17 @@ class WlistSeeder extends Seeder
                         $forUser = 1;
                     }
 
+                    if ($wlist->status == 'estimate'){
+                        $wlist->status = 'pending';
+                    } elseif ($wlist->status == 'pending'){
+                        $wlist->status = 'pending';
+                    } elseif ($wlist->status == 'working'){
+                        $wlist->status = 'progressing';
+                    } elseif ($wlist->status == 'done') {
+                        $wlist->status = 'completed';
+                    } else {
+                        $wlist->status = 'verifying';
+                    }
                     
                     
                     //insert record in new db
