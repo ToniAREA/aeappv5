@@ -81,6 +81,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.wlog.fields.notes') }}
+                        </th>
+                        <td>
+                            {{ $wlog->notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.wlog.fields.proforma_number') }}
                         </th>
                         <td>

@@ -54,9 +54,6 @@ class WlogsController extends Controller
                 return $row->wlist ? $row->wlist->description : '';
             });
 
-            $table->editColumn('wlist.status', function ($row) {
-                return $row->wlist ? (is_string($row->wlist) ? $row->wlist : $row->wlist->status) : '';
-            });
             $table->editColumn('boat_namecomplete', function ($row) {
                 return $row->boat_namecomplete ? $row->boat_namecomplete : '';
             });
@@ -78,6 +75,9 @@ class WlogsController extends Controller
             $table->editColumn('hours', function ($row) {
                 return $row->hours ? $row->hours : '';
             });
+            $table->editColumn('notes', function ($row) {
+                return $row->notes ? $row->notes : '';
+            });
             $table->addColumn('proforma_number_proforma_number', function ($row) {
                 return $row->proforma_number ? $row->proforma_number->proforma_number : '';
             });
@@ -97,7 +97,12 @@ class WlogsController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.wlogs.index');
+        $wlists    = Wlist::get();
+        $users     = User::get();
+        $marinas   = Marina::get();
+        $proformas = Proforma::get();
+
+        return view('admin.wlogs.index', compact('wlists', 'users', 'marinas', 'proformas'));
     }
 
     public function create()

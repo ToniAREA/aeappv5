@@ -44,7 +44,7 @@
                             {{ trans('cruds.comment.fields.comment') }}
                         </th>
                         <td>
-                            {!! $comment->comment !!}
+                            {{ $comment->comment }}
                         </td>
                     </tr>
                 </tbody>

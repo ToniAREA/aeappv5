@@ -37,10 +37,6 @@ class StoreMatLogRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'description' => [
-                'string',
-                'nullable',
-            ],
             'pvp' => [
                 'numeric',
             ],

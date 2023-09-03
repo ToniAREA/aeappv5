@@ -15,10 +15,6 @@ class MatLog extends Model
 
     public $table = 'mat_logs';
 
-    public static $searchable = [
-        'description',
-    ];
-
     protected $dates = [
         'date',
         'created_at',

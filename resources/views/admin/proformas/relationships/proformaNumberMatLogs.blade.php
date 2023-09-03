@@ -37,9 +37,6 @@
                                 {{ trans('cruds.matLog.fields.wlist') }}
                             </th>
                             <th>
-                                {{ trans('cruds.wlist.fields.status') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.matLog.fields.date') }}
                             </th>
                             <th>
@@ -53,9 +50,6 @@
                             </th>
                             <th>
                                 {{ trans('cruds.matLog.fields.product') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.product.fields.description') }}
                             </th>
                             <th>
                                 {{ trans('cruds.matLog.fields.description') }}
@@ -105,9 +99,6 @@
                                     {{ $matLog->wlist->description ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $matLog->wlist->status ?? '' }}
-                                </td>
-                                <td>
                                     {{ $matLog->date ?? '' }}
                                 </td>
                                 <td>
@@ -121,9 +112,6 @@
                                 </td>
                                 <td>
                                     {{ $matLog->product->name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $matLog->product->description ?? '' }}
                                 </td>
                                 <td>
                                     {{ $matLog->description ?? '' }}

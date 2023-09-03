@@ -27,7 +27,17 @@ class MatLogsController extends Controller
 
         $matLogs = MatLog::with(['boat', 'wlist', 'employee', 'product', 'proforma_number'])->get();
 
-        return view('frontend.matLogs.index', compact('matLogs'));
+        $boats = Boat::get();
+
+        $wlists = Wlist::get();
+
+        $users = User::get();
+
+        $products = Product::get();
+
+        $proformas = Proforma::get();
+
+        return view('frontend.matLogs.index', compact('boats', 'matLogs', 'products', 'proformas', 'users', 'wlists'));
     }
 
     public function create()

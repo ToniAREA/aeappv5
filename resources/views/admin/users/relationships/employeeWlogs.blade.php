@@ -49,6 +49,9 @@
                                 {{ trans('cruds.wlog.fields.hours') }}
                             </th>
                             <th>
+                                {{ trans('cruds.wlog.fields.notes') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.wlog.fields.proforma_number') }}
                             </th>
                             <th>
@@ -97,6 +100,9 @@
                                 </td>
                                 <td>
                                     {{ $wlog->hours ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlog->notes ?? '' }}
                                 </td>
                                 <td>
                                     {{ $wlog->proforma_number->proforma_number ?? '' }}

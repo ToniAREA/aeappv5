@@ -13,7 +13,7 @@ class CreateMatLogsTable extends Migration
             $table->string('boat_namecomplete')->nullable();
             $table->date('date');
             $table->string('item')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->float('pvp', 10, 2)->nullable();
             $table->float('units', 10, 2)->nullable();
             $table->boolean('invoiced_line')->default(0)->nullable();

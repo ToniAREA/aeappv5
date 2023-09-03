@@ -29,10 +29,6 @@ class StoreWlogRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'description' => [
-                'string',
-                'nullable',
-            ],
             'hours' => [
                 'numeric',
                 'min:0',

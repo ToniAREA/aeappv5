@@ -63,7 +63,7 @@
             </div>
             <div class="form-group">
                 <label for="description">{{ trans('cruds.wlog.fields.description') }}</label>
-                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', '') }}">
+                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
                 @if($errors->has('description'))
                     <span class="text-danger">{{ $errors->first('description') }}</span>
                 @endif
@@ -76,6 +76,14 @@
                     <span class="text-danger">{{ $errors->first('hours') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.wlog.fields.hours_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="notes">{{ trans('cruds.wlog.fields.notes') }}</label>
+                <textarea class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{{ old('notes') }}</textarea>
+                @if($errors->has('notes'))
+                    <span class="text-danger">{{ $errors->first('notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="proforma_number_id">{{ trans('cruds.wlog.fields.proforma_number') }}</label>
