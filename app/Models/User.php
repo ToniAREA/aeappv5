@@ -134,6 +134,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class, 'from_user_id', 'id');
     }
 
+    public function userBookingLists()
+    {
+        return $this->hasMany(BookingList::class, 'user_id', 'id');
+    }
+
     public function forUserToDos()
     {
         return $this->belongsToMany(ToDo::class);

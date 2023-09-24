@@ -14,9 +14,11 @@ class CreateEmployeesTable extends Migration
             $table->string('status')->nullable();
             $table->date('contract_starts')->nullable();
             $table->date('contract_ends')->nullable();
+            $table->string('category')->nullable();
             $table->string('notes')->nullable();
             $table->string('internalnotes')->nullable();
             $table->string('link')->nullable();
+            $table->boolean('active')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

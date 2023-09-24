@@ -46,6 +46,11 @@ class AssetLocation extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function productLocationProducts()
+    {
+        return $this->hasMany(Product::class, 'product_location_id', 'id');
+    }
+
     public function getPhotoAttribute()
     {
         $file = $this->getMedia('photo')->last();

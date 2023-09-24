@@ -68,6 +68,11 @@ class Client extends Model
         return $this->hasMany(Appointment::class, 'client_id', 'id');
     }
 
+    public function clientBookingLists()
+    {
+        return $this->hasMany(BookingList::class, 'client_id', 'id');
+    }
+
     public function clientsBoats()
     {
         return $this->belongsToMany(Boat::class);

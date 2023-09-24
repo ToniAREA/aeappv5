@@ -844,6 +844,50 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 209,
+                'title' => 'booking_access',
+            ],
+            [
+                'id'    => 210,
+                'title' => 'booking_list_create',
+            ],
+            [
+                'id'    => 211,
+                'title' => 'booking_list_edit',
+            ],
+            [
+                'id'    => 212,
+                'title' => 'booking_list_show',
+            ],
+            [
+                'id'    => 213,
+                'title' => 'booking_list_delete',
+            ],
+            [
+                'id'    => 214,
+                'title' => 'booking_list_access',
+            ],
+            [
+                'id'    => 215,
+                'title' => 'availability_create',
+            ],
+            [
+                'id'    => 216,
+                'title' => 'availability_edit',
+            ],
+            [
+                'id'    => 217,
+                'title' => 'availability_show',
+            ],
+            [
+                'id'    => 218,
+                'title' => 'availability_delete',
+            ],
+            [
+                'id'    => 219,
+                'title' => 'availability_access',
+            ],
+            [
+                'id'    => 220,
                 'title' => 'profile_password_edit',
             ],
         ];

@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\AssetLocation;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -25,15 +26,17 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $products = Product::with(['categories', 'brand', 'tags', 'media'])->get();
+        $products = Product::with(['categories', 'brand', 'product_location', 'tags', 'media'])->get();
 
         $product_categories = ProductCategory::get();
 
         $brands = Brand::get();
 
+        $asset_locations = AssetLocation::get();
+
         $product_tags = ProductTag::get();
 
-        return view('frontend.products.index', compact('brands', 'product_categories', 'product_tags', 'products'));
+        return view('frontend.products.index', compact('asset_locations', 'brands', 'product_categories', 'product_tags', 'products'));
     }
 
     public function create()
@@ -44,9 +47,11 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $tags = ProductTag::pluck('name', 'id');
 
-        return view('frontend.products.create', compact('brands', 'categories', 'tags'));
+        return view('frontend.products.create', compact('brands', 'categories', 'product_locations', 'tags'));
     }
 
     public function store(StoreProductRequest $request)
@@ -77,11 +82,13 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $tags = ProductTag::pluck('name', 'id');
 
-        $product->load('categories', 'brand', 'tags');
+        $product->load('categories', 'brand', 'product_location', 'tags');
 
-        return view('frontend.products.edit', compact('brands', 'categories', 'product', 'tags'));
+        return view('frontend.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'tags'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -124,7 +131,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'brand', 'tags', 'productMatLogs');
+        $product->load('categories', 'brand', 'product_location', 'tags', 'productMatLogs');
 
         return view('frontend.products.show', compact('product'));
     }

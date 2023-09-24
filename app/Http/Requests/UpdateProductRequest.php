@@ -58,6 +58,12 @@ class UpdateProductRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'local_stock' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
             'tags.*' => [
                 'integer',
             ],

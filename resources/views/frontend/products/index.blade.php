@@ -63,6 +63,15 @@
                                         {{ trans('cruds.product.fields.stock') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.product.fields.local_stock') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.product_location') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.assetLocation.fields.description') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.product.fields.tag') }}
                                     </th>
                                     <th>
@@ -119,6 +128,19 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($asset_locations as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <select class="search">
@@ -178,6 +200,15 @@
                                         </td>
                                         <td>
                                             {{ $product->stock ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->local_stock ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->product_location->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->product_location->description ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($product->tags as $key => $item)

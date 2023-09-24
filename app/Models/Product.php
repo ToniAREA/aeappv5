@@ -48,6 +48,8 @@ class Product extends Model implements HasMedia
         'price',
         'pro_discount',
         'stock',
+        'local_stock',
+        'product_location_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -89,6 +91,11 @@ class Product extends Model implements HasMedia
         });
 
         return $files;
+    }
+
+    public function product_location()
+    {
+        return $this->belongsTo(AssetLocation::class, 'product_location_id');
     }
 
     public function tags()

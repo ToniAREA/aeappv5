@@ -148,6 +148,45 @@
                         </ul>
                     </li>
                 @endcan
+                @can('booking_access')
+                    <li class="nav-item has-treeview {{ request()->is("admin/booking-lists*") ? "menu-open" : "" }} {{ request()->is("admin/availabilities*") ? "menu-open" : "" }}">
+                        <a class="nav-link nav-dropdown-toggle {{ request()->is("admin/booking-lists*") ? "active" : "" }} {{ request()->is("admin/availabilities*") ? "active" : "" }}" href="#">
+                            <i class="fa-fw nav-icon fas fa-book-open">
+
+                            </i>
+                            <p>
+                                {{ trans('cruds.booking.title') }}
+                                <i class="right fa fa-fw fa-angle-left nav-icon"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('booking_list_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.booking-lists.index") }}" class="nav-link {{ request()->is("admin/booking-lists") || request()->is("admin/booking-lists/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-bookmark">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.bookingList.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('availability_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.availabilities.index") }}" class="nav-link {{ request()->is("admin/availabilities") || request()->is("admin/availabilities/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon far fa-bookmark">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.availability.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcan
                 @can('billing_access')
                     <li class="nav-item has-treeview {{ request()->is("admin/proformas*") ? "menu-open" : "" }} {{ request()->is("admin/payments*") ? "menu-open" : "" }} {{ request()->is("admin/claims*") ? "menu-open" : "" }}">
                         <a class="nav-link nav-dropdown-toggle {{ request()->is("admin/proformas*") ? "active" : "" }} {{ request()->is("admin/payments*") ? "active" : "" }} {{ request()->is("admin/claims*") ? "active" : "" }}" href="#">

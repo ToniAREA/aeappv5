@@ -58,6 +58,15 @@
                                 {{ trans('cruds.product.fields.stock') }}
                             </th>
                             <th>
+                                {{ trans('cruds.product.fields.local_stock') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.product.fields.product_location') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.assetLocation.fields.description') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.product.fields.tag') }}
                             </th>
                             <th>
@@ -115,6 +124,15 @@
                                 </td>
                                 <td>
                                     {{ $product->stock ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $product->local_stock ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $product->product_location->name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $product->product_location->description ?? '' }}
                                 </td>
                                 <td>
                                     @foreach($product->tags as $key => $item)

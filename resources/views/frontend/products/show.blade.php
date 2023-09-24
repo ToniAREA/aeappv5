@@ -138,6 +138,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.product.fields.local_stock') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->local_stock }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.product.fields.product_location') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->product_location->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.product.fields.tag') }}
                                     </th>
                                     <td>

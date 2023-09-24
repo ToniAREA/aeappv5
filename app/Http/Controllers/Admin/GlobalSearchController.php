@@ -27,6 +27,7 @@ class GlobalSearchController extends Controller
         'FaqCategory'     => 'cruds.faqCategory.title',
         'FaqQuestion'     => 'cruds.faqQuestion.title',
         'Comment'         => 'cruds.comment.title',
+        'BookingList'     => 'cruds.bookingList.title',
     ];
 
     public function search(Request $request)

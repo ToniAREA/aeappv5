@@ -127,6 +127,21 @@
                                             {{ trans('cruds.appointment.title') }}
                                         </a>
                                     @endcan
+                                    @can('booking_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.booking.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('booking_list_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.booking-lists.index') }}">
+                                            {{ trans('cruds.bookingList.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('availability_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.availabilities.index') }}">
+                                            {{ trans('cruds.availability.title') }}
+                                        </a>
+                                    @endcan
                                     @can('billing_access')
                                         <a class="dropdown-item disabled" href="#">
                                             {{ trans('cruds.billing.title') }}

@@ -242,6 +242,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('comments/process-csv-import', 'CommentsController@processCsvImport')->name('comments.processCsvImport');
     Route::resource('comments', 'CommentsController');
 
+    // Booking List
+    Route::delete('booking-lists/destroy', 'BookingListController@massDestroy')->name('booking-lists.massDestroy');
+    Route::post('booking-lists/parse-csv-import', 'BookingListController@parseCsvImport')->name('booking-lists.parseCsvImport');
+    Route::post('booking-lists/process-csv-import', 'BookingListController@processCsvImport')->name('booking-lists.processCsvImport');
+    Route::resource('booking-lists', 'BookingListController');
+
+    // Availability
+    Route::delete('availabilities/destroy', 'AvailabilityController@massDestroy')->name('availabilities.massDestroy');
+    Route::post('availabilities/parse-csv-import', 'AvailabilityController@parseCsvImport')->name('availabilities.parseCsvImport');
+    Route::post('availabilities/process-csv-import', 'AvailabilityController@processCsvImport')->name('availabilities.processCsvImport');
+    Route::resource('availabilities', 'AvailabilityController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
 });
@@ -436,6 +448,14 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Comments
     Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
     Route::resource('comments', 'CommentsController');
+
+    // Booking List
+    Route::delete('booking-lists/destroy', 'BookingListController@massDestroy')->name('booking-lists.massDestroy');
+    Route::resource('booking-lists', 'BookingListController');
+
+    // Availability
+    Route::delete('availabilities/destroy', 'AvailabilityController@massDestroy')->name('availabilities.massDestroy');
+    Route::resource('availabilities', 'AvailabilityController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
     Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');
