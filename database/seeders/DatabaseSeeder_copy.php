@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             BoatsSeeder::class,
             BoatClientPivotSeeder::class,
             WlistSeeder::class,
+            WlogSeeder::class,
         ]);
     }
 }
