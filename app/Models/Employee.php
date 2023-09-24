@@ -43,9 +43,11 @@ class Employee extends Model implements HasMedia
         'status',
         'contract_starts',
         'contract_ends',
+        'category',
         'notes',
         'internalnotes',
         'link',
+        'active',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -60,6 +62,16 @@ class Employee extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function employeeBookingLists()
+    {
+        return $this->hasMany(BookingList::class, 'employee_id', 'id');
+    }
+
+    public function employeeAvailabilities()
+    {
+        return $this->hasMany(Availability::class, 'employee_id', 'id');
     }
 
     public function user()

@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->decimal('price', 15, 2)->nullable();
             $table->float('pro_discount', 5, 2)->nullable();
             $table->string('stock')->nullable();
+            $table->integer('local_stock')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

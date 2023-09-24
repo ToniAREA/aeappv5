@@ -62,6 +62,15 @@
                         {{ trans('cruds.product.fields.stock') }}
                     </th>
                     <th>
+                        {{ trans('cruds.product.fields.local_stock') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.product_location') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.assetLocation.fields.description') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.product.fields.tag') }}
                     </th>
                     <th>
@@ -118,6 +127,19 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($asset_locations as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <select class="search">
@@ -196,6 +218,9 @@
 { data: 'price', name: 'price' },
 { data: 'pro_discount', name: 'pro_discount' },
 { data: 'stock', name: 'stock' },
+{ data: 'local_stock', name: 'local_stock' },
+{ data: 'product_location_name', name: 'product_location.name' },
+{ data: 'product_location.description', name: 'product_location.description' },
 { data: 'tag', name: 'tags.name' },
 { data: 'file', name: 'file', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

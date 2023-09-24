@@ -88,6 +88,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.employee.fields.category') }}
+                                    </th>
+                                    <td>
+                                        {{ $employee->category }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.employee.fields.notes') }}
                                     </th>
                                     <td>
@@ -108,6 +116,14 @@
                                     </th>
                                     <td>
                                         {{ $employee->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $employee->active ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                             </tbody>

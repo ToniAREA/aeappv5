@@ -123,6 +123,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#user_booking_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.bookingList.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#for_user_to_dos" role="tab" data-toggle="tab">
                 {{ trans('cruds.toDo.title') }}
             </a>
@@ -153,6 +158,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="from_user_comments">
             @includeIf('admin.users.relationships.fromUserComments', ['comments' => $user->fromUserComments])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="user_booking_lists">
+            @includeIf('admin.users.relationships.userBookingLists', ['bookingLists' => $user->userBookingLists])
         </div>
         <div class="tab-pane" role="tabpanel" id="for_user_to_dos">
             @includeIf('admin.users.relationships.forUserToDos', ['toDos' => $user->forUserToDos])

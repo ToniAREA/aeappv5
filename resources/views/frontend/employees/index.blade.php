@@ -54,6 +54,9 @@
                                         {{ trans('cruds.employee.fields.contract_ends') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.employee.fields.category') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.employee.fields.notes') }}
                                     </th>
                                     <th>
@@ -61,6 +64,9 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.employee.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.active') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -102,6 +108,9 @@
                                             {{ $employee->contract_ends ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $employee->category ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $employee->notes ?? '' }}
                                         </td>
                                         <td>
@@ -109,6 +118,10 @@
                                         </td>
                                         <td>
                                             {{ $employee->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $employee->active ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $employee->active ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @can('employee_show')

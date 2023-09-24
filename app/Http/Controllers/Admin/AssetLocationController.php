@@ -125,6 +125,8 @@ class AssetLocationController extends Controller
     {
         abort_if(Gate::denies('asset_location_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $assetLocation->load('productLocationProducts');
+
         return view('admin.assetLocations.show', compact('assetLocation'));
     }
 

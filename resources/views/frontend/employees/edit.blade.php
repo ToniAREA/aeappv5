@@ -93,6 +93,16 @@
                             <span class="help-block">{{ trans('cruds.employee.fields.contract_ends_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="category">{{ trans('cruds.employee.fields.category') }}</label>
+                            <input class="form-control" type="text" name="category" id="category" value="{{ old('category', $employee->category) }}">
+                            @if($errors->has('category'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('category') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.category_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="notes">{{ trans('cruds.employee.fields.notes') }}</label>
                             <input class="form-control" type="text" name="notes" id="notes" value="{{ old('notes', $employee->notes) }}">
                             @if($errors->has('notes'))
@@ -121,6 +131,18 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.employee.fields.link_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="checkbox" name="active" id="active" value="1" {{ $employee->active || old('active', 0) === 1 ? 'checked' : '' }} required>
+                                <label class="required" for="active">{{ trans('cruds.employee.fields.active') }}</label>
+                            </div>
+                            @if($errors->has('active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.active_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

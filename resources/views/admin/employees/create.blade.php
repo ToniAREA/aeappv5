@@ -75,6 +75,14 @@
                 <span class="help-block">{{ trans('cruds.employee.fields.contract_ends_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="category">{{ trans('cruds.employee.fields.category') }}</label>
+                <input class="form-control {{ $errors->has('category') ? 'is-invalid' : '' }}" type="text" name="category" id="category" value="{{ old('category', '') }}">
+                @if($errors->has('category'))
+                    <span class="text-danger">{{ $errors->first('category') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.employee.fields.category_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="notes">{{ trans('cruds.employee.fields.notes') }}</label>
                 <input class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" type="text" name="notes" id="notes" value="{{ old('notes', '') }}">
                 @if($errors->has('notes'))
@@ -97,6 +105,16 @@
                     <span class="text-danger">{{ $errors->first('link') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.employee.fields.link_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('active') ? 'is-invalid' : '' }}">
+                    <input class="form-check-input" type="checkbox" name="active" id="active" value="1" required {{ old('active', 0) == 1 ? 'checked' : '' }}>
+                    <label class="required form-check-label" for="active">{{ trans('cruds.employee.fields.active') }}</label>
+                </div>
+                @if($errors->has('active'))
+                    <span class="text-danger">{{ $errors->first('active') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.employee.fields.active_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

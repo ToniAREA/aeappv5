@@ -157,6 +157,30 @@
                             <span class="help-block">{{ trans('cruds.product.fields.stock_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="local_stock">{{ trans('cruds.product.fields.local_stock') }}</label>
+                            <input class="form-control" type="number" name="local_stock" id="local_stock" value="{{ old('local_stock', $product->local_stock) }}" step="1">
+                            @if($errors->has('local_stock'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('local_stock') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.local_stock_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="product_location_id">{{ trans('cruds.product.fields.product_location') }}</label>
+                            <select class="form-control select2" name="product_location_id" id="product_location_id">
+                                @foreach($product_locations as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('product_location_id') ? old('product_location_id') : $product->product_location->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('product_location'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('product_location') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.product_location_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="tags">{{ trans('cruds.product.fields.tag') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

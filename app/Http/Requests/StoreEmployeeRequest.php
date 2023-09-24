@@ -33,6 +33,10 @@ class StoreEmployeeRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'category' => [
+                'string',
+                'nullable',
+            ],
             'notes' => [
                 'string',
                 'nullable',
@@ -44,6 +48,9 @@ class StoreEmployeeRequest extends FormRequest
             'link' => [
                 'string',
                 'nullable',
+            ],
+            'active' => [
+                'required',
             ],
         ];
     }

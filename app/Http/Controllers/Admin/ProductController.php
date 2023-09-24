@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyProductRequest;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\AssetLocation;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
@@ -27,7 +28,7 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::with(['categories', 'brand', 'tags'])->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['categories', 'brand', 'product_location', 'tags'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -98,6 +99,16 @@ class ProductController extends Controller
             $table->editColumn('stock', function ($row) {
                 return $row->stock ? $row->stock : '';
             });
+            $table->editColumn('local_stock', function ($row) {
+                return $row->local_stock ? $row->local_stock : '';
+            });
+            $table->addColumn('product_location_name', function ($row) {
+                return $row->product_location ? $row->product_location->name : '';
+            });
+
+            $table->editColumn('product_location.description', function ($row) {
+                return $row->product_location ? (is_string($row->product_location) ? $row->product_location : $row->product_location->description) : '';
+            });
             $table->editColumn('tag', function ($row) {
                 $labels = [];
                 foreach ($row->tags as $tag) {
@@ -118,16 +129,17 @@ class ProductController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'brand', 'photos', 'tag', 'file']);
+            $table->rawColumns(['actions', 'placeholder', 'category', 'brand', 'photos', 'product_location', 'tag', 'file']);
 
             return $table->make(true);
         }
 
         $product_categories = ProductCategory::get();
         $brands             = Brand::get();
+        $asset_locations    = AssetLocation::get();
         $product_tags       = ProductTag::get();
 
-        return view('admin.products.index', compact('product_categories', 'brands', 'product_tags'));
+        return view('admin.products.index', compact('product_categories', 'brands', 'asset_locations', 'product_tags'));
     }
 
     public function create()
@@ -138,9 +150,11 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $tags = ProductTag::pluck('name', 'id');
 
-        return view('admin.products.create', compact('brands', 'categories', 'tags'));
+        return view('admin.products.create', compact('brands', 'categories', 'product_locations', 'tags'));
     }
 
     public function store(StoreProductRequest $request)
@@ -171,11 +185,13 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $tags = ProductTag::pluck('name', 'id');
 
-        $product->load('categories', 'brand', 'tags');
+        $product->load('categories', 'brand', 'product_location', 'tags');
 
-        return view('admin.products.edit', compact('brands', 'categories', 'product', 'tags'));
+        return view('admin.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'tags'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
@@ -218,7 +234,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'brand', 'tags', 'productMatLogs');
+        $product->load('categories', 'brand', 'product_location', 'tags', 'productMatLogs');
 
         return view('admin.products.show', compact('product'));
     }

@@ -85,6 +85,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.employee.fields.category') }}
+                        </th>
+                        <td>
+                            {{ $employee->category }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.employee.fields.notes') }}
                         </th>
                         <td>
@@ -107,6 +115,14 @@
                             {{ $employee->link }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.employee.fields.active') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $employee->active ? 'checked' : '' }}>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -118,6 +134,30 @@
     </div>
 </div>
 
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#employee_booking_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.bookingList.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#employee_availabilities" role="tab" data-toggle="tab">
+                {{ trans('cruds.availability.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="employee_booking_lists">
+            @includeIf('admin.employees.relationships.employeeBookingLists', ['bookingLists' => $employee->employeeBookingLists])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="employee_availabilities">
+            @includeIf('admin.employees.relationships.employeeAvailabilities', ['availabilities' => $employee->employeeAvailabilities])
+        </div>
+    </div>
+</div>
 
 @endsection

@@ -87,4 +87,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Comments
     Route::apiResource('comments', 'CommentsApiController');
+
+    // Booking List
+    Route::apiResource('booking-lists', 'BookingListApiController');
+
+    // Availability
+    Route::apiResource('availabilities', 'AvailabilityApiController');
 });
