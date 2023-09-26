@@ -63,24 +63,24 @@ class WlistSeeder extends Seeder
                     } elseif ($wlist->assigned == 'rodolfo') {
                         $forRole = 3;
                         $forUser = 4;
-                    } else{
+                    } else {
                         $forRole = 3;
                         $forUser = 1;
                     }
 
-                    if ($wlist->status == 'estimate'){
+                    if ($wlist->status == 'estimate') {
                         $wlist->status = 'pending';
-                    } elseif ($wlist->status == 'pending'){
+                    } elseif ($wlist->status == 'pending') {
                         $wlist->status = 'pending';
-                    } elseif ($wlist->status == 'working'){
+                    } elseif ($wlist->status == 'working') {
                         $wlist->status = 'progressing';
                     } elseif ($wlist->status == 'done') {
                         $wlist->status = 'completed';
                     } else {
                         $wlist->status = 'verifying';
                     }
-                    
-                    
+
+
                     //insert record in new db
                     DB::table('wlists')->insert([
                         'order_type' => $wlist->type,

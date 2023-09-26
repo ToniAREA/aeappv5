@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Asset;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -12,11 +13,9 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
+            AssetStatusTableSeeder::class,
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
-<<<<<<< HEAD
-            AssetStatusTableSeeder::class,
-=======
             PriorityTableSeeder::class,
             EmployeesSeeder::class,
             MarinasSeeder::class,
@@ -25,7 +24,8 @@ class DatabaseSeeder extends Seeder
             BoatClientPivotSeeder::class,
             WlistSeeder::class,
             WlogSeeder::class,
->>>>>>> 9633ab2 (db seeder and wlogseeder)
         ]);
+
+        
     }
 }
