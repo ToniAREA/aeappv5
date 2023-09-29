@@ -54,16 +54,10 @@ class AvailabilityController extends Controller
             $table->editColumn('employee.category', function ($row) {
                 return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->category) : '';
             });
-
             $table->editColumn('weekday', function ($row) {
                 return $row->weekday ? $row->weekday : '';
             });
-            $table->editColumn('start_time', function ($row) {
-                return $row->start_time ? $row->start_time : '';
-            });
-            $table->editColumn('end_time', function ($row) {
-                return $row->end_time ? $row->end_time : '';
-            });
+
             $table->editColumn('rate_multiplier', function ($row) {
                 return $row->rate_multiplier ? $row->rate_multiplier : '';
             });

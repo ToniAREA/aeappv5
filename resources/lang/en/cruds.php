@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title'          => 'Users',
-        'title_singular' => 'Users',
+        'title'          => 'User management',
+        'title_singular' => 'User management',
     ],
     'permission' => [
         'title'          => 'Permissions',
@@ -946,8 +946,8 @@ return [
         ],
     ],
     'expenseManagement' => [
-        'title'          => 'Accounting',
-        'title_singular' => 'Accounting',
+        'title'          => 'Expense Management',
+        'title_singular' => 'Expense Management',
     ],
     'expenseCategory' => [
         'title'          => 'Expense Categories',
@@ -1193,8 +1193,6 @@ return [
         'fields'         => [
             'id'                     => 'ID',
             'id_helper'              => ' ',
-            'date'                   => 'Date',
-            'date_helper'            => ' ',
             'created_at'             => 'Created at',
             'created_at_helper'      => ' ',
             'updated_at'             => 'Updated at',
@@ -1203,16 +1201,16 @@ return [
             'deleted_at_helper'      => ' ',
             'employee'               => 'Employee',
             'employee_helper'        => ' ',
-            'start_time'             => 'Start Time',
-            'start_time_helper'      => ' ',
-            'end_time'               => 'End Time',
-            'end_time_helper'        => ' ',
             'rate_multiplier'        => 'Rate Multiplier',
             'rate_multiplier_helper' => 'Hour rate multiplier',
             'weekday'                => 'Weekday',
             'weekday_helper'         => ' ',
             'status'                 => 'Status',
             'status_helper'          => ' ',
+            'star_time'              => 'Star Time',
+            'star_time_helper'       => ' ',
+            'end_time'               => 'End Time',
+            'end_time_helper'        => ' ',
         ],
     ],
 

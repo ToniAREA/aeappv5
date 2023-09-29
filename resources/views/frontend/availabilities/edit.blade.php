@@ -28,16 +28,6 @@
                             <span class="help-block">{{ trans('cruds.availability.fields.employee_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="date">{{ trans('cruds.availability.fields.date') }}</label>
-                            <input class="form-control date" type="text" name="date" id="date" value="{{ old('date', $availability->date) }}">
-                            @if($errors->has('date'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('date') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.availability.fields.date_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label class="required" for="weekday">{{ trans('cruds.availability.fields.weekday') }}</label>
                             <input class="form-control" type="text" name="weekday" id="weekday" value="{{ old('weekday', $availability->weekday) }}" required>
                             @if($errors->has('weekday'))
@@ -48,18 +38,18 @@
                             <span class="help-block">{{ trans('cruds.availability.fields.weekday_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="required" for="start_time">{{ trans('cruds.availability.fields.start_time') }}</label>
-                            <input class="form-control timepicker" type="text" name="start_time" id="start_time" value="{{ old('start_time', $availability->start_time) }}" required>
-                            @if($errors->has('start_time'))
+                            <label class="required" for="star_time">{{ trans('cruds.availability.fields.star_time') }}</label>
+                            <input class="form-control datetime" type="text" name="star_time" id="star_time" value="{{ old('star_time', $availability->star_time) }}" required>
+                            @if($errors->has('star_time'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('start_time') }}
+                                    {{ $errors->first('star_time') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.availability.fields.start_time_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.availability.fields.star_time_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label class="required" for="end_time">{{ trans('cruds.availability.fields.end_time') }}</label>
-                            <input class="form-control timepicker" type="text" name="end_time" id="end_time" value="{{ old('end_time', $availability->end_time) }}" required>
+                            <input class="form-control datetime" type="text" name="end_time" id="end_time" value="{{ old('end_time', $availability->end_time) }}" required>
                             @if($errors->has('end_time'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('end_time') }}

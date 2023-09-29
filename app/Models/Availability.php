@@ -16,7 +16,8 @@ class Availability extends Model
     public $table = 'availabilities';
 
     protected $dates = [
-        'date',
+        'star_time',
+        'end_time',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -30,9 +31,8 @@ class Availability extends Model
 
     protected $fillable = [
         'employee_id',
-        'date',
         'weekday',
-        'start_time',
+        'star_time',
         'end_time',
         'rate_multiplier',
         'status',
@@ -51,13 +51,23 @@ class Availability extends Model
         return $this->belongsTo(Employee::class, 'employee_id');
     }
 
-    public function getDateAttribute($value)
+    public function getStarTimeAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
     }
 
-    public function setDateAttribute($value)
+    public function setStarTimeAttribute($value)
     {
-        $this->attributes['date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['star_time'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getEndTimeAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setEndTimeAttribute($value)
+    {
+        $this->attributes['end_time'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 }

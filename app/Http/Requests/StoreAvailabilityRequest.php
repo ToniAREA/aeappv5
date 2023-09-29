@@ -21,26 +21,21 @@ class StoreAvailabilityRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
             'weekday' => [
                 'string',
                 'required',
             ],
-            'start_time' => [
+            'star_time' => [
                 'required',
-                'date_format:' . config('panel.time_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
             ],
             'end_time' => [
                 'required',
-                'date_format:' . config('panel.time_format'),
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
             ],
             'rate_multiplier' => [
                 'numeric',
                 'required',
-                'unique:availabilities,rate_multiplier',
             ],
         ];
     }
