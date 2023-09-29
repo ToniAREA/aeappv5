@@ -35,9 +35,6 @@
                         {{ trans('cruds.employee.fields.category') }}
                     </th>
                     <th>
-                        {{ trans('cruds.availability.fields.weekday') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.availability.fields.star_time') }}
                     </th>
                     <th>
@@ -68,9 +65,6 @@
                         </select>
                     </td>
                     <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -147,7 +141,6 @@
 { data: 'id', name: 'id' },
 { data: 'employee_id_employee', name: 'employee.id_employee' },
 { data: 'employee.category', name: 'employee.category' },
-{ data: 'weekday', name: 'weekday' },
 { data: 'star_time', name: 'star_time' },
 { data: 'end_time', name: 'end_time' },
 { data: 'rate_multiplier', name: 'rate_multiplier' },

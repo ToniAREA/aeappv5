@@ -21,10 +21,6 @@ class StoreAvailabilityRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'weekday' => [
-                'string',
-                'required',
-            ],
             'star_time' => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),

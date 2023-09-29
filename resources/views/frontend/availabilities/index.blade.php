@@ -36,9 +36,6 @@
                                         {{ trans('cruds.employee.fields.category') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.availability.fields.weekday') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.availability.fields.star_time') }}
                                     </th>
                                     <th>
@@ -80,9 +77,6 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
                                         <select class="search" strict="true">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach(App\Models\Availability::STATUS_SELECT as $key => $item)
@@ -105,9 +99,6 @@
                                         </td>
                                         <td>
                                             {{ $availability->employee->category ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $availability->weekday ?? '' }}
                                         </td>
                                         <td>
                                             {{ $availability->star_time ?? '' }}

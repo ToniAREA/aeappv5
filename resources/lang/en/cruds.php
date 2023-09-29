@@ -1203,8 +1203,6 @@ return [
             'employee_helper'        => ' ',
             'rate_multiplier'        => 'Rate Multiplier',
             'rate_multiplier_helper' => 'Hour rate multiplier',
-            'weekday'                => 'Weekday',
-            'weekday_helper'         => ' ',
             'status'                 => 'Status',
             'status_helper'          => ' ',
             'star_time'              => 'Star Time',

@@ -33,14 +33,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.availability.fields.weekday') }}
-                        </th>
-                        <td>
-                            {{ $availability->weekday }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.availability.fields.star_time') }}
                         </th>
                         <td>

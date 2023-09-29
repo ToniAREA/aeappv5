@@ -28,16 +28,6 @@
                             <span class="help-block">{{ trans('cruds.availability.fields.employee_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="required" for="weekday">{{ trans('cruds.availability.fields.weekday') }}</label>
-                            <input class="form-control" type="text" name="weekday" id="weekday" value="{{ old('weekday', '') }}" required>
-                            @if($errors->has('weekday'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('weekday') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.availability.fields.weekday_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label class="required" for="star_time">{{ trans('cruds.availability.fields.star_time') }}</label>
                             <input class="form-control datetime" type="text" name="star_time" id="star_time" value="{{ old('star_time') }}" required>
                             @if($errors->has('star_time'))
