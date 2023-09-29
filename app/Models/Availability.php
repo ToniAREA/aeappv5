@@ -31,7 +31,6 @@ class Availability extends Model
 
     protected $fillable = [
         'employee_id',
-        'weekday',
         'star_time',
         'end_time',
         'rate_multiplier',

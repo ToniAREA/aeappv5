@@ -10,7 +10,6 @@ class CreateAvailabilitiesTable extends Migration
     {
         Schema::create('availabilities', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('weekday');
             $table->datetime('star_time');
             $table->datetime('end_time');
             $table->float('rate_multiplier', 6, 2);

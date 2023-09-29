@@ -31,9 +31,6 @@
                                 {{ trans('cruds.employee.fields.category') }}
                             </th>
                             <th>
-                                {{ trans('cruds.availability.fields.weekday') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.availability.fields.star_time') }}
                             </th>
                             <th>
@@ -64,9 +61,6 @@
                                 </td>
                                 <td>
                                     {{ $availability->employee->category ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $availability->weekday ?? '' }}
                                 </td>
                                 <td>
                                     {{ $availability->star_time ?? '' }}
