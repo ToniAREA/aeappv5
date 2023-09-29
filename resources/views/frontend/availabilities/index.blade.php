@@ -36,13 +36,10 @@
                                         {{ trans('cruds.employee.fields.category') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.availability.fields.date') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.availability.fields.weekday') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.availability.fields.start_time') }}
+                                        {{ trans('cruds.availability.fields.star_time') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.availability.fields.end_time') }}
@@ -74,13 +71,13 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                    </td>
-                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -110,13 +107,10 @@
                                             {{ $availability->employee->category ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $availability->date ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $availability->weekday ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $availability->start_time ?? '' }}
+                                            {{ $availability->star_time ?? '' }}
                                         </td>
                                         <td>
                                             {{ $availability->end_time ?? '' }}
