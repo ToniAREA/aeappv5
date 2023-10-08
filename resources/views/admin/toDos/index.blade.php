@@ -50,9 +50,6 @@
                         {{ trans('cruds.priority.fields.weight') }}
                     </th>
                     <th>
-                        {{ trans('cruds.toDo.fields.notes') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -94,9 +91,6 @@
                         </select>
                     </td>
                     <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -161,7 +155,6 @@
 { data: 'deadline', name: 'deadline' },
 { data: 'priority_name', name: 'priority.name' },
 { data: 'priority.weight', name: 'priority.weight' },
-{ data: 'notes', name: 'notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

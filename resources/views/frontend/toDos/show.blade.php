@@ -87,7 +87,7 @@
                                         {{ trans('cruds.toDo.fields.notes') }}
                                     </th>
                                     <td>
-                                        {{ $toDo->notes }}
+                                        {!! $toDo->notes !!}
                                     </td>
                                 </tr>
                             </tbody>
