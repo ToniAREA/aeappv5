@@ -12,7 +12,7 @@ class CreateToDosTable extends Migration
             $table->bigIncrements('id');
             $table->string('task')->nullable();
             $table->date('deadline')->nullable();
-            $table->string('notes')->nullable();
+            $table->longText('notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

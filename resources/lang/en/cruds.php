@@ -341,10 +341,10 @@ return [
             'for_role_helper'   => ' ',
             'for_user'          => 'For User',
             'for_user_helper'   => ' ',
-            'notes'             => 'Notes',
-            'notes_helper'      => ' ',
             'priority'          => 'Priority',
             'priority_helper'   => ' ',
+            'notes'             => 'Notes',
+            'notes_helper'      => ' ',
         ],
     ],
     'appointment' => [
