@@ -1,5 +1,13 @@
 #AEAPP, Area Electronica
 
+## Next steps to achieve:
+
+1- 
+2-
+3-
+4-
+5-
+
 ## Steps from QuickAdminPanel MODIFICATION...
 
 1- Modify on QAP, menus or CRUDS
