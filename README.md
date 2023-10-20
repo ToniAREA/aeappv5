@@ -2,7 +2,7 @@
 
 ## Next steps to achieve:
 
-1- 
+1- Feed of clients, boats, marinas & wlist.
 2-
 3-
 4-
