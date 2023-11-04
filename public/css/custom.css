@@ -1,3 +1,24 @@
+/* Estilos Personalizados */
+.custom-card {
+    border-radius: 1rem;
+    /* Cantos redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    transition: 0.3s;
+}
+
+.custom-card .card-header,
+.custom-card .card-footer {
+    padding: 10px;
+    border-radius: 0;
+    /* Quitar redondeo del header y footer para que se integren con el cuerpo de la tarjeta */
+}
+
+.custom-card .card-body {
+    padding: 10px;
+    /* Espaciado más compacto */
+}
+
 .ck-editor__editable,
 textarea {
     min-height: 150px;
@@ -49,7 +70,7 @@ table.dataTable thead .sorting_desc {
     background-image: none;
 }
 
-.btn-group-xs > .btn,
+.btn-group-xs>.btn,
 .btn-xs {
     padding: 1px 5px;
     font-size: 12px;
@@ -60,19 +81,24 @@ table.dataTable thead .sorting_desc {
 .searchable-title {
     font-weight: bold;
 }
+
 .select2-container--open {
     z-index: 9999;
 }
+
 .searchable-fields {
-    padding-left:5px;
+    padding-left: 5px;
 }
+
 .searchable-link {
-    padding:0 5px 0 5px;
+    padding: 0 5px 0 5px;
 }
-.searchable-link:hover   {
+
+.searchable-link:hover {
     cursor: pointer;
     background: #eaeaea;
 }
+
 .select2-results__option {
     padding-left: 0px;
     padding-right: 0px;
@@ -83,12 +109,12 @@ table.dataTable thead .sorting_desc {
     color: red;
 }
 
-.form-check.is-invalid ~ .invalid-feedback {
+.form-check.is-invalid~.invalid-feedback {
     display: block;
 }
 
 .dataTables_length label select {
-    width: 65px!important;
+    width: 65px !important;
 }
 
 div.dt-button-collection {
