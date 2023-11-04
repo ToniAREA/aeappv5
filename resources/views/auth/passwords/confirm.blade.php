@@ -25,7 +25,7 @@
 <div class="lockscreen">
     <div class="lockscreen-wrapper">
         <div class="lockscreen-logo">
-            <a href="{{ route('admin.home') }}">
+            <a href="{{ route('home') }}">
                 {{ trans('panel.site_title') }}
             </a>
         </div>

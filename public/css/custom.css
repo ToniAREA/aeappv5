@@ -1,4 +1,66 @@
 /* Estilos Personalizados */
+.login-page,
+.register-page {
+    background: #343a40;
+}
+
+.login-box,
+.register-box {
+    width: 360px;
+    margin: 7% auto;
+    background-color: #495057;
+    /* A slightly lighter background for the form itself */
+    border-radius: 15px;
+    /* Rounded borders */
+    padding: 20px;
+    /* Some padding so the content doesn't touch the edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* A subtle shadow */
+
+}
+
+.login-logo,
+.register-logo {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 25px;
+    color: #ffc107;
+}
+
+.login-logo a,
+.register-logo a {
+    color: #ffc107;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+/* Again, for hover state */
+.login-logo a:hover,
+.register-logo a:hover {
+    color: #ffffff;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.login-card-body,
+.register-card-body {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    /* Cantos redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    transition: 0.3s;
+}
+
+.card-body {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    /* Cantos redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    transition: 0.3s;
+}
+
 .custom-card {
     border-radius: 1rem;
     /* Cantos redondeados */

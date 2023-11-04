@@ -3,7 +3,7 @@
 <div class="login-box">
     <div class="login-logo">
         <div class="login-logo">
-            <a href="{{ route('admin.home') }}">
+            <a href="{{ route('home') }}">
                 {{ trans('panel.site_title') }}
             </a>
         </div>
@@ -44,7 +44,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button type="submit" class="btn btn-primary btn-flat btn-block">
+                        <button type="submit" class="btn btn-warning btn-flat btn-block">
                             {{ trans('global.reset_password') }}
                         </button>
                     </div>

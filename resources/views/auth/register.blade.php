@@ -3,7 +3,7 @@
 <div class="login-box">
     <div class="login-logo">
         <div class="login-logo">
-            <a href="#">
+            <a href="{{ route('home') }}">
                 {{ trans('panel.site_title') }}
             </a>
         </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12 text-right">
-                        <button type="submit" class="btn btn-primary btn-block btn-flat">
+                        <button type="submit" class="btn btn-warning btn-block btn-flat">
                             {{ trans('global.register') }}
                         </button>
                     </div>

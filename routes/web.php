@@ -1,8 +1,38 @@
 <?php
 
-Route::view('/', 'welcome');
-Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
+// Rutas en routes/web.php
+
+use Illuminate\Support\Facades\Route;
+
+// Ruta para la página de inicio
+Route::get('/', function () {
+    return view('welcome');
+})->name('home');
+
+// Ruta para la sección "About"
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
+
+// Ruta para la sección "Services"
+Route::get('/services', function () {
+    return view('services');
+})->name('services');
+
+// Ruta para la sección "Portfolio"
+Route::get('/portfolio', function () {
+    return view('portfolio');
+})->name('portfolio');
+
+// Ruta para la sección "Contact"
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// Rutas de autenticación (si las tienes configuradas)
 Auth::routes();
+
+Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
     Route::get('/', 'HomeController@index')->name('home');
