@@ -10,7 +10,7 @@
     </div>
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">
+            <p class="mb-2 login-box-msg">
                 {{ trans('global.reset_password') }}
             </p>
 
@@ -49,6 +49,7 @@
                         </button>
                     </div>
                 </div>
+                
             </form>
         </div>
     </div>

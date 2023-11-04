@@ -3,20 +3,20 @@
 @extends('layouts.public')
 @section('content')
     <!-- Page Content-->
-    <div class="container p-3 p-lg-4">
-        <div class="row gx-4 gx-lg-5">
-            <div class="py-5 text-center">
+    <div class="container px-3 p-lg-4">
+        <div class="row">
+            <div class="py-3 text-center">
                 <h2>Contact form</h2>
                 <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form
                     group has a validation state that can be triggered by attempting to submit the form without completing
                     it.</p>
             </div>
 
-            <div class="row gx-4 gx-lg-5">
+            <div class="row">
                 <div class="col">
                     <h4 class="mb-3">Billing address</h4>
                     <form class="needs-validation" novalidate>
-                        <div class="row g-3">
+                        <div class="row">
                             <div class="col-sm-6">
                                 <label for="firstName" class="form-label">First name</label>
                                 <input type="text" class="form-control" id="firstName" placeholder="" value=""

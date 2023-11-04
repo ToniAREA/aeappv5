@@ -381,8 +381,7 @@
                 </div>
             @endif
             @livewireScripts
-            LAYOUT
-            FRONTEND
+            
             @yield('content')
         </main>
     </div>

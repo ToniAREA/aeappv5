@@ -1,13 +1,14 @@
 /* Estilos Personalizados */
 .login-page,
 .register-page {
-    background: #343a40;
+    background: #33383D;
 }
 
 .login-box,
 .register-box {
     width: 360px;
     margin: 7% auto;
+    margin-top: 100px;
     background-color: #495057;
     /* A slightly lighter background for the form itself */
     border-radius: 15px;
@@ -17,6 +18,16 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* A subtle shadow */
 
+}
+
+.login-box-msg,
+.register-box-msg {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    color: #251f0e;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 .login-logo,
@@ -30,6 +41,15 @@
 .login-logo a,
 .register-logo a {
     color: #ffc107;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.login-logo h4,
+.register-logo h4 {
+    color: #ffc107;
+    font-size: 1rem;
+    text-align: center;
     text-decoration: none;
     text-shadow: 2px 2px 4px #000000;
 }

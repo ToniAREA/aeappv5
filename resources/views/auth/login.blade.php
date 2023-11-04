@@ -6,12 +6,14 @@
             <a href="{{ route('home') }}">
                 {{ trans('panel.site_title') }}
             </a>
+            <br>
+            <h4>BESPOKE MARINE ELECTRONICS</h4>
         </div>
     </div>
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">
-                {{ trans('global.login') }}
+            <p class="mb-2 login-box-msg">
+                ACCESS TO OUR SYSTEM
             </p>
 
             @if(session()->has('message'))
@@ -27,7 +29,7 @@
                     <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" name="email" value="{{ old('email', null) }}">
 
                     @if($errors->has('email'))
-                        <div class="invalid-feedback">
+                        <div class="m-2 text-center invalid-feedback">
                             {{ $errors->first('email') }}
                         </div>
                     @endif
@@ -37,7 +39,7 @@
                     <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required placeholder="{{ trans('global.login_password') }}">
 
                     @if($errors->has('password'))
-                        <div class="invalid-feedback">
+                        <div class="m-2 text-center invalid-feedback">
                             {{ $errors->first('password') }}
                         </div>
                     @endif
@@ -45,14 +47,17 @@
 
 
                 <div class="row">
-                    <div class="col-8">
-                        <div class="icheck-primary">
+                    <div class="col">
+                        <div class="m-2 icheck-primary">
                             <input type="checkbox" name="remember" id="remember">
                             <label for="remember">{{ trans('global.remember_me') }}</label>
                         </div>
                     </div>
-                    <!-- /.col -->
-                    <div class="col-4">
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col">
                         <button type="submit" class="btn btn-warning btn-block btn-flat">
                             {{ trans('global.login') }}
                         </button>
@@ -63,19 +68,18 @@
 
 
             @if(Route::has('password.request'))
-                <p class="mb-1">
-                    <a href="{{ route('password.request') }}">
+                <p class="mt-4 m-1 text-center">
+                    <a class="text-center text-secondary" href="{{ route('password.request') }}">
                         {{ trans('global.forgot_password') }}
                     </a>
                 </p>
             @endif
-            <p class="mb-1">
-                <a class="text-center" href="{{ route('register') }}">
-                    {{ trans('global.register') }}
+            <p class="mb-1 text-center">
+                <a class="text-center text-secondary" href="{{ route('register') }}">
+                    Don't have an account?
                 </a>
             </p>
         </div>
-        <!-- /.login-card-body -->
     </div>
 </div>
 @endsection

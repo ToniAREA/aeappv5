@@ -4,12 +4,10 @@
 @section('content')
     <!-- Page Content-->
 
-
-
-    <div class="container px-4 px-lg-5">
+    <div class="container px-3 px-lg-5">
 
         <!-- Heading Row-->
-        <div class="row gx-4 gx-lg-5 align-items-center my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center my-3">
             <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0"
                     src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="..." /></div>
             <div class="col-lg-5">

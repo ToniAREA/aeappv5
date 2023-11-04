@@ -5,7 +5,7 @@
     <!-- Page Content-->
     <div class="container p-3 p-lg-4">
         <div class="row gx-4 gx-lg-5">
-            <div class="py-5 text-center">
+            <div class="py-3 text-center">
                 <h2>HERE SOME WORKS WE'VE DONE</h2>
                 <p class="lead">Below is an example form built entirely with Bootstrap’s form controls. Each required form
                     group has a validation state that can be triggered by attempting to submit the form without completing
