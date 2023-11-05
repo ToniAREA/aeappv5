@@ -12608,3 +12608,77 @@ fieldset:disabled .btn {
         display: none !important;
     }
 }
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+}
+
+.bg-image {
+    background-image: url('/images/gallery/tony-profile-01.png');
+    /* Reemplaza con la ruta real de tu imagen */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 768px) {
+    .bg-image {
+        background-attachment: fixed;
+    }
+}
+
+/* Esta es una sobreescritura adicional para asegurar que el texto sea legible sobre la imagen de fondo */
+.m-4 {
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Blanco con un poco de transparencia */
+    border-radius: 15px;
+    /* Bordes redondeados para el div interior */
+    padding: 20px;
+    /* Espaciado interior para no tocar los bordes del div padre */
+}
+
+.image-container {
+    position: relative;
+    width: calc(100% - 20px);
+    /* se resta el doble del margen que deseas en cada lado */
+    margin: 10px;
+    /* margen deseado */
+    padding-top: 44.44%;
+    /* 4/9 = 0.4444, que es aproximadamente una proporción de 9x4 */
+    overflow: hidden;
+    /* Esto asegura que nada sobresalga del contenedor */
+    border-radius: 10px;
+    /* bordes redondeados para seguir el borde de la imagen */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* efecto de sombra */
+}
+
+.image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Esto asegurará que la imagen cubra el área sin perder su proporción */
+    border-radius: 15px;
+    /* bordes redondeados para la imagen */
+}
+
+.custom-img-size {
+    width: 900px;
+    /* Ancho fijo */
+    height: 300px;
+    /* Altura fija */
+    object-fit: cover;
+    /* Esto asegurará que la imagen cubra el espacio sin deformarse */
+}

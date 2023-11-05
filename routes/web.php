@@ -3,11 +3,23 @@
 // Rutas en routes/web.php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
+use App\Http\Controllers\WelcomeController;
+
+
+// Ruta para email de test
+Route::get('/send-mail', function () {
+    \Mail::raw('This is a test email', function ($message) {
+        $message->to('areaelectronica@protonmail.com')->subject('Test Email');
+    });
+
+    return 'A test email has been sent!';
+});
+
 
 // Ruta para la página de inicio
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 // Ruta para la sección "About"
 Route::get('/about', function () {

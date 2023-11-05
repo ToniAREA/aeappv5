@@ -5,58 +5,76 @@
     <!-- Page Content-->
 
     <div class="container px-3 px-lg-5">
-
-        <!-- Heading Row-->
+        <!-- Heading Row -->
         <div class="row gx-4 gx-lg-5 align-items-center my-3">
-            <div class="col-lg-7"><img class="img-fluid rounded mb-4 mb-lg-0"
-                    src="https://dummyimage.com/900x400/dee2e6/6c757d.jpg" alt="..." /></div>
+
+            <div class="col-lg-7">
+                <img class="img-fluid custom-img-size rounded mb-4 mb-lg-0"
+                    src="images/photos/marine-electronics-main-bridge-04.jpeg" alt="Yacht Connectivity Solutions" />
+            </div>
+
+
             <div class="col-lg-5">
-                <h1 class="font-weight-light">Business Name or Tagline</h1>
-                <p>This is a template that is great for small businesses. It doesn't have too much fancy flare to it,
-                    but it makes a great use of the standard Bootstrap core components. Feel free to use this template
-                    for any project you want!</p>
-                <a class="btn btn-primary" href="#!">Call to Action!</a>
+                <h1 class="font-weight-light">Tailored Marine Electronics</h1>
+                <p>We specialize in bespoke electronic systems for luxury yachts, delivering robust internet connectivity,
+                    advanced navigation aids, and solar power solutions. Our expertise lies in crafting personalized
+                    solutions to enhance your maritime experience.</p>
+                <a class="btn btn-primary" href="#!">Explore Our Services</a>
             </div>
         </div>
-        <!-- Call to Action-->
+        <!-- Call to Action -->
         <div class="card text-white bg-secondary my-5 py-4 text-center">
             <div class="card-body">
-                <p class="text-white m-0">This call to action card is a great place to showcase some important
-                    information or display a clever tagline!</p>
+                <p class="text-white m-0">Enhance your yachting journey with our state-of-the-art custom electronics.
+                    Discover the pinnacle of maritime technology with Area Electronica.</p>
             </div>
         </div>
 
-        <!-- Content Row-->
+        <!-- Content Row -->
         <div class="row gx-4 gx-lg-5">
+
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">Card One</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
-                            numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                        <h2 class="card-title">Internet & Connectivity</h2>
+                        <p class="card-text">Stay connected wherever the seas may take you with our high-speed internet
+                            solutions for yachts. Seamless communication and entertainment at your fingertips.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    <!-- Contenedor de la imagen -->
+                    <div class="image-container">
+                        <img src="images/photos/internet-onboard-yacht-01.jpeg" class="card-img-bottom"
+                            alt="Descripción de la imagen">
+                    </div>
                 </div>
             </div>
+
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">Card Two</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod tenetur ex
-                            natus at dolorem enim! Nesciunt pariatur voluptatem sunt quam eaque, vel, non in id dolore
-                            voluptates quos eligendi labore.</p>
+                        <h2 class="card-title">Solar & Battery Systems</h2>
+                        <p class="card-text">Embrace the power of the sun with our advanced solar panel installations and
+                            lithium battery systems, designed for efficiency and reliability on the open sea.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    <!-- Contenedor de la imagen -->
+                    <div class="image-container">
+                        <img src="images/photos/boat-solar-panels-01.jpeg" class="card-img-bottom"
+                            alt="Solar panels on motor yacht">
+                    </div>
                 </div>
             </div>
+
             <div class="col-md-4 mb-5">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">Card Three</h2>
-                        <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rem magni quas ex
-                            numquam, maxime minus quam molestias corporis quod, ea minima accusamus.</p>
+                        <h2 class="card-title">Custom Electronic Design</h2>
+                        <p class="card-text">From navigation aids to onboard network systems, PLC automation, and remote
+                            monitoring, we design and implement tailored solutions to meet your unique needs.</p>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">More Info</a></div>
+                    <!-- Contenedor de la imagen -->
+                    <div class="image-container">
+                        <img src="images/photos/marine-custom-electronics-01.jpeg" class="card-img-bottom"
+                            alt="Custom electronic PCB for boat alarm system">
+                    </div>
                 </div>
             </div>
         </div>
