@@ -3,7 +3,28 @@
 @extends('layouts.public')
 @section('content')
     <!-- Page Content-->
+
     <div class="container p-3 p-lg-4">
+        <div class="row">
+            <div>
+                <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+
+                    @component('livewire.boat-carousel')
+                        
+                    @endcomponent
+
+                    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
         <div class="row gx-4 gx-lg-5">
             <div class="py-3 text-center">
                 <h2>HERE SOME WORKS WE'VE DONE</h2>
@@ -106,4 +127,5 @@
             </div>
         </div>
     </div>
+
 @endsection

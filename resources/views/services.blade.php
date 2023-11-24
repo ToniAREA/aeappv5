@@ -14,13 +14,13 @@
             </div>
 
 
-            <div class="col-lg-5">
-                <h1 class="font-weight-light">Tailored Marine Electronics</h1>
-                <p>We specialize in bespoke electronic systems for luxury yachts, delivering robust internet connectivity,
-                    advanced navigation aids, and solar power solutions. Our expertise lies in crafting personalized
-                    solutions to enhance your maritime experience.</p>
-                <a class="btn btn-primary" href="#!">Explore Our Services</a>
-            </div>
+            <div class="col-lg-5 d-flex flex-column align-items-center text-center">
+    <h1 class="font-weight-light">Tailored Marine Electronics</h1>
+    <p>We specialize in bespoke electronic systems for luxury yachts, delivering robust internet connectivity,
+        advanced navigation aids, and solar power solutions. Our expertise lies in crafting personalized
+        solutions to enhance your maritime experience.</p>
+    <a class="btn btn-primary" href="{{ route('portfolio') }}">Explore our work</a>
+</div>
         </div>
         <!-- Call to Action -->
         <div class="card text-white bg-secondary my-5 py-4 text-center">
