@@ -1,3 +1,135 @@
+/* Estilos Personalizados */
+
+/* Definición de variables CSS en :root para que sean accesibles globalmente */
+:root {
+    --main-color: #fbfbfa; /* Color principal */
+}
+
+.login-page,
+.register-page {
+    background: #33383D;
+}
+
+.login-box,
+.register-box {
+    width: 360px;
+    margin: 7% auto;
+    margin-top: 100px;
+    background-color: #495057;
+    /* A slightly lighter background for the form itself */
+    border-radius: 15px;
+    /* Rounded borders */
+    padding: 20px;
+    /* Some padding so the content doesn't touch the edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* A subtle shadow */
+
+}
+
+.login-box-msg,
+.register-box-msg {
+    margin: 0;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    color: #251f0e;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.login-logo,
+.register-logo {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--main-color);
+}
+
+.login-logo a,
+.register-logo a {
+    color: var(--main-color);
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.login-logo h4,
+.register-logo h4 {
+    color: var(--main-color);
+    font-size: 1rem;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+/* Again, for hover state */
+.login-logo a:hover,
+.register-logo a:hover {
+    color: #ffffff;
+    text-decoration: none;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.login-card-body,
+.register-card-body {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    /* Cantos redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    transition: 0.3s;
+}
+
+.card-body {
+    padding: 0.5rem;
+    border-radius: 1rem;
+    /* Cantos redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    transition: 0.3s;
+}
+
+.custom-card {
+    border-radius: 1rem;
+    /* Cantos redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+    transition: 0.3s;
+}
+
+.custom-card .card-header,
+.custom-card .card-footer {
+    padding: 10px;
+    border-radius: 0;
+    /* Quitar redondeo del header y footer para que se integren con el cuerpo de la tarjeta */
+}
+
+.custom-card .card-body {
+    padding: 10px;
+    /* Espaciado más compacto */
+}
+
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+}
+
+
+
+
+
+
+
+
+
+
+
 .ck-editor__editable,
 textarea {
     min-height: 150px;
@@ -49,7 +181,7 @@ table.dataTable thead .sorting_desc {
     background-image: none;
 }
 
-.btn-group-xs > .btn,
+.btn-group-xs>.btn,
 .btn-xs {
     padding: 1px 5px;
     font-size: 12px;
@@ -60,19 +192,24 @@ table.dataTable thead .sorting_desc {
 .searchable-title {
     font-weight: bold;
 }
+
 .select2-container--open {
     z-index: 9999;
 }
+
 .searchable-fields {
-    padding-left:5px;
+    padding-left: 5px;
 }
+
 .searchable-link {
-    padding:0 5px 0 5px;
+    padding: 0 5px 0 5px;
 }
-.searchable-link:hover   {
+
+.searchable-link:hover {
     cursor: pointer;
     background: #eaeaea;
 }
+
 .select2-results__option {
     padding-left: 0px;
     padding-right: 0px;
@@ -83,12 +220,12 @@ table.dataTable thead .sorting_desc {
     color: red;
 }
 
-.form-check.is-invalid ~ .invalid-feedback {
+.form-check.is-invalid~.invalid-feedback {
     display: block;
 }
 
 .dataTables_length label select {
-    width: 65px!important;
+    width: 65px !important;
 }
 
 div.dt-button-collection {

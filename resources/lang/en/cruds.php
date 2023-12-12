@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title'          => 'User management',
-        'title_singular' => 'User management',
+        'title'          => 'User',
+        'title_singular' => 'Users',
     ],
     'permission' => [
         'title'          => 'Permissions',
@@ -946,8 +946,8 @@ return [
         ],
     ],
     'expenseManagement' => [
-        'title'          => 'Expense Management',
-        'title_singular' => 'Expense Management',
+        'title'          => 'Accounting',
+        'title_singular' => 'Accounting',
     ],
     'expenseCategory' => [
         'title'          => 'Expense Categories',
