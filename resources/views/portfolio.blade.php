@@ -9,7 +9,7 @@
             <div>
                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 
-                    @component('livewire.boat-carousel')
+                    @component('livewire.counter')
                         
                     @endcomponent
 

@@ -2,21 +2,22 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\Boat;
+use Livewire\Component;
 
 class BoatCarousel extends Component
 {
-    public $images = [];
+    public $boats;
 
     public function mount()
     {
-        $limit = 5;
-        $this->images = Boat::inRandomOrder()->limit($limit)->get();
-    }
+    
+        $this->boats = Boat::all();
+    
+        $someVariable = 'Hello, World!';   }
 
     public function render()
     {
-        return view('livewire.boat-carousel');
+        return view('livewire.boat-carousel', ['someVariable' => $someVariable]);
     }
 }
