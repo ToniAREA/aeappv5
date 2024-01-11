@@ -28,9 +28,6 @@
                                 {{ trans('cruds.matLog.fields.boat') }}
                             </th>
                             <th>
-                                {{ trans('cruds.boat.fields.internalnotes') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.matLog.fields.boat_namecomplete') }}
                             </th>
                             <th>
@@ -73,6 +70,9 @@
                                 {{ trans('cruds.matLog.fields.status') }}
                             </th>
                             <th>
+                                {{ trans('cruds.matLog.fields.internal_notes') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -88,9 +88,6 @@
                                 </td>
                                 <td>
                                     {{ $matLog->boat->name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $matLog->boat->internalnotes ?? '' }}
                                 </td>
                                 <td>
                                     {{ $matLog->boat_namecomplete ?? '' }}
@@ -134,6 +131,9 @@
                                 </td>
                                 <td>
                                     {{ $matLog->status ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $matLog->internal_notes ?? '' }}
                                 </td>
                                 <td>
                                     @can('mat_log_show')

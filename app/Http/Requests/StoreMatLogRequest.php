@@ -47,6 +47,10 @@ class StoreMatLogRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'internal_notes' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

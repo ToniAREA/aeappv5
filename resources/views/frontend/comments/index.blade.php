@@ -45,6 +45,9 @@
                                         {{ trans('cruds.comment.fields.comment') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.comment.fields.private_comment') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -78,6 +81,9 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -101,6 +107,9 @@
                                         </td>
                                         <td>
                                             {{ $comment->comment ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $comment->private_comment ?? '' }}
                                         </td>
                                         <td>
                                             @can('comment_show')

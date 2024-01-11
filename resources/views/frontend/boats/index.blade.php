@@ -51,7 +51,7 @@
                                         {{ trans('cruds.boat.fields.notes') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.boat.fields.internalnotes') }}
+                                        {{ trans('cruds.boat.fields.internal_notes') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.boat.fields.clients') }}
@@ -153,7 +153,7 @@
                                             {{ $boat->notes ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $boat->internalnotes ?? '' }}
+                                            {{ $boat->internal_notes ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($boat->clients as $key => $item)

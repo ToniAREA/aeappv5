@@ -77,6 +77,9 @@
                         {{ trans('cruds.matLog.fields.status') }}
                     </th>
                     <th>
+                        {{ trans('cruds.matLog.fields.internal_notes') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -155,6 +158,9 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                 </tr>
             </thead>
@@ -226,6 +232,7 @@
 { data: 'proforma_number.description', name: 'proforma_number.description' },
 { data: 'invoiced_line', name: 'invoiced_line' },
 { data: 'status', name: 'status' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

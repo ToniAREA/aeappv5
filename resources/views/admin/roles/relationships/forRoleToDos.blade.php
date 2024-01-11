@@ -46,7 +46,7 @@
                                 {{ trans('cruds.priority.fields.weight') }}
                             </th>
                             <th>
-                                {{ trans('cruds.toDo.fields.notes') }}
+                                {{ trans('cruds.toDo.fields.internal_notes') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -92,7 +92,7 @@
                                     {{ $toDo->priority->weight ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $toDo->notes ?? '' }}
+                                    {{ $toDo->internal_notes ?? '' }}
                                 </td>
                                 <td>
                                     @can('to_do_show')

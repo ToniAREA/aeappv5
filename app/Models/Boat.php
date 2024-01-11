@@ -19,7 +19,7 @@ class Boat extends Model
         'ref',
         'mmsi',
         'notes',
-        'internalnotes',
+        'internal_notes',
     ];
 
     protected $dates = [
@@ -37,7 +37,7 @@ class Boat extends Model
         'mmsi',
         'marina_id',
         'notes',
-        'internalnotes',
+        'internal_notes',
         'coordinates',
         'link',
         'last_use',

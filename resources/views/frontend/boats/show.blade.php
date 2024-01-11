@@ -84,10 +84,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.boat.fields.internalnotes') }}
+                                        {{ trans('cruds.boat.fields.internal_notes') }}
                                     </th>
                                     <td>
-                                        {{ $boat->internalnotes }}
+                                        {{ $boat->internal_notes }}
                                     </td>
                                 </tr>
                                 <tr>

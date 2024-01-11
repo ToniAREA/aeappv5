@@ -89,8 +89,8 @@ class ToDoController extends Controller
             $table->editColumn('priority.weight', function ($row) {
                 return $row->priority ? (is_string($row->priority) ? $row->priority : $row->priority->weight) : '';
             });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'for_role', 'for_user', 'photo', 'priority']);

@@ -43,6 +43,10 @@ class UpdateAppointmentRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'private_comment' => [
+                'string',
+                'nullable',
+            ],
             'when_starts' => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),

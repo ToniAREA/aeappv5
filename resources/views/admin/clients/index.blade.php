@@ -68,7 +68,7 @@
                         {{ trans('cruds.client.fields.notes') }}
                     </th>
                     <th>
-                        {{ trans('cruds.client.fields.internalnotes') }}
+                        {{ trans('cruds.client.fields.internal_notes') }}
                     </th>
                     <th>
                         {{ trans('cruds.client.fields.link') }}
@@ -218,7 +218,7 @@
 { data: 'contacts', name: 'contacts.contact_first_name' },
 { data: 'boats', name: 'boats.name' },
 { data: 'notes', name: 'notes' },
-{ data: 'internalnotes', name: 'internalnotes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'link', name: 'link' },
 { data: 'coordinates', name: 'coordinates' },
 { data: 'last_use', name: 'last_use' },

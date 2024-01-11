@@ -53,9 +53,6 @@
                         {{ trans('cruds.wlog.fields.hours') }}
                     </th>
                     <th>
-                        {{ trans('cruds.wlog.fields.notes') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.wlog.fields.proforma_number') }}
                     </th>
                     <th>
@@ -66,6 +63,12 @@
                     </th>
                     <th>
                         {{ trans('cruds.wlog.fields.status') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.internal_notes') }}
                     </th>
                     <th>
                         &nbsp;
@@ -115,9 +118,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($proformas as $key => $item)
@@ -128,6 +128,12 @@
                     <td>
                     </td>
                     <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -196,11 +202,12 @@
 { data: 'marina_name', name: 'marina.name' },
 { data: 'description', name: 'description' },
 { data: 'hours', name: 'hours' },
-{ data: 'notes', name: 'notes' },
 { data: 'proforma_number_proforma_number', name: 'proforma_number.proforma_number' },
 { data: 'proforma_number.description', name: 'proforma_number.description' },
 { data: 'invoiced_line', name: 'invoiced_line' },
 { data: 'status', name: 'status' },
+{ data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
