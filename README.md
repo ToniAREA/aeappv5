@@ -28,7 +28,21 @@
 
 9- 
 
-## From VScode MODIFICATION only...
+## From VScode MODIFICATION - MERGE from CUSTOM to PRODUCTION
+
+1- Hacer commit en PRODUCTION, con `git add .` seguido de `git commit -m "Mensaje"`
+
+2- Cambiar a rama PRODUCTION `git checkout production`
+
+3- Comprobar que no hay cambios en PRODUCTION con `git pull`
+
+4- Realizar el MERGE con la rama CUSTOM con `git merge custom`
+
+5- Empujar cambios a PRODUCTION con `git push`
+
+6- Volver a rama CUSTOM con `git checkout custom`
+
+##  Ahora ir a CLOUDWAYS to pull repo and...
 
 ## To serve the page:
 > php artisan serve

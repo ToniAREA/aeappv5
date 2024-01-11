@@ -21,16 +21,6 @@ Route::get('/send-mail', function () {
 // Ruta para la página de inicio
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-// Ruta para la sección "About"
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
-
-// Ruta para la sección "Services"
-Route::get('/services', function () {
-    return view('services');
-})->name('services');
-
 // Ruta para la sección "Portfolio"
 Route::get('/portfolio', function () {
     return view('portfolio');
