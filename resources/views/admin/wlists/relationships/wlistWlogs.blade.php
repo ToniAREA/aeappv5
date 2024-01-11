@@ -49,9 +49,6 @@
                                 {{ trans('cruds.wlog.fields.hours') }}
                             </th>
                             <th>
-                                {{ trans('cruds.wlog.fields.notes') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.wlog.fields.proforma_number') }}
                             </th>
                             <th>
@@ -62,6 +59,12 @@
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.status') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.internal_notes') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -102,9 +105,6 @@
                                     {{ $wlog->hours ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $wlog->notes ?? '' }}
-                                </td>
-                                <td>
                                     {{ $wlog->proforma_number->proforma_number ?? '' }}
                                 </td>
                                 <td>
@@ -116,6 +116,12 @@
                                 </td>
                                 <td>
                                     {{ $wlog->status ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlog->notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlog->internal_notes ?? '' }}
                                 </td>
                                 <td>
                                     @can('wlog_show')

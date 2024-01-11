@@ -104,6 +104,9 @@ class MatLogsController extends Controller
             $table->editColumn('status', function ($row) {
                 return $row->status ? $row->status : '';
             });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'boat', 'wlist', 'employee', 'product', 'proforma_number', 'invoiced_line']);
 

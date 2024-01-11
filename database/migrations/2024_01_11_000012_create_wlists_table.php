@@ -17,6 +17,7 @@ class CreateWlistsTable extends Migration
             $table->string('status')->nullable();
             $table->string('url_invoice')->nullable();
             $table->string('notes')->nullable();
+            $table->string('internal_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

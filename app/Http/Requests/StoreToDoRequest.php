@@ -41,6 +41,10 @@ class StoreToDoRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'internal_notes' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

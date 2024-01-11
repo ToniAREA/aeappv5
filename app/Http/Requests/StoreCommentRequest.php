@@ -16,6 +16,11 @@ class StoreCommentRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'private_comment' => [
+                'string',
+                'nullable',
+            ],
+        ];
     }
 }

@@ -69,7 +69,7 @@
                                         {{ trans('cruds.client.fields.notes') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.client.fields.internalnotes') }}
+                                        {{ trans('cruds.client.fields.internal_notes') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.client.fields.link') }}
@@ -205,7 +205,7 @@
                                             {{ $client->notes ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $client->internalnotes ?? '' }}
+                                            {{ $client->internal_notes ?? '' }}
                                         </td>
                                         <td>
                                             {{ $client->link ?? '' }}

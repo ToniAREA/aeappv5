@@ -22,6 +22,10 @@ class ToDo extends Model implements HasMedia
         'photo',
     ];
 
+    public static $searchable = [
+        'internal_notes',
+    ];
+
     protected $dates = [
         'deadline',
         'created_at',
@@ -34,6 +38,7 @@ class ToDo extends Model implements HasMedia
         'deadline',
         'priority_id',
         'notes',
+        'internal_notes',
         'created_at',
         'updated_at',
         'deleted_at',

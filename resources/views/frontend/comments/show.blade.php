@@ -50,6 +50,14 @@
                                         {{ $comment->comment }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.comment.fields.private_comment') }}
+                                    </th>
+                                    <td>
+                                        {{ $comment->private_comment }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

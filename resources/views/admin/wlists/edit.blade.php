@@ -166,6 +166,14 @@
                 <span class="help-block">{{ trans('cruds.wlist.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="internal_notes">{{ trans('cruds.wlist.fields.internal_notes') }}</label>
+                <input class="form-control {{ $errors->has('internal_notes') ? 'is-invalid' : '' }}" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', $wlist->internal_notes) }}">
+                @if($errors->has('internal_notes'))
+                    <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlist.fields.internal_notes_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

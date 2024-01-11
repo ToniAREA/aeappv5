@@ -143,6 +143,14 @@
                             {{ $wlist->notes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlist.fields.internal_notes') }}
+                        </th>
+                        <td>
+                            {{ $wlist->internal_notes }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

@@ -83,6 +83,9 @@
                         {{ trans('cruds.wlist.fields.notes') }}
                     </th>
                     <th>
+                        {{ trans('cruds.wlist.fields.internal_notes') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -181,6 +184,9 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                 </tr>
             </thead>
@@ -254,6 +260,7 @@
 { data: 'status', name: 'status' },
 { data: 'url_invoice', name: 'url_invoice' },
 { data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

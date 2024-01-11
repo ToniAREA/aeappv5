@@ -75,9 +75,6 @@ class WlogsController extends Controller
             $table->editColumn('hours', function ($row) {
                 return $row->hours ? $row->hours : '';
             });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
             $table->addColumn('proforma_number_proforma_number', function ($row) {
                 return $row->proforma_number ? $row->proforma_number->proforma_number : '';
             });
@@ -90,6 +87,12 @@ class WlogsController extends Controller
             });
             $table->editColumn('status', function ($row) {
                 return $row->status ? $row->status : '';
+            });
+            $table->editColumn('notes', function ($row) {
+                return $row->notes ? $row->notes : '';
+            });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'wlist', 'employee', 'marina', 'proforma_number', 'invoiced_line']);

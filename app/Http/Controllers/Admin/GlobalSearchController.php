@@ -14,6 +14,8 @@ class GlobalSearchController extends Controller
         'ContentPage'     => 'cruds.contentPage.title',
         'Wlog'            => 'cruds.wlog.title',
         'Wlist'           => 'cruds.wlist.title',
+        'ToDo'            => 'cruds.toDo.title',
+        'Appointment'     => 'cruds.appointment.title',
         'ProductCategory' => 'cruds.productCategory.title',
         'Product'         => 'cruds.product.title',
         'Marina'          => 'cruds.marina.title',
@@ -26,6 +28,7 @@ class GlobalSearchController extends Controller
         'Asset'           => 'cruds.asset.title',
         'FaqCategory'     => 'cruds.faqCategory.title',
         'FaqQuestion'     => 'cruds.faqQuestion.title',
+        'MatLog'          => 'cruds.matLog.title',
         'Comment'         => 'cruds.comment.title',
         'BookingList'     => 'cruds.bookingList.title',
     ];

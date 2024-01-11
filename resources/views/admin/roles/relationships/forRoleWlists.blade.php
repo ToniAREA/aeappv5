@@ -79,6 +79,9 @@
                                 {{ trans('cruds.wlist.fields.notes') }}
                             </th>
                             <th>
+                                {{ trans('cruds.wlist.fields.internal_notes') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -153,6 +156,9 @@
                                 </td>
                                 <td>
                                     {{ $wlist->notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlist->internal_notes ?? '' }}
                                 </td>
                                 <td>
                                     @can('wlist_show')

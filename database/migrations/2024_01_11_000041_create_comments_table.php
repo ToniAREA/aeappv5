@@ -11,6 +11,7 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->longText('comment')->nullable();
+            $table->string('private_comment')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -90,6 +90,14 @@
                                         {!! $toDo->notes !!}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.toDo.fields.internal_notes') }}
+                                    </th>
+                                    <td>
+                                        {{ $toDo->internal_notes }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

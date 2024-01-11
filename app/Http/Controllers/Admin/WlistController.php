@@ -127,6 +127,9 @@ class WlistController extends Controller
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'client', 'boat', 'from_user', 'for_role', 'for_user', 'photos', 'priority']);
 

@@ -43,6 +43,14 @@
                 <span class="help-block">{{ trans('cruds.comment.fields.comment_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="private_comment">{{ trans('cruds.comment.fields.private_comment') }}</label>
+                <input class="form-control {{ $errors->has('private_comment') ? 'is-invalid' : '' }}" type="text" name="private_comment" id="private_comment" value="{{ old('private_comment', $comment->private_comment) }}">
+                @if($errors->has('private_comment'))
+                    <span class="text-danger">{{ $errors->first('private_comment') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.comment.fields.private_comment_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

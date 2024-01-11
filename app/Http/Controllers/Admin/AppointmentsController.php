@@ -93,6 +93,9 @@ class AppointmentsController extends Controller
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : '';
             });
+            $table->editColumn('private_comment', function ($row) {
+                return $row->private_comment ? $row->private_comment : '';
+            });
 
             $table->addColumn('priority_name', function ($row) {
                 return $row->priority ? $row->priority->name : '';

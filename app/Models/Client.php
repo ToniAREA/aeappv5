@@ -17,7 +17,7 @@ class Client extends Model
 
     public static $searchable = [
         'notes',
-        'internalnotes',
+        'internal_notes',
     ];
 
     protected $dates = [
@@ -39,7 +39,7 @@ class Client extends Model
         'mobile',
         'email',
         'notes',
-        'internalnotes',
+        'internal_notes',
         'link',
         'coordinates',
         'last_use',
