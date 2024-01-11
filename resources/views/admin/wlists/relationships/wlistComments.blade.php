@@ -40,6 +40,9 @@
                                 {{ trans('cruds.comment.fields.comment') }}
                             </th>
                             <th>
+                                {{ trans('cruds.comment.fields.private_comment') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -67,6 +70,9 @@
                                 </td>
                                 <td>
                                     {{ $comment->comment ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $comment->private_comment ?? '' }}
                                 </td>
                                 <td>
                                     @can('comment_show')

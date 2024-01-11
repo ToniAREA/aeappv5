@@ -88,14 +88,14 @@
                             <span class="help-block">{{ trans('cruds.boat.fields.notes_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="internalnotes">{{ trans('cruds.boat.fields.internalnotes') }}</label>
-                            <input class="form-control" type="text" name="internalnotes" id="internalnotes" value="{{ old('internalnotes', $boat->internalnotes) }}">
-                            @if($errors->has('internalnotes'))
+                            <label for="internal_notes">{{ trans('cruds.boat.fields.internal_notes') }}</label>
+                            <input class="form-control" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', $boat->internal_notes) }}">
+                            @if($errors->has('internal_notes'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('internalnotes') }}
+                                    {{ $errors->first('internal_notes') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.boat.fields.internalnotes_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.boat.fields.internal_notes_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="clients">{{ trans('cruds.boat.fields.clients') }}</label>

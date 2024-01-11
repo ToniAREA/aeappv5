@@ -16,6 +16,7 @@ class Comment extends Model
 
     public static $searchable = [
         'comment',
+        'private_comment',
     ];
 
     protected $dates = [
@@ -28,6 +29,7 @@ class Comment extends Model
         'wlist_id',
         'from_user_id',
         'comment',
+        'private_comment',
         'created_at',
         'updated_at',
         'deleted_at',

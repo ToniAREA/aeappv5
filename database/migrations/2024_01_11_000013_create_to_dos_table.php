@@ -13,6 +13,7 @@ class CreateToDosTable extends Migration
             $table->string('task')->nullable();
             $table->date('deadline')->nullable();
             $table->longText('notes')->nullable();
+            $table->string('internal_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

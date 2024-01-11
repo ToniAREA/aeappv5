@@ -43,7 +43,7 @@ class StoreBoatRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'internalnotes' => [
+            'internal_notes' => [
                 'string',
                 'nullable',
             ],

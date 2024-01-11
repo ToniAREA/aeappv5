@@ -70,8 +70,8 @@ class BoatsController extends Controller
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
-            $table->editColumn('internalnotes', function ($row) {
-                return $row->internalnotes ? $row->internalnotes : '';
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
             });
             $table->editColumn('clients', function ($row) {
                 $labels = [];

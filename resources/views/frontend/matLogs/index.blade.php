@@ -78,6 +78,9 @@
                                         {{ trans('cruds.matLog.fields.status') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.matLog.fields.internal_notes') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -156,6 +159,9 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -213,6 +219,9 @@
                                         </td>
                                         <td>
                                             {{ $matLog->status ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $matLog->internal_notes ?? '' }}
                                         </td>
                                         <td>
                                             @can('mat_log_show')

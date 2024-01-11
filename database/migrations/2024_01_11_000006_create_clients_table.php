@@ -21,7 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('mobile')->nullable();
             $table->string('email')->nullable();
             $table->string('notes')->nullable();
-            $table->string('internalnotes')->nullable();
+            $table->string('internal_notes')->nullable();
             $table->string('link')->nullable();
             $table->string('coordinates')->nullable();
             $table->datetime('last_use')->nullable();

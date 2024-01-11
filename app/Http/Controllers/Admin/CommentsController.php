@@ -65,6 +65,9 @@ class CommentsController extends Controller
             $table->editColumn('comment', function ($row) {
                 return $row->comment ? $row->comment : '';
             });
+            $table->editColumn('private_comment', function ($row) {
+                return $row->private_comment ? $row->private_comment : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'wlist', 'from_user']);
 

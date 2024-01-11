@@ -38,6 +38,10 @@ class UpdateWlogRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'internal_notes' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

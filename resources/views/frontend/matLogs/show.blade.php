@@ -130,6 +130,14 @@
                                         {{ $matLog->status }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.matLog.fields.internal_notes') }}
+                                    </th>
+                                    <td>
+                                        {{ $matLog->internal_notes }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

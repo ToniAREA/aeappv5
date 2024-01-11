@@ -51,6 +51,9 @@
                                         {{ trans('cruds.priority.fields.weight') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.toDo.fields.internal_notes') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -94,6 +97,9 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -131,6 +137,9 @@
                                         </td>
                                         <td>
                                             {{ $toDo->priority->weight ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $toDo->internal_notes ?? '' }}
                                         </td>
                                         <td>
                                             @can('to_do_show')

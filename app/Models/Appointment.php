@@ -15,6 +15,10 @@ class Appointment extends Model
 
     public $table = 'appointments';
 
+    public static $searchable = [
+        'private_comment',
+    ];
+
     protected $dates = [
         'when_starts',
         'when_ends',
@@ -28,6 +32,7 @@ class Appointment extends Model
         'boat_id',
         'boat_namecomplete',
         'description',
+        'private_comment',
         'when_starts',
         'when_ends',
         'priority_id',
