@@ -87,6 +87,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.appointment.fields.private_comment') }}
+                        </th>
+                        <td>
+                            {{ $appointment->private_comment }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.appointment.fields.when_starts') }}
                         </th>
                         <td>

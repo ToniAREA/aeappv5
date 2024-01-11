@@ -15,6 +15,10 @@ class MatLog extends Model
 
     public $table = 'mat_logs';
 
+    public static $searchable = [
+        'internal_notes',
+    ];
+
     protected $dates = [
         'date',
         'created_at',
@@ -36,6 +40,7 @@ class MatLog extends Model
         'proforma_number_id',
         'invoiced_line',
         'status',
+        'internal_notes',
         'created_at',
         'updated_at',
         'deleted_at',

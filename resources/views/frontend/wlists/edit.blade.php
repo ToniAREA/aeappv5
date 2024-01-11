@@ -197,6 +197,16 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.notes_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="internal_notes">{{ trans('cruds.wlist.fields.internal_notes') }}</label>
+                            <input class="form-control" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', $wlist->internal_notes) }}">
+                            @if($errors->has('internal_notes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('internal_notes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.internal_notes_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>

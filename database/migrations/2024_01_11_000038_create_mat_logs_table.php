@@ -18,6 +18,7 @@ class CreateMatLogsTable extends Migration
             $table->float('units', 10, 2)->nullable();
             $table->boolean('invoiced_line')->default(0)->nullable();
             $table->string('status')->nullable();
+            $table->string('internal_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

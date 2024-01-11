@@ -134,12 +134,12 @@
                 <span class="help-block">{{ trans('cruds.client.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="internalnotes">{{ trans('cruds.client.fields.internalnotes') }}</label>
-                <input class="form-control {{ $errors->has('internalnotes') ? 'is-invalid' : '' }}" type="text" name="internalnotes" id="internalnotes" value="{{ old('internalnotes', $client->internalnotes) }}">
-                @if($errors->has('internalnotes'))
-                    <span class="text-danger">{{ $errors->first('internalnotes') }}</span>
+                <label for="internal_notes">{{ trans('cruds.client.fields.internal_notes') }}</label>
+                <input class="form-control {{ $errors->has('internal_notes') ? 'is-invalid' : '' }}" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', $client->internal_notes) }}">
+                @if($errors->has('internal_notes'))
+                    <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.client.fields.internalnotes_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.client.fields.internal_notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="link">{{ trans('cruds.client.fields.link') }}</label>

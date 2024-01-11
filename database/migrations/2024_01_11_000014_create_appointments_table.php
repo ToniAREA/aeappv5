@@ -12,6 +12,7 @@ class CreateAppointmentsTable extends Migration
             $table->bigIncrements('id');
             $table->string('boat_namecomplete')->nullable();
             $table->string('description');
+            $table->string('private_comment')->nullable();
             $table->datetime('when_starts');
             $table->datetime('when_ends');
             $table->string('status')->nullable();

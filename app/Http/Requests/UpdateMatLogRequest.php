@@ -47,6 +47,10 @@ class UpdateMatLogRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'internal_notes' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

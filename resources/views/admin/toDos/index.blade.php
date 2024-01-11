@@ -50,7 +50,7 @@
                         {{ trans('cruds.priority.fields.weight') }}
                     </th>
                     <th>
-                        {{ trans('cruds.toDo.fields.notes') }}
+                        {{ trans('cruds.toDo.fields.internal_notes') }}
                     </th>
                     <th>
                         &nbsp;
@@ -161,7 +161,7 @@
 { data: 'deadline', name: 'deadline' },
 { data: 'priority_name', name: 'priority.name' },
 { data: 'priority.weight', name: 'priority.weight' },
-{ data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -13,14 +13,6 @@
                         href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('about') ? 'active' : '' }}"
-                        href="{{ route('about') }}">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ Request::routeIs('services') ? 'active' : '' }}"
-                        href="{{ route('services') }}">Services</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link {{ Request::routeIs('portfolio') ? 'active' : '' }}"
                         href="{{ route('portfolio') }}">Portfolio</a>
                 </li>

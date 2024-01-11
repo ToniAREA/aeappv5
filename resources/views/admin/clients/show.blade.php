@@ -133,10 +133,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.client.fields.internalnotes') }}
+                            {{ trans('cruds.client.fields.internal_notes') }}
                         </th>
                         <td>
-                            {{ $client->internalnotes }}
+                            {{ $client->internal_notes }}
                         </td>
                     </tr>
                     <tr>

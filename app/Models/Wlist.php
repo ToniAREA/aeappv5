@@ -24,6 +24,7 @@ class Wlist extends Model implements HasMedia
 
     public static $searchable = [
         'status',
+        'internal_notes',
     ];
 
     protected $dates = [
@@ -61,6 +62,7 @@ class Wlist extends Model implements HasMedia
         'status',
         'url_invoice',
         'notes',
+        'internal_notes',
         'created_at',
         'updated_at',
         'deleted_at',

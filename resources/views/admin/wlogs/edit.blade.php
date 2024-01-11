@@ -79,14 +79,6 @@
                 <span class="help-block">{{ trans('cruds.wlog.fields.hours_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="notes">{{ trans('cruds.wlog.fields.notes') }}</label>
-                <textarea class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{{ old('notes', $wlog->notes) }}</textarea>
-                @if($errors->has('notes'))
-                    <span class="text-danger">{{ $errors->first('notes') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.wlog.fields.notes_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="proforma_number_id">{{ trans('cruds.wlog.fields.proforma_number') }}</label>
                 <select class="form-control select2 {{ $errors->has('proforma_number') ? 'is-invalid' : '' }}" name="proforma_number_id" id="proforma_number_id">
                     @foreach($proforma_numbers as $id => $entry)
@@ -116,6 +108,22 @@
                     <span class="text-danger">{{ $errors->first('status') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.wlog.fields.status_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="notes">{{ trans('cruds.wlog.fields.notes') }}</label>
+                <textarea class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{{ old('notes', $wlog->notes) }}</textarea>
+                @if($errors->has('notes'))
+                    <span class="text-danger">{{ $errors->first('notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="internal_notes">{{ trans('cruds.wlog.fields.internal_notes') }}</label>
+                <input class="form-control {{ $errors->has('internal_notes') ? 'is-invalid' : '' }}" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', $wlog->internal_notes) }}">
+                @if($errors->has('internal_notes'))
+                    <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.internal_notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

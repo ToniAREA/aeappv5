@@ -38,7 +38,7 @@ class ClientsSeeder extends Seeder
                     'mobile' => '',
                     'email' => '',
                     'notes' => '',
-                    'internalnotes' => '',
+                    'internal_notes' => '',
                     'link_fd' => '',
                     'coordinates' => '',
                 ];
@@ -52,7 +52,7 @@ class ClientsSeeder extends Seeder
                     'mobile' => $client->mobile,
                     'email' => $client->email,
                     'notes' => $client->notes,
-                    'internalnotes' => $client->internalnotes,
+                    'internal_notes' => $client->internal_notes,
                     'link' => $client->link_fd,
                     'coordinates' => $client->coordinates,
                 ]);
@@ -72,7 +72,7 @@ class ClientsSeeder extends Seeder
                         'mobile' => $client->mobile,
                         'email' => $client->email,
                         'notes' => $client->notes,
-                        'internalnotes' => $client->internalnotes,
+                        'internal_notes' => $client->internalnotes,
                         'link' => $client->link_fd,
                         'coordinates' => $client->coordinates,
                     ]);

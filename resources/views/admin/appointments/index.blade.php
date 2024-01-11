@@ -53,6 +53,9 @@
                         {{ trans('cruds.appointment.fields.description') }}
                     </th>
                     <th>
+                        {{ trans('cruds.appointment.fields.private_comment') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.appointment.fields.when_starts') }}
                     </th>
                     <th>
@@ -138,6 +141,7 @@
 { data: 'for_user', name: 'for_users.name' },
 { data: 'boat_namecomplete', name: 'boat_namecomplete' },
 { data: 'description', name: 'description' },
+{ data: 'private_comment', name: 'private_comment' },
 { data: 'when_starts', name: 'when_starts' },
 { data: 'when_ends', name: 'when_ends' },
 { data: 'priority_name', name: 'priority.name' },

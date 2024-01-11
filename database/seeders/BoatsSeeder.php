@@ -33,14 +33,14 @@ class BoatsSeeder extends Seeder
                     'name' => '------',
                     'mmsi' => '',
                     'notes' => '',
-                    'internalnotes' => '',
+                    'internal_notes' => '',
                 ];
                 DB::table('boats')->insert([
                     'boat_type' => $boat->type,
                     'name' => $boat->name,
                     'mmsi' => $boat->mmsi,
                     'notes' => $boat->notes,
-                    'internalnotes' => $boat->internalnotes,
+                    'internal_notes' => $boat->internal_notes,
                 ]);
             } else {
                 if ($i != $boat->id) {
@@ -52,7 +52,7 @@ class BoatsSeeder extends Seeder
                         'name' => $boat->name,
                         'mmsi' => $boat->mmsi,
                         'notes' => $boat->notes,
-                        'internalnotes' => $boat->internalnotes,
+                        'internal_notes' => $boat->internalnotes,
                         'marina_id' => $boat->marina_id,
                     ]);
                 }

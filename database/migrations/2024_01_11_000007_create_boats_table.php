@@ -16,7 +16,7 @@ class CreateBoatsTable extends Migration
             $table->string('imo')->nullable();
             $table->string('mmsi')->nullable();
             $table->string('notes')->nullable();
-            $table->string('internalnotes')->nullable();
+            $table->string('internal_notes')->nullable();
             $table->string('coordinates')->nullable();
             $table->string('link')->nullable();
             $table->datetime('last_use')->nullable();

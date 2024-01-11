@@ -50,7 +50,7 @@
                         {{ trans('cruds.boat.fields.notes') }}
                     </th>
                     <th>
-                        {{ trans('cruds.boat.fields.internalnotes') }}
+                        {{ trans('cruds.boat.fields.internal_notes') }}
                     </th>
                     <th>
                         {{ trans('cruds.boat.fields.clients') }}
@@ -183,7 +183,7 @@
 { data: 'mmsi', name: 'mmsi' },
 { data: 'marina_name', name: 'marina.name' },
 { data: 'notes', name: 'notes' },
-{ data: 'internalnotes', name: 'internalnotes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'clients', name: 'clients.name' },
 { data: 'coordinates', name: 'coordinates' },
 { data: 'link', name: 'link' },

@@ -116,6 +116,16 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.description_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="private_comment">{{ trans('cruds.appointment.fields.private_comment') }}</label>
+                            <input class="form-control" type="text" name="private_comment" id="private_comment" value="{{ old('private_comment', $appointment->private_comment) }}">
+                            @if($errors->has('private_comment'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('private_comment') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.appointment.fields.private_comment_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="when_starts">{{ trans('cruds.appointment.fields.when_starts') }}</label>
                             <input class="form-control datetime" type="text" name="when_starts" id="when_starts" value="{{ old('when_starts', $appointment->when_starts) }}" required>
                             @if($errors->has('when_starts'))
