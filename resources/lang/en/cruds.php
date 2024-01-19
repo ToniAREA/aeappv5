@@ -1009,6 +1009,10 @@ return [
             'updated_at_helper'       => ' ',
             'deleted_at'              => 'Deleted At',
             'deleted_at_helper'       => ' ',
+            'file'                    => 'File',
+            'file_helper'             => ' ',
+            'photo'                   => 'Photo',
+            'photo_helper'            => ' ',
         ],
     ],
     'income' => [

@@ -33,18 +33,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.claim.fields.note') }}
-                        </th>
-                        <td>
-                            {{ $claim->note }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.claim.fields.claim_date') }}
                         </th>
                         <td>
                             {{ $claim->claim_date }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.claim.fields.note') }}
+                        </th>
+                        <td>
+                            {{ $claim->note }}
                         </td>
                     </tr>
                 </tbody>
