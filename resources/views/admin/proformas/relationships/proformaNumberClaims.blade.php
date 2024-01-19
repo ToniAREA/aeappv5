@@ -31,10 +31,10 @@
                                 {{ trans('cruds.proforma.fields.description') }}
                             </th>
                             <th>
-                                {{ trans('cruds.claim.fields.note') }}
+                                {{ trans('cruds.claim.fields.claim_date') }}
                             </th>
                             <th>
-                                {{ trans('cruds.claim.fields.claim_date') }}
+                                {{ trans('cruds.claim.fields.note') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -57,10 +57,10 @@
                                     {{ $claim->proforma_number->description ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $claim->note ?? '' }}
+                                    {{ $claim->claim_date ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $claim->claim_date ?? '' }}
+                                    {{ $claim->note ?? '' }}
                                 </td>
                                 <td>
                                     @can('claim_show')

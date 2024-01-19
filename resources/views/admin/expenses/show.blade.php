@@ -55,6 +55,30 @@
                             {{ $expense->description }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.expense.fields.file') }}
+                        </th>
+                        <td>
+                            @if($expense->file)
+                                <a href="{{ $expense->file->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.expense.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($expense->photo)
+                                <a href="{{ $expense->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $expense->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

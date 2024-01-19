@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyExpenseRequest;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
@@ -11,12 +12,13 @@ use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class ExpenseController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index(Request $request)
     {
@@ -57,8 +59,22 @@ class ExpenseController extends Controller
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : '';
             });
+            $table->editColumn('file', function ($row) {
+                return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
+            $table->editColumn('photo', function ($row) {
+                if ($photo = $row->photo) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
 
-            $table->rawColumns(['actions', 'placeholder', 'expense_category']);
+                return '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'expense_category', 'file', 'photo']);
 
             return $table->make(true);
         }
@@ -81,6 +97,18 @@ class ExpenseController extends Controller
     {
         $expense = Expense::create($request->all());
 
+        if ($request->input('file', false)) {
+            $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
+        }
+
+        if ($request->input('photo', false)) {
+            $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $expense->id]);
+        }
+
         return redirect()->route('admin.expenses.index');
     }
 
@@ -98,6 +126,28 @@ class ExpenseController extends Controller
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         $expense->update($request->all());
+
+        if ($request->input('file', false)) {
+            if (! $expense->file || $request->input('file') !== $expense->file->file_name) {
+                if ($expense->file) {
+                    $expense->file->delete();
+                }
+                $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
+            }
+        } elseif ($expense->file) {
+            $expense->file->delete();
+        }
+
+        if ($request->input('photo', false)) {
+            if (! $expense->photo || $request->input('photo') !== $expense->photo->file_name) {
+                if ($expense->photo) {
+                    $expense->photo->delete();
+                }
+                $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($expense->photo) {
+            $expense->photo->delete();
+        }
 
         return redirect()->route('admin.expenses.index');
     }
@@ -129,5 +179,17 @@ class ExpenseController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('expense_create') && Gate::denies('expense_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Expense();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }
