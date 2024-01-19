@@ -2,7 +2,7 @@
 
 ## Next steps to achieve:
 
-1- Feed of clients, boats, marinas & wlist.
+1- Feed of clients, boats, marinas & wlist & wlogs. DONE
 2-
 3-
 4-
@@ -10,13 +10,16 @@
 
 ## Steps from QuickAdminPanel MODIFICATION...
 
-1- Modify on QAP, menus or CRUDS
+1- MODIFY on QAP, menus or CRUDS
 
-2- Update on GitHub via QAP.
+2- PUSH to GitHub via QAP.
 
-3- Go to GitHub account to merge changes to main branch (if needs)
+3- MERGE on GitHub account to MASTER branch.
 
-4- In local machine, `git pull`
+4- PULL branch MASTER in local machine. 
+    Asegurar que estamos en CUSTOM con `git checkout custom`.
+    Primero hacer commit en CUSTOM, con `git add .` seguido de `git commit -m "Mensaje"` para guardar cualquier cambio. 
+    Después hacer MERGE desde MASTER a CUSTOM con `git merge master`. Reparar conflictos si hay.
 
 5- In local, `composer install`
 
@@ -30,7 +33,7 @@
 
 ## From VScode MODIFICATION - MERGE from CUSTOM to PRODUCTION
 
-1- Hacer commit en PRODUCTION, con `git add .` seguido de `git commit -m "Mensaje"`
+1- Hacer commit en CUSTOM, con `git add .` seguido de `git commit -m "Mensaje"`
 
 2- Cambiar a rama PRODUCTION `git checkout production`
 
