@@ -10,8 +10,8 @@ class CreateClaimsTable extends Migration
     {
         Schema::create('claims', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('note')->nullable();
             $table->date('claim_date')->nullable();
+            $table->string('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

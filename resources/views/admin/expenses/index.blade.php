@@ -41,6 +41,12 @@
                         {{ trans('cruds.expense.fields.description') }}
                     </th>
                     <th>
+                        {{ trans('cruds.expense.fields.file') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.expense.fields.photo') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -65,6 +71,10 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -126,6 +136,8 @@
 { data: 'entry_date', name: 'entry_date' },
 { data: 'amount', name: 'amount' },
 { data: 'description', name: 'description' },
+{ data: 'file', name: 'file', sortable: false, searchable: false },
+{ data: 'photo', name: 'photo', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

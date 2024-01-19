@@ -208,6 +208,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Expense
     Route::delete('expenses/destroy', 'ExpenseController@massDestroy')->name('expenses.massDestroy');
+    Route::post('expenses/media', 'ExpenseController@storeMedia')->name('expenses.storeMedia');
+    Route::post('expenses/ckmedia', 'ExpenseController@storeCKEditorImages')->name('expenses.storeCKEditorImages');
     Route::post('expenses/parse-csv-import', 'ExpenseController@parseCsvImport')->name('expenses.parseCsvImport');
     Route::post('expenses/process-csv-import', 'ExpenseController@processCsvImport')->name('expenses.processCsvImport');
     Route::resource('expenses', 'ExpenseController');
@@ -427,6 +429,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Expense
     Route::delete('expenses/destroy', 'ExpenseController@massDestroy')->name('expenses.massDestroy');
+    Route::post('expenses/media', 'ExpenseController@storeMedia')->name('expenses.storeMedia');
+    Route::post('expenses/ckmedia', 'ExpenseController@storeCKEditorImages')->name('expenses.storeCKEditorImages');
     Route::resource('expenses', 'ExpenseController');
 
     // Income

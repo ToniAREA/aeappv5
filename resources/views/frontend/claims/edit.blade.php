@@ -28,16 +28,6 @@
                             <span class="help-block">{{ trans('cruds.claim.fields.proforma_number_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="note">{{ trans('cruds.claim.fields.note') }}</label>
-                            <input class="form-control" type="text" name="note" id="note" value="{{ old('note', $claim->note) }}">
-                            @if($errors->has('note'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('note') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.claim.fields.note_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label for="claim_date">{{ trans('cruds.claim.fields.claim_date') }}</label>
                             <input class="form-control date" type="text" name="claim_date" id="claim_date" value="{{ old('claim_date', $claim->claim_date) }}">
                             @if($errors->has('claim_date'))
@@ -46,6 +36,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.claim.fields.claim_date_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="note">{{ trans('cruds.claim.fields.note') }}</label>
+                            <input class="form-control" type="text" name="note" id="note" value="{{ old('note', $claim->note) }}">
+                            @if($errors->has('note'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('note') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.claim.fields.note_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
