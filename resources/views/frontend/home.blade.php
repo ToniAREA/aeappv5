@@ -18,7 +18,8 @@
                         <div class="col-lg-4 col-md-6 col-sm-12">
                             <div class="card m-1">
                                 <div class="card-header">
-                                    <a href="">{{ $wlist->client['name'] ?? '-' }}, {{ $wlist->client['lastname'] ?? '-' }}</a>
+                                    <a href="">{{ $wlist->client['name'] ?? '-' }}, {{ $wlist->client['lastname'] ?? '-' }}</a><br>
+                                    <span class="text-muted">({{ $wlist->created_at->diffInDays() }} days ago)</span>
 
                                 </div>
                                 <div class="card-body">

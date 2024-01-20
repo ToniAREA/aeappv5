@@ -13,7 +13,10 @@ class HomeController
     
     public function index()
     {
-        $wlists = Wlist::paginate(10); // Recupera los registros de la tabla 'wlist' en bloques de 10 registros por página
-        return view('frontend.home', compact('wlists')); // Pasa los registros a la vista
+        $wlists = Wlist::where('status', '=', 'progressing')
+            
+            ->orderBy('created_at', 'desc') // Order the records by the 'created_at' column in descending order
+            ->paginate(20); // Retrieve records from the 'wlist' table in blocks of 20 records per page
+        return view('frontend.home', compact('wlists')); // Pass the records to the view
     }
 }
