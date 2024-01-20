@@ -13,8 +13,8 @@ class UsersTableSeeder extends Seeder
             [
                 'id'                 => 1,
                 'name'               => 'Admin',
-                'email'              => 'admin@admin.com',
-                'password'           => bcrypt('password'),
+                'email'              => 'areaelectronica@protonmail.com',
+                'password'           => bcrypt('NewLife2018'),
                 'remember_token'     => null,
                 'approved'           => 1,
                 'verified'           => 1,

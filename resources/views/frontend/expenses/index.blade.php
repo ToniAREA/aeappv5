@@ -42,6 +42,12 @@
                                         {{ trans('cruds.expense.fields.description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.expense.fields.file') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.expense.fields.photo') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -69,6 +75,10 @@
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -88,6 +98,20 @@
                                         </td>
                                         <td>
                                             {{ $expense->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($expense->file)
+                                                <a href="{{ $expense->file->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($expense->photo)
+                                                <a href="{{ $expense->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $expense->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('expense_show')

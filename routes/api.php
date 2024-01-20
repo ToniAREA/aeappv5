@@ -77,6 +77,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('faq-categories', 'FaqCategoryApiController');
 
     // Expense
+    Route::post('expenses/media', 'ExpenseApiController@storeMedia')->name('expenses.storeMedia');
     Route::apiResource('expenses', 'ExpenseApiController');
 
     // Income
