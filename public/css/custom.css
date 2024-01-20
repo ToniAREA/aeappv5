@@ -1,5 +1,27 @@
 /* Estilos Personalizados */
 
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    /* Asegúrate de que el contenedor ocupe todo el ancho disponible */
+}
+
+.pagination-wrapper nav {
+    flex-grow: 0;
+    /* Evita que el nav crezca y ocupe más espacio del necesario */
+}
+
+.pagination-wrapper svg {
+    width: 1em;
+    /* O el tamaño que prefieras */
+    height: 1em;
+}
+
+.pagination-wrapper .page-link {
+    width: equal;
+}
+
 /* Definición de variables CSS en :root para que sean accesibles globalmente */
 :root {
     --main-color: #fbfbfa; /* Color principal */
