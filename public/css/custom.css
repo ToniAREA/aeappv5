@@ -1,4 +1,9 @@
 /* Estilos Personalizados */
+body,
+html {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+}
 
 .custom-badge {
     background-color: #6c757d;
