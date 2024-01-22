@@ -153,16 +153,15 @@
 }
 
 .card-body {
-    padding: 0.5rem;
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     /* Cantos redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Sombra suave */
-    transition: 0.3s;
+    transition: 0.5s;
 }
 
 .custom-card {
-    border-radius: 1rem;
+    border-radius: 0.5rem;
     /* Cantos redondeados */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Sombra suave */
@@ -171,13 +170,13 @@
 
 .custom-card .card-header,
 .custom-card .card-footer {
-    padding: 10px;
+    padding: 5px;
     border-radius: 0;
     /* Quitar redondeo del header y footer para que se integren con el cuerpo de la tarjeta */
 }
 
 .custom-card .card-body {
-    padding: 10px;
+    padding: 5px;
     /* Espaciado más compacto */
 }
 
