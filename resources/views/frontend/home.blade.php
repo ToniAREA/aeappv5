@@ -42,7 +42,7 @@
                                         @endphp
                                         <span>{{ $elapsedDays }} days</span>
                                         <span>{{ strtoupper($wlist->type) }}</span>
-                                        <span>{{ strtoupper($wlist->status) }}</span>
+                                        <span>{{ strtoupper(substr($wlist->status, 0, 8)) }}</span>
                                     </div>
                                 </div>
                             </div>
