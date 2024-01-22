@@ -3,8 +3,7 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            <!-- Principal div: 12 columnas en desktop y 10 en pantallas más pequeñas -->
-            <div class="col-lg-12 col-md-10">
+            <div class="">
 
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
@@ -12,11 +11,11 @@
                     </div>
                 @endif
 
-                <div class="row">
+                <div class="row p-1">
                     @foreach ($wlists as $wlist)
-                        <div class="col-12 col-md-6 col-lg- mt-2">
-                            <div class="card custom-card">
-                                <div class="card-body p-3 d-flex flex-row position-relative">
+                        <div class="col-sm-12 col-md-6 col-lg-4 ">
+                            <div class="card custom-card m-1">
+                                <div class="card-body d-flex flex-row position-relative">
                                     <!-- ID Badge -->
                                     <div class="col-2 d-flex align-items-center justify-content-center custom-badge">
                                         <span>{{ $wlist->id }}</span>
