@@ -1,5 +1,57 @@
 /* Estilos Personalizados */
 
+.custom-badge {
+    background-color: #6c757d;
+    /* You can change this color */
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 2px 8px;
+    box-shadow: 1px 1px 3px #888888;
+    width: 15%;
+    /* Set width */
+    text-align: center;
+    /* Center the text */
+}
+
+.text-container {
+    padding: 0 15px;
+    width: 65%;
+    /* Set width */
+}
+
+.custom-link,
+.custom-description-link {
+    color: #6c757d;
+    /* Matching color for text and links */
+    text-decoration: none;
+}
+
+.custom-link:hover,
+.custom-description-link:hover {
+    text-decoration: underline;
+    /* Underline on hover */
+}
+
+.custom-title {
+    font-weight: bold;
+    text-shadow: 1px 1px 2px #888888;
+}
+
+.custom-description {
+    font-style: italic;
+    /* Italic style for description */
+}
+
+.custom-elapsed-time {
+    font-size: 12px;
+    color: #a0a0a0;
+    /* Light grey color for elapsed time */
+    width: 20%;
+    /* Set width */
+    text-align: center;
+    /* Center the text */
+}
+
 .pagination-wrapper {
     display: flex;
     justify-content: center;
