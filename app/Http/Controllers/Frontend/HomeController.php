@@ -8,9 +8,14 @@ class HomeController
 {
     public function index()
     {
-        $wlists = Wlist::where('status', '=', 'progressing')
-            ->orderBy('created_at', 'desc') // Order the records by the 'created_at' column in descending order
-            ->paginate(20); // Retrieve records from the 'wlist' table in blocks of 20 records per page
-        return view('frontend.home', compact('wlists')); // Pass the records to the view
+        $progressing = Wlist::where('status', '=', 'progressing')
+            ->orderBy('created_at', 'asc') // Order the records by the 'created_at' column in descending order
+            ->get(); // Retrieve all records from the 'wlist' table
+
+        $pending = Wlist::where('status', '=', 'pending')
+            ->orderBy('created_at', 'asc') // Order the records by the 'created_at' column in descending order
+            ->get(); // Retrieve all records from the 'wlist' table
+
+        return view('frontend.home', compact('progressing', 'pending')); // Pass the records to the view
     }
 }
