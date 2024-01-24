@@ -1,7 +1,15 @@
 @extends('layouts.frontend')
 @section('content')
     <div class="container-fluid">
-        <div class="card my-2">
+        <div class="row mb-3">
+            <div class="col d-flex justify-content-center">
+                <a href="/home" class="btn btn-link text-white"><i class="fas fa-tachometer-alt"></i> Home</a>
+                <a href="/clients" class="btn btn-link text-white"><i class="fa fa-users"></i> Clients</a>
+                <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> boats</a>
+                <a href="/wlists" class="btn btn-link text-white"><i class="fa fa-briefcase"></i> Works</a>
+            </div>
+        </div>
+        <div class="card">
             <div class="card-header">
                 <div class="d-flex justify-content-between align-items-center">
                     <h5><strong><i class="fas fa-anchor"></i> {{ strtoupper(trans('cruds.marina.title_singular')) }}

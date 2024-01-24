@@ -1,6 +1,14 @@
 @extends('layouts.frontend')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col d-flex justify-content-center">
+                <a href="/home" class="btn btn-link text-white"><i class="fas fa-tachometer-alt"></i> Home</a>
+                <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> Boats</a>
+                <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> Marinas</a>
+                <a href="/wlists" class="btn btn-link text-white"><i class="fa fa-briefcase"></i> Works</a>
+            </div>
+        </div>
         <div class="row justify-content-center">
             
             @livewire('client-search')

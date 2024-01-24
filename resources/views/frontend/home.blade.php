@@ -8,15 +8,24 @@
                 {{ session('status') }}
             </div>
         @endif
-
+        <div class="row mb-3">
+            <div class="col d-flex justify-content-center">
+                <a href="/clients" class="btn btn-link text-white"><i class="fa fa-users"></i> Clients</a>
+                <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> Boats</a>
+                <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> Marinas</a>
+                <a href="/wlists" class="btn btn-link text-white"><i class="fa fa-briefcase"></i> Works</a>
+            </div>
+        </div>
         <div class="row">
             @foreach ($progressing as $wlist)
                 <div class="col-sm-12 col-md-6 col-lg-4 ">
                     <div class="card custom-card m-1">
                         <div class="card-body d-flex flex-row position-relative">
                             <!-- ID Badge -->
-                            <div class="col-2 d-flex align-items-center justify-content-center custom-badge" style="background-color: #57c559;">
-                                <a href="/wlists/{{ $wlist->id }}" class="custom-description-link" style="color: white;"><span>{{ $wlist->id }}</span></a>
+                            <div class="col-2 d-flex align-items-center justify-content-center custom-badge"
+                                style="background-color: #57c559;">
+                                <a href="/wlists/{{ $wlist->id }}" class="custom-description-link"
+                                    style="color: white;"><span>{{ $wlist->id }}</span></a>
                             </div>
 
                             <!-- Boat Name and Description -->
@@ -24,7 +33,7 @@
                                 <a href="/boats/{{ $wlist->boat['id'] }}" class="custom-link d-block mb-1">
                                     <h2 class="h6 mb-0 custom-title">{{ $wlist->boat_namecomplete }}</h2>
                                 </a>
-                            
+
                                 <a href="/wlists/{{ $wlist->id }}" class="custom-description-link">
                                     <p class="custom-description mb-0">
                                         {{ Str::limit($wlist->description, 50, '...') }}
@@ -33,7 +42,8 @@
                             </div>
 
                             <!-- Elapsed Time in Days -->
-                            <div class="col-2 d-flex flex-column align-items-center justify-content-center custom-elapsed-time p-1 ts-4">
+                            <div
+                                class="col-2 d-flex flex-column align-items-center justify-content-center custom-elapsed-time p-1 ts-4">
                                 @php
                                     $elapsedDays = \Carbon\Carbon::now()->diffInDays($wlist->created_at);
                                 @endphp
@@ -53,7 +63,8 @@
                     <div class="card custom-card m-1">
                         <div class="card-body d-flex flex-row position-relative">
                             <!-- ID Badge -->
-                            <div class="col-2 d-flex align-items-center justify-content-center custom-badge" style="background-color: #303230;">
+                            <div class="col-2 d-flex align-items-center justify-content-center custom-badge"
+                                style="background-color: #303230;">
                                 <span>{{ $wlist->id }}</span>
                             </div>
 
@@ -70,7 +81,8 @@
                             </div>
 
                             <!-- Elapsed Time in Days -->
-                            <div class="col-2 d-flex flex-column align-items-center justify-content-center custom-elapsed-time p-1 ts-4">
+                            <div
+                                class="col-2 d-flex flex-column align-items-center justify-content-center custom-elapsed-time p-1 ts-4">
                                 @php
                                     $elapsedDays = \Carbon\Carbon::now()->diffInDays($wlist->created_at);
                                 @endphp
