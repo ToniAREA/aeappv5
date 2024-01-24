@@ -1,6 +1,14 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
+<div class="container-fluid">
+    <div class="row mb-3">
+            <div class="col d-flex justify-content-center">
+                <a href="/home" class="btn btn-link text-white"><i class="fas fa-tachometer-alt"></i> Home</a>
+                <a href="/clients" class="btn btn-link text-white"><i class="fa fa-users"></i> Clients</a>
+                <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> boats</a>
+                <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> Marinas</a>
+            </div>
+        </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
             @can('wlist_create')
