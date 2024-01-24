@@ -12622,79 +12622,23 @@ fieldset:disabled .btn {
     background-color: #128C7E;
 }
 
-@keyframes scrollHorizontal {
-    from {
-        background-position: 0 0;
-    }
-
-    to {
-        background-position: 100% 0;
-    }
-}
-
 .bg-image {
     background-image: url('/images/gallery/tony-profile-01.png');
-    background-size: auto 100%;
-    /* Ajusta el alto para cubrir, el ancho se repetirá */
-    background-repeat: repeat-x;
-    /* Repetir horizontalmente */
-    background-position: 0 0;
-    animation: scrollHorizontal 60s linear infinite;
-}
-
-/* Estilos por defecto para los encabezados (móvil visible, escritorio oculto) */
-.header-desktop {
-    display: none;
-}
-
-.header-mobile {
-    display: block;
-}
-
-/* Media query para pantallas de tamaño mediano a grande */
-@media (min-width: 768px) {
-    .header-desktop {
-        display: block;
-        /* Muestra el encabezado de escritorio */
-    }
-
-    .header-mobile {
-        display: none;
-        /* Oculta el encabezado móvil */
-    }
-
-        .bg-image {
-            background-size: 100% auto;
-            /* Cambia para ajustar la altura en dispositivos de escritorio */
-        }
-}
-
-/* Media query para dispositivos móviles */
-@media (max-width: 768px) {
-    .bg-image {
-        background-size: auto 100%;
-        /* Cambia para ajustar el ancho en dispositivos móviles */
-        animation: scrollHorizontal 60s linear infinite;
-    }
+    background-size: cover;
+    background-position:top;
 }
 
 .custom-badge {
     background-color: #6c757d;
     /* You can change this color */
     color: #ffffff;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 2px 8px;
     box-shadow: 1px 1px 3px #888888;
     width: 15%;
     /* Set width */
     text-align: center;
     /* Center the text */
-}
-
-@media (max-width: 768px) {
-    .bg-image {
-        background-attachment: fixed;
-    }
 }
 
 /* Esta es una sobreescritura adicional para asegurar que el texto sea legible sobre la imagen de fondo */
