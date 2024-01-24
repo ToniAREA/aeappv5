@@ -5,15 +5,17 @@
     <!-- Page Content-->
 
     <!-- Header-->
-    <header class="py-3">
-        <div class="container px-lg-5">
-            <div class="p-4 p-lg-5 bg-light rounded-3 text-center bg-image">
-                <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 15px;">
-                    <h1 class="display-5 fw-bold">Need assistance?</h1>
+    <!-- Encabezado para pantallas medianas a grandes -->
+    <header class="header-desktop py-3">
+        <!-- Tu contenido para pantallas grandes aquí -->
+        <div class="container px-5">
+            <div class="p-4 bg-light rounded-3 text-center bg-image">
+                <div class="m-4" style="background: rgba(255, 255, 255, 0.8); border-radius: 15px;">
+                    <h1 class="display-5 fw-bold">Bespoke marine electronics.</h1>
                     <p class="fs-4">
-                        At Area Electronica, we specialize in custom-tailored electronic solutions for private yachts. Our
-                        commitment lies in delivering exceptional quality and personalized service. Should you have any
-                        queries or require assistance, we're just a message away.
+                        Welcome to Area Electronica, where I specialize in bespoke electronic services tailored exclusively
+                        for private yachts. My dedication is to provide unparalleled quality and personalized service. If
+                        you have any questions or need assistance, I'm here to help – just a message away.
                     </p>
                     <!-- resources/views/your-view.blade.php -->
                     <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20me%20at%20your%20earliest%20convenience."
@@ -22,6 +24,30 @@
             </div>
         </div>
     </header>
+
+    <!-- Encabezado para pantallas móviles -->
+    <header class="header-mobile py-3">
+        <!-- Tu contenido para pantallas móviles aquí -->
+        <div class="container px-lg-5">
+            <div class="p-4 p-lg-5 bg-light rounded-3 text-center bg-image">
+                <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 15px;">
+                    <h1 class="display-5 fw-bold">Bespoke marine electronics.</h1>
+
+                </div>
+                <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 15px;">
+                    <p class="fs-4">
+                        Welcome to Area Electronica, where I specialize in bespoke electronic services tailored exclusively
+                        for private yachts. My dedication is to provide unparalleled quality and personalized service. If
+                        you have any questions or need assistance, I'm here to help – just a message away.
+                    </p>
+                    <!-- resources/views/your-view.blade.php -->
+                    <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20me%20at%20your%20earliest%20convenience."
+                        target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Contact Us on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <!-- Page Content-->
     <div class="container px-lg-5 py-3">
         <div class="row text-center">

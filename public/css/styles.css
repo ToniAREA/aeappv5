@@ -12642,20 +12642,39 @@ fieldset:disabled .btn {
     animation: scrollHorizontal 60s linear infinite;
 }
 
+/* Estilos por defecto para los encabezados (móvil visible, escritorio oculto) */
+.header-desktop {
+    display: none;
+}
+
+.header-mobile {
+    display: block;
+}
+
+/* Media query para pantallas de tamaño mediano a grande */
+@media (min-width: 768px) {
+    .header-desktop {
+        display: block;
+        /* Muestra el encabezado de escritorio */
+    }
+
+    .header-mobile {
+        display: none;
+        /* Oculta el encabezado móvil */
+    }
+
+        .bg-image {
+            background-size: 100% auto;
+            /* Cambia para ajustar la altura en dispositivos de escritorio */
+        }
+}
+
 /* Media query para dispositivos móviles */
 @media (max-width: 768px) {
     .bg-image {
         background-size: auto 100%;
         /* Cambia para ajustar el ancho en dispositivos móviles */
         animation: scrollHorizontal 60s linear infinite;
-    }
-}
-
-/* Media query para dispositivos de escritorio */
-@media (min-width: 769px) {
-    .bg-image {
-        background-size: 100% auto;
-        /* Cambia para ajustar la altura en dispositivos de escritorio */
     }
 }
 
