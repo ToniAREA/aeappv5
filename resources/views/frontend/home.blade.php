@@ -16,7 +16,7 @@
                         <div class="card-body d-flex flex-row position-relative">
                             <!-- ID Badge -->
                             <div class="col-2 d-flex align-items-center justify-content-center custom-badge" style="background-color: #57c559;">
-                                <span>{{ $wlist->id }}</span>
+                                <a href="/wlists/{{ $wlist->id }}" class="custom-description-link" style="color: white;"><span>{{ $wlist->id }}</span></a>
                             </div>
 
                             <!-- Boat Name and Description -->

@@ -11,7 +11,9 @@
                 <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 20px;">
                     <h2 class="display-5 fw-bold">Top-Notch Yacht Electronics</h2>
                     <p class="fs-5">
-                        Welcome to Area Electronica, where I specialize in bespoke electronic services tailored exclusively for private yachts. My dedication is to provide unparalleled quality and personalized service. If you have any questions or need assistance, I'm here to help – just a message away.
+                        Welcome to Area Electronica, where I specialize in bespoke electronic services tailored exclusively
+                        for private yachts. My dedication is to provide unparalleled quality and personalized service. If
+                        you have any questions or need assistance, I'm here to help – just a message away.
                     </p>
                     <!-- resources/views/your-view.blade.php -->
                     <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20me%20at%20your%20earliest%20convenience."
@@ -66,19 +68,15 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-calendar3"></i></div>
                         <h2 class="fs-4 fw-bold">Decades of Expertise</h2>
-                        <p class="mb-0">Over {{ $yearsSince }} years of experience in marine electronics, delivering
-                            bespoke
-                            solutions for yachts and boats.
-                        <p>
-                        <p> Since 1996, we have been passionately devoted to electronics, electricity, and computing, with a
-                            specialization in maritime technology. Our expertise primarily lies in servicing private
-                            vessels, including both sailboats and motorboats. Renowned for our adept troubleshooting skills,
-                            we excel in crafting tailor-made technological solutions that cater uniquely to each case or
-                            client.</p>
-                        <p>
-                            Our preferred brands include Pepwave, Raymarine, Mastervolt, KVH, Victron, Furuno, Maretron,
-                            Fusion, Airmar, among others, ensuring quality and reliability in every project.
-                        </p>
+                        <p class="mb-0">With over <b>{{ $yearsSince }}</b> years of experience in marine electronics, I
+                            specialize in delivering bespoke solutions for yachts and boats.</p>
+                        <p>Since 1996, I have been passionately devoted to electronics, electricity, and computing, with a
+                            focus on maritime technology. My expertise primarily lies in servicing private vessels,
+                            including both sailboats and motorboats. Renowned for my adept troubleshooting skills, I excel
+                            in crafting tailor-made technological solutions that uniquely cater to each case or client.</p>
+                        <p>My preferred brands include Pepwave, Raymarine, Mastervolt, KVH, Victron, Furuno, Maretron,
+                            Fusion, Airmar, among others, ensuring quality and reliability in every project.</p>
+
                     </div>
                 </div>
             </div>
@@ -92,9 +90,8 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-people"></i></div>
                         <h2 class="fs-4 fw-bold">Trusted by Clients</h2>
-                        <p class="mb-0">With a strong clientele of {{ $clientsCount }}, we pride ourselves on
-                            delivering exceptional
-                            service to every customer.</p>
+                        <p class="mb-0">With a strong clientele of <b>{{ $clientsCount }}</b>, I take great pride in
+                            delivering exceptional service to each and every one of my customers.</p>
                     </div>
                 </div>
             </div>
@@ -105,9 +102,11 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-speedometer2"></i></div>
                         <h2 class="fs-4 fw-bold">Boats Serviced</h2>
-                        <p class="mb-0">{{ $boatsCount }} boats have been equipped and upgraded with our
-                            cutting-edge technology
-                            solutions.</p>
+                        <p class="mb-0">I've successfully assisted and repaired <b>{{ $boatsCount }}</b> boats,
+                            providing top-notch technology solutions and expertise.</p>
+
+
+
                     </div>
                 </div>
             </div>
@@ -118,9 +117,9 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-journal-check"></i></div>
                         <h2 class="fs-4 fw-bold">Projects Completed</h2>
-                        <p class="mb-0">A total of {{ $worksCount }} installations completed to date, reflecting our
-                            extensive
-                            experience and dedication to quality.</p>
+                        <p class="mb-0">I have completed a total of <b>{{ $worksCount }}</b> installations to date,
+                            reflecting my extensive experience and dedication to quality.</p>
+
                     </div>
                 </div>
             </div>
@@ -138,28 +137,28 @@
 
             <div class="col-lg-5 d-flex flex-column align-items-center text-center">
                 <h1 class="font-weight-light">Tailored Marine Electronics</h1>
-                <p>We specialize in bespoke electronic systems for luxury yachts, delivering robust internet connectivity,
-                    advanced navigation aids, and solar power solutions. Our expertise lies in crafting personalized
-                    solutions to enhance your maritime experience.</p>
-                <a class="btn btn-primary" href="{{ route('portfolio') }}">Explore our work</a>
+                <p>I specialize in bespoke electronic systems for luxury yachts, delivering robust internet connectivity,
+                    advanced navigation aids, and solar power solutions. My expertise is in crafting personalized solutions
+                    to enhance your maritime experience.</p>
             </div>
         </div>
         <!-- Call to Action -->
         <div class="card text-white bg-secondary my-5 py-4 text-center">
             <div class="card-body">
-                <p class="text-white m-0">Enhance your yachting journey with our state-of-the-art custom electronics.
-                    Discover the pinnacle of maritime technology with Area Electronica.</p>
+                <p class="text-white m-0">Transform your yachting experience with my expert help in custom electronic
+                    projects. Unveil the future of maritime technology with Area Electronica.</p>
             </div>
+
         </div>
 
         <!-- Content Row -->
         <div class="row gx-4 gx-lg-5">
 
-            <div class="col-md-4 mb-5">
+            <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
                         <h2 class="card-title">Internet & Connectivity</h2>
-                        <p class="card-text">Stay connected wherever the seas may take you with our high-speed internet
+                        <p class="card-text">Stay connected wherever the seas may take you with my high-speed internet
                             solutions for yachts. Seamless communication and entertainment at your fingertips.</p>
                     </div>
                     <!-- Contenedor de la imagen -->
@@ -170,11 +169,11 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-5">
+            <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
                         <h2 class="card-title">Solar & Battery Systems</h2>
-                        <p class="card-text">Embrace the power of the sun with our advanced solar panel installations and
+                        <p class="card-text">Embrace the power of the sun with my advanced solar panel installations and
                             lithium battery systems, designed for efficiency and reliability on the open sea.</p>
                     </div>
                     <!-- Contenedor de la imagen -->
@@ -185,12 +184,12 @@
                 </div>
             </div>
 
-            <div class="col-md-4 mb-5">
+            <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
                         <h2 class="card-title">Custom Electronic Design</h2>
                         <p class="card-text">From navigation aids to onboard network systems, PLC automation, and remote
-                            monitoring, we design and implement tailored solutions to meet your unique needs.</p>
+                            monitoring, I design and implement tailored solutions to meet your unique needs.</p>
                     </div>
                     <!-- Contenedor de la imagen -->
                     <div class="image-container">
@@ -200,8 +199,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+
 
     <script>
         // Simple counter function
