@@ -4,20 +4,31 @@
     <div class="container">
 
         <div class="row justify-content-center">
-    <div class="col-lg-8 mt-3 text-center">
-        <h1 class="display-5 fw-normal">Priority Service: Member-Exclusive</h1>
-        <p class="fs-5 text-muted">
-            In my commitment to deliver top-tier service, I have limited new memberships, focusing instead on a select group of VIP clients. Opportunities to join this exclusive group are available through a waiting list. I offer two distinct membership plans: SILVER and GOLD, each with limited availability due to high demand and my dedication to maintaining excellence. If your preferred plan is fully subscribed, you can be placed on the waiting list and, once a spot is available, enjoy benefits like preferential rates, fixed pricing, and priority service channels. This focused approach ensures each client receives the finest care for their yacht's electronics.
-        </p>
-    </div>
-</div>
-
-
+            <div class="col-lg-8 m-3 text-center">
+                <h1 class="display-5 fw-normal">PRIORITY SERVICE<br>Member-Exclusive</h1>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="mb-3 col-lg-8 col-12 d-flex">
                 <img class="img-fluid rounded" src="images/gallery/vip-header-01.png" alt="" />
             </div>
         </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 mt-2 text-center">
+                <p class="fs-5 text-muted">
+                    In my commitment to deliver top-tier service, I have limited new memberships, focusing instead on a
+                    select group of VIP clients. Opportunities to join this exclusive group are available through a waiting
+                    list. I offer two distinct membership plans: SILVER and GOLD, each with limited availability due to high
+                    demand and my dedication to maintaining excellence. If your preferred plan is fully subscribed, you can
+                    be placed on the waiting list and, once a spot is available, enjoy benefits like preferential rates,
+                    fixed pricing, and priority service channels. This focused approach ensures each client receives the
+                    finest care for their yacht's electronics.
+                </p>
+            </div>
+        </div>
+
+
+
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
@@ -69,7 +80,7 @@
 
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
-                    <p class="fs-5 text-muted">
+                    <p class="fs-5 text-muted mt-2">
                         Secure your spot in this exclusive circle! Limited VIP Memberships available. VAT not
                         included.
                     </p>

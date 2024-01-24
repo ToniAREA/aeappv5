@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
 
@@ -8,7 +8,8 @@
                 <div class="card-header">
                     {{ trans('global.show') }} {{ trans('cruds.wlist.title') }}
                 </div>
-
+WLOGS: {{ $wlist->wlistWlogs->count() }}
+MLOGS: {{ $wlist->wlistMatLogs->count() }}
                 <div class="card-body">
                     <div class="form-group">
                         <div class="form-group">
