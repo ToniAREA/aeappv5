@@ -12622,12 +12622,37 @@ fieldset:disabled .btn {
     background-color: #128C7E;
 }
 
+@keyframes scrollHorizontal {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 100% 0;
+    }
+}
+
 .bg-image {
     background-image: url('/images/gallery/tony-profile-01.png');
-    /* Reemplaza con la ruta real de tu imagen */
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+    background-size: auto 100%;
+    /* Ajusta el alto para cubrir, el ancho se repetirá */
+    background-repeat: repeat-x;
+    /* Repetir horizontalmente */
+    background-position: 0 0;
+    animation: scrollHorizontal 40s linear infinite;
+}
+
+.custom-badge {
+    background-color: #6c757d;
+    /* You can change this color */
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 2px 8px;
+    box-shadow: 1px 1px 3px #888888;
+    width: 15%;
+    /* Set width */
+    text-align: center;
+    /* Center the text */
 }
 
 @media (max-width: 768px) {
