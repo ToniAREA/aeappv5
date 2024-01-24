@@ -12639,7 +12639,24 @@ fieldset:disabled .btn {
     background-repeat: repeat-x;
     /* Repetir horizontalmente */
     background-position: 0 0;
-    animation: scrollHorizontal 40s linear infinite;
+    animation: scrollHorizontal 60s linear infinite;
+}
+
+/* Media query para dispositivos móviles */
+@media (max-width: 768px) {
+    .bg-image {
+        background-size: auto 100%;
+        /* Cambia para ajustar el ancho en dispositivos móviles */
+        animation: scrollHorizontal 60s linear infinite;
+    }
+}
+
+/* Media query para dispositivos de escritorio */
+@media (min-width: 769px) {
+    .bg-image {
+        background-size: 100% auto;
+        /* Cambia para ajustar la altura en dispositivos de escritorio */
+    }
 }
 
 .custom-badge {
