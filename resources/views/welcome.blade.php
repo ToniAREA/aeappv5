@@ -9,15 +9,15 @@
         <div class="container-fluid px-lg-5">
             <div class="p-4 p-lg-5 bg-light rounded-3 text-center bg-image">
                 <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 20px;">
-                    <h2 class="display-5 fw-bold">Top-Notch Yacht Electronics</h2>
+                    <h2 class="display-5 fw-bold">Welcome to Area Electronica</h2>
                     <p class="fs-5">
-                        Welcome to Area Electronica, where I specialize in bespoke electronic services tailored exclusively
+                        ...where I specialize in bespoke electronic services tailored exclusively
                         for private yachts. My dedication is to provide unparalleled quality and personalized service. If
                         you have any questions or need assistance, I'm here to help – just a message away.
                     </p>
                     <!-- resources/views/your-view.blade.php -->
                     <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20me%20at%20your%20earliest%20convenience."
-                        target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Contact Us on WhatsApp</a>
+                        target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Contact by WhatsApp</a>
                 </div>
             </div>
         </div>
