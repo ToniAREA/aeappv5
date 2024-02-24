@@ -36,6 +36,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.proforma.fields.closed_and_protected') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $proforma->closed_and_protected ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.proforma.fields.invoice_link') }}
+                                    </th>
+                                    <td>
+                                        {{ $proforma->invoice_link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.proforma.fields.client') }}
                                     </th>
                                     <td>
@@ -128,6 +144,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.proforma.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $proforma->link_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.proforma.fields.status') }}
                                     </th>
                                     <td>
@@ -140,6 +164,22 @@
                                     </th>
                                     <td>
                                         {{ $proforma->notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.proforma.fields.internal_notes') }}
+                                    </th>
+                                    <td>
+                                        {{ $proforma->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.proforma.fields.completed_at') }}
+                                    </th>
+                                    <td>
+                                        {{ $proforma->completed_at }}
                                     </td>
                                 </tr>
                             </tbody>

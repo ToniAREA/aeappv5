@@ -38,6 +38,9 @@
                         {{ trans('cruds.boat.fields.name') }}
                     </th>
                     <th>
+                        {{ trans('cruds.boat.fields.boat_photo') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.boat.fields.imo') }}
                     </th>
                     <th>
@@ -62,6 +65,9 @@
                         {{ trans('cruds.boat.fields.link') }}
                     </th>
                     <th>
+                        {{ trans('cruds.boat.fields.link_description') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.boat.fields.last_use') }}
                     </th>
                     <th>
@@ -82,6 +88,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -110,6 +118,9 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -179,6 +190,7 @@
 { data: 'ref', name: 'ref' },
 { data: 'boat_type', name: 'boat_type' },
 { data: 'name', name: 'name' },
+{ data: 'boat_photo', name: 'boat_photo', sortable: false, searchable: false },
 { data: 'imo', name: 'imo' },
 { data: 'mmsi', name: 'mmsi' },
 { data: 'marina_name', name: 'marina.name' },
@@ -187,6 +199,7 @@
 { data: 'clients', name: 'clients.name' },
 { data: 'coordinates', name: 'coordinates' },
 { data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
 { data: 'last_use', name: 'last_use' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

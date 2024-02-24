@@ -56,6 +56,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.provider.fields.provider_url') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->provider_url }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.provider.fields.brands') }}
                                     </th>
                                     <td>
@@ -90,6 +98,22 @@
                                     </th>
                                     <td>
                                         {{ $provider->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->link_description }}
                                     </td>
                                 </tr>
                             </tbody>

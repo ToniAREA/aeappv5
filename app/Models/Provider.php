@@ -35,8 +35,11 @@ class Provider extends Model implements HasMedia
     protected $fillable = [
         'name',
         'company_id',
+        'provider_url',
         'notes',
         'internal_notes',
+        'link',
+        'link_description',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,6 +59,11 @@ class Provider extends Model implements HasMedia
     public function providersBrands()
     {
         return $this->belongsToMany(Brand::class);
+    }
+
+    public function providersProducts()
+    {
+        return $this->belongsToMany(Product::class);
     }
 
     public function company()

@@ -59,6 +59,15 @@
                         {{ trans('cruds.contactCompany.fields.contacts') }}
                     </th>
                     <th>
+                        {{ trans('cruds.contactCompany.fields.link') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contactCompany.fields.link_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contactCompany.fields.last_use') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -101,6 +110,15 @@
                                 <option value="{{ $item->contact_first_name }}">{{ $item->contact_first_name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -168,6 +186,9 @@
 { data: 'company_website', name: 'company_website' },
 { data: 'company_social_link', name: 'company_social_link' },
 { data: 'contacts', name: 'contacts.contact_first_name' },
+{ data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
+{ data: 'last_use', name: 'last_use' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

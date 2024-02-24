@@ -21,6 +21,12 @@ class StoreCommentRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'photos' => [
+                'array',
+            ],
+            'files' => [
+                'array',
+            ],
         ];
     }
 }

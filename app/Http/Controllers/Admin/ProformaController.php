@@ -52,6 +52,12 @@ class ProformaController extends Controller
             $table->editColumn('proforma_number', function ($row) {
                 return $row->proforma_number ? $row->proforma_number : '';
             });
+            $table->editColumn('closed_and_protected', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->closed_and_protected ? 'checked' : null) . '>';
+            });
+            $table->editColumn('invoice_link', function ($row) {
+                return $row->invoice_link ? $row->invoice_link : '';
+            });
             $table->addColumn('client_name', function ($row) {
                 return $row->client ? $row->client->name : '';
             });
@@ -97,14 +103,20 @@ class ProformaController extends Controller
             $table->editColumn('link', function ($row) {
                 return $row->link ? $row->link : '';
             });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
             $table->editColumn('status', function ($row) {
                 return $row->status ? $row->status : '';
             });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'client', 'boats', 'wlists', 'sent', 'paid']);
+            $table->rawColumns(['actions', 'placeholder', 'closed_and_protected', 'client', 'boats', 'wlists', 'sent', 'paid']);
 
             return $table->make(true);
         }
@@ -162,7 +174,7 @@ class ProformaController extends Controller
     {
         abort_if(Gate::denies('proforma_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $proforma->load('client', 'boats', 'wlists', 'proformaNumberWlogs', 'proformaNumberClaims', 'proformaNumberPayments', 'proformaNumberMatLogs');
+        $proforma->load('client', 'boats', 'wlists', 'proformaNumberWlogs', 'proformaNumberClaims', 'proformaNumberPayments', 'proformaNumberMlogs', 'proformaAssetsRentals', 'proformaClientsReviews', 'proformaSuscriptions');
 
         return view('admin.proformas.show', compact('proforma'));
     }

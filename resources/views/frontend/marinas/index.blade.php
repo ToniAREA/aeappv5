@@ -33,10 +33,16 @@
                                         {{ trans('cruds.marina.fields.name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.marina.fields.marina_photo') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.marina.fields.coordinates') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.marina.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.marina.fields.link_description') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.marina.fields.notes') }}
@@ -62,10 +68,20 @@
                                             {{ $marina->name ?? '' }}
                                         </td>
                                         <td>
+                                            @if($marina->marina_photo)
+                                                <a href="{{ $marina->marina_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $marina->marina_photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
                                             {{ $marina->coordinates ?? '' }}
                                         </td>
                                         <td>
                                             {{ $marina->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $marina->link_description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $marina->notes ?? '' }}

@@ -20,19 +20,19 @@ class ExpenseApiController extends Controller
     {
         abort_if(Gate::denies('expense_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ExpenseResource(Expense::with(['expense_category'])->get());
+        return new ExpenseResource(Expense::with(['employee', 'expense_category'])->get());
     }
 
     public function store(StoreExpenseRequest $request)
     {
         $expense = Expense::create($request->all());
 
-        if ($request->input('file', false)) {
-            $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
+        foreach ($request->input('files', []) as $file) {
+            $expense->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
 
-        if ($request->input('photo', false)) {
-            $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        foreach ($request->input('photos', []) as $file) {
+            $expense->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
 
         return (new ExpenseResource($expense))
@@ -44,33 +44,39 @@ class ExpenseApiController extends Controller
     {
         abort_if(Gate::denies('expense_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ExpenseResource($expense->load(['expense_category']));
+        return new ExpenseResource($expense->load(['employee', 'expense_category']));
     }
 
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         $expense->update($request->all());
 
-        if ($request->input('file', false)) {
-            if (! $expense->file || $request->input('file') !== $expense->file->file_name) {
-                if ($expense->file) {
-                    $expense->file->delete();
+        if (count($expense->files) > 0) {
+            foreach ($expense->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
                 }
-                $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
             }
-        } elseif ($expense->file) {
-            $expense->file->delete();
+        }
+        $media = $expense->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $expense->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+            }
         }
 
-        if ($request->input('photo', false)) {
-            if (! $expense->photo || $request->input('photo') !== $expense->photo->file_name) {
-                if ($expense->photo) {
-                    $expense->photo->delete();
+        if (count($expense->photos) > 0) {
+            foreach ($expense->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
+                    $media->delete();
                 }
-                $expense->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
             }
-        } elseif ($expense->photo) {
-            $expense->photo->delete();
+        }
+        $media = $expense->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $expense->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
         }
 
         return (new ExpenseResource($expense))

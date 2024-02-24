@@ -23,12 +23,13 @@ class Wlist extends Model implements HasMedia
     ];
 
     public static $searchable = [
-        'status',
         'internal_notes',
     ];
 
     protected $dates = [
         'deadline',
+        'last_use',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -39,15 +40,7 @@ class Wlist extends Model implements HasMedia
         'estimate' => 'Estimate',
         'order'    => 'Order',
         'work'     => 'Work',
-    ];
-
-    public const STATUS_RADIO = [
-        'pending'     => 'Pending',
-        'assigned'    => 'Assigned',
-        'progressing' => 'Progressing',
-        'verifying'   => 'Verifying',
-        'completed'   => 'Completed',
-        'billed'      => 'Billed',
+        'other'    => 'Other',
     ];
 
     protected $fillable = [
@@ -55,14 +48,20 @@ class Wlist extends Model implements HasMedia
         'order_type',
         'boat_id',
         'from_user_id',
+        'for_employee_id',
         'boat_namecomplete',
         'description',
+        'estimated_hours',
         'deadline',
-        'priority_id',
-        'status',
-        'url_invoice',
+        'status_id',
+        'priority',
+        'proforma_link',
         'notes',
         'internal_notes',
+        'link',
+        'link_description',
+        'last_use',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -84,14 +83,19 @@ class Wlist extends Model implements HasMedia
         return $this->hasMany(Wlog::class, 'wlist_id', 'id');
     }
 
-    public function wlistMatLogs()
-    {
-        return $this->hasMany(MatLog::class, 'wlist_id', 'id');
-    }
-
     public function wlistComments()
     {
         return $this->hasMany(Comment::class, 'wlist_id', 'id');
+    }
+
+    public function wlistMlogs()
+    {
+        return $this->hasMany(Mlog::class, 'wlist_id', 'id');
+    }
+
+    public function forWlistEmployeesRatings()
+    {
+        return $this->hasMany(EmployeesRating::class, 'for_wlist_id', 'id');
     }
 
     public function wlistsAppointments()
@@ -124,9 +128,9 @@ class Wlist extends Model implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function for_users()
+    public function for_employee()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(Employee::class, 'for_employee_id');
     }
 
     public function getPhotosAttribute()
@@ -151,8 +155,28 @@ class Wlist extends Model implements HasMedia
         $this->attributes['deadline'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function priority()
+    public function status()
     {
-        return $this->belongsTo(Priority::class, 'priority_id');
+        return $this->belongsTo(WlistStatus::class, 'status_id');
+    }
+
+    public function getLastUseAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setLastUseAttribute($value)
+    {
+        $this->attributes['last_use'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function getCompletedAtAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setCompletedAtAttribute($value)
+    {
+        $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 }

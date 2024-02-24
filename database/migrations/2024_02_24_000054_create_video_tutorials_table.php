@@ -1,0 +1,21 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateVideoTutorialsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('video_tutorials', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title')->nullable();
+            $table->boolean('show_online')->default(0)->nullable();
+            $table->string('description')->nullable();
+            $table->string('video_url')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+}

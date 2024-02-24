@@ -85,6 +85,22 @@
                             {{ $brand->internal_notes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.brand.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $brand->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.brand.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $brand->link_description }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -107,6 +123,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#brand_technical_documentations" role="tab" data-toggle="tab">
+                {{ trans('cruds.technicalDocumentation.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#brands_providers" role="tab" data-toggle="tab">
                 {{ trans('cruds.provider.title') }}
             </a>
@@ -115,6 +136,9 @@
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="brand_products">
             @includeIf('admin.brands.relationships.brandProducts', ['products' => $brand->brandProducts])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="brand_technical_documentations">
+            @includeIf('admin.brands.relationships.brandTechnicalDocumentations', ['technicalDocumentations' => $brand->brandTechnicalDocumentations])
         </div>
         <div class="tab-pane" role="tabpanel" id="brands_providers">
             @includeIf('admin.brands.relationships.brandsProviders', ['providers' => $brand->brandsProviders])

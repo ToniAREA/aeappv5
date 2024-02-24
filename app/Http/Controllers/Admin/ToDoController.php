@@ -8,10 +8,9 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyToDoRequest;
 use App\Http\Requests\StoreToDoRequest;
 use App\Http\Requests\UpdateToDoRequest;
-use App\Models\Priority;
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\ToDo;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -27,7 +26,7 @@ class ToDoController extends Controller
         abort_if(Gate::denies('to_do_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ToDo::with(['for_roles', 'for_users', 'priority'])->select(sprintf('%s.*', (new ToDo)->table));
+            $query = ToDo::with(['for_roles', 'for_employee'])->select(sprintf('%s.*', (new ToDo)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -51,6 +50,9 @@ class ToDoController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->editColumn('task', function ($row) {
+                return $row->task ? $row->task : '';
+            });
             $table->editColumn('for_role', function ($row) {
                 $labels = [];
                 foreach ($row->for_roles as $for_role) {
@@ -59,50 +61,39 @@ class ToDoController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->editColumn('for_user', function ($row) {
-                $labels = [];
-                foreach ($row->for_users as $for_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $for_user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('task', function ($row) {
-                return $row->task ? $row->task : '';
-            });
-            $table->editColumn('photo', function ($row) {
-                if (! $row->photo) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photo as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
+            $table->addColumn('for_employee_id_employee', function ($row) {
+                return $row->for_employee ? $row->for_employee->id_employee : '';
             });
 
-            $table->addColumn('priority_name', function ($row) {
-                return $row->priority ? $row->priority->name : '';
+            $table->editColumn('for_employee.namecomplete', function ($row) {
+                return $row->for_employee ? (is_string($row->for_employee) ? $row->for_employee : $row->for_employee->namecomplete) : '';
             });
 
-            $table->editColumn('priority.weight', function ($row) {
-                return $row->priority ? (is_string($row->priority) ? $row->priority : $row->priority->weight) : '';
+            $table->editColumn('priority', function ($row) {
+                return $row->priority ? $row->priority : '';
+            });
+            $table->editColumn('is_repetitive', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->is_repetitive ? 'checked' : null) . '>';
+            });
+            $table->editColumn('repeat_interval_value', function ($row) {
+                return $row->repeat_interval_value ? $row->repeat_interval_value : '';
+            });
+            $table->editColumn('repeat_interval_unit', function ($row) {
+                return $row->repeat_interval_unit ? ToDo::REPEAT_INTERVAL_UNIT_SELECT[$row->repeat_interval_unit] : '';
             });
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'for_role', 'for_user', 'photo', 'priority']);
+            $table->rawColumns(['actions', 'placeholder', 'for_role', 'for_employee', 'is_repetitive']);
 
             return $table->make(true);
         }
 
-        $roles      = Role::get();
-        $users      = User::get();
-        $priorities = Priority::get();
+        $roles     = Role::get();
+        $employees = Employee::get();
 
-        return view('admin.toDos.index', compact('roles', 'users', 'priorities'));
+        return view('admin.toDos.index', compact('roles', 'employees'));
     }
 
     public function create()
@@ -111,22 +102,15 @@ class ToDoController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.toDos.create', compact('for_roles', 'for_users', 'priorities'));
+        return view('admin.toDos.create', compact('for_employees', 'for_roles'));
     }
 
     public function store(StoreToDoRequest $request)
     {
         $toDo = ToDo::create($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        foreach ($request->input('photo', []) as $file) {
-            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
-        }
-
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $toDo->id]);
         }
@@ -140,33 +124,17 @@ class ToDoController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $toDo->load('for_roles', 'for_employee');
 
-        $toDo->load('for_roles', 'for_users', 'priority');
-
-        return view('admin.toDos.edit', compact('for_roles', 'for_users', 'priorities', 'toDo'));
+        return view('admin.toDos.edit', compact('for_employees', 'for_roles', 'toDo'));
     }
 
     public function update(UpdateToDoRequest $request, ToDo $toDo)
     {
         $toDo->update($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        if (count($toDo->photo) > 0) {
-            foreach ($toDo->photo as $media) {
-                if (! in_array($media->file_name, $request->input('photo', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $toDo->photo->pluck('file_name')->toArray();
-        foreach ($request->input('photo', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
-            }
-        }
 
         return redirect()->route('admin.to-dos.index');
     }
@@ -175,7 +143,7 @@ class ToDoController extends Controller
     {
         abort_if(Gate::denies('to_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $toDo->load('for_roles', 'for_users', 'priority');
+        $toDo->load('for_roles', 'for_employee');
 
         return view('admin.toDos.show', compact('toDo'));
     }

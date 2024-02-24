@@ -19,6 +19,25 @@
                 <span class="help-block">{{ trans('cruds.proforma.fields.proforma_number_helper') }}</span>
             </div>
             <div class="form-group">
+                <div class="form-check {{ $errors->has('closed_and_protected') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="closed_and_protected" value="0">
+                    <input class="form-check-input" type="checkbox" name="closed_and_protected" id="closed_and_protected" value="1" {{ $proforma->closed_and_protected || old('closed_and_protected', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="closed_and_protected">{{ trans('cruds.proforma.fields.closed_and_protected') }}</label>
+                </div>
+                @if($errors->has('closed_and_protected'))
+                    <span class="text-danger">{{ $errors->first('closed_and_protected') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.proforma.fields.closed_and_protected_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="invoice_link">{{ trans('cruds.proforma.fields.invoice_link') }}</label>
+                <input class="form-control {{ $errors->has('invoice_link') ? 'is-invalid' : '' }}" type="text" name="invoice_link" id="invoice_link" value="{{ old('invoice_link', $proforma->invoice_link) }}">
+                @if($errors->has('invoice_link'))
+                    <span class="text-danger">{{ $errors->first('invoice_link') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.proforma.fields.invoice_link_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="client_id">{{ trans('cruds.proforma.fields.client') }}</label>
                 <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id">
                     @foreach($clients as $id => $entry)
@@ -133,6 +152,14 @@
                 <span class="help-block">{{ trans('cruds.proforma.fields.link_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="link_description">{{ trans('cruds.proforma.fields.link_description') }}</label>
+                <input class="form-control {{ $errors->has('link_description') ? 'is-invalid' : '' }}" type="text" name="link_description" id="link_description" value="{{ old('link_description', $proforma->link_description) }}">
+                @if($errors->has('link_description'))
+                    <span class="text-danger">{{ $errors->first('link_description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.proforma.fields.link_description_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="status">{{ trans('cruds.proforma.fields.status') }}</label>
                 <input class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" type="text" name="status" id="status" value="{{ old('status', $proforma->status) }}">
                 @if($errors->has('status'))
@@ -147,6 +174,22 @@
                     <span class="text-danger">{{ $errors->first('notes') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.proforma.fields.notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="internal_notes">{{ trans('cruds.proforma.fields.internal_notes') }}</label>
+                <input class="form-control {{ $errors->has('internal_notes') ? 'is-invalid' : '' }}" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', $proforma->internal_notes) }}">
+                @if($errors->has('internal_notes'))
+                    <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.proforma.fields.internal_notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="completed_at">{{ trans('cruds.proforma.fields.completed_at') }}</label>
+                <input class="form-control datetime {{ $errors->has('completed_at') ? 'is-invalid' : '' }}" type="text" name="completed_at" id="completed_at" value="{{ old('completed_at', $proforma->completed_at) }}">
+                @if($errors->has('completed_at'))
+                    <span class="text-danger">{{ $errors->first('completed_at') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.proforma.fields.completed_at_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

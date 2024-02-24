@@ -43,6 +43,12 @@
                                 {{ trans('cruds.comment.fields.private_comment') }}
                             </th>
                             <th>
+                                {{ trans('cruds.comment.fields.photos') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.comment.fields.files') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -73,6 +79,20 @@
                                 </td>
                                 <td>
                                     {{ $comment->private_comment ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($comment->photos as $key => $media)
+                                        <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                            <img src="{{ $media->getUrl('thumb') }}">
+                                        </a>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($comment->files as $key => $media)
+                                        <a href="{{ $media->getUrl() }}" target="_blank">
+                                            {{ trans('global.view_file') }}
+                                        </a>
+                                    @endforeach
                                 </td>
                                 <td>
                                     @can('comment_show')

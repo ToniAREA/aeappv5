@@ -84,6 +84,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.wlog.fields.hourly_rate') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlog->hourly_rate }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlog.fields.wlist_finished') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.wlog.fields.proforma_number') }}
                                     </th>
                                     <td>
@@ -100,14 +116,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlog.fields.status') }}
-                                    </th>
-                                    <td>
-                                        {{ $wlog->status }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.wlog.fields.notes') }}
                                     </th>
                                     <td>
@@ -120,6 +128,18 @@
                                     </th>
                                     <td>
                                         {{ $wlog->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlog.fields.photos') }}
+                                    </th>
+                                    <td>
+                                        @foreach($wlog->photos as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $media->getUrl('thumb') }}">
+                                            </a>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

@@ -60,6 +60,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.bookingList.fields.booking_slot') }}
+                                    </th>
+                                    <td>
+                                        {{ $bookingList->booking_slot->star_time ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.bookingList.fields.date') }}
                                     </th>
                                     <td>
@@ -92,18 +100,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.hour_rate') }}
+                                        {{ trans('cruds.bookingList.fields.hourly_rate') }}
                                     </th>
                                     <td>
-                                        {{ $bookingList->hour_rate }}
+                                        {{ $bookingList->hourly_rate }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.total_price') }}
+                                        {{ trans('cruds.bookingList.fields.total_amount') }}
                                     </th>
                                     <td>
-                                        {{ $bookingList->total_price }}
+                                        {{ $bookingList->total_amount }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -136,6 +144,14 @@
                                     </th>
                                     <td>
                                         {{ $bookingList->status }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.bookingList.fields.completed_at') }}
+                                    </th>
+                                    <td>
+                                        {{ $bookingList->completed_at }}
                                     </td>
                                 </tr>
                             </tbody>

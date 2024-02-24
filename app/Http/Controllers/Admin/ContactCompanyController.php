@@ -82,6 +82,12 @@ class ContactCompanyController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'defaulter', 'contacts']);
 

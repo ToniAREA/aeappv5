@@ -54,6 +54,12 @@
                                         {{ trans('cruds.wlog.fields.hours') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.wlog.fields.hourly_rate') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlog.fields.wlist_finished') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.wlog.fields.proforma_number') }}
                                     </th>
                                     <th>
@@ -63,13 +69,13 @@
                                         {{ trans('cruds.wlog.fields.invoiced_line') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.wlog.fields.status') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.wlog.fields.notes') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.wlog.fields.internal_notes') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlog.fields.photos') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -119,6 +125,11 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($proformas as $key => $item)
@@ -137,7 +148,6 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                     </td>
@@ -174,6 +184,13 @@
                                             {{ $wlog->hours ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $wlog->hourly_rate ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $wlog->wlist_finished ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
                                             {{ $wlog->proforma_number->proforma_number ?? '' }}
                                         </td>
                                         <td>
@@ -184,13 +201,17 @@
                                             <input type="checkbox" disabled="disabled" {{ $wlog->invoiced_line ? 'checked' : '' }}>
                                         </td>
                                         <td>
-                                            {{ $wlog->status ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $wlog->notes ?? '' }}
                                         </td>
                                         <td>
                                             {{ $wlog->internal_notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($wlog->photos as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $media->getUrl('thumb') }}">
+                                                </a>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('wlog_show')

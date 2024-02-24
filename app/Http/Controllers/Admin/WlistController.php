@@ -10,10 +10,11 @@ use App\Http\Requests\StoreWlistRequest;
 use App\Http\Requests\UpdateWlistRequest;
 use App\Models\Boat;
 use App\Models\Client;
-use App\Models\Priority;
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Wlist;
+use App\Models\WlistStatus;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -29,7 +30,7 @@ class WlistController extends Controller
         abort_if(Gate::denies('wlist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority'])->select(sprintf('%s.*', (new Wlist)->table));
+            $query = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status'])->select(sprintf('%s.*', (new Wlist)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -85,19 +86,21 @@ class WlistController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->editColumn('for_user', function ($row) {
-                $labels = [];
-                foreach ($row->for_users as $for_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $for_user->name);
-                }
+            $table->addColumn('for_employee_id_employee', function ($row) {
+                return $row->for_employee ? $row->for_employee->id_employee : '';
+            });
 
-                return implode(' ', $labels);
+            $table->editColumn('for_employee.namecomplete', function ($row) {
+                return $row->for_employee ? (is_string($row->for_employee) ? $row->for_employee : $row->for_employee->namecomplete) : '';
             });
             $table->editColumn('boat_namecomplete', function ($row) {
                 return $row->boat_namecomplete ? $row->boat_namecomplete : '';
             });
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : '';
+            });
+            $table->editColumn('estimated_hours', function ($row) {
+                return $row->estimated_hours ? $row->estimated_hours : '';
             });
             $table->editColumn('photos', function ($row) {
                 if (! $row->photos) {
@@ -111,18 +114,15 @@ class WlistController extends Controller
                 return implode(' ', $links);
             });
 
-            $table->addColumn('priority_name', function ($row) {
-                return $row->priority ? $row->priority->name : '';
+            $table->addColumn('status_name', function ($row) {
+                return $row->status ? $row->status->name : '';
             });
 
-            $table->editColumn('priority.weight', function ($row) {
-                return $row->priority ? (is_string($row->priority) ? $row->priority : $row->priority->weight) : '';
+            $table->editColumn('priority', function ($row) {
+                return $row->priority ? $row->priority : '';
             });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? Wlist::STATUS_RADIO[$row->status] : '';
-            });
-            $table->editColumn('url_invoice', function ($row) {
-                return $row->url_invoice ? $row->url_invoice : '';
+            $table->editColumn('proforma_link', function ($row) {
+                return $row->proforma_link ? $row->proforma_link : '';
             });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
@@ -130,19 +130,26 @@ class WlistController extends Controller
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'client', 'boat', 'from_user', 'for_role', 'for_user', 'photos', 'priority']);
+            $table->rawColumns(['actions', 'placeholder', 'client', 'boat', 'from_user', 'for_role', 'for_employee', 'photos', 'status']);
 
             return $table->make(true);
         }
 
-        $clients    = Client::get();
-        $boats      = Boat::get();
-        $users      = User::get();
-        $roles      = Role::get();
-        $priorities = Priority::get();
+        $clients        = Client::get();
+        $boats          = Boat::get();
+        $users          = User::get();
+        $roles          = Role::get();
+        $employees      = Employee::get();
+        $wlist_statuses = WlistStatus::get();
 
-        return view('admin.wlists.index', compact('clients', 'boats', 'users', 'roles', 'priorities'));
+        return view('admin.wlists.index', compact('clients', 'boats', 'users', 'roles', 'employees', 'wlist_statuses'));
     }
 
     public function create()
@@ -157,18 +164,17 @@ class WlistController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.wlists.create', compact('boats', 'clients', 'for_roles', 'for_users', 'from_users', 'priorities'));
+        return view('admin.wlists.create', compact('boats', 'clients', 'for_employees', 'for_roles', 'from_users', 'statuses'));
     }
 
     public function store(StoreWlistRequest $request)
     {
         $wlist = Wlist::create($request->all());
         $wlist->for_roles()->sync($request->input('for_roles', []));
-        $wlist->for_users()->sync($request->input('for_users', []));
         foreach ($request->input('photos', []) as $file) {
             $wlist->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
@@ -192,20 +198,19 @@ class WlistController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority');
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status');
 
-        return view('admin.wlists.edit', compact('boats', 'clients', 'for_roles', 'for_users', 'from_users', 'priorities', 'wlist'));
+        return view('admin.wlists.edit', compact('boats', 'clients', 'for_employees', 'for_roles', 'from_users', 'statuses', 'wlist'));
     }
 
     public function update(UpdateWlistRequest $request, Wlist $wlist)
     {
         $wlist->update($request->all());
         $wlist->for_roles()->sync($request->input('for_roles', []));
-        $wlist->for_users()->sync($request->input('for_users', []));
         if (count($wlist->photos) > 0) {
             foreach ($wlist->photos as $media) {
                 if (! in_array($media->file_name, $request->input('photos', []))) {
@@ -227,7 +232,7 @@ class WlistController extends Controller
     {
         abort_if(Gate::denies('wlist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority', 'wlistWlogs', 'wlistMatLogs', 'wlistComments', 'wlistsAppointments', 'wlistsProformas');
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'wlistWlogs', 'wlistComments', 'wlistMlogs', 'forWlistEmployeesRatings', 'wlistsAppointments', 'wlistsProformas');
 
         return view('admin.wlists.show', compact('wlist'));
     }

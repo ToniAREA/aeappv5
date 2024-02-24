@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.client.fields.has_active_vip_plan') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $client->has_active_vip_plan ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.client.fields.defaulter') }}
                                     </th>
                                     <td>
@@ -144,18 +152,42 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.client.fields.link') }}
-                                    </th>
-                                    <td>
-                                        {{ $client->link }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.client.fields.coordinates') }}
                                     </th>
                                     <td>
                                         {{ $client->coordinates }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_a') }}
+                                    </th>
+                                    <td>
+                                        {{ $client->link_a }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_a_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $client->link_a_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_b') }}
+                                    </th>
+                                    <td>
+                                        {{ $client->link_b }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_b_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $client->link_b_description }}
                                     </td>
                                 </tr>
                                 <tr>

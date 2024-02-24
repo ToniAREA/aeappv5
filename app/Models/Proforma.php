@@ -17,6 +17,7 @@ class Proforma extends Model
 
     protected $dates = [
         'date',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -24,6 +25,8 @@ class Proforma extends Model
 
     protected $fillable = [
         'proforma_number',
+        'closed_and_protected',
+        'invoice_link',
         'client_id',
         'date',
         'description',
@@ -33,8 +36,11 @@ class Proforma extends Model
         'paid',
         'claims',
         'link',
+        'link_description',
         'status',
         'notes',
+        'internal_notes',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -60,9 +66,24 @@ class Proforma extends Model
         return $this->hasMany(Payment::class, 'proforma_number_id', 'id');
     }
 
-    public function proformaNumberMatLogs()
+    public function proformaNumberMlogs()
     {
-        return $this->hasMany(MatLog::class, 'proforma_number_id', 'id');
+        return $this->hasMany(Mlog::class, 'proforma_number_id', 'id');
+    }
+
+    public function proformaAssetsRentals()
+    {
+        return $this->hasMany(AssetsRental::class, 'proforma_id', 'id');
+    }
+
+    public function proformaClientsReviews()
+    {
+        return $this->hasMany(ClientsReview::class, 'proforma_id', 'id');
+    }
+
+    public function proformaSuscriptions()
+    {
+        return $this->hasMany(Suscription::class, 'proforma_id', 'id');
     }
 
     public function client()
@@ -88,5 +109,15 @@ class Proforma extends Model
     public function setDateAttribute($value)
     {
         $this->attributes['date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getCompletedAtAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setCompletedAtAttribute($value)
+    {
+        $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 }

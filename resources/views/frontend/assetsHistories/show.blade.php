@@ -60,6 +60,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.assetsHistory.fields.notes') }}
+                                    </th>
+                                    <td>
+                                        {{ $assetsHistory->notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.assetsHistory.fields.created_at') }}
                                     </th>
                                     <td>

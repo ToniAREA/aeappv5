@@ -53,6 +53,9 @@ class ContentPageController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : '';
             });
+            $table->editColumn('show_online', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online ? 'checked' : null) . '>';
+            });
             $table->editColumn('slug', function ($row) {
                 return $row->slug ? $row->slug : '';
             });
@@ -94,8 +97,38 @@ class ContentPageController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->editColumn('seo_title', function ($row) {
+                return $row->seo_title ? $row->seo_title : '';
+            });
+            $table->editColumn('seo_meta_description', function ($row) {
+                return $row->seo_meta_description ? $row->seo_meta_description : '';
+            });
+            $table->editColumn('seo_slug', function ($row) {
+                return $row->seo_slug ? $row->seo_slug : '';
+            });
+            $table->editColumn('link_a', function ($row) {
+                return $row->link_a ? $row->link_a : '';
+            });
+            $table->editColumn('link_a_description', function ($row) {
+                return $row->link_a_description ? $row->link_a_description : '';
+            });
+            $table->editColumn('show_online_link_a', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online_link_a ? 'checked' : null) . '>';
+            });
+            $table->editColumn('link_b', function ($row) {
+                return $row->link_b ? $row->link_b : '';
+            });
+            $table->editColumn('link_b_description', function ($row) {
+                return $row->link_b_description ? $row->link_b_description : '';
+            });
+            $table->editColumn('show_online_link_b', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online_link_b ? 'checked' : null) . '>';
+            });
+            $table->editColumn('view_count', function ($row) {
+                return $row->view_count ? $row->view_count : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'tag', 'featured_image', 'file']);
+            $table->rawColumns(['actions', 'placeholder', 'show_online', 'category', 'tag', 'featured_image', 'file', 'show_online_link_a', 'show_online_link_b']);
 
             return $table->make(true);
         }

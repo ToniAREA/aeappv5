@@ -70,6 +70,20 @@
                             <span class="help-block">{{ trans('cruds.bookingList.fields.employee_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="booking_slot_id">{{ trans('cruds.bookingList.fields.booking_slot') }}</label>
+                            <select class="form-control select2" name="booking_slot_id" id="booking_slot_id">
+                                @foreach($booking_slots as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('booking_slot_id') ? old('booking_slot_id') : $bookingList->booking_slot->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('booking_slot'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('booking_slot') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.bookingList.fields.booking_slot_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="date">{{ trans('cruds.bookingList.fields.date') }}</label>
                             <input class="form-control date" type="text" name="date" id="date" value="{{ old('date', $bookingList->date) }}" required>
                             @if($errors->has('date'))
@@ -110,24 +124,24 @@
                             <span class="help-block">{{ trans('cruds.bookingList.fields.end_time_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="required" for="hour_rate">{{ trans('cruds.bookingList.fields.hour_rate') }}</label>
-                            <input class="form-control" type="number" name="hour_rate" id="hour_rate" value="{{ old('hour_rate', $bookingList->hour_rate) }}" step="0.01" required>
-                            @if($errors->has('hour_rate'))
+                            <label for="hourly_rate">{{ trans('cruds.bookingList.fields.hourly_rate') }}</label>
+                            <input class="form-control" type="number" name="hourly_rate" id="hourly_rate" value="{{ old('hourly_rate', $bookingList->hourly_rate) }}" step="0.01">
+                            @if($errors->has('hourly_rate'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('hour_rate') }}
+                                    {{ $errors->first('hourly_rate') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.bookingList.fields.hour_rate_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.bookingList.fields.hourly_rate_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="required" for="total_price">{{ trans('cruds.bookingList.fields.total_price') }}</label>
-                            <input class="form-control" type="number" name="total_price" id="total_price" value="{{ old('total_price', $bookingList->total_price) }}" step="0.01" required>
-                            @if($errors->has('total_price'))
+                            <label for="total_amount">{{ trans('cruds.bookingList.fields.total_amount') }}</label>
+                            <input class="form-control" type="number" name="total_amount" id="total_amount" value="{{ old('total_amount', $bookingList->total_amount) }}" step="0.01">
+                            @if($errors->has('total_amount'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('total_price') }}
+                                    {{ $errors->first('total_amount') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.bookingList.fields.total_price_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.bookingList.fields.total_amount_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="notes">{{ trans('cruds.bookingList.fields.notes') }}</label>
@@ -170,6 +184,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.bookingList.fields.status_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="completed_at">{{ trans('cruds.bookingList.fields.completed_at') }}</label>
+                            <input class="form-control datetime" type="text" name="completed_at" id="completed_at" value="{{ old('completed_at', $bookingList->completed_at) }}">
+                            @if($errors->has('completed_at'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('completed_at') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.bookingList.fields.completed_at_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

@@ -33,6 +33,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.contentPage.fields.show_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.contentPage.fields.slug') }}
                         </th>
                         <td>
@@ -97,6 +105,86 @@
                                     {{ trans('global.view_file') }}
                                 </a>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.seo_title') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->seo_title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.seo_meta_description') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->seo_meta_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.seo_slug') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->seo_slug }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_a') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_a }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_a_description') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_a_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.show_online_link_a') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_a ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_b') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_b }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_b_description') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_b_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.show_online_link_b') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_b ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.view_count') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->view_count }}
                         </td>
                     </tr>
                 </tbody>

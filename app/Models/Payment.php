@@ -37,6 +37,12 @@ class Payment extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new \App\Observers\PaymentActionObserver);
+    }
+
     public function proforma_number()
     {
         return $this->belongsTo(Proforma::class, 'proforma_number_id');

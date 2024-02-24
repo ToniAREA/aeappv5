@@ -125,6 +125,36 @@
                             <span class="help-block">{{ trans('cruds.contactCompany.fields.contacts_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="link">{{ trans('cruds.contactCompany.fields.link') }}</label>
+                            <input class="form-control" type="text" name="link" id="link" value="{{ old('link', '') }}">
+                            @if($errors->has('link'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.contactCompany.fields.link_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_description">{{ trans('cruds.contactCompany.fields.link_description') }}</label>
+                            <input class="form-control" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                            @if($errors->has('link_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.contactCompany.fields.link_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_use">{{ trans('cruds.contactCompany.fields.last_use') }}</label>
+                            <input class="form-control datetime" type="text" name="last_use" id="last_use" value="{{ old('last_use') }}">
+                            @if($errors->has('last_use'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('last_use') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.contactCompany.fields.last_use_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>

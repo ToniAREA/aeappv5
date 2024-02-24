@@ -53,6 +53,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.provider.fields.provider_url') }}
+                        </th>
+                        <td>
+                            {{ $provider->provider_url }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.provider.fields.brands') }}
                         </th>
                         <td>
@@ -89,6 +97,22 @@
                             {{ $provider->internal_notes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.provider.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $provider->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.provider.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $provider->link_description }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -110,10 +134,18 @@
                 {{ trans('cruds.brand.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#providers_products" role="tab" data-toggle="tab">
+                {{ trans('cruds.product.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="providers_brands">
             @includeIf('admin.providers.relationships.providersBrands', ['brands' => $provider->providersBrands])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="providers_products">
+            @includeIf('admin.providers.relationships.providersProducts', ['products' => $provider->providersProducts])
         </div>
     </div>
 </div>

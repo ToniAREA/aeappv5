@@ -47,6 +47,12 @@
                         {{ trans('cruds.brand.fields.internal_notes') }}
                     </th>
                     <th>
+                        {{ trans('cruds.brand.fields.link') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.brand.fields.link_description') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -71,6 +77,12 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -140,6 +152,8 @@
 { data: 'providers', name: 'providers.name' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
+{ data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -27,6 +27,12 @@ class StoreFaqQuestionRequest extends FormRequest
             'answer' => [
                 'required',
             ],
+            'view_count' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
         ];
     }
 }

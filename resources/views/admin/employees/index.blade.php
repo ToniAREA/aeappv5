@@ -33,6 +33,9 @@
                             {{ trans('cruds.employee.fields.id_employee') }}
                         </th>
                         <th>
+                            {{ trans('cruds.employee.fields.namecomplete') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.employee.fields.user') }}
                         </th>
                         <th>
@@ -66,6 +69,9 @@
                             {{ trans('cruds.employee.fields.link') }}
                         </th>
                         <th>
+                            {{ trans('cruds.employee.fields.link_description') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.employee.fields.active') }}
                         </th>
                         <th>
@@ -84,6 +90,9 @@
                             </td>
                             <td>
                                 {{ $employee->id_employee ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employee->namecomplete ?? '' }}
                             </td>
                             <td>
                                 {{ $employee->user->name ?? '' }}
@@ -121,6 +130,9 @@
                             </td>
                             <td>
                                 {{ $employee->link ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employee->link_description ?? '' }}
                             </td>
                             <td>
                                 <span style="display:none">{{ $employee->active ?? '' }}</span>

@@ -127,6 +127,30 @@
                             {{ $contactContact->contact_internalnotes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactContact.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $contactContact->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactContact.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $contactContact->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactContact.fields.last_use') }}
+                        </th>
+                        <td>
+                            {{ $contactContact->last_use }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

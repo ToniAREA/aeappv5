@@ -49,6 +49,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.boat.fields.boat_photo') }}
+                        </th>
+                        <td>
+                            @if($boat->boat_photo)
+                                <a href="{{ $boat->boat_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $boat->boat_photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.boat.fields.imo') }}
                         </th>
                         <td>
@@ -115,6 +127,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.boat.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $boat->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.boat.fields.last_use') }}
                         </th>
                         <td>
@@ -148,13 +168,18 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#boat_mat_logs" role="tab" data-toggle="tab">
-                {{ trans('cruds.matLog.title') }}
+            <a class="nav-link" href="#boat_booking_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.bookingList.title') }}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#boat_booking_lists" role="tab" data-toggle="tab">
-                {{ trans('cruds.bookingList.title') }}
+            <a class="nav-link" href="#boat_mlogs" role="tab" data-toggle="tab">
+                {{ trans('cruds.mlog.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#boat_assets_rentals" role="tab" data-toggle="tab">
+                {{ trans('cruds.assetsRental.title') }}
             </a>
         </li>
         <li class="nav-item">
@@ -167,6 +192,11 @@
                 {{ trans('cruds.proforma.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#boats_clients_reviews" role="tab" data-toggle="tab">
+                {{ trans('cruds.clientsReview.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="boat_wlists">
@@ -175,17 +205,23 @@
         <div class="tab-pane" role="tabpanel" id="boat_appointments">
             @includeIf('admin.boats.relationships.boatAppointments', ['appointments' => $boat->boatAppointments])
         </div>
-        <div class="tab-pane" role="tabpanel" id="boat_mat_logs">
-            @includeIf('admin.boats.relationships.boatMatLogs', ['matLogs' => $boat->boatMatLogs])
-        </div>
         <div class="tab-pane" role="tabpanel" id="boat_booking_lists">
             @includeIf('admin.boats.relationships.boatBookingLists', ['bookingLists' => $boat->boatBookingLists])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boat_mlogs">
+            @includeIf('admin.boats.relationships.boatMlogs', ['mlogs' => $boat->boatMlogs])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boat_assets_rentals">
+            @includeIf('admin.boats.relationships.boatAssetsRentals', ['assetsRentals' => $boat->boatAssetsRentals])
         </div>
         <div class="tab-pane" role="tabpanel" id="boats_clients">
             @includeIf('admin.boats.relationships.boatsClients', ['clients' => $boat->boatsClients])
         </div>
         <div class="tab-pane" role="tabpanel" id="boats_proformas">
             @includeIf('admin.boats.relationships.boatsProformas', ['proformas' => $boat->boatsProformas])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boats_clients_reviews">
+            @includeIf('admin.boats.relationships.boatsClientsReviews', ['clientsReviews' => $boat->boatsClientsReviews])
         </div>
     </div>
 </div>

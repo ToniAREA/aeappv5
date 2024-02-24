@@ -48,6 +48,12 @@
                                         {{ trans('cruds.brand.fields.internal_notes') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.brand.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.brand.fields.link_description') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -72,6 +78,12 @@
                                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -112,6 +124,12 @@
                                         </td>
                                         <td>
                                             {{ $brand->internal_notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $brand->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $brand->link_description ?? '' }}
                                         </td>
                                         <td>
                                             @can('brand_show')

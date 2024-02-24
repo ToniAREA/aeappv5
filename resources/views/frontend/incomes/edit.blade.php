@@ -14,6 +14,20 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <label for="employee_id">{{ trans('cruds.income.fields.employee') }}</label>
+                            <select class="form-control select2" name="employee_id" id="employee_id">
+                                @foreach($employees as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('employee_id') ? old('employee_id') : $income->employee->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('employee'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('employee') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.income.fields.employee_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="income_category_id">{{ trans('cruds.income.fields.income_category') }}</label>
                             <select class="form-control select2" name="income_category_id" id="income_category_id">
                                 @foreach($income_categories as $id => $entry)
@@ -38,6 +52,16 @@
                             <span class="help-block">{{ trans('cruds.income.fields.entry_date_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="description">{{ trans('cruds.income.fields.description') }}</label>
+                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $income->description) }}">
+                            @if($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.income.fields.description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="amount">{{ trans('cruds.income.fields.amount') }}</label>
                             <input class="form-control" type="number" name="amount" id="amount" value="{{ old('amount', $income->amount) }}" step="0.01" required>
                             @if($errors->has('amount'))
@@ -48,14 +72,17 @@
                             <span class="help-block">{{ trans('cruds.income.fields.amount_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.income.fields.description') }}</label>
-                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $income->description) }}">
-                            @if($errors->has('description'))
+                            <div>
+                                <input type="hidden" name="is_accounted" value="0">
+                                <input type="checkbox" name="is_accounted" id="is_accounted" value="1" {{ $income->is_accounted || old('is_accounted', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_accounted">{{ trans('cruds.income.fields.is_accounted') }}</label>
+                            </div>
+                            @if($errors->has('is_accounted'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('description') }}
+                                    {{ $errors->first('is_accounted') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.income.fields.description_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.income.fields.is_accounted_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

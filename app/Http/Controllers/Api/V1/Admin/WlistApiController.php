@@ -20,14 +20,13 @@ class WlistApiController extends Controller
     {
         abort_if(Gate::denies('wlist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WlistResource(Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority'])->get());
+        return new WlistResource(Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status'])->get());
     }
 
     public function store(StoreWlistRequest $request)
     {
         $wlist = Wlist::create($request->all());
         $wlist->for_roles()->sync($request->input('for_roles', []));
-        $wlist->for_users()->sync($request->input('for_users', []));
         foreach ($request->input('photos', []) as $file) {
             $wlist->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
@@ -41,14 +40,13 @@ class WlistApiController extends Controller
     {
         abort_if(Gate::denies('wlist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WlistResource($wlist->load(['client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority']));
+        return new WlistResource($wlist->load(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status']));
     }
 
     public function update(UpdateWlistRequest $request, Wlist $wlist)
     {
         $wlist->update($request->all());
         $wlist->for_roles()->sync($request->input('for_roles', []));
-        $wlist->for_users()->sync($request->input('for_users', []));
         if (count($wlist->photos) > 0) {
             foreach ($wlist->photos as $media) {
                 if (! in_array($media->file_name, $request->input('photos', []))) {

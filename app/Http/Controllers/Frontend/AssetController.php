@@ -26,7 +26,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assets = Asset::with(['category', 'status', 'location', 'assigned_to', 'media'])->get();
+        $assets = Asset::with(['category', 'status', 'location', 'actual_holder', 'media'])->get();
 
         $asset_categories = AssetCategory::get();
 
@@ -49,9 +49,9 @@ class AssetController extends Controller
 
         $locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actual_holders = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.assets.create', compact('assigned_tos', 'categories', 'locations', 'statuses'));
+        return view('frontend.assets.create', compact('actual_holders', 'categories', 'locations', 'statuses'));
     }
 
     public function store(StoreAssetRequest $request)
@@ -60,6 +60,10 @@ class AssetController extends Controller
 
         foreach ($request->input('photos', []) as $file) {
             $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        foreach ($request->input('files', []) as $file) {
+            $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -79,11 +83,11 @@ class AssetController extends Controller
 
         $locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actual_holders = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'actual_holder');
 
-        return view('frontend.assets.edit', compact('asset', 'assigned_tos', 'categories', 'locations', 'statuses'));
+        return view('frontend.assets.edit', compact('actual_holders', 'asset', 'categories', 'locations', 'statuses'));
     }
 
     public function update(UpdateAssetRequest $request, Asset $asset)
@@ -104,6 +108,20 @@ class AssetController extends Controller
             }
         }
 
+        if (count($asset->files) > 0) {
+            foreach ($asset->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $asset->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+            }
+        }
+
         return redirect()->route('frontend.assets.index');
     }
 
@@ -111,7 +129,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'actual_holder');
 
         return view('frontend.assets.show', compact('asset'));
     }

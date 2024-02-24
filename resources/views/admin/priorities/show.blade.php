@@ -68,26 +68,10 @@
                 {{ trans('cruds.appointment.title') }}
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#priority_wlists" role="tab" data-toggle="tab">
-                {{ trans('cruds.wlist.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#priority_to_dos" role="tab" data-toggle="tab">
-                {{ trans('cruds.toDo.title') }}
-            </a>
-        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="priority_appointments">
             @includeIf('admin.priorities.relationships.priorityAppointments', ['appointments' => $priority->priorityAppointments])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="priority_wlists">
-            @includeIf('admin.priorities.relationships.priorityWlists', ['wlists' => $priority->priorityWlists])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="priority_to_dos">
-            @includeIf('admin.priorities.relationships.priorityToDos', ['toDos' => $priority->priorityToDos])
         </div>
     </div>
 </div>

@@ -18,27 +18,36 @@ class ToDo extends Model implements HasMedia
 
     public $table = 'to_dos';
 
-    protected $appends = [
-        'photo',
-    ];
-
     public static $searchable = [
         'internal_notes',
     ];
 
     protected $dates = [
         'deadline',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    public const REPEAT_INTERVAL_UNIT_SELECT = [
+        'day'   => 'Day',
+        'week'  => 'Week',
+        'month' => 'Month',
+        'year'  => 'Year',
+    ];
+
     protected $fillable = [
         'task',
-        'deadline',
-        'priority_id',
         'notes',
+        'for_employee_id',
+        'deadline',
+        'priority',
+        'is_repetitive',
+        'repeat_interval_value',
+        'repeat_interval_unit',
         'internal_notes',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -60,21 +69,9 @@ class ToDo extends Model implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function for_users()
+    public function for_employee()
     {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function getPhotoAttribute()
-    {
-        $files = $this->getMedia('photo');
-        $files->each(function ($item) {
-            $item->url       = $item->getUrl();
-            $item->thumbnail = $item->getUrl('thumb');
-            $item->preview   = $item->getUrl('preview');
-        });
-
-        return $files;
+        return $this->belongsTo(Employee::class, 'for_employee_id');
     }
 
     public function getDeadlineAttribute($value)
@@ -87,8 +84,13 @@ class ToDo extends Model implements HasMedia
         $this->attributes['deadline'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function priority()
+    public function getCompletedAtAttribute($value)
     {
-        return $this->belongsTo(Priority::class, 'priority_id');
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setCompletedAtAttribute($value)
+    {
+        $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 }

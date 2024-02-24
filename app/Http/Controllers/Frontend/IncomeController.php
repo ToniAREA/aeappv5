@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyIncomeRequest;
 use App\Http\Requests\StoreIncomeRequest;
 use App\Http\Requests\UpdateIncomeRequest;
+use App\Models\Employee;
 use App\Models\Income;
 use App\Models\IncomeCategory;
 use Gate;
@@ -21,20 +22,24 @@ class IncomeController extends Controller
     {
         abort_if(Gate::denies('income_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $incomes = Income::with(['income_category'])->get();
+        $incomes = Income::with(['employee', 'income_category'])->get();
+
+        $employees = Employee::get();
 
         $income_categories = IncomeCategory::get();
 
-        return view('frontend.incomes.index', compact('income_categories', 'incomes'));
+        return view('frontend.incomes.index', compact('employees', 'income_categories', 'incomes'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('income_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $income_categories = IncomeCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.incomes.create', compact('income_categories'));
+        return view('frontend.incomes.create', compact('employees', 'income_categories'));
     }
 
     public function store(StoreIncomeRequest $request)
@@ -48,11 +53,13 @@ class IncomeController extends Controller
     {
         abort_if(Gate::denies('income_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $income_categories = IncomeCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $income->load('income_category');
+        $income->load('employee', 'income_category');
 
-        return view('frontend.incomes.edit', compact('income', 'income_categories'));
+        return view('frontend.incomes.edit', compact('employees', 'income', 'income_categories'));
     }
 
     public function update(UpdateIncomeRequest $request, Income $income)
@@ -66,7 +73,7 @@ class IncomeController extends Controller
     {
         abort_if(Gate::denies('income_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $income->load('income_category');
+        $income->load('employee', 'income_category');
 
         return view('frontend.incomes.show', compact('income'));
     }

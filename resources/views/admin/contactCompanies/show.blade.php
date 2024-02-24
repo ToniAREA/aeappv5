@@ -105,6 +105,30 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactCompany.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $contactCompany->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactCompany.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $contactCompany->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactCompany.fields.last_use') }}
+                        </th>
+                        <td>
+                            {{ $contactCompany->last_use }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

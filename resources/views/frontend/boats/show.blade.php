@@ -52,6 +52,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.boat.fields.boat_photo') }}
+                                    </th>
+                                    <td>
+                                        @if($boat->boat_photo)
+                                            <a href="{{ $boat->boat_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $boat->boat_photo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.boat.fields.imo') }}
                                     </th>
                                     <td>
@@ -114,6 +126,14 @@
                                     </th>
                                     <td>
                                         {{ $boat->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $boat->link_description }}
                                     </td>
                                 </tr>
                                 <tr>

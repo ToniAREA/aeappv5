@@ -9,6 +9,7 @@ use App\Http\Requests\StoreBookingListRequest;
 use App\Http\Requests\UpdateBookingListRequest;
 use App\Models\Boat;
 use App\Models\BookingList;
+use App\Models\BookingSlot;
 use App\Models\Client;
 use App\Models\Employee;
 use App\Models\User;
@@ -26,7 +27,7 @@ class BookingListController extends Controller
         abort_if(Gate::denies('booking_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = BookingList::with(['user', 'client', 'boat', 'employee'])->select(sprintf('%s.*', (new BookingList)->table));
+            $query = BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot'])->select(sprintf('%s.*', (new BookingList)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -78,6 +79,13 @@ class BookingListController extends Controller
             $table->editColumn('employee.category', function ($row) {
                 return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->category) : '';
             });
+            $table->addColumn('booking_slot_star_time', function ($row) {
+                return $row->booking_slot ? $row->booking_slot->star_time : '';
+            });
+
+            $table->editColumn('booking_slot.end_time', function ($row) {
+                return $row->booking_slot ? (is_string($row->booking_slot) ? $row->booking_slot : $row->booking_slot->end_time) : '';
+            });
 
             $table->editColumn('hours', function ($row) {
                 return $row->hours ? $row->hours : '';
@@ -88,11 +96,11 @@ class BookingListController extends Controller
             $table->editColumn('end_time', function ($row) {
                 return $row->end_time ? $row->end_time : '';
             });
-            $table->editColumn('hour_rate', function ($row) {
-                return $row->hour_rate ? $row->hour_rate : '';
+            $table->editColumn('hourly_rate', function ($row) {
+                return $row->hourly_rate ? $row->hourly_rate : '';
             });
-            $table->editColumn('total_price', function ($row) {
-                return $row->total_price ? $row->total_price : '';
+            $table->editColumn('total_amount', function ($row) {
+                return $row->total_amount ? $row->total_amount : '';
             });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
@@ -107,17 +115,18 @@ class BookingListController extends Controller
                 return $row->status ? $row->status : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'client', 'boat', 'employee', 'confirmed']);
+            $table->rawColumns(['actions', 'placeholder', 'user', 'client', 'boat', 'employee', 'booking_slot', 'confirmed']);
 
             return $table->make(true);
         }
 
-        $users     = User::get();
-        $clients   = Client::get();
-        $boats     = Boat::get();
-        $employees = Employee::get();
+        $users         = User::get();
+        $clients       = Client::get();
+        $boats         = Boat::get();
+        $employees     = Employee::get();
+        $booking_slots = BookingSlot::get();
 
-        return view('admin.bookingLists.index', compact('users', 'clients', 'boats', 'employees'));
+        return view('admin.bookingLists.index', compact('users', 'clients', 'boats', 'employees', 'booking_slots'));
     }
 
     public function create()
@@ -132,7 +141,9 @@ class BookingListController extends Controller
 
         $employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.bookingLists.create', compact('boats', 'clients', 'employees', 'users'));
+        $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.bookingLists.create', compact('boats', 'booking_slots', 'clients', 'employees', 'users'));
     }
 
     public function store(StoreBookingListRequest $request)
@@ -154,9 +165,11 @@ class BookingListController extends Controller
 
         $employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bookingList->load('user', 'client', 'boat', 'employee');
+        $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.bookingLists.edit', compact('boats', 'bookingList', 'clients', 'employees', 'users'));
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
+
+        return view('admin.bookingLists.edit', compact('boats', 'bookingList', 'booking_slots', 'clients', 'employees', 'users'));
     }
 
     public function update(UpdateBookingListRequest $request, BookingList $bookingList)
@@ -170,7 +183,7 @@ class BookingListController extends Controller
     {
         abort_if(Gate::denies('booking_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bookingList->load('user', 'client', 'boat', 'employee');
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
 
         return view('admin.bookingLists.show', compact('bookingList'));
     }
