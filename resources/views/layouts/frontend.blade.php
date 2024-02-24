@@ -9,36 +9,33 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'AEAPP') }}</title>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
-    <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
+ <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
+    <link href="{{ asset('css/adminltev3.css') }}" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     @yield('styles')
+    
 </head>
 
 <body>
     <div id="app">
+        <!-- Navbar and content goes here -->
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}" style="font-size: 1.5em;">
-                    <b>AREA</b> ELECTRONICA
+                    <b><i class="fa fa-ship"></i> AREA</b> ELECTRONICA
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -62,20 +59,22 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if(Route::has('register'))
+                            @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                    <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
 
                                     @can('to_do_access')
                                         <a class="dropdown-item" href="{{ route('frontend.to-dos.index') }}">
@@ -188,7 +187,8 @@
                                         </a>
                                     @endcan
                                     @can('product_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.product-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.product-categories.index') }}">
                                             {{ trans('cruds.productCategory.title') }}
                                         </a>
                                     @endcan
@@ -253,7 +253,8 @@
                                         </a>
                                     @endcan
                                     @can('content_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.content-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.content-categories.index') }}">
                                             {{ trans('cruds.contentCategory.title') }}
                                         </a>
                                     @endcan
@@ -323,12 +324,14 @@
                                         </a>
                                     @endcan
                                     @can('expense_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.expense-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.expense-categories.index') }}">
                                             {{ trans('cruds.expenseCategory.title') }}
                                         </a>
                                     @endcan
                                     @can('income_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.income-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.income-categories.index') }}">
                                             {{ trans('cruds.incomeCategory.title') }}
                                         </a>
                                     @endcan
@@ -338,12 +341,14 @@
                                         </a>
                                     @endcan
 
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -354,8 +359,15 @@
             </div>
         </nav>
 
-        <main class="py-1">
-            @if(session('message'))
+        <!-- Example for updated Bootstrap 5 navbar toggle -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="{{ __('Toggle navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <main class="">
+            @if (session('message'))
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -364,13 +376,13 @@
                     </div>
                 </div>
             @endif
-            @if($errors->count() > 0)
+            @if ($errors->count() > 0)
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger">
                                 <ul class="list-unstyled mb-0">
-                                    @foreach($errors->all() as $error)
+                                    @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>
@@ -379,32 +391,32 @@
                     </div>
                 </div>
             @endif
-            
+
             @yield('content')
         </main>
     </div>
-</body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.min.js"></script>
-<script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
-<script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
-<script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
-<script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
-<script src="{{ asset('js/main.js') }}"></script>
-@yield('scripts')
 
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
+    <script src="//cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script src="{{ asset('js/main.js') }}"></script>
+    @yield('scripts')
+</body>
 </html>

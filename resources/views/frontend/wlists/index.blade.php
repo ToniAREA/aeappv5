@@ -9,6 +9,8 @@
                 <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> Marinas</a>
             </div>
         </div>
+    </div>
+
     <div class="row justify-content-center">
         <div class="col-md-12">
             @can('wlist_create')
@@ -28,7 +30,6 @@
                 <div class="card-header">
                     {{ trans('cruds.wlist.title_singular') }} {{ trans('global.list') }}
                 </div>
-
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class=" table table-bordered table-striped table-hover datatable datatable-Wlist">
