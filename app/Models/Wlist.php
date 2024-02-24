@@ -50,6 +50,7 @@ class Wlist extends Model implements HasMedia
         'billed'      => 'Billed',
     ];
 
+    //MODEL WLIST
     protected $fillable = [
         'client_id',
         'order_type',
