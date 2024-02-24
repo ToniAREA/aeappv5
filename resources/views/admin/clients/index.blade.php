@@ -29,6 +29,9 @@
                         {{ trans('cruds.client.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.client.fields.has_active_vip_plan') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.client.fields.defaulter') }}
                     </th>
                     <th>
@@ -71,10 +74,19 @@
                         {{ trans('cruds.client.fields.internal_notes') }}
                     </th>
                     <th>
-                        {{ trans('cruds.client.fields.link') }}
+                        {{ trans('cruds.client.fields.coordinates') }}
                     </th>
                     <th>
-                        {{ trans('cruds.client.fields.coordinates') }}
+                        {{ trans('cruds.client.fields.link_a') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.client.fields.link_a_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.client.fields.link_b') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.client.fields.link_b_description') }}
                     </th>
                     <th>
                         {{ trans('cruds.client.fields.last_use') }}
@@ -88,6 +100,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -133,6 +147,15 @@
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -205,6 +228,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'has_active_vip_plan', name: 'has_active_vip_plan' },
 { data: 'defaulter', name: 'defaulter' },
 { data: 'ref', name: 'ref' },
 { data: 'name', name: 'name' },
@@ -219,8 +243,11 @@
 { data: 'boats', name: 'boats.name' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
-{ data: 'link', name: 'link' },
 { data: 'coordinates', name: 'coordinates' },
+{ data: 'link_a', name: 'link_a' },
+{ data: 'link_a_description', name: 'link_a_description' },
+{ data: 'link_b', name: 'link_b' },
+{ data: 'link_b_description', name: 'link_b_description' },
 { data: 'last_use', name: 'last_use' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

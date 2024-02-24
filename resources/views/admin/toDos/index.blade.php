@@ -29,16 +29,16 @@
                         {{ trans('cruds.toDo.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.toDo.fields.for_role') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.toDo.fields.for_user') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.toDo.fields.task') }}
                     </th>
                     <th>
-                        {{ trans('cruds.toDo.fields.photo') }}
+                        {{ trans('cruds.toDo.fields.for_role') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.toDo.fields.for_employee') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.employee.fields.namecomplete') }}
                     </th>
                     <th>
                         {{ trans('cruds.toDo.fields.deadline') }}
@@ -47,10 +47,19 @@
                         {{ trans('cruds.toDo.fields.priority') }}
                     </th>
                     <th>
-                        {{ trans('cruds.priority.fields.weight') }}
+                        {{ trans('cruds.toDo.fields.is_repetitive') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.toDo.fields.repeat_interval_value') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.toDo.fields.repeat_interval_unit') }}
                     </th>
                     <th>
                         {{ trans('cruds.toDo.fields.internal_notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.toDo.fields.completed_at') }}
                     </th>
                     <th>
                         &nbsp;
@@ -58,6 +67,9 @@
                 </tr>
                 <tr>
                     <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -73,10 +85,14 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @foreach($employees as $key => $item)
+                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -84,16 +100,18 @@
                     <td>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <select class="search">
+                        <select class="search" strict="true">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($priorities as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @foreach(App\Models\ToDo::REPEAT_INTERVAL_UNIT_SELECT as $key => $item)
+                                <option value="{{ $key }}">{{ $item }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -154,14 +172,17 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'for_role', name: 'for_roles.title' },
-{ data: 'for_user', name: 'for_users.name' },
 { data: 'task', name: 'task' },
-{ data: 'photo', name: 'photo', sortable: false, searchable: false },
+{ data: 'for_role', name: 'for_roles.title' },
+{ data: 'for_employee_id_employee', name: 'for_employee.id_employee' },
+{ data: 'for_employee.namecomplete', name: 'for_employee.namecomplete' },
 { data: 'deadline', name: 'deadline' },
-{ data: 'priority_name', name: 'priority.name' },
-{ data: 'priority.weight', name: 'priority.weight' },
+{ data: 'priority', name: 'priority' },
+{ data: 'is_repetitive', name: 'is_repetitive' },
+{ data: 'repeat_interval_value', name: 'repeat_interval_value' },
+{ data: 'repeat_interval_unit', name: 'repeat_interval_unit' },
 { data: 'internal_notes', name: 'internal_notes' },
+{ data: 'completed_at', name: 'completed_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -19,8 +19,8 @@ class Expense extends Model implements HasMedia
     public $table = 'expenses';
 
     protected $appends = [
-        'file',
-        'photo',
+        'files',
+        'photos',
     ];
 
     protected $dates = [
@@ -31,6 +31,7 @@ class Expense extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'employee_id',
         'expense_category_id',
         'entry_date',
         'amount',
@@ -51,6 +52,11 @@ class Expense extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
+    }
+
     public function expense_category()
     {
         return $this->belongsTo(ExpenseCategory::class, 'expense_category_id');
@@ -66,20 +72,20 @@ class Expense extends Model implements HasMedia
         $this->attributes['entry_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function getFileAttribute()
+    public function getFilesAttribute()
     {
-        return $this->getMedia('file')->last();
+        return $this->getMedia('files');
     }
 
-    public function getPhotoAttribute()
+    public function getPhotosAttribute()
     {
-        $file = $this->getMedia('photo')->last();
-        if ($file) {
-            $file->url       = $file->getUrl();
-            $file->thumbnail = $file->getUrl('thumb');
-            $file->preview   = $file->getUrl('preview');
-        }
+        $files = $this->getMedia('photos');
+        $files->each(function ($item) {
+            $item->url       = $item->getUrl();
+            $item->thumbnail = $item->getUrl('thumb');
+            $item->preview   = $item->getUrl('preview');
+        });
 
-        return $file;
+        return $files;
     }
 }

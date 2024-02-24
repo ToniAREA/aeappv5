@@ -29,6 +29,12 @@
                                         {{ trans('cruds.faqQuestion.fields.category') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.faqQuestion.fields.show_online') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.view_count') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -48,6 +54,11 @@
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,6 +69,13 @@
                                         </td>
                                         <td>
                                             {{ $faqQuestion->category->category ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $faqQuestion->show_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $faqQuestion->show_online ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $faqQuestion->view_count ?? '' }}
                                         </td>
                                         <td>
                                             @can('faq_question_show')

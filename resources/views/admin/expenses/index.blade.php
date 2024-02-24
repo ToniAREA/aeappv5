@@ -29,22 +29,28 @@
                         {{ trans('cruds.expense.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.expense.fields.employee') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.employee.fields.namecomplete') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.expense.fields.expense_category') }}
                     </th>
                     <th>
                         {{ trans('cruds.expense.fields.entry_date') }}
                     </th>
                     <th>
-                        {{ trans('cruds.expense.fields.amount') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.expense.fields.description') }}
                     </th>
                     <th>
-                        {{ trans('cruds.expense.fields.file') }}
+                        {{ trans('cruds.expense.fields.amount') }}
                     </th>
                     <th>
-                        {{ trans('cruds.expense.fields.photo') }}
+                        {{ trans('cruds.expense.fields.files') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.expense.fields.photos') }}
                     </th>
                     <th>
                         &nbsp;
@@ -55,6 +61,16 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($employees as $key => $item)
+                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <select class="search">
@@ -132,12 +148,14 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'employee_id_employee', name: 'employee.id_employee' },
+{ data: 'employee.namecomplete', name: 'employee.namecomplete' },
 { data: 'expense_category_name', name: 'expense_category.name' },
 { data: 'entry_date', name: 'entry_date' },
-{ data: 'amount', name: 'amount' },
 { data: 'description', name: 'description' },
-{ data: 'file', name: 'file', sortable: false, searchable: false },
-{ data: 'photo', name: 'photo', sortable: false, searchable: false },
+{ data: 'amount', name: 'amount' },
+{ data: 'files', name: 'files', sortable: false, searchable: false },
+{ data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

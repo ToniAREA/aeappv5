@@ -70,12 +70,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.for_user') }}
+                                        {{ trans('cruds.wlist.fields.for_employee') }}
                                     </th>
                                     <td>
-                                        @foreach($wlist->for_users as $key => $for_user)
-                                            <span class="label label-info">{{ $for_user->name }}</span>
-                                        @endforeach
+                                        {{ $wlist->for_employee->id_employee ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -92,6 +90,14 @@
                                     </th>
                                     <td>
                                         {{ $wlist->description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.estimated_hours') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->estimated_hours }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -116,26 +122,26 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.priority') }}
-                                    </th>
-                                    <td>
-                                        {{ $wlist->priority->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.wlist.fields.status') }}
                                     </th>
                                     <td>
-                                        {{ App\Models\Wlist::STATUS_RADIO[$wlist->status] ?? '' }}
+                                        {{ $wlist->status->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.url_invoice') }}
+                                        {{ trans('cruds.wlist.fields.priority') }}
                                     </th>
                                     <td>
-                                        {{ $wlist->url_invoice }}
+                                        {{ $wlist->priority }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.proforma_link') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->proforma_link }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -152,6 +158,38 @@
                                     </th>
                                     <td>
                                         {{ $wlist->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->link_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.last_use') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->last_use }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.completed_at') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->completed_at }}
                                     </td>
                                 </tr>
                             </tbody>

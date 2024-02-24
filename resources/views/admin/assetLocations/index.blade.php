@@ -38,6 +38,9 @@
                         {{ trans('cruds.assetLocation.fields.photo') }}
                     </th>
                     <th>
+                        {{ trans('cruds.assetLocation.fields.available') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -52,6 +55,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -114,6 +119,7 @@
 { data: 'name', name: 'name' },
 { data: 'description', name: 'description' },
 { data: 'photo', name: 'photo', sortable: false, searchable: false },
+{ data: 'available', name: 'available' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

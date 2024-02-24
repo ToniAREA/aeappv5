@@ -112,9 +112,9 @@
                                             {{ trans('cruds.wlog.title') }}
                                         </a>
                                     @endcan
-                                    @can('mat_log_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.mat-logs.index') }}">
-                                            {{ trans('cruds.matLog.title') }}
+                                    @can('mlog_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.mlogs.index') }}">
+                                            {{ trans('cruds.mlog.title') }}
                                         </a>
                                     @endcan
                                     @can('comment_access')
@@ -127,6 +127,21 @@
                                             {{ trans('cruds.appointment.title') }}
                                         </a>
                                     @endcan
+                                    @can('vip_plan_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.vipPlan.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('suscription_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.suscriptions.index') }}">
+                                            {{ trans('cruds.suscription.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('plan_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.plans.index') }}">
+                                            {{ trans('cruds.plan.title') }}
+                                        </a>
+                                    @endcan
                                     @can('booking_access')
                                         <a class="dropdown-item disabled" href="#">
                                             {{ trans('cruds.booking.title') }}
@@ -137,9 +152,9 @@
                                             {{ trans('cruds.bookingList.title') }}
                                         </a>
                                     @endcan
-                                    @can('availability_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.availabilities.index') }}">
-                                            {{ trans('cruds.availability.title') }}
+                                    @can('booking_slot_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.booking-slots.index') }}">
+                                            {{ trans('cruds.bookingSlot.title') }}
                                         </a>
                                     @endcan
                                     @can('billing_access')
@@ -212,6 +227,11 @@
                                             {{ trans('cruds.asset.title') }}
                                         </a>
                                     @endcan
+                                    @can('assets_rental_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.assets-rentals.index') }}">
+                                            {{ trans('cruds.assetsRental.title') }}
+                                        </a>
+                                    @endcan
                                     @can('asset_category_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.asset-categories.index') }}">
                                             {{ trans('cruds.assetCategory.title') }}
@@ -272,6 +292,56 @@
                                             {{ trans('cruds.employee.title') }}
                                         </a>
                                     @endcan
+                                    @can('employee_attendance_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employee-attendances.index') }}">
+                                            {{ trans('cruds.employeeAttendance.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('employees_skill_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employees-skills.index') }}">
+                                            {{ trans('cruds.employeesSkill.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('employees_rating_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employees-ratings.index') }}">
+                                            {{ trans('cruds.employeesRating.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('skills_category_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.skills-categories.index') }}">
+                                            {{ trans('cruds.skillsCategory.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('clients_review_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.clients-reviews.index') }}">
+                                            {{ trans('cruds.clientsReview.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('learning_center_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.learningCenter.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('technical_documentation_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.technical-documentations.index') }}">
+                                            {{ trans('cruds.technicalDocumentation.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('tech_docs_type_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.tech-docs-types.index') }}">
+                                            {{ trans('cruds.techDocsType.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('video_tutorial_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.video-tutorials.index') }}">
+                                            {{ trans('cruds.videoTutorial.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('video_category_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.video-categories.index') }}">
+                                            {{ trans('cruds.videoCategory.title') }}
+                                        </a>
+                                    @endcan
                                     @can('faq_management_access')
                                         <a class="dropdown-item disabled" href="#">
                                             {{ trans('cruds.faqManagement.title') }}
@@ -292,14 +362,14 @@
                                             {{ trans('cruds.setup.title') }}
                                         </a>
                                     @endcan
-                                    @can('role_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.roles.index') }}">
-                                            {{ trans('cruds.role.title') }}
-                                        </a>
-                                    @endcan
                                     @can('permission_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.permissions.index') }}">
                                             {{ trans('cruds.permission.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('role_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.roles.index') }}">
+                                            {{ trans('cruds.role.title') }}
                                         </a>
                                     @endcan
                                     @can('priority_access')
@@ -307,14 +377,24 @@
                                             {{ trans('cruds.priority.title') }}
                                         </a>
                                     @endcan
-                                    @can('product_tag_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.product-tags.index') }}">
-                                            {{ trans('cruds.productTag.title') }}
+                                    @can('wlist_status_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.wlist-statuses.index') }}">
+                                            {{ trans('cruds.wlistStatus.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('asset_status_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.asset-statuses.index') }}">
+                                            {{ trans('cruds.assetStatus.title') }}
                                         </a>
                                     @endcan
                                     @can('contact_tag_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.contact-tags.index') }}">
                                             {{ trans('cruds.contactTag.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('product_tag_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.product-tags.index') }}">
+                                            {{ trans('cruds.productTag.title') }}
                                         </a>
                                     @endcan
                                     @can('content_tag_access')
@@ -332,9 +412,9 @@
                                             {{ trans('cruds.incomeCategory.title') }}
                                         </a>
                                     @endcan
-                                    @can('asset_status_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.asset-statuses.index') }}">
-                                            {{ trans('cruds.assetStatus.title') }}
+                                    @can('booking_status_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.booking-statuses.index') }}">
+                                            {{ trans('cruds.bookingStatus.title') }}
                                         </a>
                                     @endcan
 

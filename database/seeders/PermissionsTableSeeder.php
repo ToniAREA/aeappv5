@@ -760,134 +760,422 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 188,
-                'title' => 'mat_log_create',
-            ],
-            [
-                'id'    => 189,
-                'title' => 'mat_log_edit',
-            ],
-            [
-                'id'    => 190,
-                'title' => 'mat_log_show',
-            ],
-            [
-                'id'    => 191,
-                'title' => 'mat_log_delete',
-            ],
-            [
-                'id'    => 192,
-                'title' => 'mat_log_access',
-            ],
-            [
-                'id'    => 193,
                 'title' => 'setup_access',
             ],
             [
-                'id'    => 194,
+                'id'    => 189,
                 'title' => 'contact_tag_create',
             ],
             [
-                'id'    => 195,
+                'id'    => 190,
                 'title' => 'contact_tag_edit',
             ],
             [
-                'id'    => 196,
+                'id'    => 191,
                 'title' => 'contact_tag_show',
             ],
             [
-                'id'    => 197,
+                'id'    => 192,
                 'title' => 'contact_tag_delete',
             ],
             [
-                'id'    => 198,
+                'id'    => 193,
                 'title' => 'contact_tag_access',
             ],
             [
-                'id'    => 199,
+                'id'    => 194,
                 'title' => 'priority_create',
             ],
             [
-                'id'    => 200,
+                'id'    => 195,
                 'title' => 'priority_edit',
             ],
             [
-                'id'    => 201,
+                'id'    => 196,
                 'title' => 'priority_show',
             ],
             [
-                'id'    => 202,
+                'id'    => 197,
                 'title' => 'priority_delete',
             ],
             [
-                'id'    => 203,
+                'id'    => 198,
                 'title' => 'priority_access',
             ],
             [
-                'id'    => 204,
+                'id'    => 199,
                 'title' => 'comment_create',
             ],
             [
-                'id'    => 205,
+                'id'    => 200,
                 'title' => 'comment_edit',
             ],
             [
-                'id'    => 206,
+                'id'    => 201,
                 'title' => 'comment_show',
             ],
             [
-                'id'    => 207,
+                'id'    => 202,
                 'title' => 'comment_delete',
             ],
             [
-                'id'    => 208,
+                'id'    => 203,
                 'title' => 'comment_access',
             ],
             [
-                'id'    => 209,
+                'id'    => 204,
                 'title' => 'booking_access',
             ],
             [
-                'id'    => 210,
+                'id'    => 205,
                 'title' => 'booking_list_create',
             ],
             [
-                'id'    => 211,
+                'id'    => 206,
                 'title' => 'booking_list_edit',
             ],
             [
-                'id'    => 212,
+                'id'    => 207,
                 'title' => 'booking_list_show',
             ],
             [
-                'id'    => 213,
+                'id'    => 208,
                 'title' => 'booking_list_delete',
             ],
             [
-                'id'    => 214,
+                'id'    => 209,
                 'title' => 'booking_list_access',
             ],
             [
+                'id'    => 210,
+                'title' => 'wlist_status_create',
+            ],
+            [
+                'id'    => 211,
+                'title' => 'wlist_status_edit',
+            ],
+            [
+                'id'    => 212,
+                'title' => 'wlist_status_show',
+            ],
+            [
+                'id'    => 213,
+                'title' => 'wlist_status_delete',
+            ],
+            [
+                'id'    => 214,
+                'title' => 'wlist_status_access',
+            ],
+            [
                 'id'    => 215,
-                'title' => 'availability_create',
+                'title' => 'mlog_create',
             ],
             [
                 'id'    => 216,
-                'title' => 'availability_edit',
+                'title' => 'mlog_edit',
             ],
             [
                 'id'    => 217,
-                'title' => 'availability_show',
+                'title' => 'mlog_show',
             ],
             [
                 'id'    => 218,
-                'title' => 'availability_delete',
+                'title' => 'mlog_delete',
             ],
             [
                 'id'    => 219,
-                'title' => 'availability_access',
+                'title' => 'mlog_access',
             ],
             [
                 'id'    => 220,
+                'title' => 'assets_rental_create',
+            ],
+            [
+                'id'    => 221,
+                'title' => 'assets_rental_edit',
+            ],
+            [
+                'id'    => 222,
+                'title' => 'assets_rental_show',
+            ],
+            [
+                'id'    => 223,
+                'title' => 'assets_rental_delete',
+            ],
+            [
+                'id'    => 224,
+                'title' => 'assets_rental_access',
+            ],
+            [
+                'id'    => 225,
+                'title' => 'booking_status_create',
+            ],
+            [
+                'id'    => 226,
+                'title' => 'booking_status_edit',
+            ],
+            [
+                'id'    => 227,
+                'title' => 'booking_status_show',
+            ],
+            [
+                'id'    => 228,
+                'title' => 'booking_status_delete',
+            ],
+            [
+                'id'    => 229,
+                'title' => 'booking_status_access',
+            ],
+            [
+                'id'    => 230,
+                'title' => 'booking_slot_create',
+            ],
+            [
+                'id'    => 231,
+                'title' => 'booking_slot_edit',
+            ],
+            [
+                'id'    => 232,
+                'title' => 'booking_slot_show',
+            ],
+            [
+                'id'    => 233,
+                'title' => 'booking_slot_delete',
+            ],
+            [
+                'id'    => 234,
+                'title' => 'booking_slot_access',
+            ],
+            [
+                'id'    => 235,
+                'title' => 'employee_attendance_create',
+            ],
+            [
+                'id'    => 236,
+                'title' => 'employee_attendance_edit',
+            ],
+            [
+                'id'    => 237,
+                'title' => 'employee_attendance_show',
+            ],
+            [
+                'id'    => 238,
+                'title' => 'employee_attendance_delete',
+            ],
+            [
+                'id'    => 239,
+                'title' => 'employee_attendance_access',
+            ],
+            [
+                'id'    => 240,
+                'title' => 'learning_center_access',
+            ],
+            [
+                'id'    => 241,
+                'title' => 'technical_documentation_create',
+            ],
+            [
+                'id'    => 242,
+                'title' => 'technical_documentation_edit',
+            ],
+            [
+                'id'    => 243,
+                'title' => 'technical_documentation_show',
+            ],
+            [
+                'id'    => 244,
+                'title' => 'technical_documentation_delete',
+            ],
+            [
+                'id'    => 245,
+                'title' => 'technical_documentation_access',
+            ],
+            [
+                'id'    => 246,
+                'title' => 'tech_docs_type_create',
+            ],
+            [
+                'id'    => 247,
+                'title' => 'tech_docs_type_edit',
+            ],
+            [
+                'id'    => 248,
+                'title' => 'tech_docs_type_show',
+            ],
+            [
+                'id'    => 249,
+                'title' => 'tech_docs_type_delete',
+            ],
+            [
+                'id'    => 250,
+                'title' => 'tech_docs_type_access',
+            ],
+            [
+                'id'    => 251,
+                'title' => 'employees_skill_create',
+            ],
+            [
+                'id'    => 252,
+                'title' => 'employees_skill_edit',
+            ],
+            [
+                'id'    => 253,
+                'title' => 'employees_skill_show',
+            ],
+            [
+                'id'    => 254,
+                'title' => 'employees_skill_delete',
+            ],
+            [
+                'id'    => 255,
+                'title' => 'employees_skill_access',
+            ],
+            [
+                'id'    => 256,
+                'title' => 'employees_rating_create',
+            ],
+            [
+                'id'    => 257,
+                'title' => 'employees_rating_edit',
+            ],
+            [
+                'id'    => 258,
+                'title' => 'employees_rating_show',
+            ],
+            [
+                'id'    => 259,
+                'title' => 'employees_rating_delete',
+            ],
+            [
+                'id'    => 260,
+                'title' => 'employees_rating_access',
+            ],
+            [
+                'id'    => 261,
+                'title' => 'skills_category_create',
+            ],
+            [
+                'id'    => 262,
+                'title' => 'skills_category_edit',
+            ],
+            [
+                'id'    => 263,
+                'title' => 'skills_category_show',
+            ],
+            [
+                'id'    => 264,
+                'title' => 'skills_category_delete',
+            ],
+            [
+                'id'    => 265,
+                'title' => 'skills_category_access',
+            ],
+            [
+                'id'    => 266,
+                'title' => 'clients_review_create',
+            ],
+            [
+                'id'    => 267,
+                'title' => 'clients_review_edit',
+            ],
+            [
+                'id'    => 268,
+                'title' => 'clients_review_show',
+            ],
+            [
+                'id'    => 269,
+                'title' => 'clients_review_delete',
+            ],
+            [
+                'id'    => 270,
+                'title' => 'clients_review_access',
+            ],
+            [
+                'id'    => 271,
+                'title' => 'video_tutorial_create',
+            ],
+            [
+                'id'    => 272,
+                'title' => 'video_tutorial_edit',
+            ],
+            [
+                'id'    => 273,
+                'title' => 'video_tutorial_show',
+            ],
+            [
+                'id'    => 274,
+                'title' => 'video_tutorial_delete',
+            ],
+            [
+                'id'    => 275,
+                'title' => 'video_tutorial_access',
+            ],
+            [
+                'id'    => 276,
+                'title' => 'video_category_create',
+            ],
+            [
+                'id'    => 277,
+                'title' => 'video_category_edit',
+            ],
+            [
+                'id'    => 278,
+                'title' => 'video_category_show',
+            ],
+            [
+                'id'    => 279,
+                'title' => 'video_category_delete',
+            ],
+            [
+                'id'    => 280,
+                'title' => 'video_category_access',
+            ],
+            [
+                'id'    => 281,
+                'title' => 'vip_plan_access',
+            ],
+            [
+                'id'    => 282,
+                'title' => 'suscription_create',
+            ],
+            [
+                'id'    => 283,
+                'title' => 'suscription_edit',
+            ],
+            [
+                'id'    => 284,
+                'title' => 'suscription_show',
+            ],
+            [
+                'id'    => 285,
+                'title' => 'suscription_delete',
+            ],
+            [
+                'id'    => 286,
+                'title' => 'suscription_access',
+            ],
+            [
+                'id'    => 287,
+                'title' => 'plan_create',
+            ],
+            [
+                'id'    => 288,
+                'title' => 'plan_edit',
+            ],
+            [
+                'id'    => 289,
+                'title' => 'plan_show',
+            ],
+            [
+                'id'    => 290,
+                'title' => 'plan_delete',
+            ],
+            [
+                'id'    => 291,
+                'title' => 'plan_access',
+            ],
+            [
+                'id'    => 292,
                 'title' => 'profile_password_edit',
             ],
         ];

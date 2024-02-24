@@ -28,6 +28,12 @@ class UpdateExpenseRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'files' => [
+                'array',
+            ],
+            'photos' => [
+                'array',
+            ],
         ];
     }
 }

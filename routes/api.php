@@ -5,6 +5,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('clients', 'ClientsApiController');
 
     // Boats
+    Route::post('boats/media', 'BoatsApiController@storeMedia')->name('boats.storeMedia');
     Route::apiResource('boats', 'BoatsApiController');
 
     // Content Page
@@ -12,6 +13,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('content-pages', 'ContentPageApiController');
 
     // Wlogs
+    Route::post('wlogs/media', 'WlogsApiController@storeMedia')->name('wlogs.storeMedia');
     Route::apiResource('wlogs', 'WlogsApiController');
 
     // Wlist
@@ -34,6 +36,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('products', 'ProductApiController');
 
     // Marinas
+    Route::post('marinas/media', 'MarinasApiController@storeMedia')->name('marinas.storeMedia');
     Route::apiResource('marinas', 'MarinasApiController');
 
     // Contact Company
@@ -83,15 +86,43 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Income
     Route::apiResource('incomes', 'IncomeApiController');
 
-    // Mat Logs
-    Route::apiResource('mat-logs', 'MatLogsApiController');
-
     // Comments
+    Route::post('comments/media', 'CommentsApiController@storeMedia')->name('comments.storeMedia');
     Route::apiResource('comments', 'CommentsApiController');
 
     // Booking List
     Route::apiResource('booking-lists', 'BookingListApiController');
 
-    // Availability
-    Route::apiResource('availabilities', 'AvailabilityApiController');
+    // Mlogs
+    Route::post('mlogs/media', 'MlogsApiController@storeMedia')->name('mlogs.storeMedia');
+    Route::apiResource('mlogs', 'MlogsApiController');
+
+    // Assets Rentals
+    Route::apiResource('assets-rentals', 'AssetsRentalsApiController');
+
+    // Booking Slots
+    Route::apiResource('booking-slots', 'BookingSlotsApiController');
+
+    // Employee Attendances
+    Route::apiResource('employee-attendances', 'EmployeeAttendancesApiController');
+
+    // Technical Documentation
+    Route::post('technical-documentations/media', 'TechnicalDocumentationApiController@storeMedia')->name('technical-documentations.storeMedia');
+    Route::apiResource('technical-documentations', 'TechnicalDocumentationApiController');
+
+    // Employees Skills
+    Route::apiResource('employees-skills', 'EmployeesSkillsApiController');
+
+    // Employees Ratings
+    Route::apiResource('employees-ratings', 'EmployeesRatingsApiController');
+
+    // Skills Categories
+    Route::apiResource('skills-categories', 'SkillsCategoriesApiController');
+
+    // Clients Reviews
+    Route::apiResource('clients-reviews', 'ClientsReviewsApiController');
+
+    // Suscriptions
+    Route::post('suscriptions/media', 'SuscriptionsApiController@storeMedia')->name('suscriptions.storeMedia');
+    Route::apiResource('suscriptions', 'SuscriptionsApiController');
 });

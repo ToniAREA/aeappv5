@@ -85,6 +85,12 @@ class ContactContactsController extends Controller
             $table->editColumn('contact_internalnotes', function ($row) {
                 return $row->contact_internalnotes ? $row->contact_internalnotes : '';
             });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 

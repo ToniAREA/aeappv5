@@ -28,6 +28,12 @@
                                 {{ trans('cruds.proforma.fields.proforma_number') }}
                             </th>
                             <th>
+                                {{ trans('cruds.proforma.fields.closed_and_protected') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.proforma.fields.invoice_link') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.proforma.fields.client') }}
                             </th>
                             <th>
@@ -64,10 +70,19 @@
                                 {{ trans('cruds.proforma.fields.link') }}
                             </th>
                             <th>
+                                {{ trans('cruds.proforma.fields.link_description') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.proforma.fields.status') }}
                             </th>
                             <th>
                                 {{ trans('cruds.proforma.fields.notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.proforma.fields.internal_notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.proforma.fields.completed_at') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -85,6 +100,13 @@
                                 </td>
                                 <td>
                                     {{ $proforma->proforma_number ?? '' }}
+                                </td>
+                                <td>
+                                    <span style="display:none">{{ $proforma->closed_and_protected ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $proforma->closed_and_protected ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    {{ $proforma->invoice_link ?? '' }}
                                 </td>
                                 <td>
                                     {{ $proforma->client->name ?? '' }}
@@ -129,10 +151,19 @@
                                     {{ $proforma->link ?? '' }}
                                 </td>
                                 <td>
+                                    {{ $proforma->link_description ?? '' }}
+                                </td>
+                                <td>
                                     {{ $proforma->status ?? '' }}
                                 </td>
                                 <td>
                                     {{ $proforma->notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $proforma->internal_notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $proforma->completed_at ?? '' }}
                                 </td>
                                 <td>
                                     @can('proforma_show')

@@ -30,6 +30,10 @@ class StoreMarinaRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'link_description' => [
+                'string',
+                'nullable',
+            ],
             'notes' => [
                 'string',
                 'nullable',

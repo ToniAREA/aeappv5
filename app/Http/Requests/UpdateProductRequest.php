@@ -27,6 +27,12 @@ class UpdateProductRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'providers.*' => [
+                'integer',
+            ],
+            'providers' => [
+                'array',
+            ],
             'ref_provider' => [
                 'string',
                 'nullable',
@@ -39,24 +45,11 @@ class UpdateProductRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'product_slug' => [
-                'string',
-                'nullable',
-            ],
             'photos' => [
                 'array',
             ],
-            'price' => [
-                'required',
-            ],
-            'pro_discount' => [
+            'purchase_discount' => [
                 'numeric',
-                'min:0',
-                'max:100',
-            ],
-            'stock' => [
-                'string',
-                'nullable',
             ],
             'local_stock' => [
                 'nullable',
@@ -70,8 +63,33 @@ class UpdateProductRequest extends FormRequest
             'tags' => [
                 'array',
             ],
-            'file' => [
-                'array',
+            'link_a' => [
+                'string',
+                'nullable',
+            ],
+            'link_a_description' => [
+                'string',
+                'nullable',
+            ],
+            'link_b' => [
+                'string',
+                'nullable',
+            ],
+            'link_b_description' => [
+                'string',
+                'nullable',
+            ],
+            'seo_title' => [
+                'string',
+                'nullable',
+            ],
+            'seo_meta_description' => [
+                'string',
+                'nullable',
+            ],
+            'seo_slug' => [
+                'string',
+                'nullable',
             ],
         ];
     }

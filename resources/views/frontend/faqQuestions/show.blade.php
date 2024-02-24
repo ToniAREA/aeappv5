@@ -36,6 +36,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.faqQuestion.fields.show_online') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $faqQuestion->show_online ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.faqQuestion.fields.question') }}
                                     </th>
                                     <td>
@@ -48,6 +56,14 @@
                                     </th>
                                     <td>
                                         {!! $faqQuestion->answer !!}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.view_count') }}
+                                    </th>
+                                    <td>
+                                        {{ $faqQuestion->view_count }}
                                     </td>
                                 </tr>
                             </tbody>

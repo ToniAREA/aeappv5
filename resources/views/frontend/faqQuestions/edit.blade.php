@@ -28,6 +28,19 @@
                             <span class="help-block">{{ trans('cruds.faqQuestion.fields.category_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="show_online" value="0">
+                                <input type="checkbox" name="show_online" id="show_online" value="1" {{ $faqQuestion->show_online || old('show_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="show_online">{{ trans('cruds.faqQuestion.fields.show_online') }}</label>
+                            </div>
+                            @if($errors->has('show_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('show_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.faqQuestion.fields.show_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="question">{{ trans('cruds.faqQuestion.fields.question') }}</label>
                             <textarea class="form-control ckeditor" name="question" id="question">{!! old('question', $faqQuestion->question) !!}</textarea>
                             @if($errors->has('question'))
@@ -46,6 +59,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.faqQuestion.fields.answer_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="view_count">{{ trans('cruds.faqQuestion.fields.view_count') }}</label>
+                            <input class="form-control" type="number" name="view_count" id="view_count" value="{{ old('view_count', $faqQuestion->view_count) }}" step="1">
+                            @if($errors->has('view_count'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('view_count') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.faqQuestion.fields.view_count_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

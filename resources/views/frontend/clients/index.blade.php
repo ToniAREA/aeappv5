@@ -30,6 +30,9 @@
                                         {{ trans('cruds.client.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.client.fields.has_active_vip_plan') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.client.fields.defaulter') }}
                                     </th>
                                     <th>
@@ -72,10 +75,19 @@
                                         {{ trans('cruds.client.fields.internal_notes') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.client.fields.link') }}
+                                        {{ trans('cruds.client.fields.coordinates') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.client.fields.coordinates') }}
+                                        {{ trans('cruds.client.fields.link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_a_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.client.fields.link_b_description') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.client.fields.last_use') }}
@@ -89,6 +101,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -151,6 +165,15 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -159,6 +182,10 @@
                                     <tr data-entry-id="{{ $client->id }}">
                                         <td>
                                             {{ $client->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $client->has_active_vip_plan ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $client->has_active_vip_plan ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             <span style="display:none">{{ $client->defaulter ?? '' }}</span>
@@ -208,10 +235,19 @@
                                             {{ $client->internal_notes ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $client->link ?? '' }}
+                                            {{ $client->coordinates ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $client->coordinates ?? '' }}
+                                            {{ $client->link_a ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $client->link_a_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $client->link_b ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $client->link_b_description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $client->last_use ?? '' }}

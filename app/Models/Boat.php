@@ -8,12 +8,19 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Boat extends Model
+class Boat extends Model implements HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'boats';
+
+    protected $appends = [
+        'boat_photo',
+    ];
 
     public static $searchable = [
         'ref',
@@ -40,6 +47,7 @@ class Boat extends Model
         'internal_notes',
         'coordinates',
         'link',
+        'link_description',
         'last_use',
         'created_at',
         'updated_at',
@@ -49,6 +57,12 @@ class Boat extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function boatWlists()
@@ -61,14 +75,19 @@ class Boat extends Model
         return $this->hasMany(Appointment::class, 'boat_id', 'id');
     }
 
-    public function boatMatLogs()
-    {
-        return $this->hasMany(MatLog::class, 'boat_id', 'id');
-    }
-
     public function boatBookingLists()
     {
         return $this->hasMany(BookingList::class, 'boat_id', 'id');
+    }
+
+    public function boatMlogs()
+    {
+        return $this->hasMany(Mlog::class, 'boat_id', 'id');
+    }
+
+    public function boatAssetsRentals()
+    {
+        return $this->hasMany(AssetsRental::class, 'boat_id', 'id');
     }
 
     public function boatsClients()
@@ -79,6 +98,23 @@ class Boat extends Model
     public function boatsProformas()
     {
         return $this->belongsToMany(Proforma::class);
+    }
+
+    public function boatsClientsReviews()
+    {
+        return $this->belongsToMany(ClientsReview::class);
+    }
+
+    public function getBoatPhotoAttribute()
+    {
+        $file = $this->getMedia('boat_photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function marina()

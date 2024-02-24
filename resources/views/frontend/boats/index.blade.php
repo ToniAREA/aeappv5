@@ -39,6 +39,9 @@
                                         {{ trans('cruds.boat.fields.name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.boat.fields.boat_photo') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.boat.fields.imo') }}
                                     </th>
                                     <th>
@@ -63,6 +66,9 @@
                                         {{ trans('cruds.boat.fields.link') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.boat.fields.link_description') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.boat.fields.last_use') }}
                                     </th>
                                     <th>
@@ -83,6 +89,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -122,6 +130,9 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -139,6 +150,13 @@
                                         </td>
                                         <td>
                                             {{ $boat->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($boat->boat_photo)
+                                                <a href="{{ $boat->boat_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $boat->boat_photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $boat->imo ?? '' }}
@@ -165,6 +183,9 @@
                                         </td>
                                         <td>
                                             {{ $boat->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->link_description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $boat->last_use ?? '' }}

@@ -37,14 +37,4 @@ class Priority extends Model
     {
         return $this->hasMany(Appointment::class, 'priority_id', 'id');
     }
-
-    public function priorityWlists()
-    {
-        return $this->hasMany(Wlist::class, 'priority_id', 'id');
-    }
-
-    public function priorityToDos()
-    {
-        return $this->hasMany(ToDo::class, 'priority_id', 'id');
-    }
 }

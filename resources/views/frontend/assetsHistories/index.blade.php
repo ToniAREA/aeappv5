@@ -30,6 +30,9 @@
                                         {{ trans('cruds.assetsHistory.fields.assigned_user') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetsHistory.fields.notes') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.assetsHistory.fields.created_at') }}
                                     </th>
                                     <th>
@@ -54,6 +57,9 @@
                                         </td>
                                         <td>
                                             {{ $assetsHistory->assigned_user->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $assetsHistory->notes ?? '' }}
                                         </td>
                                         <td>
                                             {{ $assetsHistory->created_at ?? '' }}

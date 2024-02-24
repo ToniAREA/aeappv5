@@ -10,6 +10,17 @@
         <form method="POST" action="{{ route("admin.clients.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('has_active_vip_plan') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="has_active_vip_plan" value="0">
+                    <input class="form-check-input" type="checkbox" name="has_active_vip_plan" id="has_active_vip_plan" value="1" {{ old('has_active_vip_plan', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="has_active_vip_plan">{{ trans('cruds.client.fields.has_active_vip_plan') }}</label>
+                </div>
+                @if($errors->has('has_active_vip_plan'))
+                    <span class="text-danger">{{ $errors->first('has_active_vip_plan') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.client.fields.has_active_vip_plan_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <div class="form-check {{ $errors->has('defaulter') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="defaulter" value="0">
                     <input class="form-check-input" type="checkbox" name="defaulter" id="defaulter" value="1" {{ old('defaulter', 0) == 1 ? 'checked' : '' }}>
@@ -141,20 +152,44 @@
                 <span class="help-block">{{ trans('cruds.client.fields.internal_notes_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="link">{{ trans('cruds.client.fields.link') }}</label>
-                <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', '') }}">
-                @if($errors->has('link'))
-                    <span class="text-danger">{{ $errors->first('link') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.client.fields.link_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="coordinates">{{ trans('cruds.client.fields.coordinates') }}</label>
                 <input class="form-control {{ $errors->has('coordinates') ? 'is-invalid' : '' }}" type="text" name="coordinates" id="coordinates" value="{{ old('coordinates', '') }}">
                 @if($errors->has('coordinates'))
                     <span class="text-danger">{{ $errors->first('coordinates') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.client.fields.coordinates_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_a">{{ trans('cruds.client.fields.link_a') }}</label>
+                <input class="form-control {{ $errors->has('link_a') ? 'is-invalid' : '' }}" type="text" name="link_a" id="link_a" value="{{ old('link_a', '') }}">
+                @if($errors->has('link_a'))
+                    <span class="text-danger">{{ $errors->first('link_a') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.client.fields.link_a_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_a_description">{{ trans('cruds.client.fields.link_a_description') }}</label>
+                <input class="form-control {{ $errors->has('link_a_description') ? 'is-invalid' : '' }}" type="text" name="link_a_description" id="link_a_description" value="{{ old('link_a_description', '') }}">
+                @if($errors->has('link_a_description'))
+                    <span class="text-danger">{{ $errors->first('link_a_description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.client.fields.link_a_description_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_b">{{ trans('cruds.client.fields.link_b') }}</label>
+                <input class="form-control {{ $errors->has('link_b') ? 'is-invalid' : '' }}" type="text" name="link_b" id="link_b" value="{{ old('link_b', '') }}">
+                @if($errors->has('link_b'))
+                    <span class="text-danger">{{ $errors->first('link_b') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.client.fields.link_b_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_b_description">{{ trans('cruds.client.fields.link_b_description') }}</label>
+                <input class="form-control {{ $errors->has('link_b_description') ? 'is-invalid' : '' }}" type="text" name="link_b_description" id="link_b_description" value="{{ old('link_b_description', '') }}">
+                @if($errors->has('link_b_description'))
+                    <span class="text-danger">{{ $errors->first('link_b_description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.client.fields.link_b_description_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="last_use">{{ trans('cruds.client.fields.last_use') }}</label>

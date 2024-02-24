@@ -29,8 +29,10 @@ class FaqQuestion extends Model implements HasMedia
 
     protected $fillable = [
         'category_id',
+        'show_online',
         'question',
         'answer',
+        'view_count',
         'created_at',
         'updated_at',
         'deleted_at',

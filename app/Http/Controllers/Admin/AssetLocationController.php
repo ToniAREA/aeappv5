@@ -65,8 +65,11 @@ class AssetLocationController extends Controller
 
                 return '';
             });
+            $table->editColumn('available', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->available ? 'checked' : null) . '>';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'photo']);
+            $table->rawColumns(['actions', 'placeholder', 'photo', 'available']);
 
             return $table->make(true);
         }
@@ -125,7 +128,7 @@ class AssetLocationController extends Controller
     {
         abort_if(Gate::denies('asset_location_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assetLocation->load('productLocationProducts');
+        $assetLocation->load('locationAssets', 'productLocationProducts');
 
         return view('admin.assetLocations.show', compact('assetLocation'));
     }

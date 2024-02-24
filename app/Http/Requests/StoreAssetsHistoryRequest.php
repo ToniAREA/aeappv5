@@ -16,6 +16,11 @@ class StoreAssetsHistoryRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'notes' => [
+                'string',
+                'nullable',
+            ],
+        ];
     }
 }

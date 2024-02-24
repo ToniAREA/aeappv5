@@ -30,16 +30,25 @@
                                         {{ trans('cruds.income.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.income.fields.employee') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.namecomplete') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.income.fields.income_category') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.income.fields.entry_date') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.income.fields.description') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.income.fields.amount') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.income.fields.description') }}
+                                        {{ trans('cruds.income.fields.is_accounted') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -50,6 +59,16 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($employees as $key => $item)
+                                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <select class="search">
@@ -69,6 +88,8 @@
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,16 +99,26 @@
                                             {{ $income->id ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $income->employee->id_employee ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $income->employee->namecomplete ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $income->income_category->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $income->entry_date ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $income->description ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $income->amount ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $income->description ?? '' }}
+                                            <span style="display:none">{{ $income->is_accounted ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @can('income_show')

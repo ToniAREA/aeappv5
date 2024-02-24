@@ -33,6 +33,9 @@
                                         {{ trans('cruds.contentPage.fields.title') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contentPage.fields.show_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.contentPage.fields.slug') }}
                                     </th>
                                     <th>
@@ -48,6 +51,36 @@
                                         {{ trans('cruds.contentPage.fields.file') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contentPage.fields.seo_title') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.seo_meta_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.seo_slug') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_a_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.show_online_link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_b_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.show_online_link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.view_count') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -59,6 +92,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -84,6 +119,34 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -95,6 +158,10 @@
                                         </td>
                                         <td>
                                             {{ $contentPage->title ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $contentPage->show_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $contentPage->slug ?? '' }}
@@ -122,6 +189,38 @@
                                                     {{ trans('global.view_file') }}
                                                 </a>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->seo_title ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->seo_meta_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->seo_slug ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_a ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_a_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $contentPage->show_online_link_a ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_a ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_b ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_b_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $contentPage->show_online_link_b ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_b ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->view_count ?? '' }}
                                         </td>
                                         <td>
                                             @can('content_page_show')

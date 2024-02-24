@@ -30,22 +30,28 @@
                                         {{ trans('cruds.expense.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.expense.fields.employee') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.namecomplete') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.expense.fields.expense_category') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.expense.fields.entry_date') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.expense.fields.amount') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.expense.fields.description') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.expense.fields.file') }}
+                                        {{ trans('cruds.expense.fields.amount') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.expense.fields.photo') }}
+                                        {{ trans('cruds.expense.fields.files') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.expense.fields.photos') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -56,6 +62,16 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($employees as $key => $item)
+                                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <select class="search">
@@ -88,30 +104,36 @@
                                             {{ $expense->id ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $expense->employee->id_employee ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $expense->employee->namecomplete ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $expense->expense_category->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $expense->entry_date ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $expense->amount ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $expense->description ?? '' }}
                                         </td>
                                         <td>
-                                            @if($expense->file)
-                                                <a href="{{ $expense->file->getUrl() }}" target="_blank">
-                                                    {{ trans('global.view_file') }}
-                                                </a>
-                                            @endif
+                                            {{ $expense->amount ?? '' }}
                                         </td>
                                         <td>
-                                            @if($expense->photo)
-                                                <a href="{{ $expense->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                                    <img src="{{ $expense->photo->getUrl('thumb') }}">
+                                            @foreach($expense->files as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
                                                 </a>
-                                            @endif
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($expense->photos as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $media->getUrl('thumb') }}">
+                                                </a>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('expense_show')

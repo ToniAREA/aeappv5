@@ -34,13 +34,12 @@ class UpdateWlogRequest extends FormRequest
                 'min:0',
                 'max:24',
             ],
-            'status' => [
-                'string',
-                'nullable',
-            ],
             'internal_notes' => [
                 'string',
                 'nullable',
+            ],
+            'photos' => [
+                'array',
             ],
         ];
     }

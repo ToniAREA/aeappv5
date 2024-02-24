@@ -108,11 +108,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#employee_mat_logs" role="tab" data-toggle="tab">
-                {{ trans('cruds.matLog.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#from_user_wlists" role="tab" data-toggle="tab">
                 {{ trans('cruds.wlist.title') }}
             </a>
@@ -128,18 +123,33 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#for_user_to_dos" role="tab" data-toggle="tab">
-                {{ trans('cruds.toDo.title') }}
+            <a class="nav-link" href="#actual_holder_assets" role="tab" data-toggle="tab">
+                {{ trans('cruds.asset.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#employee_mlogs" role="tab" data-toggle="tab">
+                {{ trans('cruds.mlog.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#user_assets_rentals" role="tab" data-toggle="tab">
+                {{ trans('cruds.assetsRental.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#from_user_employees_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeesRating.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#user_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.suscription.title') }}
             </a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#for_user_appointments" role="tab" data-toggle="tab">
                 {{ trans('cruds.appointment.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#for_user_wlists" role="tab" data-toggle="tab">
-                {{ trans('cruds.wlist.title') }}
             </a>
         </li>
     </ul>
@@ -150,9 +160,6 @@
         <div class="tab-pane" role="tabpanel" id="employee_wlogs">
             @includeIf('admin.users.relationships.employeeWlogs', ['wlogs' => $user->employeeWlogs])
         </div>
-        <div class="tab-pane" role="tabpanel" id="employee_mat_logs">
-            @includeIf('admin.users.relationships.employeeMatLogs', ['matLogs' => $user->employeeMatLogs])
-        </div>
         <div class="tab-pane" role="tabpanel" id="from_user_wlists">
             @includeIf('admin.users.relationships.fromUserWlists', ['wlists' => $user->fromUserWlists])
         </div>
@@ -162,14 +169,23 @@
         <div class="tab-pane" role="tabpanel" id="user_booking_lists">
             @includeIf('admin.users.relationships.userBookingLists', ['bookingLists' => $user->userBookingLists])
         </div>
-        <div class="tab-pane" role="tabpanel" id="for_user_to_dos">
-            @includeIf('admin.users.relationships.forUserToDos', ['toDos' => $user->forUserToDos])
+        <div class="tab-pane" role="tabpanel" id="actual_holder_assets">
+            @includeIf('admin.users.relationships.actualHolderAssets', ['assets' => $user->actualHolderAssets])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="employee_mlogs">
+            @includeIf('admin.users.relationships.employeeMlogs', ['mlogs' => $user->employeeMlogs])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="user_assets_rentals">
+            @includeIf('admin.users.relationships.userAssetsRentals', ['assetsRentals' => $user->userAssetsRentals])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="from_user_employees_ratings">
+            @includeIf('admin.users.relationships.fromUserEmployeesRatings', ['employeesRatings' => $user->fromUserEmployeesRatings])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="user_suscriptions">
+            @includeIf('admin.users.relationships.userSuscriptions', ['suscriptions' => $user->userSuscriptions])
         </div>
         <div class="tab-pane" role="tabpanel" id="for_user_appointments">
             @includeIf('admin.users.relationships.forUserAppointments', ['appointments' => $user->forUserAppointments])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="for_user_wlists">
-            @includeIf('admin.users.relationships.forUserWlists', ['wlists' => $user->forUserWlists])
         </div>
     </div>
 </div>

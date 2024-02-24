@@ -53,6 +53,12 @@
                         {{ trans('cruds.wlog.fields.hours') }}
                     </th>
                     <th>
+                        {{ trans('cruds.wlog.fields.hourly_rate') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.wlist_finished') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.wlog.fields.proforma_number') }}
                     </th>
                     <th>
@@ -62,13 +68,13 @@
                         {{ trans('cruds.wlog.fields.invoiced_line') }}
                     </th>
                     <th>
-                        {{ trans('cruds.wlog.fields.status') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.wlog.fields.notes') }}
                     </th>
                     <th>
                         {{ trans('cruds.wlog.fields.internal_notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.photos') }}
                     </th>
                     <th>
                         &nbsp;
@@ -118,6 +124,11 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
                             @foreach($proformas as $key => $item)
@@ -136,7 +147,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -202,12 +212,14 @@
 { data: 'marina_name', name: 'marina.name' },
 { data: 'description', name: 'description' },
 { data: 'hours', name: 'hours' },
+{ data: 'hourly_rate', name: 'hourly_rate' },
+{ data: 'wlist_finished', name: 'wlist_finished' },
 { data: 'proforma_number_proforma_number', name: 'proforma_number.proforma_number' },
 { data: 'proforma_number.description', name: 'proforma_number.description' },
 { data: 'invoiced_line', name: 'invoiced_line' },
-{ data: 'status', name: 'status' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
+{ data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

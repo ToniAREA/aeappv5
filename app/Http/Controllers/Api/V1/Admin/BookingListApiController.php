@@ -17,7 +17,7 @@ class BookingListApiController extends Controller
     {
         abort_if(Gate::denies('booking_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BookingListResource(BookingList::with(['user', 'client', 'boat', 'employee'])->get());
+        return new BookingListResource(BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot'])->get());
     }
 
     public function store(StoreBookingListRequest $request)
@@ -33,7 +33,7 @@ class BookingListApiController extends Controller
     {
         abort_if(Gate::denies('booking_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BookingListResource($bookingList->load(['user', 'client', 'boat', 'employee']));
+        return new BookingListResource($bookingList->load(['user', 'client', 'boat', 'employee', 'booking_slot']));
     }
 
     public function update(UpdateBookingListRequest $request, BookingList $bookingList)

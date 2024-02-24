@@ -54,6 +54,12 @@
                                         {{ trans('cruds.employee.fields.category') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.bookingList.fields.booking_slot') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.bookingSlot.fields.end_time') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.bookingList.fields.date') }}
                                     </th>
                                     <th>
@@ -66,10 +72,10 @@
                                         {{ trans('cruds.bookingList.fields.end_time') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.hour_rate') }}
+                                        {{ trans('cruds.bookingList.fields.hourly_rate') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.total_price') }}
+                                        {{ trans('cruds.bookingList.fields.total_amount') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.bookingList.fields.notes') }}
@@ -82,6 +88,9 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.bookingList.fields.status') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.bookingList.fields.completed_at') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -134,6 +143,16 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($booking_slots as $key => $item)
+                                                <option value="{{ $item->star_time }}">{{ $item->star_time }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -155,6 +174,9 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -194,6 +216,12 @@
                                             {{ $bookingList->employee->category ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $bookingList->booking_slot->star_time ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $bookingList->booking_slot->end_time ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $bookingList->date ?? '' }}
                                         </td>
                                         <td>
@@ -206,10 +234,10 @@
                                             {{ $bookingList->end_time ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $bookingList->hour_rate ?? '' }}
+                                            {{ $bookingList->hourly_rate ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $bookingList->total_price ?? '' }}
+                                            {{ $bookingList->total_amount ?? '' }}
                                         </td>
                                         <td>
                                             {{ $bookingList->notes ?? '' }}
@@ -223,6 +251,9 @@
                                         </td>
                                         <td>
                                             {{ $bookingList->status ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $bookingList->completed_at ?? '' }}
                                         </td>
                                         <td>
                                             @can('booking_list_show')

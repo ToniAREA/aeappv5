@@ -39,6 +39,9 @@
                             {{ trans('cruds.provider.fields.provider_logo') }}
                         </th>
                         <th>
+                            {{ trans('cruds.provider.fields.provider_url') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.provider.fields.brands') }}
                         </th>
                         <th>
@@ -49,6 +52,12 @@
                         </th>
                         <th>
                             {{ trans('cruds.provider.fields.internal_notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.provider.fields.link') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.provider.fields.link_description') }}
                         </th>
                         <th>
                             &nbsp;
@@ -78,6 +87,9 @@
                                 @endif
                             </td>
                             <td>
+                                {{ $provider->provider_url ?? '' }}
+                            </td>
+                            <td>
                                 @foreach($provider->brands as $key => $item)
                                     <span class="badge badge-info">{{ $item->brand }}</span>
                                 @endforeach
@@ -94,6 +106,12 @@
                             </td>
                             <td>
                                 {{ $provider->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $provider->link ?? '' }}
+                            </td>
+                            <td>
+                                {{ $provider->link_description ?? '' }}
                             </td>
                             <td>
                                 @can('provider_show')

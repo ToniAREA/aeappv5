@@ -33,6 +33,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.marina.fields.marina_photo') }}
+                        </th>
+                        <td>
+                            @if($marina->marina_photo)
+                                <a href="{{ $marina->marina_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $marina->marina_photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.marina.fields.coordinates') }}
                         </th>
                         <td>
@@ -45,6 +57,14 @@
                         </th>
                         <td>
                             {{ $marina->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.marina.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $marina->link_description }}
                         </td>
                     </tr>
                     <tr>

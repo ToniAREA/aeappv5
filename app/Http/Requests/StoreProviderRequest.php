@@ -21,6 +21,10 @@ class StoreProviderRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'provider_url' => [
+                'string',
+                'nullable',
+            ],
             'brands.*' => [
                 'integer',
             ],
@@ -35,6 +39,14 @@ class StoreProviderRequest extends FormRequest
                 'nullable',
             ],
             'internal_notes' => [
+                'string',
+                'nullable',
+            ],
+            'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
                 'string',
                 'nullable',
             ],

@@ -22,6 +22,17 @@
                 <span class="help-block">{{ trans('cruds.faqQuestion.fields.category_helper') }}</span>
             </div>
             <div class="form-group">
+                <div class="form-check {{ $errors->has('show_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="show_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="show_online" id="show_online" value="1" {{ old('show_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="show_online">{{ trans('cruds.faqQuestion.fields.show_online') }}</label>
+                </div>
+                @if($errors->has('show_online'))
+                    <span class="text-danger">{{ $errors->first('show_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.faqQuestion.fields.show_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="question">{{ trans('cruds.faqQuestion.fields.question') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('question') ? 'is-invalid' : '' }}" name="question" id="question">{!! old('question') !!}</textarea>
                 @if($errors->has('question'))
@@ -36,6 +47,14 @@
                     <span class="text-danger">{{ $errors->first('answer') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.faqQuestion.fields.answer_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="view_count">{{ trans('cruds.faqQuestion.fields.view_count') }}</label>
+                <input class="form-control {{ $errors->has('view_count') ? 'is-invalid' : '' }}" type="number" name="view_count" id="view_count" value="{{ old('view_count', '') }}" step="1">
+                @if($errors->has('view_count'))
+                    <span class="text-danger">{{ $errors->first('view_count') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.faqQuestion.fields.view_count_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

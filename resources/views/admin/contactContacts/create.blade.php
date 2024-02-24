@@ -114,6 +114,30 @@
                 <span class="help-block">{{ trans('cruds.contactContact.fields.contact_internalnotes_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="link">{{ trans('cruds.contactContact.fields.link') }}</label>
+                <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', '') }}">
+                @if($errors->has('link'))
+                    <span class="text-danger">{{ $errors->first('link') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contactContact.fields.link_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_description">{{ trans('cruds.contactContact.fields.link_description') }}</label>
+                <input class="form-control {{ $errors->has('link_description') ? 'is-invalid' : '' }}" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                @if($errors->has('link_description'))
+                    <span class="text-danger">{{ $errors->first('link_description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contactContact.fields.link_description_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="last_use">{{ trans('cruds.contactContact.fields.last_use') }}</label>
+                <input class="form-control datetime {{ $errors->has('last_use') ? 'is-invalid' : '' }}" type="text" name="last_use" id="last_use" value="{{ old('last_use') }}">
+                @if($errors->has('last_use'))
+                    <span class="text-danger">{{ $errors->first('last_use') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contactContact.fields.last_use_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>

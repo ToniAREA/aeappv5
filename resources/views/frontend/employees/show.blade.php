@@ -36,6 +36,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.employee.fields.namecomplete') }}
+                                    </th>
+                                    <td>
+                                        {{ $employee->namecomplete }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.employee.fields.user') }}
                                     </th>
                                     <td>
@@ -116,6 +124,14 @@
                                     </th>
                                     <td>
                                         {{ $employee->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $employee->link_description }}
                                     </td>
                                 </tr>
                                 <tr>

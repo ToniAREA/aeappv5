@@ -13,6 +13,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
+use App\Models\Provider;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,17 +27,19 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $products = Product::with(['categories', 'brand', 'product_location', 'tags', 'media'])->get();
+        $products = Product::with(['categories', 'brand', 'providers', 'product_location', 'tags', 'media'])->get();
 
         $product_categories = ProductCategory::get();
 
         $brands = Brand::get();
 
+        $providers = Provider::get();
+
         $asset_locations = AssetLocation::get();
 
         $product_tags = ProductTag::get();
 
-        return view('frontend.products.index', compact('asset_locations', 'brands', 'product_categories', 'product_tags', 'products'));
+        return view('frontend.products.index', compact('asset_locations', 'brands', 'product_categories', 'product_tags', 'products', 'providers'));
     }
 
     public function create()
@@ -47,24 +50,23 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $providers = Provider::pluck('name', 'id');
+
         $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tags = ProductTag::pluck('name', 'id');
 
-        return view('frontend.products.create', compact('brands', 'categories', 'product_locations', 'tags'));
+        return view('frontend.products.create', compact('brands', 'categories', 'product_locations', 'providers', 'tags'));
     }
 
     public function store(StoreProductRequest $request)
     {
         $product = Product::create($request->all());
         $product->categories()->sync($request->input('categories', []));
+        $product->providers()->sync($request->input('providers', []));
         $product->tags()->sync($request->input('tags', []));
         foreach ($request->input('photos', []) as $file) {
             $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
-        }
-
-        foreach ($request->input('file', []) as $file) {
-            $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -82,19 +84,22 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $providers = Provider::pluck('name', 'id');
+
         $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tags = ProductTag::pluck('name', 'id');
 
-        $product->load('categories', 'brand', 'product_location', 'tags');
+        $product->load('categories', 'brand', 'providers', 'product_location', 'tags');
 
-        return view('frontend.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'tags'));
+        return view('frontend.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'providers', 'tags'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
         $product->categories()->sync($request->input('categories', []));
+        $product->providers()->sync($request->input('providers', []));
         $product->tags()->sync($request->input('tags', []));
         if (count($product->photos) > 0) {
             foreach ($product->photos as $media) {
@@ -110,20 +115,6 @@ class ProductController extends Controller
             }
         }
 
-        if (count($product->file) > 0) {
-            foreach ($product->file as $media) {
-                if (! in_array($media->file_name, $request->input('file', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $product->file->pluck('file_name')->toArray();
-        foreach ($request->input('file', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
-            }
-        }
-
         return redirect()->route('frontend.products.index');
     }
 
@@ -131,7 +122,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'brand', 'product_location', 'tags', 'productMatLogs');
+        $product->load('categories', 'brand', 'providers', 'product_location', 'tags', 'productMlogs', 'productTechnicalDocumentations');
 
         return view('frontend.products.show', compact('product'));
     }

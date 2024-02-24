@@ -15,6 +15,19 @@
                         @csrf
                         <div class="form-group">
                             <div>
+                                <input type="hidden" name="has_active_vip_plan" value="0">
+                                <input type="checkbox" name="has_active_vip_plan" id="has_active_vip_plan" value="1" {{ $client->has_active_vip_plan || old('has_active_vip_plan', 0) === 1 ? 'checked' : '' }}>
+                                <label for="has_active_vip_plan">{{ trans('cruds.client.fields.has_active_vip_plan') }}</label>
+                            </div>
+                            @if($errors->has('has_active_vip_plan'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('has_active_vip_plan') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.client.fields.has_active_vip_plan_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <div>
                                 <input type="hidden" name="defaulter" value="0">
                                 <input type="checkbox" name="defaulter" id="defaulter" value="1" {{ $client->defaulter || old('defaulter', 0) === 1 ? 'checked' : '' }}>
                                 <label for="defaulter">{{ trans('cruds.client.fields.defaulter') }}</label>
@@ -173,16 +186,6 @@
                             <span class="help-block">{{ trans('cruds.client.fields.internal_notes_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="link">{{ trans('cruds.client.fields.link') }}</label>
-                            <input class="form-control" type="text" name="link" id="link" value="{{ old('link', $client->link) }}">
-                            @if($errors->has('link'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('link') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.client.fields.link_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label for="coordinates">{{ trans('cruds.client.fields.coordinates') }}</label>
                             <input class="form-control" type="text" name="coordinates" id="coordinates" value="{{ old('coordinates', $client->coordinates) }}">
                             @if($errors->has('coordinates'))
@@ -191,6 +194,46 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.client.fields.coordinates_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_a">{{ trans('cruds.client.fields.link_a') }}</label>
+                            <input class="form-control" type="text" name="link_a" id="link_a" value="{{ old('link_a', $client->link_a) }}">
+                            @if($errors->has('link_a'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_a') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.client.fields.link_a_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_a_description">{{ trans('cruds.client.fields.link_a_description') }}</label>
+                            <input class="form-control" type="text" name="link_a_description" id="link_a_description" value="{{ old('link_a_description', $client->link_a_description) }}">
+                            @if($errors->has('link_a_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_a_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.client.fields.link_a_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_b">{{ trans('cruds.client.fields.link_b') }}</label>
+                            <input class="form-control" type="text" name="link_b" id="link_b" value="{{ old('link_b', $client->link_b) }}">
+                            @if($errors->has('link_b'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_b') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.client.fields.link_b_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_b_description">{{ trans('cruds.client.fields.link_b_description') }}</label>
+                            <input class="form-control" type="text" name="link_b_description" id="link_b_description" value="{{ old('link_b_description', $client->link_b_description) }}">
+                            @if($errors->has('link_b_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_b_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.client.fields.link_b_description_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="last_use">{{ trans('cruds.client.fields.last_use') }}</label>

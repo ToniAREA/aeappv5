@@ -40,6 +40,14 @@ class UpdateBrandRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

@@ -38,6 +38,9 @@
                         {{ trans('cruds.product.fields.ref_manu') }}
                     </th>
                     <th>
+                        {{ trans('cruds.product.fields.providers') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.product.fields.ref_provider') }}
                     </th>
                     <th>
@@ -47,19 +50,22 @@
                         {{ trans('cruds.product.fields.name') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.product_slug') }}
+                        {{ trans('cruds.product.fields.show_online') }}
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.photos') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.price') }}
+                        {{ trans('cruds.product.fields.product_price') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.pro_discount') }}
+                        {{ trans('cruds.product.fields.purchase_discount') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.stock') }}
+                        {{ trans('cruds.product.fields.purchase_price') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.has_stock') }}
                     </th>
                     <th>
                         {{ trans('cruds.product.fields.local_stock') }}
@@ -74,7 +80,25 @@
                         {{ trans('cruds.product.fields.tag') }}
                     </th>
                     <th>
-                        {{ trans('cruds.product.fields.file') }}
+                        {{ trans('cruds.product.fields.link_a') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.link_a_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.link_b') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.link_b_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.seo_title') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.seo_meta_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.product.fields.seo_slug') }}
                     </th>
                     <th>
                         &nbsp;
@@ -106,7 +130,12 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($providers as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -120,13 +149,17 @@
                     <td>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -150,6 +183,25 @@
                         </select>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -210,19 +262,27 @@
 { data: 'category', name: 'categories.name' },
 { data: 'brand_brand', name: 'brand.brand' },
 { data: 'ref_manu', name: 'ref_manu' },
+{ data: 'providers', name: 'providers.name' },
 { data: 'ref_provider', name: 'ref_provider' },
 { data: 'model', name: 'model' },
 { data: 'name', name: 'name' },
-{ data: 'product_slug', name: 'product_slug' },
+{ data: 'show_online', name: 'show_online' },
 { data: 'photos', name: 'photos', sortable: false, searchable: false },
-{ data: 'price', name: 'price' },
-{ data: 'pro_discount', name: 'pro_discount' },
-{ data: 'stock', name: 'stock' },
+{ data: 'product_price', name: 'product_price' },
+{ data: 'purchase_discount', name: 'purchase_discount' },
+{ data: 'purchase_price', name: 'purchase_price' },
+{ data: 'has_stock', name: 'has_stock' },
 { data: 'local_stock', name: 'local_stock' },
 { data: 'product_location_name', name: 'product_location.name' },
 { data: 'product_location.description', name: 'product_location.description' },
 { data: 'tag', name: 'tags.name' },
-{ data: 'file', name: 'file', sortable: false, searchable: false },
+{ data: 'link_a', name: 'link_a' },
+{ data: 'link_a_description', name: 'link_a_description' },
+{ data: 'link_b', name: 'link_b' },
+{ data: 'link_b_description', name: 'link_b_description' },
+{ data: 'seo_title', name: 'seo_title' },
+{ data: 'seo_meta_description', name: 'seo_meta_description' },
+{ data: 'seo_slug', name: 'seo_slug' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -55,6 +55,30 @@
                             {{ $comment->private_comment }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.comment.fields.photos') }}
+                        </th>
+                        <td>
+                            @foreach($comment->photos as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.comment.fields.files') }}
+                        </th>
+                        <td>
+                            @foreach($comment->files as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

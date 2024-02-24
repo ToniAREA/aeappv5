@@ -24,6 +24,16 @@
                             <span class="help-block">{{ trans('cruds.employee.fields.id_employee_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="namecomplete">{{ trans('cruds.employee.fields.namecomplete') }}</label>
+                            <input class="form-control" type="text" name="namecomplete" id="namecomplete" value="{{ old('namecomplete', '') }}">
+                            @if($errors->has('namecomplete'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('namecomplete') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.namecomplete_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="user_id">{{ trans('cruds.employee.fields.user') }}</label>
                             <select class="form-control select2" name="user_id" id="user_id">
                                 @foreach($users as $id => $entry)
@@ -131,6 +141,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.employee.fields.link_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_description">{{ trans('cruds.employee.fields.link_description') }}</label>
+                            <input class="form-control" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                            @if($errors->has('link_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.link_description_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <div>

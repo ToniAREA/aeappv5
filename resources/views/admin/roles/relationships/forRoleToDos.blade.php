@@ -25,16 +25,16 @@
                                 {{ trans('cruds.toDo.fields.id') }}
                             </th>
                             <th>
-                                {{ trans('cruds.toDo.fields.for_role') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.toDo.fields.for_user') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.toDo.fields.task') }}
                             </th>
                             <th>
-                                {{ trans('cruds.toDo.fields.photo') }}
+                                {{ trans('cruds.toDo.fields.for_role') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.toDo.fields.for_employee') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.employee.fields.namecomplete') }}
                             </th>
                             <th>
                                 {{ trans('cruds.toDo.fields.deadline') }}
@@ -43,10 +43,19 @@
                                 {{ trans('cruds.toDo.fields.priority') }}
                             </th>
                             <th>
-                                {{ trans('cruds.priority.fields.weight') }}
+                                {{ trans('cruds.toDo.fields.is_repetitive') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.toDo.fields.repeat_interval_value') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.toDo.fields.repeat_interval_unit') }}
                             </th>
                             <th>
                                 {{ trans('cruds.toDo.fields.internal_notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.toDo.fields.completed_at') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -63,36 +72,40 @@
                                     {{ $toDo->id ?? '' }}
                                 </td>
                                 <td>
+                                    {{ $toDo->task ?? '' }}
+                                </td>
+                                <td>
                                     @foreach($toDo->for_roles as $key => $item)
                                         <span class="badge badge-info">{{ $item->title }}</span>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach($toDo->for_users as $key => $item)
-                                        <span class="badge badge-info">{{ $item->name }}</span>
-                                    @endforeach
+                                    {{ $toDo->for_employee->id_employee ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $toDo->task ?? '' }}
-                                </td>
-                                <td>
-                                    @foreach($toDo->photo as $key => $media)
-                                        <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                            <img src="{{ $media->getUrl('thumb') }}">
-                                        </a>
-                                    @endforeach
+                                    {{ $toDo->for_employee->namecomplete ?? '' }}
                                 </td>
                                 <td>
                                     {{ $toDo->deadline ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $toDo->priority->name ?? '' }}
+                                    {{ $toDo->priority ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $toDo->priority->weight ?? '' }}
+                                    <span style="display:none">{{ $toDo->is_repetitive ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $toDo->is_repetitive ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    {{ $toDo->repeat_interval_value ?? '' }}
+                                </td>
+                                <td>
+                                    {{ App\Models\ToDo::REPEAT_INTERVAL_UNIT_SELECT[$toDo->repeat_interval_unit] ?? '' }}
                                 </td>
                                 <td>
                                     {{ $toDo->internal_notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $toDo->completed_at ?? '' }}
                                 </td>
                                 <td>
                                     @can('to_do_show')

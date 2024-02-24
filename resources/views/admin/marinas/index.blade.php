@@ -32,10 +32,16 @@
                         {{ trans('cruds.marina.fields.name') }}
                     </th>
                     <th>
+                        {{ trans('cruds.marina.fields.marina_photo') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.marina.fields.coordinates') }}
                     </th>
                     <th>
                         {{ trans('cruds.marina.fields.link') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.marina.fields.link_description') }}
                     </th>
                     <th>
                         {{ trans('cruds.marina.fields.notes') }}
@@ -104,8 +110,10 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
+{ data: 'marina_photo', name: 'marina_photo', sortable: false, searchable: false },
 { data: 'coordinates', name: 'coordinates' },
 { data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
 { data: 'last_use', name: 'last_use' },

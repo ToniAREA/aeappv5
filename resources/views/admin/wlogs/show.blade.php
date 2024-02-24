@@ -81,6 +81,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.wlog.fields.hourly_rate') }}
+                        </th>
+                        <td>
+                            {{ $wlog->hourly_rate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.wlist_finished') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.wlog.fields.proforma_number') }}
                         </th>
                         <td>
@@ -93,14 +109,6 @@
                         </th>
                         <td>
                             <input type="checkbox" disabled="disabled" {{ $wlog->invoiced_line ? 'checked' : '' }}>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.wlog.fields.status') }}
-                        </th>
-                        <td>
-                            {{ $wlog->status }}
                         </td>
                     </tr>
                     <tr>
@@ -119,6 +127,18 @@
                             {{ $wlog->internal_notes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.photos') }}
+                        </th>
+                        <td>
+                            @foreach($wlog->photos as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -130,6 +150,22 @@
     </div>
 </div>
 
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#for_wlog_employees_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeesRating.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="for_wlog_employees_ratings">
+            @includeIf('admin.wlogs.relationships.forWlogEmployeesRatings', ['employeesRatings' => $wlog->forWlogEmployeesRatings])
+        </div>
+    </div>
+</div>
 
 @endsection

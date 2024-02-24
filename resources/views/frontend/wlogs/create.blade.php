@@ -96,6 +96,29 @@
                             <span class="help-block">{{ trans('cruds.wlog.fields.hours_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="hourly_rate">{{ trans('cruds.wlog.fields.hourly_rate') }}</label>
+                            <input class="form-control" type="number" name="hourly_rate" id="hourly_rate" value="{{ old('hourly_rate', '') }}" step="0.01">
+                            @if($errors->has('hourly_rate'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('hourly_rate') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlog.fields.hourly_rate_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="hidden" name="wlist_finished" value="0">
+                                <input type="checkbox" name="wlist_finished" id="wlist_finished" value="1" {{ old('wlist_finished', 0) == 1 ? 'checked' : '' }}>
+                                <label for="wlist_finished">{{ trans('cruds.wlog.fields.wlist_finished') }}</label>
+                            </div>
+                            @if($errors->has('wlist_finished'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('wlist_finished') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlog.fields.wlist_finished_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="proforma_number_id">{{ trans('cruds.wlog.fields.proforma_number') }}</label>
                             <select class="form-control select2" name="proforma_number_id" id="proforma_number_id">
                                 @foreach($proforma_numbers as $id => $entry)
@@ -123,16 +146,6 @@
                             <span class="help-block">{{ trans('cruds.wlog.fields.invoiced_line_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="status">{{ trans('cruds.wlog.fields.status') }}</label>
-                            <input class="form-control" type="text" name="status" id="status" value="{{ old('status', '') }}">
-                            @if($errors->has('status'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('status') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.wlog.fields.status_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label for="notes">{{ trans('cruds.wlog.fields.notes') }}</label>
                             <textarea class="form-control" name="notes" id="notes">{{ old('notes') }}</textarea>
                             @if($errors->has('notes'))
@@ -153,6 +166,17 @@
                             <span class="help-block">{{ trans('cruds.wlog.fields.internal_notes_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="photos">{{ trans('cruds.wlog.fields.photos') }}</label>
+                            <div class="needsclick dropzone" id="photos-dropzone">
+                            </div>
+                            @if($errors->has('photos'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('photos') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlog.fields.photos_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -164,4 +188,68 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    var uploadedPhotosMap = {}
+Dropzone.options.photosDropzone = {
+    url: '{{ route('frontend.wlogs.storeMedia') }}',
+    maxFilesize: 2, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="photos[]" value="' + response.name + '">')
+      uploadedPhotosMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      console.log(file)
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedPhotosMap[file.name]
+      }
+      $('form').find('input[name="photos[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($wlog) && $wlog->photos)
+      var files = {!! json_encode($wlog->photos) !!}
+          for (var i in files) {
+          var file = files[i]
+          this.options.addedfile.call(this, file)
+          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+          file.previewElement.classList.add('dz-complete')
+          $('form').append('<input type="hidden" name="photos[]" value="' + file.file_name + '">')
+        }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+
+</script>
 @endsection

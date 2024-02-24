@@ -22,6 +22,7 @@ class AssetsHistory extends Model
         'status_id',
         'location_id',
         'assigned_user_id',
+        'notes',
         'created_at',
         'updated_at',
     ];

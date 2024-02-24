@@ -9,6 +9,7 @@ use App\Http\Requests\StoreBookingListRequest;
 use App\Http\Requests\UpdateBookingListRequest;
 use App\Models\Boat;
 use App\Models\BookingList;
+use App\Models\BookingSlot;
 use App\Models\Client;
 use App\Models\Employee;
 use App\Models\User;
@@ -24,7 +25,7 @@ class BookingListController extends Controller
     {
         abort_if(Gate::denies('booking_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bookingLists = BookingList::with(['user', 'client', 'boat', 'employee'])->get();
+        $bookingLists = BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot'])->get();
 
         $users = User::get();
 
@@ -34,7 +35,9 @@ class BookingListController extends Controller
 
         $employees = Employee::get();
 
-        return view('frontend.bookingLists.index', compact('boats', 'bookingLists', 'clients', 'employees', 'users'));
+        $booking_slots = BookingSlot::get();
+
+        return view('frontend.bookingLists.index', compact('boats', 'bookingLists', 'booking_slots', 'clients', 'employees', 'users'));
     }
 
     public function create()
@@ -49,7 +52,9 @@ class BookingListController extends Controller
 
         $employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.bookingLists.create', compact('boats', 'clients', 'employees', 'users'));
+        $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.bookingLists.create', compact('boats', 'booking_slots', 'clients', 'employees', 'users'));
     }
 
     public function store(StoreBookingListRequest $request)
@@ -71,9 +76,11 @@ class BookingListController extends Controller
 
         $employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bookingList->load('user', 'client', 'boat', 'employee');
+        $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.bookingLists.edit', compact('boats', 'bookingList', 'clients', 'employees', 'users'));
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
+
+        return view('frontend.bookingLists.edit', compact('boats', 'bookingList', 'booking_slots', 'clients', 'employees', 'users'));
     }
 
     public function update(UpdateBookingListRequest $request, BookingList $bookingList)
@@ -87,7 +94,7 @@ class BookingListController extends Controller
     {
         abort_if(Gate::denies('booking_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bookingList->load('user', 'client', 'boat', 'employee');
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
 
         return view('frontend.bookingLists.show', compact('bookingList'));
     }

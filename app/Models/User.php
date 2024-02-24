@@ -109,6 +109,12 @@ class User extends Authenticatable
         });
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new \App\Observers\UserActionObserver);
+    }
+
     public function userEmployees()
     {
         return $this->hasMany(Employee::class, 'user_id', 'id');
@@ -117,11 +123,6 @@ class User extends Authenticatable
     public function employeeWlogs()
     {
         return $this->hasMany(Wlog::class, 'employee_id', 'id');
-    }
-
-    public function employeeMatLogs()
-    {
-        return $this->hasMany(MatLog::class, 'employee_id', 'id');
     }
 
     public function fromUserWlists()
@@ -139,19 +140,34 @@ class User extends Authenticatable
         return $this->hasMany(BookingList::class, 'user_id', 'id');
     }
 
-    public function forUserToDos()
+    public function actualHolderAssets()
     {
-        return $this->belongsToMany(ToDo::class);
+        return $this->hasMany(Asset::class, 'actual_holder_id', 'id');
+    }
+
+    public function employeeMlogs()
+    {
+        return $this->hasMany(Mlog::class, 'employee_id', 'id');
+    }
+
+    public function userAssetsRentals()
+    {
+        return $this->hasMany(AssetsRental::class, 'user_id', 'id');
+    }
+
+    public function fromUserEmployeesRatings()
+    {
+        return $this->hasMany(EmployeesRating::class, 'from_user_id', 'id');
+    }
+
+    public function userSuscriptions()
+    {
+        return $this->hasMany(Suscription::class, 'user_id', 'id');
     }
 
     public function forUserAppointments()
     {
         return $this->belongsToMany(Appointment::class);
-    }
-
-    public function forUserWlists()
-    {
-        return $this->belongsToMany(Wlist::class);
     }
 
     public function getEmailVerifiedAtAttribute($value)

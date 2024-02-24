@@ -33,6 +33,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.proforma.fields.closed_and_protected') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $proforma->closed_and_protected ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.proforma.fields.invoice_link') }}
+                        </th>
+                        <td>
+                            {{ $proforma->invoice_link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.proforma.fields.client') }}
                         </th>
                         <td>
@@ -125,6 +141,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.proforma.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $proforma->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.proforma.fields.status') }}
                         </th>
                         <td>
@@ -137,6 +161,22 @@
                         </th>
                         <td>
                             {{ $proforma->notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.proforma.fields.internal_notes') }}
+                        </th>
+                        <td>
+                            {{ $proforma->internal_notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.proforma.fields.completed_at') }}
+                        </th>
+                        <td>
+                            {{ $proforma->completed_at }}
                         </td>
                     </tr>
                 </tbody>
@@ -171,8 +211,23 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#proforma_number_mat_logs" role="tab" data-toggle="tab">
-                {{ trans('cruds.matLog.title') }}
+            <a class="nav-link" href="#proforma_number_mlogs" role="tab" data-toggle="tab">
+                {{ trans('cruds.mlog.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#proforma_assets_rentals" role="tab" data-toggle="tab">
+                {{ trans('cruds.assetsRental.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#proforma_clients_reviews" role="tab" data-toggle="tab">
+                {{ trans('cruds.clientsReview.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#proforma_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.suscription.title') }}
             </a>
         </li>
     </ul>
@@ -186,8 +241,17 @@
         <div class="tab-pane" role="tabpanel" id="proforma_number_payments">
             @includeIf('admin.proformas.relationships.proformaNumberPayments', ['payments' => $proforma->proformaNumberPayments])
         </div>
-        <div class="tab-pane" role="tabpanel" id="proforma_number_mat_logs">
-            @includeIf('admin.proformas.relationships.proformaNumberMatLogs', ['matLogs' => $proforma->proformaNumberMatLogs])
+        <div class="tab-pane" role="tabpanel" id="proforma_number_mlogs">
+            @includeIf('admin.proformas.relationships.proformaNumberMlogs', ['mlogs' => $proforma->proformaNumberMlogs])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="proforma_assets_rentals">
+            @includeIf('admin.proformas.relationships.proformaAssetsRentals', ['assetsRentals' => $proforma->proformaAssetsRentals])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="proforma_clients_reviews">
+            @includeIf('admin.proformas.relationships.proformaClientsReviews', ['clientsReviews' => $proforma->proformaClientsReviews])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="proforma_suscriptions">
+            @includeIf('admin.proformas.relationships.proformaSuscriptions', ['suscriptions' => $proforma->proformaSuscriptions])
         </div>
     </div>
 </div>

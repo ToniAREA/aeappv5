@@ -37,6 +37,8 @@ class Brand extends Model implements HasMedia
         'description',
         'notes',
         'internal_notes',
+        'link',
+        'link_description',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,6 +58,11 @@ class Brand extends Model implements HasMedia
     public function brandProducts()
     {
         return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
+
+    public function brandTechnicalDocumentations()
+    {
+        return $this->hasMany(TechnicalDocumentation::class, 'brand_id', 'id');
     }
 
     public function brandsProviders()

@@ -47,6 +47,12 @@
                         {{ trans('cruds.comment.fields.private_comment') }}
                     </th>
                     <th>
+                        {{ trans('cruds.comment.fields.photos') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.comment.fields.files') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -81,6 +87,10 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -144,6 +154,8 @@
 { data: 'from_user.email', name: 'from_user.email' },
 { data: 'comment', name: 'comment' },
 { data: 'private_comment', name: 'private_comment' },
+{ data: 'photos', name: 'photos', sortable: false, searchable: false },
+{ data: 'files', name: 'files', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

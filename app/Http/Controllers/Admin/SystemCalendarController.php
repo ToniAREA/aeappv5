@@ -32,6 +32,14 @@ class SystemCalendarController extends Controller
             'suffix'     => '',
             'route'      => 'admin.wlists.edit',
         ],
+        [
+            'model'      => '\App\Models\ToDo',
+            'date_field' => 'deadline',
+            'field'      => 'task',
+            'prefix'     => 'Task:',
+            'suffix'     => '',
+            'route'      => 'admin.to-dos.edit',
+        ],
     ];
 
     public function index()
