@@ -196,7 +196,7 @@ class WlogsController extends Controller
     {
         abort_if(Gate::denies('wlog_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlog->load('wlist', 'employee', 'marina', 'proforma_number', 'forWlogEmployeesRatings');
+        $wlog->load('wlist', 'employee', 'marina', 'proforma_number', 'forWlogEmployeeRatings');
 
         return view('admin.wlogs.show', compact('wlog'));
     }

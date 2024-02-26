@@ -57,19 +57,29 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.suscription.fields.plan_name') }}
+                            {{ trans('cruds.suscription.fields.boats') }}
                         </th>
                         <td>
-                            {{ $suscription->plan_name }}
+                            @foreach($suscription->boats as $key => $boats)
+                                <span class="label label-info">{{ $boats->name }}</span>
+                            @endforeach
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.suscription.fields.contract') }}
+                            {{ trans('cruds.suscription.fields.plan') }}
                         </th>
                         <td>
-                            @if($suscription->contract)
-                                <a href="{{ $suscription->contract->getUrl() }}" target="_blank">
+                            {{ $suscription->plan->plan_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.suscription.fields.signed_contract') }}
+                        </th>
+                        <td>
+                            @if($suscription->signed_contract)
+                                <a href="{{ $suscription->signed_contract->getUrl() }}" target="_blank">
                                     {{ trans('global.view_file') }}
                                 </a>
                             @endif
@@ -121,6 +131,30 @@
                         </th>
                         <td>
                             {{ $suscription->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.suscription.fields.notes') }}
+                        </th>
+                        <td>
+                            {{ $suscription->notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.suscription.fields.internalnotes') }}
+                        </th>
+                        <td>
+                            {{ $suscription->internalnotes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.suscription.fields.completed_at') }}
+                        </th>
+                        <td>
+                            {{ $suscription->completed_at }}
                         </td>
                     </tr>
                 </tbody>

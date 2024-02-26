@@ -33,6 +33,8 @@ class GlobalSearchController extends Controller
         'Mlog'                   => 'cruds.mlog.title',
         'TechnicalDocumentation' => 'cruds.technicalDocumentation.title',
         'VideoTutorial'          => 'cruds.videoTutorial.title',
+        'Documentation'          => 'cruds.documentation.title',
+        'Insurance'              => 'cruds.insurance.title',
     ];
 
     public function search(Request $request)

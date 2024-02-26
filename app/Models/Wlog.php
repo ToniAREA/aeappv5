@@ -71,9 +71,9 @@ class Wlog extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function forWlogEmployeesRatings()
+    public function forWlogEmployeeRatings()
     {
-        return $this->hasMany(EmployeesRating::class, 'for_wlog_id', 'id');
+        return $this->hasMany(EmployeeRating::class, 'for_wlog_id', 'id');
     }
 
     public function wlist()

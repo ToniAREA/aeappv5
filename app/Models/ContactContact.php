@@ -61,6 +61,11 @@ class ContactContact extends Model
         return $this->hasMany(Employee::class, 'contact_id', 'id');
     }
 
+    public function contactDocsMarinas()
+    {
+        return $this->hasMany(Marina::class, 'contact_docs_id', 'id');
+    }
+
     public function contactsClients()
     {
         return $this->belongsToMany(Client::class);

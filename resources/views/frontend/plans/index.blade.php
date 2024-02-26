@@ -29,22 +29,37 @@
                                         {{ trans('cruds.plan.fields.plan_name') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.plan.fields.show_online') }}
+                                        {{ trans('cruds.plan.fields.short_description') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.plan.fields.description') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.plan.fields.duration_months') }}
+                                        {{ trans('cruds.plan.fields.show_online') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.plan.fields.price') }}
+                                        {{ trans('cruds.plan.fields.period') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.period_price') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.plan.fields.seo_title') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.plan.fields.seo_meta_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.seo_slug') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.contract') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.link_description') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -61,23 +76,42 @@
                                             {{ $plan->plan_name ?? '' }}
                                         </td>
                                         <td>
-                                            <span style="display:none">{{ $plan->show_online ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
+                                            {{ $plan->short_description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $plan->description ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $plan->duration_months ?? '' }}
+                                            <span style="display:none">{{ $plan->show_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
-                                            {{ $plan->price ?? '' }}
+                                            {{ App\Models\Plan::PERIOD_RADIO[$plan->period] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->period_price ?? '' }}
                                         </td>
                                         <td>
                                             {{ $plan->seo_title ?? '' }}
                                         </td>
                                         <td>
                                             {{ $plan->seo_meta_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->seo_slug ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($plan->contract)
+                                                <a href="{{ $plan->contract->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $plan->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->link_description ?? '' }}
                                         </td>
                                         <td>
                                             @can('plan_show')

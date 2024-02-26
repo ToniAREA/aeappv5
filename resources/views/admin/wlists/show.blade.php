@@ -221,8 +221,8 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#for_wlist_employees_ratings" role="tab" data-toggle="tab">
-                {{ trans('cruds.employeesRating.title') }}
+            <a class="nav-link" href="#for_wlist_employee_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeRating.title') }}
             </a>
         </li>
         <li class="nav-item">
@@ -246,8 +246,8 @@
         <div class="tab-pane" role="tabpanel" id="wlist_mlogs">
             @includeIf('admin.wlists.relationships.wlistMlogs', ['mlogs' => $wlist->wlistMlogs])
         </div>
-        <div class="tab-pane" role="tabpanel" id="for_wlist_employees_ratings">
-            @includeIf('admin.wlists.relationships.forWlistEmployeesRatings', ['employeesRatings' => $wlist->forWlistEmployeesRatings])
+        <div class="tab-pane" role="tabpanel" id="for_wlist_employee_ratings">
+            @includeIf('admin.wlists.relationships.forWlistEmployeeRatings', ['employeeRatings' => $wlist->forWlistEmployeeRatings])
         </div>
         <div class="tab-pane" role="tabpanel" id="wlists_appointments">
             @includeIf('admin.wlists.relationships.wlistsAppointments', ['appointments' => $wlist->wlistsAppointments])

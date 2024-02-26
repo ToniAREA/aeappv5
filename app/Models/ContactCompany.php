@@ -55,6 +55,11 @@ class ContactCompany extends Model
         return $this->hasMany(Provider::class, 'company_id', 'id');
     }
 
+    public function companyInsurances()
+    {
+        return $this->hasMany(Insurance::class, 'company_id', 'id');
+    }
+
     public function contacts()
     {
         return $this->belongsToMany(ContactContact::class);

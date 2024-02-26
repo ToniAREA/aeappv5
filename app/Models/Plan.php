@@ -2,16 +2,24 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Plan extends Model
+class Plan extends Model implements HasMedia
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'plans';
+
+    protected $appends = [
+        'contract',
+    ];
 
     protected $dates = [
         'created_at',
@@ -19,14 +27,26 @@ class Plan extends Model
         'deleted_at',
     ];
 
+    public const PERIOD_RADIO = [
+        'monthly'      => 'Monthly',
+        'quarterly'    => 'Quarterly',
+        'semiannually' => 'Semi-Annually',
+        'annually'     => 'Annually',
+        'biennially'   => 'Biennially',
+    ];
+
     protected $fillable = [
         'plan_name',
-        'show_online',
+        'short_description',
         'description',
-        'duration_months',
-        'price',
+        'show_online',
+        'period',
+        'period_price',
         'seo_title',
         'seo_meta_description',
+        'seo_slug',
+        'link',
+        'link_description',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -35,5 +55,21 @@ class Plan extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function planSuscriptions()
+    {
+        return $this->hasMany(Suscription::class, 'plan_id', 'id');
+    }
+
+    public function getContractAttribute()
+    {
+        return $this->getMedia('contract')->last();
     }
 }

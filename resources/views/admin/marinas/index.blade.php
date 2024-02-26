@@ -50,6 +50,12 @@
                         {{ trans('cruds.marina.fields.internal_notes') }}
                     </th>
                     <th>
+                        {{ trans('cruds.marina.fields.contact_docs') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contactContact.fields.contact_email') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.marina.fields.last_use') }}
                     </th>
                     <th>
@@ -116,6 +122,8 @@
 { data: 'link_description', name: 'link_description' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
+{ data: 'contact_docs_contact_first_name', name: 'contact_docs.contact_first_name' },
+{ data: 'contact_docs.contact_email', name: 'contact_docs.contact_email' },
 { data: 'last_use', name: 'last_use' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

@@ -96,14 +96,19 @@ class Employee extends Model implements HasMedia
         return $this->hasMany(EmployeeAttendance::class, 'employee_id', 'id');
     }
 
-    public function employeeEmployeesSkills()
+    public function employeeEmployeeHolidays()
     {
-        return $this->hasMany(EmployeesSkill::class, 'employee_id', 'id');
+        return $this->hasMany(EmployeeHoliday::class, 'employee_id', 'id');
     }
 
-    public function employeeEmployeesRatings()
+    public function employeeEmployeeSkills()
     {
-        return $this->hasMany(EmployeesRating::class, 'employee_id', 'id');
+        return $this->hasMany(EmployeeSkill::class, 'employee_id', 'id');
+    }
+
+    public function employeeEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'employee_id', 'id');
     }
 
     public function user()

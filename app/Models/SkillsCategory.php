@@ -32,8 +32,8 @@ class SkillsCategory extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
-    public function subjectEmployeesSkills()
+    public function subjectEmployeeSkills()
     {
-        return $this->hasMany(EmployeesSkill::class, 'subject_id', 'id');
+        return $this->hasMany(EmployeeSkill::class, 'subject_id', 'id');
     }
 }

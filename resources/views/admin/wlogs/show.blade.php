@@ -156,14 +156,14 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#for_wlog_employees_ratings" role="tab" data-toggle="tab">
-                {{ trans('cruds.employeesRating.title') }}
+            <a class="nav-link" href="#for_wlog_employee_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeRating.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="for_wlog_employees_ratings">
-            @includeIf('admin.wlogs.relationships.forWlogEmployeesRatings', ['employeesRatings' => $wlog->forWlogEmployeesRatings])
+        <div class="tab-pane" role="tabpanel" id="for_wlog_employee_ratings">
+            @includeIf('admin.wlogs.relationships.forWlogEmployeeRatings', ['employeeRatings' => $wlog->forWlogEmployeeRatings])
         </div>
     </div>
 </div>

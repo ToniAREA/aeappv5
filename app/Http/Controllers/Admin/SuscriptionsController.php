@@ -7,7 +7,9 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySuscriptionRequest;
 use App\Http\Requests\StoreSuscriptionRequest;
 use App\Http\Requests\UpdateSuscriptionRequest;
+use App\Models\Boat;
 use App\Models\Client;
+use App\Models\Plan;
 use App\Models\Proforma;
 use App\Models\Suscription;
 use App\Models\User;
@@ -24,7 +26,7 @@ class SuscriptionsController extends Controller
     {
         abort_if(Gate::denies('suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $suscriptions = Suscription::with(['user', 'proforma', 'client', 'media'])->get();
+        $suscriptions = Suscription::with(['user', 'proforma', 'client', 'boats', 'plan', 'media'])->get();
 
         return view('admin.suscriptions.index', compact('suscriptions'));
     }
@@ -39,15 +41,19 @@ class SuscriptionsController extends Controller
 
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.suscriptions.create', compact('clients', 'proformas', 'users'));
+        $boats = Boat::pluck('name', 'id');
+
+        $plans = Plan::pluck('plan_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.suscriptions.create', compact('boats', 'clients', 'plans', 'proformas', 'users'));
     }
 
     public function store(StoreSuscriptionRequest $request)
     {
         $suscription = Suscription::create($request->all());
-
-        if ($request->input('contract', false)) {
-            $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+        $suscription->boats()->sync($request->input('boats', []));
+        if ($request->input('signed_contract', false)) {
+            $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('signed_contract'))))->toMediaCollection('signed_contract');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -67,24 +73,28 @@ class SuscriptionsController extends Controller
 
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $suscription->load('user', 'proforma', 'client');
+        $boats = Boat::pluck('name', 'id');
 
-        return view('admin.suscriptions.edit', compact('clients', 'proformas', 'suscription', 'users'));
+        $plans = Plan::pluck('plan_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $suscription->load('user', 'proforma', 'client', 'boats', 'plan');
+
+        return view('admin.suscriptions.edit', compact('boats', 'clients', 'plans', 'proformas', 'suscription', 'users'));
     }
 
     public function update(UpdateSuscriptionRequest $request, Suscription $suscription)
     {
         $suscription->update($request->all());
-
-        if ($request->input('contract', false)) {
-            if (! $suscription->contract || $request->input('contract') !== $suscription->contract->file_name) {
-                if ($suscription->contract) {
-                    $suscription->contract->delete();
+        $suscription->boats()->sync($request->input('boats', []));
+        if ($request->input('signed_contract', false)) {
+            if (! $suscription->signed_contract || $request->input('signed_contract') !== $suscription->signed_contract->file_name) {
+                if ($suscription->signed_contract) {
+                    $suscription->signed_contract->delete();
                 }
-                $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+                $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('signed_contract'))))->toMediaCollection('signed_contract');
             }
-        } elseif ($suscription->contract) {
-            $suscription->contract->delete();
+        } elseif ($suscription->signed_contract) {
+            $suscription->signed_contract->delete();
         }
 
         return redirect()->route('admin.suscriptions.index');
@@ -94,7 +104,7 @@ class SuscriptionsController extends Controller
     {
         abort_if(Gate::denies('suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $suscription->load('user', 'proforma', 'client');
+        $suscription->load('user', 'proforma', 'client', 'boats', 'plan');
 
         return view('admin.suscriptions.show', compact('suscription'));
     }

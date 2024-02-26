@@ -21,21 +21,30 @@ class StorePlanRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'description' => [
+            'short_description' => [
                 'string',
-                'nullable',
+                'required',
             ],
-            'duration_months' => [
-                'nullable',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
+            'period_price' => [
+                'required',
             ],
             'seo_title' => [
                 'string',
                 'nullable',
             ],
             'seo_meta_description' => [
+                'string',
+                'nullable',
+            ],
+            'seo_slug' => [
+                'string',
+                'nullable',
+            ],
+            'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
                 'string',
                 'nullable',
             ],

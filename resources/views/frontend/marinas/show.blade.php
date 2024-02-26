@@ -88,6 +88,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.marina.fields.contact_docs') }}
+                                    </th>
+                                    <td>
+                                        {{ $marina->contact_docs->contact_first_name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.marina.fields.last_use') }}
                                     </th>
                                     <td>

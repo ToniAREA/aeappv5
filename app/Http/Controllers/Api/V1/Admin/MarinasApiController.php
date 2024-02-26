@@ -20,7 +20,7 @@ class MarinasApiController extends Controller
     {
         abort_if(Gate::denies('marina_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MarinaResource(Marina::all());
+        return new MarinaResource(Marina::with(['contact_docs'])->get());
     }
 
     public function store(StoreMarinaRequest $request)
@@ -40,7 +40,7 @@ class MarinasApiController extends Controller
     {
         abort_if(Gate::denies('marina_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MarinaResource($marina);
+        return new MarinaResource($marina->load(['contact_docs']));
     }
 
     public function update(UpdateMarinaRequest $request, Marina $marina)
