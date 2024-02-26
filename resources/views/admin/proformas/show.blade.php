@@ -230,6 +230,11 @@
                 {{ trans('cruds.suscription.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#proforma_maintenance_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.maintenanceSuscription.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="proforma_number_wlogs">
@@ -252,6 +257,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="proforma_suscriptions">
             @includeIf('admin.proformas.relationships.proformaSuscriptions', ['suscriptions' => $proforma->proformaSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="proforma_maintenance_suscriptions">
+            @includeIf('admin.proformas.relationships.proformaMaintenanceSuscriptions', ['maintenanceSuscriptions' => $proforma->proformaMaintenanceSuscriptions])
         </div>
     </div>
 </div>

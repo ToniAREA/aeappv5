@@ -33,10 +33,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.plan.fields.show_online') }}
+                            {{ trans('cruds.plan.fields.short_description') }}
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
+                            {{ $plan->short_description }}
                         </td>
                     </tr>
                     <tr>
@@ -49,18 +49,26 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.plan.fields.duration_months') }}
+                            {{ trans('cruds.plan.fields.show_online') }}
                         </th>
                         <td>
-                            {{ $plan->duration_months }}
+                            <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.plan.fields.price') }}
+                            {{ trans('cruds.plan.fields.period') }}
                         </th>
                         <td>
-                            {{ $plan->price }}
+                            {{ App\Models\Plan::PERIOD_RADIO[$plan->period] ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.period_price') }}
+                        </th>
+                        <td>
+                            {{ $plan->period_price }}
                         </td>
                     </tr>
                     <tr>
@@ -79,6 +87,42 @@
                             {{ $plan->seo_meta_description }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.seo_slug') }}
+                        </th>
+                        <td>
+                            {{ $plan->seo_slug }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.contract') }}
+                        </th>
+                        <td>
+                            @if($plan->contract)
+                                <a href="{{ $plan->contract->getUrl() }}" target="_blank">
+                                    {{ trans('global.view_file') }}
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $plan->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $plan->link_description }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -90,6 +134,22 @@
     </div>
 </div>
 
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#plan_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.suscription.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="plan_suscriptions">
+            @includeIf('admin.plans.relationships.planSuscriptions', ['suscriptions' => $plan->planSuscriptions])
+        </div>
+    </div>
+</div>
 
 @endsection

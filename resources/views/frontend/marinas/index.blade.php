@@ -51,6 +51,12 @@
                                         {{ trans('cruds.marina.fields.internal_notes') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.marina.fields.contact_docs') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.contact_email') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.marina.fields.last_use') }}
                                     </th>
                                     <th>
@@ -88,6 +94,12 @@
                                         </td>
                                         <td>
                                             {{ $marina->internal_notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $marina->contact_docs->contact_first_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $marina->contact_docs->contact_email ?? '' }}
                                         </td>
                                         <td>
                                             {{ $marina->last_use ?? '' }}

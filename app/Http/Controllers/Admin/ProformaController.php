@@ -174,7 +174,7 @@ class ProformaController extends Controller
     {
         abort_if(Gate::denies('proforma_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $proforma->load('client', 'boats', 'wlists', 'proformaNumberWlogs', 'proformaNumberClaims', 'proformaNumberPayments', 'proformaNumberMlogs', 'proformaAssetsRentals', 'proformaClientsReviews', 'proformaSuscriptions');
+        $proforma->load('client', 'boats', 'wlists', 'proformaNumberWlogs', 'proformaNumberClaims', 'proformaNumberPayments', 'proformaNumberMlogs', 'proformaAssetsRentals', 'proformaClientsReviews', 'proformaSuscriptions', 'proformaMaintenanceSuscriptions');
 
         return view('admin.proformas.show', compact('proforma'));
     }

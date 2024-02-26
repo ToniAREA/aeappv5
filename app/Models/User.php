@@ -155,14 +155,19 @@ class User extends Authenticatable
         return $this->hasMany(AssetsRental::class, 'user_id', 'id');
     }
 
-    public function fromUserEmployeesRatings()
-    {
-        return $this->hasMany(EmployeesRating::class, 'from_user_id', 'id');
-    }
-
     public function userSuscriptions()
     {
         return $this->hasMany(Suscription::class, 'user_id', 'id');
+    }
+
+    public function userMaintenanceSuscriptions()
+    {
+        return $this->hasMany(MaintenanceSuscription::class, 'user_id', 'id');
+    }
+
+    public function fromUserEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'from_user_id', 'id');
     }
 
     public function forUserAppointments()

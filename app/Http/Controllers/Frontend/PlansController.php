@@ -3,21 +3,25 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPlanRequest;
 use App\Http\Requests\StorePlanRequest;
 use App\Http\Requests\UpdatePlanRequest;
 use App\Models\Plan;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class PlansController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('plan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $plans = Plan::all();
+        $plans = Plan::with(['media'])->get();
 
         return view('frontend.plans.index', compact('plans'));
     }
@@ -33,6 +37,14 @@ class PlansController extends Controller
     {
         $plan = Plan::create($request->all());
 
+        if ($request->input('contract', false)) {
+            $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $plan->id]);
+        }
+
         return redirect()->route('frontend.plans.index');
     }
 
@@ -47,12 +59,25 @@ class PlansController extends Controller
     {
         $plan->update($request->all());
 
+        if ($request->input('contract', false)) {
+            if (! $plan->contract || $request->input('contract') !== $plan->contract->file_name) {
+                if ($plan->contract) {
+                    $plan->contract->delete();
+                }
+                $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+            }
+        } elseif ($plan->contract) {
+            $plan->contract->delete();
+        }
+
         return redirect()->route('frontend.plans.index');
     }
 
     public function show(Plan $plan)
     {
         abort_if(Gate::denies('plan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $plan->load('planSuscriptions');
 
         return view('frontend.plans.show', compact('plan'));
     }
@@ -75,5 +100,17 @@ class PlansController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('plan_create') && Gate::denies('plan_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Plan();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

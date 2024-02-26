@@ -82,11 +82,6 @@ class Client extends Model
         return $this->hasMany(AssetsRental::class, 'client_id', 'id');
     }
 
-    public function fromClientEmployeesRatings()
-    {
-        return $this->hasMany(EmployeesRating::class, 'from_client_id', 'id');
-    }
-
     public function clientClientsReviews()
     {
         return $this->hasMany(ClientsReview::class, 'client_id', 'id');
@@ -95,6 +90,16 @@ class Client extends Model
     public function clientSuscriptions()
     {
         return $this->hasMany(Suscription::class, 'client_id', 'id');
+    }
+
+    public function clientMaintenanceSuscriptions()
+    {
+        return $this->hasMany(MaintenanceSuscription::class, 'client_id', 'id');
+    }
+
+    public function fromClientEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'from_client_id', 'id');
     }
 
     public function clientsBoats()

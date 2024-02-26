@@ -54,7 +54,7 @@ class SkillsCategoriesController extends Controller
     {
         abort_if(Gate::denies('skills_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $skillsCategory->load('subjectEmployeesSkills');
+        $skillsCategory->load('subjectEmployeeSkills');
 
         return view('admin.skillsCategories.show', compact('skillsCategory'));
     }

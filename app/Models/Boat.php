@@ -105,6 +105,16 @@ class Boat extends Model implements HasMedia
         return $this->belongsToMany(ClientsReview::class);
     }
 
+    public function boatsSuscriptions()
+    {
+        return $this->belongsToMany(Suscription::class);
+    }
+
+    public function boatsMaintenanceSuscriptions()
+    {
+        return $this->belongsToMany(MaintenanceSuscription::class);
+    }
+
     public function getBoatPhotoAttribute()
     {
         $file = $this->getMedia('boat_photo')->last();

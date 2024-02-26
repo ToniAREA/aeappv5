@@ -17,9 +17,11 @@ class UpdateSuscriptionRequest extends FormRequest
     public function rules()
     {
         return [
-            'plan_name' => [
-                'string',
-                'nullable',
+            'boats.*' => [
+                'integer',
+            ],
+            'boats' => [
+                'array',
             ],
             'start_date' => [
                 'date_format:' . config('panel.date_format'),
@@ -41,6 +43,18 @@ class UpdateSuscriptionRequest extends FormRequest
             ],
             'link_description' => [
                 'string',
+                'nullable',
+            ],
+            'notes' => [
+                'string',
+                'nullable',
+            ],
+            'internalnotes' => [
+                'string',
+                'nullable',
+            ],
+            'completed_at' => [
+                'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
         ];

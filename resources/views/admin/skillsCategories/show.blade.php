@@ -56,14 +56,14 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#subject_employees_skills" role="tab" data-toggle="tab">
-                {{ trans('cruds.employeesSkill.title') }}
+            <a class="nav-link" href="#subject_employee_skills" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeSkill.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="subject_employees_skills">
-            @includeIf('admin.skillsCategories.relationships.subjectEmployeesSkills', ['employeesSkills' => $skillsCategory->subjectEmployeesSkills])
+        <div class="tab-pane" role="tabpanel" id="subject_employee_skills">
+            @includeIf('admin.skillsCategories.relationships.subjectEmployeeSkills', ['employeeSkills' => $skillsCategory->subjectEmployeeSkills])
         </div>
     </div>
 </div>

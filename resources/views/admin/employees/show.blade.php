@@ -186,13 +186,18 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#employee_employees_skills" role="tab" data-toggle="tab">
-                {{ trans('cruds.employeesSkill.title') }}
+            <a class="nav-link" href="#employee_employee_holidays" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeHoliday.title') }}
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#employee_employees_ratings" role="tab" data-toggle="tab">
-                {{ trans('cruds.employeesRating.title') }}
+            <a class="nav-link" href="#employee_employee_skills" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeSkill.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#employee_employee_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeRating.title') }}
             </a>
         </li>
     </ul>
@@ -215,11 +220,14 @@
         <div class="tab-pane" role="tabpanel" id="employee_employee_attendances">
             @includeIf('admin.employees.relationships.employeeEmployeeAttendances', ['employeeAttendances' => $employee->employeeEmployeeAttendances])
         </div>
-        <div class="tab-pane" role="tabpanel" id="employee_employees_skills">
-            @includeIf('admin.employees.relationships.employeeEmployeesSkills', ['employeesSkills' => $employee->employeeEmployeesSkills])
+        <div class="tab-pane" role="tabpanel" id="employee_employee_holidays">
+            @includeIf('admin.employees.relationships.employeeEmployeeHolidays', ['employeeHolidays' => $employee->employeeEmployeeHolidays])
         </div>
-        <div class="tab-pane" role="tabpanel" id="employee_employees_ratings">
-            @includeIf('admin.employees.relationships.employeeEmployeesRatings', ['employeesRatings' => $employee->employeeEmployeesRatings])
+        <div class="tab-pane" role="tabpanel" id="employee_employee_skills">
+            @includeIf('admin.employees.relationships.employeeEmployeeSkills', ['employeeSkills' => $employee->employeeEmployeeSkills])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="employee_employee_ratings">
+            @includeIf('admin.employees.relationships.employeeEmployeeRatings', ['employeeRatings' => $employee->employeeEmployeeRatings])
         </div>
     </div>
 </div>

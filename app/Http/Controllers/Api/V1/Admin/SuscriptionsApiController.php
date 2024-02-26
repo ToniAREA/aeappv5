@@ -20,15 +20,15 @@ class SuscriptionsApiController extends Controller
     {
         abort_if(Gate::denies('suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SuscriptionResource(Suscription::with(['user', 'proforma', 'client'])->get());
+        return new SuscriptionResource(Suscription::with(['user', 'proforma', 'client', 'boats', 'plan'])->get());
     }
 
     public function store(StoreSuscriptionRequest $request)
     {
         $suscription = Suscription::create($request->all());
-
-        if ($request->input('contract', false)) {
-            $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+        $suscription->boats()->sync($request->input('boats', []));
+        if ($request->input('signed_contract', false)) {
+            $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('signed_contract'))))->toMediaCollection('signed_contract');
         }
 
         return (new SuscriptionResource($suscription))
@@ -40,22 +40,22 @@ class SuscriptionsApiController extends Controller
     {
         abort_if(Gate::denies('suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SuscriptionResource($suscription->load(['user', 'proforma', 'client']));
+        return new SuscriptionResource($suscription->load(['user', 'proforma', 'client', 'boats', 'plan']));
     }
 
     public function update(UpdateSuscriptionRequest $request, Suscription $suscription)
     {
         $suscription->update($request->all());
-
-        if ($request->input('contract', false)) {
-            if (! $suscription->contract || $request->input('contract') !== $suscription->contract->file_name) {
-                if ($suscription->contract) {
-                    $suscription->contract->delete();
+        $suscription->boats()->sync($request->input('boats', []));
+        if ($request->input('signed_contract', false)) {
+            if (! $suscription->signed_contract || $request->input('signed_contract') !== $suscription->signed_contract->file_name) {
+                if ($suscription->signed_contract) {
+                    $suscription->signed_contract->delete();
                 }
-                $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
+                $suscription->addMedia(storage_path('tmp/uploads/' . basename($request->input('signed_contract'))))->toMediaCollection('signed_contract');
             }
-        } elseif ($suscription->contract) {
-            $suscription->contract->delete();
+        } elseif ($suscription->signed_contract) {
+            $suscription->signed_contract->delete();
         }
 
         return (new SuscriptionResource($suscription))

@@ -68,6 +68,18 @@
                 <span class="help-block">{{ trans('cruds.marina.fields.internal_notes_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="contact_docs_id">{{ trans('cruds.marina.fields.contact_docs') }}</label>
+                <select class="form-control select2 {{ $errors->has('contact_docs') ? 'is-invalid' : '' }}" name="contact_docs_id" id="contact_docs_id">
+                    @foreach($contact_docs as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('contact_docs_id') ? old('contact_docs_id') : $marina->contact_docs->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('contact_docs'))
+                    <span class="text-danger">{{ $errors->first('contact_docs') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.marina.fields.contact_docs_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="last_use">{{ trans('cruds.marina.fields.last_use') }}</label>
                 <input class="form-control datetime {{ $errors->has('last_use') ? 'is-invalid' : '' }}" type="text" name="last_use" id="last_use" value="{{ old('last_use', $marina->last_use) }}">
                 @if($errors->has('last_use'))

@@ -58,21 +58,41 @@
                 <span class="help-block">{{ trans('cruds.suscription.fields.client_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="plan_name">{{ trans('cruds.suscription.fields.plan_name') }}</label>
-                <input class="form-control {{ $errors->has('plan_name') ? 'is-invalid' : '' }}" type="text" name="plan_name" id="plan_name" value="{{ old('plan_name', $suscription->plan_name) }}">
-                @if($errors->has('plan_name'))
-                    <span class="text-danger">{{ $errors->first('plan_name') }}</span>
+                <label for="boats">{{ trans('cruds.suscription.fields.boats') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('boats') ? 'is-invalid' : '' }}" name="boats[]" id="boats" multiple>
+                    @foreach($boats as $id => $boat)
+                        <option value="{{ $id }}" {{ (in_array($id, old('boats', [])) || $suscription->boats->contains($id)) ? 'selected' : '' }}>{{ $boat }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('boats'))
+                    <span class="text-danger">{{ $errors->first('boats') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.suscription.fields.plan_name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.suscription.fields.boats_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="contract">{{ trans('cruds.suscription.fields.contract') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('contract') ? 'is-invalid' : '' }}" id="contract-dropzone">
-                </div>
-                @if($errors->has('contract'))
-                    <span class="text-danger">{{ $errors->first('contract') }}</span>
+                <label for="plan_id">{{ trans('cruds.suscription.fields.plan') }}</label>
+                <select class="form-control select2 {{ $errors->has('plan') ? 'is-invalid' : '' }}" name="plan_id" id="plan_id">
+                    @foreach($plans as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('plan_id') ? old('plan_id') : $suscription->plan->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('plan'))
+                    <span class="text-danger">{{ $errors->first('plan') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.suscription.fields.contract_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.suscription.fields.plan_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="signed_contract">{{ trans('cruds.suscription.fields.signed_contract') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('signed_contract') ? 'is-invalid' : '' }}" id="signed_contract-dropzone">
+                </div>
+                @if($errors->has('signed_contract'))
+                    <span class="text-danger">{{ $errors->first('signed_contract') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.suscription.fields.signed_contract_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="start_date">{{ trans('cruds.suscription.fields.start_date') }}</label>
@@ -123,6 +143,30 @@
                 <span class="help-block">{{ trans('cruds.suscription.fields.link_description_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="notes">{{ trans('cruds.suscription.fields.notes') }}</label>
+                <input class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" type="text" name="notes" id="notes" value="{{ old('notes', $suscription->notes) }}">
+                @if($errors->has('notes'))
+                    <span class="text-danger">{{ $errors->first('notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.suscription.fields.notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="internalnotes">{{ trans('cruds.suscription.fields.internalnotes') }}</label>
+                <input class="form-control {{ $errors->has('internalnotes') ? 'is-invalid' : '' }}" type="text" name="internalnotes" id="internalnotes" value="{{ old('internalnotes', $suscription->internalnotes) }}">
+                @if($errors->has('internalnotes'))
+                    <span class="text-danger">{{ $errors->first('internalnotes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.suscription.fields.internalnotes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="completed_at">{{ trans('cruds.suscription.fields.completed_at') }}</label>
+                <input class="form-control date {{ $errors->has('completed_at') ? 'is-invalid' : '' }}" type="text" name="completed_at" id="completed_at" value="{{ old('completed_at', $suscription->completed_at) }}">
+                @if($errors->has('completed_at'))
+                    <span class="text-danger">{{ $errors->first('completed_at') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.suscription.fields.completed_at_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -137,34 +181,34 @@
 
 @section('scripts')
 <script>
-    Dropzone.options.contractDropzone = {
+    Dropzone.options.signedContractDropzone = {
     url: '{{ route('admin.suscriptions.storeMedia') }}',
-    maxFilesize: 5, // MB
+    maxFilesize: 15, // MB
     maxFiles: 1,
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 5
+      size: 15
     },
     success: function (file, response) {
-      $('form').find('input[name="contract"]').remove()
-      $('form').append('<input type="hidden" name="contract" value="' + response.name + '">')
+      $('form').find('input[name="signed_contract"]').remove()
+      $('form').append('<input type="hidden" name="signed_contract" value="' + response.name + '">')
     },
     removedfile: function (file) {
       file.previewElement.remove()
       if (file.status !== 'error') {
-        $('form').find('input[name="contract"]').remove()
+        $('form').find('input[name="signed_contract"]').remove()
         this.options.maxFiles = this.options.maxFiles + 1
       }
     },
     init: function () {
-@if(isset($suscription) && $suscription->contract)
-      var file = {!! json_encode($suscription->contract) !!}
+@if(isset($suscription) && $suscription->signed_contract)
+      var file = {!! json_encode($suscription->signed_contract) !!}
           this.options.addedfile.call(this, file)
       file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="contract" value="' + file.file_name + '">')
+      $('form').append('<input type="hidden" name="signed_contract" value="' + file.file_name + '">')
       this.options.maxFiles = this.options.maxFiles - 1
 @endif
     },

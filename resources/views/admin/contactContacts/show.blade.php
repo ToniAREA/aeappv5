@@ -173,6 +173,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#contact_docs_marinas" role="tab" data-toggle="tab">
+                {{ trans('cruds.marina.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#contacts_clients" role="tab" data-toggle="tab">
                 {{ trans('cruds.client.title') }}
             </a>
@@ -186,6 +191,9 @@
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="contact_employees">
             @includeIf('admin.contactContacts.relationships.contactEmployees', ['employees' => $contactContact->contactEmployees])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="contact_docs_marinas">
+            @includeIf('admin.contactContacts.relationships.contactDocsMarinas', ['marinas' => $contactContact->contactDocsMarinas])
         </div>
         <div class="tab-pane" role="tabpanel" id="contacts_clients">
             @includeIf('admin.contactContacts.relationships.contactsClients', ['clients' => $contactContact->contactsClients])

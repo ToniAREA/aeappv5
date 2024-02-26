@@ -237,11 +237,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#from_client_employees_ratings" role="tab" data-toggle="tab">
-                {{ trans('cruds.employeesRating.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#client_clients_reviews" role="tab" data-toggle="tab">
                 {{ trans('cruds.clientsReview.title') }}
             </a>
@@ -249,6 +244,16 @@
         <li class="nav-item">
             <a class="nav-link" href="#client_suscriptions" role="tab" data-toggle="tab">
                 {{ trans('cruds.suscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_maintenance_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.maintenanceSuscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#from_client_employee_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeRating.title') }}
             </a>
         </li>
         <li class="nav-item">
@@ -273,14 +278,17 @@
         <div class="tab-pane" role="tabpanel" id="client_assets_rentals">
             @includeIf('admin.clients.relationships.clientAssetsRentals', ['assetsRentals' => $client->clientAssetsRentals])
         </div>
-        <div class="tab-pane" role="tabpanel" id="from_client_employees_ratings">
-            @includeIf('admin.clients.relationships.fromClientEmployeesRatings', ['employeesRatings' => $client->fromClientEmployeesRatings])
-        </div>
         <div class="tab-pane" role="tabpanel" id="client_clients_reviews">
             @includeIf('admin.clients.relationships.clientClientsReviews', ['clientsReviews' => $client->clientClientsReviews])
         </div>
         <div class="tab-pane" role="tabpanel" id="client_suscriptions">
             @includeIf('admin.clients.relationships.clientSuscriptions', ['suscriptions' => $client->clientSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_maintenance_suscriptions">
+            @includeIf('admin.clients.relationships.clientMaintenanceSuscriptions', ['maintenanceSuscriptions' => $client->clientMaintenanceSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="from_client_employee_ratings">
+            @includeIf('admin.clients.relationships.fromClientEmployeeRatings', ['employeeRatings' => $client->fromClientEmployeeRatings])
         </div>
         <div class="tab-pane" role="tabpanel" id="clients_boats">
             @includeIf('admin.clients.relationships.clientsBoats', ['boats' => $client->clientsBoats])

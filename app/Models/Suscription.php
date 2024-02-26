@@ -18,12 +18,13 @@ class Suscription extends Model implements HasMedia
     public $table = 'suscriptions';
 
     protected $appends = [
-        'contract',
+        'signed_contract',
     ];
 
     protected $dates = [
         'start_date',
         'end_date',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -34,13 +35,16 @@ class Suscription extends Model implements HasMedia
         'is_active',
         'proforma_id',
         'client_id',
-        'plan_name',
+        'plan_id',
         'start_date',
         'end_date',
         'hourly_rate_discount',
         'material_discount',
         'link',
         'link_description',
+        'notes',
+        'internalnotes',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -72,9 +76,19 @@ class Suscription extends Model implements HasMedia
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function getContractAttribute()
+    public function boats()
     {
-        return $this->getMedia('contract')->last();
+        return $this->belongsToMany(Boat::class);
+    }
+
+    public function plan()
+    {
+        return $this->belongsTo(Plan::class, 'plan_id');
+    }
+
+    public function getSignedContractAttribute()
+    {
+        return $this->getMedia('signed_contract')->last();
     }
 
     public function getStartDateAttribute($value)
@@ -95,5 +109,15 @@ class Suscription extends Model implements HasMedia
     public function setEndDateAttribute($value)
     {
         $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getCompletedAtAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setCompletedAtAttribute($value)
+    {
+        $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 }

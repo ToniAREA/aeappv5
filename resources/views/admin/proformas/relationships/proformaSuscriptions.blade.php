@@ -46,10 +46,16 @@
                                 {{ trans('cruds.client.fields.lastname') }}
                             </th>
                             <th>
-                                {{ trans('cruds.suscription.fields.plan_name') }}
+                                {{ trans('cruds.suscription.fields.boats') }}
                             </th>
                             <th>
-                                {{ trans('cruds.suscription.fields.contract') }}
+                                {{ trans('cruds.suscription.fields.plan') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.plan.fields.description') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.suscription.fields.signed_contract') }}
                             </th>
                             <th>
                                 {{ trans('cruds.suscription.fields.start_date') }}
@@ -68,6 +74,15 @@
                             </th>
                             <th>
                                 {{ trans('cruds.suscription.fields.link_description') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.suscription.fields.notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.suscription.fields.internalnotes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.suscription.fields.completed_at') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -106,11 +121,19 @@
                                     {{ $suscription->client->lastname ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $suscription->plan_name ?? '' }}
+                                    @foreach($suscription->boats as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
+                                    @endforeach
                                 </td>
                                 <td>
-                                    @if($suscription->contract)
-                                        <a href="{{ $suscription->contract->getUrl() }}" target="_blank">
+                                    {{ $suscription->plan->plan_name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $suscription->plan->description ?? '' }}
+                                </td>
+                                <td>
+                                    @if($suscription->signed_contract)
+                                        <a href="{{ $suscription->signed_contract->getUrl() }}" target="_blank">
                                             {{ trans('global.view_file') }}
                                         </a>
                                     @endif
@@ -132,6 +155,15 @@
                                 </td>
                                 <td>
                                     {{ $suscription->link_description ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $suscription->notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $suscription->internalnotes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $suscription->completed_at ?? '' }}
                                 </td>
                                 <td>
                                     @can('suscription_show')

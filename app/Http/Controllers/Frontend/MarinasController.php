@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyMarinaRequest;
 use App\Http\Requests\StoreMarinaRequest;
 use App\Http\Requests\UpdateMarinaRequest;
+use App\Models\ContactContact;
 use App\Models\Marina;
 use Gate;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $marinas = Marina::with(['media'])->get();
+        $marinas = Marina::with(['contact_docs', 'media'])->get();
 
         return view('frontend.marinas.index', compact('marinas'));
     }
@@ -31,7 +32,9 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.marinas.create');
+        $contact_docs = ContactContact::pluck('contact_first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.marinas.create', compact('contact_docs'));
     }
 
     public function store(StoreMarinaRequest $request)
@@ -53,7 +56,11 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.marinas.edit', compact('marina'));
+        $contact_docs = ContactContact::pluck('contact_first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $marina->load('contact_docs');
+
+        return view('frontend.marinas.edit', compact('contact_docs', 'marina'));
     }
 
     public function update(UpdateMarinaRequest $request, Marina $marina)
@@ -78,7 +85,7 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $marina->load('marinaBoats', 'marinaWlogs');
+        $marina->load('contact_docs', 'marinaBoats', 'marinaWlogs');
 
         return view('frontend.marinas.show', compact('marina'));
     }

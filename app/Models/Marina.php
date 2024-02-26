@@ -40,6 +40,7 @@ class Marina extends Model implements HasMedia
         'link_description',
         'notes',
         'internal_notes',
+        'contact_docs_id',
         'last_use',
         'created_at',
         'updated_at',
@@ -77,6 +78,11 @@ class Marina extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function contact_docs()
+    {
+        return $this->belongsTo(ContactContact::class, 'contact_docs_id');
     }
 
     public function getLastUseAttribute($value)

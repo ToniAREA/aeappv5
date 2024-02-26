@@ -197,6 +197,16 @@
                 {{ trans('cruds.clientsReview.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#boats_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.suscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#boats_maintenance_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.maintenanceSuscription.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="boat_wlists">
@@ -222,6 +232,12 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="boats_clients_reviews">
             @includeIf('admin.boats.relationships.boatsClientsReviews', ['clientsReviews' => $boat->boatsClientsReviews])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boats_suscriptions">
+            @includeIf('admin.boats.relationships.boatsSuscriptions', ['suscriptions' => $boat->boatsSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boats_maintenance_suscriptions">
+            @includeIf('admin.boats.relationships.boatsMaintenanceSuscriptions', ['maintenanceSuscriptions' => $boat->boatsMaintenanceSuscriptions])
         </div>
     </div>
 </div>

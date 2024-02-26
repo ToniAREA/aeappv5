@@ -110,12 +110,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('technical-documentations/media', 'TechnicalDocumentationApiController@storeMedia')->name('technical-documentations.storeMedia');
     Route::apiResource('technical-documentations', 'TechnicalDocumentationApiController');
 
-    // Employees Skills
-    Route::apiResource('employees-skills', 'EmployeesSkillsApiController');
-
-    // Employees Ratings
-    Route::apiResource('employees-ratings', 'EmployeesRatingsApiController');
-
     // Skills Categories
     Route::apiResource('skills-categories', 'SkillsCategoriesApiController');
 
@@ -125,4 +119,35 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Suscriptions
     Route::post('suscriptions/media', 'SuscriptionsApiController@storeMedia')->name('suscriptions.storeMedia');
     Route::apiResource('suscriptions', 'SuscriptionsApiController');
+
+    // Plans
+    Route::post('plans/media', 'PlansApiController@storeMedia')->name('plans.storeMedia');
+    Route::apiResource('plans', 'PlansApiController');
+
+    // Insurances
+    Route::post('insurances/media', 'InsurancesApiController@storeMedia')->name('insurances.storeMedia');
+    Route::apiResource('insurances', 'InsurancesApiController');
+
+    // Banks
+    Route::apiResource('banks', 'BanksApiController');
+
+    // Checkpoints
+    Route::post('checkpoints/media', 'CheckpointsApiController@storeMedia')->name('checkpoints.storeMedia');
+    Route::apiResource('checkpoints', 'CheckpointsApiController');
+
+    // Care Plans
+    Route::apiResource('care-plans', 'CarePlansApiController');
+
+    // Maintenance Suscriptions
+    Route::post('maintenance-suscriptions/media', 'MaintenanceSuscriptionsApiController@storeMedia')->name('maintenance-suscriptions.storeMedia');
+    Route::apiResource('maintenance-suscriptions', 'MaintenanceSuscriptionsApiController');
+
+    // Employee Holidays
+    Route::apiResource('employee-holidays', 'EmployeeHolidaysApiController');
+
+    // Employee Skills
+    Route::apiResource('employee-skills', 'EmployeeSkillsApiController');
+
+    // Employee Rating
+    Route::apiResource('employee-ratings', 'EmployeeRatingApiController');
 });

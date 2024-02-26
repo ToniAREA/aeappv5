@@ -86,6 +86,11 @@ class Proforma extends Model
         return $this->hasMany(Suscription::class, 'proforma_id', 'id');
     }
 
+    public function proformaMaintenanceSuscriptions()
+    {
+        return $this->hasMany(MaintenanceSuscription::class, 'proforma_id', 'id');
+    }
+
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
