@@ -25,6 +25,13 @@ class UpdateCheckpointRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'groups.*' => [
+                'integer',
+            ],
+            'groups' => [
+                'required',
+                'array',
+            ],
         ];
     }
 }

@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.content-categories.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.contentCategory.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'ContentCategory', 'route' => 'admin.content-categories.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -35,6 +39,12 @@
                                         {{ trans('cruds.contentCategory.fields.photo') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contentCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentCategory.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -57,6 +67,16 @@
                                                     <img src="{{ $contentCategory->photo->getUrl('thumb') }}">
                                                 </a>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @foreach($contentCategory->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($contentCategory->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('content_category_show')

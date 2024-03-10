@@ -41,14 +41,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.suscription.fields.proforma') }}
-                        </th>
-                        <td>
-                            {{ $suscription->proforma->proforma_number ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.suscription.fields.client') }}
                         </th>
                         <td>
@@ -103,22 +95,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.suscription.fields.hourly_rate_discount') }}
-                        </th>
-                        <td>
-                            {{ $suscription->hourly_rate_discount }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.suscription.fields.material_discount') }}
-                        </th>
-                        <td>
-                            {{ $suscription->material_discount }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.suscription.fields.link') }}
                         </th>
                         <td>
@@ -155,6 +131,14 @@
                         </th>
                         <td>
                             {{ $suscription->completed_at }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.suscription.fields.financial_document') }}
+                        </th>
+                        <td>
+                            {{ $suscription->financial_document->reference_number ?? '' }}
                         </td>
                     </tr>
                 </tbody>

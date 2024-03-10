@@ -44,14 +44,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.maintenanceSuscription.fields.proforma') }}
-                                    </th>
-                                    <td>
-                                        {{ $maintenanceSuscription->proforma->proforma_number ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.maintenanceSuscription.fields.client') }}
                                     </th>
                                     <td>
@@ -158,6 +150,14 @@
                                     </th>
                                     <td>
                                         {{ $maintenanceSuscription->completed_at }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.maintenanceSuscription.fields.financial_document') }}
+                                    </th>
+                                    <td>
+                                        {{ $maintenanceSuscription->financial_document->reference_number ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

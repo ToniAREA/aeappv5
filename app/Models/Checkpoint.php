@@ -54,6 +54,11 @@ class Checkpoint extends Model implements HasMedia
         return $this->belongsToMany(CarePlan::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(CheckpointsGroup::class);
+    }
+
     public function getFileAttribute()
     {
         return $this->getMedia('file')->last();

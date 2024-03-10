@@ -17,7 +17,7 @@ class AppointmentsApiController extends Controller
     {
         abort_if(Gate::denies('appointment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AppointmentResource(Appointment::with(['client', 'boat', 'wlists', 'for_roles', 'for_users', 'priority'])->get());
+        return new AppointmentResource(Appointment::with(['client', 'boat', 'wlists', 'for_roles', 'for_employees', 'in_marina'])->get());
     }
 
     public function store(StoreAppointmentRequest $request)
@@ -25,7 +25,7 @@ class AppointmentsApiController extends Controller
         $appointment = Appointment::create($request->all());
         $appointment->wlists()->sync($request->input('wlists', []));
         $appointment->for_roles()->sync($request->input('for_roles', []));
-        $appointment->for_users()->sync($request->input('for_users', []));
+        $appointment->for_employees()->sync($request->input('for_employees', []));
 
         return (new AppointmentResource($appointment))
             ->response()
@@ -36,7 +36,7 @@ class AppointmentsApiController extends Controller
     {
         abort_if(Gate::denies('appointment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AppointmentResource($appointment->load(['client', 'boat', 'wlists', 'for_roles', 'for_users', 'priority']));
+        return new AppointmentResource($appointment->load(['client', 'boat', 'wlists', 'for_roles', 'for_employees', 'in_marina']));
     }
 
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
@@ -44,7 +44,7 @@ class AppointmentsApiController extends Controller
         $appointment->update($request->all());
         $appointment->wlists()->sync($request->input('wlists', []));
         $appointment->for_roles()->sync($request->input('for_roles', []));
-        $appointment->for_users()->sync($request->input('for_users', []));
+        $appointment->for_employees()->sync($request->input('for_employees', []));
 
         return (new AppointmentResource($appointment))
             ->response()

@@ -61,6 +61,12 @@
                                 {{ trans('cruds.technicalDocumentation.fields.seo_slug') }}
                             </th>
                             <th>
+                                {{ trans('cruds.technicalDocumentation.fields.authorized_roles') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.technicalDocumentation.fields.authorized_users') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -118,6 +124,16 @@
                                 </td>
                                 <td>
                                     {{ $technicalDocumentation->seo_slug ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($technicalDocumentation->authorized_roles as $key => $item)
+                                        <span class="badge badge-info">{{ $item->title }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($technicalDocumentation->authorized_users as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
+                                    @endforeach
                                 </td>
                                 <td>
                                     @can('technical_documentation_show')

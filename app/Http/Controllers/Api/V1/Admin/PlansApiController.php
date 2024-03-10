@@ -27,6 +27,10 @@ class PlansApiController extends Controller
     {
         $plan = Plan::create($request->all());
 
+        if ($request->input('photo', false)) {
+            $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
         if ($request->input('contract', false)) {
             $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
         }
@@ -46,6 +50,17 @@ class PlansApiController extends Controller
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
         $plan->update($request->all());
+
+        if ($request->input('photo', false)) {
+            if (! $plan->photo || $request->input('photo') !== $plan->photo->file_name) {
+                if ($plan->photo) {
+                    $plan->photo->delete();
+                }
+                $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($plan->photo) {
+            $plan->photo->delete();
+        }
 
         if ($request->input('contract', false)) {
             if (! $plan->contract || $request->input('contract') !== $plan->contract->file_name) {

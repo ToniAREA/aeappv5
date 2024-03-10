@@ -28,11 +28,6 @@ class StorePaymentRequest extends FormRequest
             'total_amount' => [
                 'numeric',
             ],
-            'currency' => [
-                'string',
-                'max:3',
-                'nullable',
-            ],
             'status' => [
                 'string',
                 'nullable',

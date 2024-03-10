@@ -44,8 +44,8 @@ class Mlog extends Model implements HasMedia
         'description',
         'units',
         'price_unit',
-        'proforma_number_id',
         'invoiced_line',
+        'financial_document_id',
         'internal_notes',
         'created_at',
         'updated_at',
@@ -105,8 +105,8 @@ class Mlog extends Model implements HasMedia
         return $files;
     }
 
-    public function proforma_number()
+    public function financial_document()
     {
-        return $this->belongsTo(Proforma::class, 'proforma_number_id');
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

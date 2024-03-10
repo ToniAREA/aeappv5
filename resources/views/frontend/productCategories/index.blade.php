@@ -39,6 +39,12 @@
                                         {{ trans('cruds.productCategory.fields.photo') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.productCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.productCategory.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -55,6 +61,22 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                     </td>
@@ -78,6 +100,16 @@
                                                     <img src="{{ $productCategory->photo->getUrl('thumb') }}">
                                                 </a>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @foreach($productCategory->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($productCategory->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('product_category_show')

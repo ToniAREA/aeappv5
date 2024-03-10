@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ContentCategory extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     protected $appends = [
         'photo',
@@ -55,5 +56,15 @@ class ContentCategory extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

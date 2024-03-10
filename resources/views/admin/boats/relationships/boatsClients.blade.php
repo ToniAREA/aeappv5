@@ -28,6 +28,9 @@
                                 {{ trans('cruds.client.fields.has_active_vip_plan') }}
                             </th>
                             <th>
+                                {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.client.fields.defaulter') }}
                             </th>
                             <th>
@@ -104,6 +107,10 @@
                                 <td>
                                     <span style="display:none">{{ $client->has_active_vip_plan ?? '' }}</span>
                                     <input type="checkbox" disabled="disabled" {{ $client->has_active_vip_plan ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    <span style="display:none">{{ $client->has_active_maintenance_plan ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $client->has_active_maintenance_plan ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     <span style="display:none">{{ $client->defaulter ?? '' }}</span>

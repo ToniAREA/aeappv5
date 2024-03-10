@@ -141,20 +141,6 @@
                             <span class="help-block">{{ trans('cruds.mlog.fields.price_unit_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="proforma_number_id">{{ trans('cruds.mlog.fields.proforma_number') }}</label>
-                            <select class="form-control select2" name="proforma_number_id" id="proforma_number_id">
-                                @foreach($proforma_numbers as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('proforma_number_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('proforma_number'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('proforma_number') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.mlog.fields.proforma_number_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <div>
                                 <input type="hidden" name="invoiced_line" value="0">
                                 <input type="checkbox" name="invoiced_line" id="invoiced_line" value="1" {{ old('invoiced_line', 0) == 1 ? 'checked' : '' }}>
@@ -176,6 +162,20 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.mlog.fields.internal_notes_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="financial_document_id">{{ trans('cruds.mlog.fields.financial_document') }}</label>
+                            <select class="form-control select2" name="financial_document_id" id="financial_document_id">
+                                @foreach($financial_documents as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('financial_document_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('financial_document'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('financial_document') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.mlog.fields.financial_document_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

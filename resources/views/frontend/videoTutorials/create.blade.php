@@ -86,6 +86,72 @@
                             <span class="help-block">{{ trans('cruds.videoTutorial.fields.subjects_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="seo_title">{{ trans('cruds.videoTutorial.fields.seo_title') }}</label>
+                            <input class="form-control" type="text" name="seo_title" id="seo_title" value="{{ old('seo_title', '') }}">
+                            @if($errors->has('seo_title'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('seo_title') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.videoTutorial.fields.seo_title_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_meta_description">{{ trans('cruds.videoTutorial.fields.seo_meta_description') }}</label>
+                            <input class="form-control" type="text" name="seo_meta_description" id="seo_meta_description" value="{{ old('seo_meta_description', '') }}">
+                            @if($errors->has('seo_meta_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('seo_meta_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.videoTutorial.fields.seo_meta_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_slug">{{ trans('cruds.videoTutorial.fields.seo_slug') }}</label>
+                            <input class="form-control" type="text" name="seo_slug" id="seo_slug" value="{{ old('seo_slug', '') }}">
+                            @if($errors->has('seo_slug'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('seo_slug') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.videoTutorial.fields.seo_slug_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="authorized_roles">{{ trans('cruds.videoTutorial.fields.authorized_roles') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="authorized_roles[]" id="authorized_roles" multiple>
+                                @foreach($authorized_roles as $id => $authorized_role)
+                                    <option value="{{ $id }}" {{ in_array($id, old('authorized_roles', [])) ? 'selected' : '' }}>{{ $authorized_role }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('authorized_roles'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('authorized_roles') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.videoTutorial.fields.authorized_roles_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="authorized_users">{{ trans('cruds.videoTutorial.fields.authorized_users') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="authorized_users[]" id="authorized_users" multiple>
+                                @foreach($authorized_users as $id => $authorized_user)
+                                    <option value="{{ $id }}" {{ in_array($id, old('authorized_users', [])) ? 'selected' : '' }}>{{ $authorized_user }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('authorized_users'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('authorized_users') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.videoTutorial.fields.authorized_users_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>

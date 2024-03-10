@@ -29,6 +29,7 @@ class Client extends Model
 
     protected $fillable = [
         'has_active_vip_plan',
+        'has_active_maintenance_plan',
         'defaulter',
         'ref',
         'name',
@@ -55,11 +56,6 @@ class Client extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function clientProformas()
-    {
-        return $this->hasMany(Proforma::class, 'client_id', 'id');
     }
 
     public function clientWlists()
@@ -100,6 +96,16 @@ class Client extends Model
     public function fromClientEmployeeRatings()
     {
         return $this->hasMany(EmployeeRating::class, 'from_client_id', 'id');
+    }
+
+    public function clientIotSuscriptions()
+    {
+        return $this->hasMany(IotSuscription::class, 'client_id', 'id');
+    }
+
+    public function clientFinalcialDocuments()
+    {
+        return $this->hasMany(FinalcialDocument::class, 'client_id', 'id');
     }
 
     public function clientsBoats()

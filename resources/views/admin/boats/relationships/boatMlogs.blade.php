@@ -61,16 +61,16 @@
                                 {{ trans('cruds.mlog.fields.price_unit') }}
                             </th>
                             <th>
-                                {{ trans('cruds.mlog.fields.proforma_number') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.proforma.fields.description') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.mlog.fields.invoiced_line') }}
                             </th>
                             <th>
                                 {{ trans('cruds.mlog.fields.internal_notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.mlog.fields.financial_document') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -127,17 +127,19 @@
                                     {{ $mlog->price_unit ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $mlog->proforma_number->proforma_number ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $mlog->proforma_number->description ?? '' }}
-                                </td>
-                                <td>
                                     <span style="display:none">{{ $mlog->invoiced_line ?? '' }}</span>
                                     <input type="checkbox" disabled="disabled" {{ $mlog->invoiced_line ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     {{ $mlog->internal_notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $mlog->financial_document->reference_number ?? '' }}
+                                </td>
+                                <td>
+                                    @if($mlog->financial_document)
+                                        {{ $mlog->financial_document::DOC_TYPE_RADIO[$mlog->financial_document->doc_type] ?? '' }}
+                                    @endif
                                 </td>
                                 <td>
                                     @can('mlog_show')

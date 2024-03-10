@@ -80,6 +80,9 @@ class BoatsController extends Controller
                 return $row->marina ? $row->marina->name : '';
             });
 
+            $table->editColumn('sat_phone', function ($row) {
+                return $row->sat_phone ? $row->sat_phone : '';
+            });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
@@ -94,14 +97,21 @@ class BoatsController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->editColumn('coordinates', function ($row) {
-                return $row->coordinates ? $row->coordinates : '';
-            });
             $table->editColumn('link', function ($row) {
                 return $row->link ? $row->link : '';
             });
             $table->editColumn('link_description', function ($row) {
                 return $row->link_description ? $row->link_description : '';
+            });
+
+            $table->editColumn('settings_data', function ($row) {
+                return $row->settings_data ? $row->settings_data : '';
+            });
+            $table->editColumn('public_ip', function ($row) {
+                return $row->public_ip ? $row->public_ip : '';
+            });
+            $table->editColumn('coordinates', function ($row) {
+                return $row->coordinates ? $row->coordinates : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'boat_photo', 'marina', 'clients']);
@@ -176,7 +186,7 @@ class BoatsController extends Controller
     {
         abort_if(Gate::denies('boat_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $boat->load('marina', 'clients', 'boatWlists', 'boatAppointments', 'boatBookingLists', 'boatMlogs', 'boatAssetsRentals', 'boatsClients', 'boatsProformas', 'boatsClientsReviews', 'boatsSuscriptions', 'boatsMaintenanceSuscriptions');
+        $boat->load('marina', 'clients', 'boatWlists', 'boatAppointments', 'boatBookingLists', 'boatMlogs', 'boatAssetsRentals', 'boatsClients', 'boatsClientsReviews', 'boatsSuscriptions', 'boatsMaintenanceSuscriptions', 'boatsIotSuscriptions');
 
         return view('admin.boats.show', compact('boat'));
     }

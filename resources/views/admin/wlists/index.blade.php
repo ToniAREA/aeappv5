@@ -101,6 +101,12 @@
                         {{ trans('cruds.wlist.fields.completed_at') }}
                     </th>
                     <th>
+                        {{ trans('cruds.wlist.fields.financial_document') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -212,6 +218,16 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($finalcial_documents as $key => $item)
+                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                 </tr>
             </thead>
@@ -291,6 +307,8 @@
 { data: 'link_description', name: 'link_description' },
 { data: 'last_use', name: 'last_use' },
 { data: 'completed_at', name: 'completed_at' },
+{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
+{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

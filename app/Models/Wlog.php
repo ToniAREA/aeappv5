@@ -44,9 +44,12 @@ class Wlog extends Model implements HasMedia
         'description',
         'hours',
         'hourly_rate',
+        'travel_cost_included',
+        'total_travel_cost',
+        'total_access_cost',
         'wlist_finished',
-        'proforma_number_id',
         'invoiced_line',
+        'financial_document_id',
         'notes',
         'internal_notes',
         'created_at',
@@ -101,9 +104,9 @@ class Wlog extends Model implements HasMedia
         return $this->belongsTo(Marina::class, 'marina_id');
     }
 
-    public function proforma_number()
+    public function financial_document()
     {
-        return $this->belongsTo(Proforma::class, 'proforma_number_id');
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 
     public function getPhotosAttribute()

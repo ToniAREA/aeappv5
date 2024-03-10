@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyPlanRequest;
 use App\Http\Requests\StorePlanRequest;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PlansController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
@@ -36,6 +37,10 @@ class PlansController extends Controller
     public function store(StorePlanRequest $request)
     {
         $plan = Plan::create($request->all());
+
+        if ($request->input('photo', false)) {
+            $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
 
         if ($request->input('contract', false)) {
             $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
@@ -58,6 +63,17 @@ class PlansController extends Controller
     public function update(UpdatePlanRequest $request, Plan $plan)
     {
         $plan->update($request->all());
+
+        if ($request->input('photo', false)) {
+            if (! $plan->photo || $request->input('photo') !== $plan->photo->file_name) {
+                if ($plan->photo) {
+                    $plan->photo->delete();
+                }
+                $plan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($plan->photo) {
+            $plan->photo->delete();
+        }
 
         if ($request->input('contract', false)) {
             if (! $plan->contract || $request->input('contract') !== $plan->contract->file_name) {

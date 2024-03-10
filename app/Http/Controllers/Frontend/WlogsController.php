@@ -8,8 +8,8 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyWlogRequest;
 use App\Http\Requests\StoreWlogRequest;
 use App\Http\Requests\UpdateWlogRequest;
+use App\Models\FinalcialDocument;
 use App\Models\Marina;
-use App\Models\Proforma;
 use App\Models\User;
 use App\Models\Wlist;
 use App\Models\Wlog;
@@ -26,7 +26,7 @@ class WlogsController extends Controller
     {
         abort_if(Gate::denies('wlog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlogs = Wlog::with(['wlist', 'employee', 'marina', 'proforma_number', 'media'])->get();
+        $wlogs = Wlog::with(['wlist', 'employee', 'marina', 'financial_document', 'media'])->get();
 
         $wlists = Wlist::get();
 
@@ -34,9 +34,9 @@ class WlogsController extends Controller
 
         $marinas = Marina::get();
 
-        $proformas = Proforma::get();
+        $finalcial_documents = FinalcialDocument::get();
 
-        return view('frontend.wlogs.index', compact('marinas', 'proformas', 'users', 'wlists', 'wlogs'));
+        return view('frontend.wlogs.index', compact('finalcial_documents', 'marinas', 'users', 'wlists', 'wlogs'));
     }
 
     public function create()
@@ -49,9 +49,9 @@ class WlogsController extends Controller
 
         $marinas = Marina::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proforma_numbers = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.wlogs.create', compact('employees', 'marinas', 'proforma_numbers', 'wlists'));
+        return view('frontend.wlogs.create', compact('employees', 'financial_documents', 'marinas', 'wlists'));
     }
 
     public function store(StoreWlogRequest $request)
@@ -79,11 +79,11 @@ class WlogsController extends Controller
 
         $marinas = Marina::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proforma_numbers = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wlog->load('wlist', 'employee', 'marina', 'proforma_number');
+        $wlog->load('wlist', 'employee', 'marina', 'financial_document');
 
-        return view('frontend.wlogs.edit', compact('employees', 'marinas', 'proforma_numbers', 'wlists', 'wlog'));
+        return view('frontend.wlogs.edit', compact('employees', 'financial_documents', 'marinas', 'wlists', 'wlog'));
     }
 
     public function update(UpdateWlogRequest $request, Wlog $wlog)
@@ -111,7 +111,7 @@ class WlogsController extends Controller
     {
         abort_if(Gate::denies('wlog_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlog->load('wlist', 'employee', 'marina', 'proforma_number');
+        $wlog->load('wlist', 'employee', 'marina', 'financial_document', 'forWlogEmployeeRatings');
 
         return view('frontend.wlogs.show', compact('wlog'));
     }

@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.suscriptions.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.suscription.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'Suscription', 'route' => 'admin.suscriptions.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -35,12 +39,6 @@
                                         {{ trans('cruds.suscription.fields.is_active') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.suscription.fields.proforma') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.proforma.fields.description') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.suscription.fields.client') }}
                                     </th>
                                     <th>
@@ -53,9 +51,6 @@
                                         {{ trans('cruds.suscription.fields.plan') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.plan.fields.description') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.suscription.fields.signed_contract') }}
                                     </th>
                                     <th>
@@ -63,12 +58,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.suscription.fields.end_date') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.suscription.fields.hourly_rate_discount') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.suscription.fields.material_discount') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.suscription.fields.link') }}
@@ -84,6 +73,12 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.suscription.fields.completed_at') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.suscription.fields.financial_document') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -107,12 +102,6 @@
                                             <input type="checkbox" disabled="disabled" {{ $suscription->is_active ? 'checked' : '' }}>
                                         </td>
                                         <td>
-                                            {{ $suscription->proforma->proforma_number ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $suscription->proforma->description ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $suscription->client->name ?? '' }}
                                         </td>
                                         <td>
@@ -125,9 +114,6 @@
                                         </td>
                                         <td>
                                             {{ $suscription->plan->plan_name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $suscription->plan->description ?? '' }}
                                         </td>
                                         <td>
                                             @if($suscription->signed_contract)
@@ -143,12 +129,6 @@
                                             {{ $suscription->end_date ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $suscription->hourly_rate_discount ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $suscription->material_discount ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $suscription->link ?? '' }}
                                         </td>
                                         <td>
@@ -162,6 +142,14 @@
                                         </td>
                                         <td>
                                             {{ $suscription->completed_at ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $suscription->financial_document->reference_number ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($suscription->financial_document)
+                                                {{ $suscription->financial_document::DOC_TYPE_RADIO[$suscription->financial_document->doc_type] ?? '' }}
+                                            @endif
                                         </td>
                                         <td>
                                             @can('suscription_show')

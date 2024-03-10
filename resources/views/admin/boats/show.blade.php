@@ -85,6 +85,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.boat.fields.sat_phone') }}
+                        </th>
+                        <td>
+                            {{ $boat->sat_phone }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.boat.fields.notes') }}
                         </th>
                         <td>
@@ -111,14 +119,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.boat.fields.coordinates') }}
-                        </th>
-                        <td>
-                            {{ $boat->coordinates }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.boat.fields.link') }}
                         </th>
                         <td>
@@ -139,6 +139,30 @@
                         </th>
                         <td>
                             {{ $boat->last_use }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.boat.fields.settings_data') }}
+                        </th>
+                        <td>
+                            {{ $boat->settings_data }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.boat.fields.public_ip') }}
+                        </th>
+                        <td>
+                            {{ $boat->public_ip }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.boat.fields.coordinates') }}
+                        </th>
+                        <td>
+                            {{ $boat->coordinates }}
                         </td>
                     </tr>
                 </tbody>
@@ -188,11 +212,6 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#boats_proformas" role="tab" data-toggle="tab">
-                {{ trans('cruds.proforma.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#boats_clients_reviews" role="tab" data-toggle="tab">
                 {{ trans('cruds.clientsReview.title') }}
             </a>
@@ -205,6 +224,11 @@
         <li class="nav-item">
             <a class="nav-link" href="#boats_maintenance_suscriptions" role="tab" data-toggle="tab">
                 {{ trans('cruds.maintenanceSuscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#boats_iot_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.iotSuscription.title') }}
             </a>
         </li>
     </ul>
@@ -227,9 +251,6 @@
         <div class="tab-pane" role="tabpanel" id="boats_clients">
             @includeIf('admin.boats.relationships.boatsClients', ['clients' => $boat->boatsClients])
         </div>
-        <div class="tab-pane" role="tabpanel" id="boats_proformas">
-            @includeIf('admin.boats.relationships.boatsProformas', ['proformas' => $boat->boatsProformas])
-        </div>
         <div class="tab-pane" role="tabpanel" id="boats_clients_reviews">
             @includeIf('admin.boats.relationships.boatsClientsReviews', ['clientsReviews' => $boat->boatsClientsReviews])
         </div>
@@ -238,6 +259,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="boats_maintenance_suscriptions">
             @includeIf('admin.boats.relationships.boatsMaintenanceSuscriptions', ['maintenanceSuscriptions' => $boat->boatsMaintenanceSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boats_iot_suscriptions">
+            @includeIf('admin.boats.relationships.boatsIotSuscriptions', ['iotSuscriptions' => $boat->boatsIotSuscriptions])
         </div>
     </div>
 </div>

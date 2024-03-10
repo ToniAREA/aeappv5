@@ -20,7 +20,7 @@ class MaintenanceSuscriptionsApiController extends Controller
     {
         abort_if(Gate::denies('maintenance_suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MaintenanceSuscriptionResource(MaintenanceSuscription::with(['user', 'proforma', 'client', 'boats', 'care_plan'])->get());
+        return new MaintenanceSuscriptionResource(MaintenanceSuscription::with(['user', 'client', 'boats', 'care_plan', 'financial_document'])->get());
     }
 
     public function store(StoreMaintenanceSuscriptionRequest $request)
@@ -40,7 +40,7 @@ class MaintenanceSuscriptionsApiController extends Controller
     {
         abort_if(Gate::denies('maintenance_suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MaintenanceSuscriptionResource($maintenanceSuscription->load(['user', 'proforma', 'client', 'boats', 'care_plan']));
+        return new MaintenanceSuscriptionResource($maintenanceSuscription->load(['user', 'client', 'boats', 'care_plan', 'financial_document']));
     }
 
     public function update(UpdateMaintenanceSuscriptionRequest $request, MaintenanceSuscription $maintenanceSuscription)

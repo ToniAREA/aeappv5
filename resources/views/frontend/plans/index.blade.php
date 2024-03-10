@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.plans.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.plan.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'Plan', 'route' => 'admin.plans.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -35,6 +39,9 @@
                                         {{ trans('cruds.plan.fields.description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.plan.fields.photo') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.plan.fields.show_online') }}
                                     </th>
                                     <th>
@@ -44,13 +51,10 @@
                                         {{ trans('cruds.plan.fields.period_price') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.plan.fields.seo_title') }}
+                                        {{ trans('cruds.plan.fields.hourly_rate_discount') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.plan.fields.seo_meta_description') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.plan.fields.seo_slug') }}
+                                        {{ trans('cruds.plan.fields.material_discount') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.plan.fields.contract') }}
@@ -60,6 +64,15 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.plan.fields.link_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.seo_title') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.seo_meta_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.plan.fields.seo_slug') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -82,6 +95,13 @@
                                             {{ $plan->description ?? '' }}
                                         </td>
                                         <td>
+                                            @if($plan->photo)
+                                                <a href="{{ $plan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $plan->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
                                             <span style="display:none">{{ $plan->show_online ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
                                         </td>
@@ -92,13 +112,10 @@
                                             {{ $plan->period_price ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $plan->seo_title ?? '' }}
+                                            {{ $plan->hourly_rate_discount ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $plan->seo_meta_description ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $plan->seo_slug ?? '' }}
+                                            {{ $plan->material_discount ?? '' }}
                                         </td>
                                         <td>
                                             @if($plan->contract)
@@ -112,6 +129,15 @@
                                         </td>
                                         <td>
                                             {{ $plan->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->seo_title ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->seo_meta_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->seo_slug ?? '' }}
                                         </td>
                                         <td>
                                             @can('plan_show')

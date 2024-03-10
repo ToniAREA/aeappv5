@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.technical-documentations.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.technicalDocumentation.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'TechnicalDocumentation', 'route' => 'admin.technical-documentations.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -60,6 +64,12 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.technicalDocumentation.fields.seo_slug') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.technicalDocumentation.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.technicalDocumentation.fields.authorized_users') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -116,6 +126,16 @@
                                         </td>
                                         <td>
                                             {{ $technicalDocumentation->seo_slug ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($technicalDocumentation->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($technicalDocumentation->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('technical_documentation_show')

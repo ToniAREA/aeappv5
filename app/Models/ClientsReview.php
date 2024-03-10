@@ -22,7 +22,6 @@ class ClientsReview extends Model
 
     protected $fillable = [
         'client_id',
-        'proforma_id',
         'rating',
         'shown_online',
         'created_at',
@@ -43,11 +42,6 @@ class ClientsReview extends Model
     public function client()
     {
         return $this->belongsTo(Client::class, 'client_id');
-    }
-
-    public function proforma()
-    {
-        return $this->belongsTo(Proforma::class, 'proforma_id');
     }
 
     public function for_wlists()

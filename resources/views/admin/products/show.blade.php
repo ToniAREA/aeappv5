@@ -259,6 +259,16 @@
                 {{ trans('cruds.technicalDocumentation.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#product_iot_devices" role="tab" data-toggle="tab">
+                {{ trans('cruds.iotDevice.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#product_financial_document_items" role="tab" data-toggle="tab">
+                {{ trans('cruds.financialDocumentItem.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="product_mlogs">
@@ -266,6 +276,12 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="product_technical_documentations">
             @includeIf('admin.products.relationships.productTechnicalDocumentations', ['technicalDocumentations' => $product->productTechnicalDocumentations])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="product_iot_devices">
+            @includeIf('admin.products.relationships.productIotDevices', ['iotDevices' => $product->productIotDevices])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="product_financial_document_items">
+            @includeIf('admin.products.relationships.productFinancialDocumentItems', ['financialDocumentItems' => $product->productFinancialDocumentItems])
         </div>
     </div>
 </div>

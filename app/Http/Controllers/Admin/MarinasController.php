@@ -25,7 +25,7 @@ class MarinasController extends Controller
         abort_if(Gate::denies('marina_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Marina::with(['contact_docs'])->select(sprintf('%s.*', (new Marina)->table));
+            $query = Marina::with(['contacts', 'contact_docs'])->select(sprintf('%s.*', (new Marina)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -66,6 +66,21 @@ class MarinasController extends Controller
             $table->editColumn('coordinates', function ($row) {
                 return $row->coordinates ? $row->coordinates : '';
             });
+            $table->editColumn('contacts', function ($row) {
+                $labels = [];
+                foreach ($row->contacts as $contact) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $contact->contact_first_name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->addColumn('contact_docs_contact_first_name', function ($row) {
+                return $row->contact_docs ? $row->contact_docs->contact_first_name : '';
+            });
+
+            $table->editColumn('contact_docs.contact_email', function ($row) {
+                return $row->contact_docs ? (is_string($row->contact_docs) ? $row->contact_docs : $row->contact_docs->contact_email) : '';
+            });
             $table->editColumn('link', function ($row) {
                 return $row->link ? $row->link : '';
             });
@@ -78,15 +93,8 @@ class MarinasController extends Controller
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
-            $table->addColumn('contact_docs_contact_first_name', function ($row) {
-                return $row->contact_docs ? $row->contact_docs->contact_first_name : '';
-            });
 
-            $table->editColumn('contact_docs.contact_email', function ($row) {
-                return $row->contact_docs ? (is_string($row->contact_docs) ? $row->contact_docs : $row->contact_docs->contact_email) : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'marina_photo', 'contact_docs']);
+            $table->rawColumns(['actions', 'placeholder', 'marina_photo', 'contacts', 'contact_docs']);
 
             return $table->make(true);
         }
@@ -98,15 +106,17 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $contacts = ContactContact::pluck('contact_first_name', 'id');
+
         $contact_docs = ContactContact::pluck('contact_first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.marinas.create', compact('contact_docs'));
+        return view('admin.marinas.create', compact('contact_docs', 'contacts'));
     }
 
     public function store(StoreMarinaRequest $request)
     {
         $marina = Marina::create($request->all());
-
+        $marina->contacts()->sync($request->input('contacts', []));
         if ($request->input('marina_photo', false)) {
             $marina->addMedia(storage_path('tmp/uploads/' . basename($request->input('marina_photo'))))->toMediaCollection('marina_photo');
         }
@@ -122,17 +132,19 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $contacts = ContactContact::pluck('contact_first_name', 'id');
+
         $contact_docs = ContactContact::pluck('contact_first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $marina->load('contact_docs');
+        $marina->load('contacts', 'contact_docs');
 
-        return view('admin.marinas.edit', compact('contact_docs', 'marina'));
+        return view('admin.marinas.edit', compact('contact_docs', 'contacts', 'marina'));
     }
 
     public function update(UpdateMarinaRequest $request, Marina $marina)
     {
         $marina->update($request->all());
-
+        $marina->contacts()->sync($request->input('contacts', []));
         if ($request->input('marina_photo', false)) {
             if (! $marina->marina_photo || $request->input('marina_photo') !== $marina->marina_photo->file_name) {
                 if ($marina->marina_photo) {
@@ -151,7 +163,7 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $marina->load('contact_docs', 'marinaBoats', 'marinaWlogs');
+        $marina->load('contacts', 'contact_docs', 'marinaBoats', 'marinaWlogs', 'inMarinaAppointments');
 
         return view('admin.marinas.show', compact('marina'));
     }

@@ -192,6 +192,14 @@
                                         {{ $wlist->completed_at }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.financial_document') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->financial_document->reference_number ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -43,6 +43,21 @@
                                 {{ trans('cruds.videoTutorial.fields.subjects') }}
                             </th>
                             <th>
+                                {{ trans('cruds.videoTutorial.fields.seo_title') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.videoTutorial.fields.seo_meta_description') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.videoTutorial.fields.seo_slug') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.videoTutorial.fields.authorized_roles') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.videoTutorial.fields.authorized_users') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -79,6 +94,25 @@
                                 <td>
                                     @foreach($videoTutorial->subjects as $key => $item)
                                         <span class="badge badge-info">{{ $item->subject }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    {{ $videoTutorial->seo_title ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $videoTutorial->seo_meta_description ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $videoTutorial->seo_slug ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($videoTutorial->authorized_roles as $key => $item)
+                                        <span class="badge badge-info">{{ $item->title }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($videoTutorial->authorized_users as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
                                     @endforeach
                                 </td>
                                 <td>

@@ -97,6 +97,12 @@
                                 {{ trans('cruds.wlist.fields.completed_at') }}
                             </th>
                             <th>
+                                {{ trans('cruds.wlist.fields.financial_document') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -187,6 +193,14 @@
                                 </td>
                                 <td>
                                     {{ $wlist->completed_at ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlist->financial_document->reference_number ?? '' }}
+                                </td>
+                                <td>
+                                    @if($wlist->financial_document)
+                                        {{ $wlist->financial_document::DOC_TYPE_RADIO[$wlist->financial_document->doc_type] ?? '' }}
+                                    @endif
                                 </td>
                                 <td>
                                     @can('wlist_show')

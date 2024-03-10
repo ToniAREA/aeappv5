@@ -3,28 +3,106 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDocumentationRequest;
 use App\Http\Requests\StoreDocumentationRequest;
 use App\Http\Requests\UpdateDocumentationRequest;
 use App\Models\Documentation;
 use App\Models\DocumentationCategory;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class DocumentationController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('documentation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documentations = Documentation::with(['category', 'media'])->get();
+        if ($request->ajax()) {
+            $query = Documentation::with(['category', 'authorized_roles', 'authorized_users'])->select(sprintf('%s.*', (new Documentation)->table));
+            $table = Datatables::of($query);
 
-        return view('admin.documentations.index', compact('documentations'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'documentation_show';
+                $editGate      = 'documentation_edit';
+                $deleteGate    = 'documentation_delete';
+                $crudRoutePart = 'documentations';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : '';
+            });
+            $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
+            });
+            $table->addColumn('category_name', function ($row) {
+                return $row->category ? $row->category->name : '';
+            });
+
+            $table->editColumn('category.description', function ($row) {
+                return $row->category ? (is_string($row->category) ? $row->category : $row->category->description) : '';
+            });
+
+            $table->editColumn('is_valid', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->is_valid ? 'checked' : null) . '>';
+            });
+            $table->editColumn('file', function ($row) {
+                return $row->file ? '<a href="' . $row->file->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+            });
+            $table->editColumn('notes', function ($row) {
+                return $row->notes ? $row->notes : '';
+            });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
+            });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
+            $table->editColumn('authorized_roles', function ($row) {
+                $labels = [];
+                foreach ($row->authorized_roles as $authorized_role) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_role->title);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->editColumn('authorized_users', function ($row) {
+                $labels = [];
+                foreach ($row->authorized_users as $authorized_user) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_user->name);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'category', 'is_valid', 'file', 'authorized_roles', 'authorized_users']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.documentations.index');
     }
 
     public function create()
@@ -33,13 +111,18 @@ class DocumentationController extends Controller
 
         $categories = DocumentationCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.documentations.create', compact('categories'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('admin.documentations.create', compact('authorized_roles', 'authorized_users', 'categories'));
     }
 
     public function store(StoreDocumentationRequest $request)
     {
         $documentation = Documentation::create($request->all());
-
+        $documentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $documentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             $documentation->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
         }
@@ -57,15 +140,20 @@ class DocumentationController extends Controller
 
         $categories = DocumentationCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $documentation->load('category');
+        $authorized_roles = Role::pluck('title', 'id');
 
-        return view('admin.documentations.edit', compact('categories', 'documentation'));
+        $authorized_users = User::pluck('name', 'id');
+
+        $documentation->load('category', 'authorized_roles', 'authorized_users');
+
+        return view('admin.documentations.edit', compact('authorized_roles', 'authorized_users', 'categories', 'documentation'));
     }
 
     public function update(UpdateDocumentationRequest $request, Documentation $documentation)
     {
         $documentation->update($request->all());
-
+        $documentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $documentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             if (! $documentation->file || $request->input('file') !== $documentation->file->file_name) {
                 if ($documentation->file) {
@@ -84,7 +172,7 @@ class DocumentationController extends Controller
     {
         abort_if(Gate::denies('documentation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documentation->load('category');
+        $documentation->load('category', 'authorized_roles', 'authorized_users');
 
         return view('admin.documentations.show', compact('documentation'));
     }

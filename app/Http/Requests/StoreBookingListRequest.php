@@ -47,18 +47,15 @@ class StoreBookingListRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.time_format'),
             ],
+            'status' => [
+                'string',
+                'nullable',
+            ],
             'notes' => [
                 'string',
                 'nullable',
             ],
             'internal_notes' => [
-                'string',
-                'nullable',
-            ],
-            'confirmed' => [
-                'required',
-            ],
-            'status' => [
                 'string',
                 'nullable',
             ],

@@ -33,18 +33,6 @@
                 <span class="help-block">{{ trans('cruds.maintenanceSuscription.fields.is_active_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="proforma_id">{{ trans('cruds.maintenanceSuscription.fields.proforma') }}</label>
-                <select class="form-control select2 {{ $errors->has('proforma') ? 'is-invalid' : '' }}" name="proforma_id" id="proforma_id">
-                    @foreach($proformas as $id => $entry)
-                        <option value="{{ $id }}" {{ old('proforma_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('proforma'))
-                    <span class="text-danger">{{ $errors->first('proforma') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.maintenanceSuscription.fields.proforma_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label class="required" for="client_id">{{ trans('cruds.maintenanceSuscription.fields.client') }}</label>
                 <select class="form-control select2 {{ $errors->has('client') ? 'is-invalid' : '' }}" name="client_id" id="client_id" required>
                     @foreach($clients as $id => $entry)
@@ -164,6 +152,18 @@
                     <span class="text-danger">{{ $errors->first('completed_at') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.maintenanceSuscription.fields.completed_at_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="financial_document_id">{{ trans('cruds.maintenanceSuscription.fields.financial_document') }}</label>
+                <select class="form-control select2 {{ $errors->has('financial_document') ? 'is-invalid' : '' }}" name="financial_document_id" id="financial_document_id">
+                    @foreach($financial_documents as $id => $entry)
+                        <option value="{{ $id }}" {{ old('financial_document_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('financial_document'))
+                    <span class="text-danger">{{ $errors->first('financial_document') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.maintenanceSuscription.fields.financial_document_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

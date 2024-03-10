@@ -51,6 +51,9 @@ class ClientsController extends Controller
             $table->editColumn('has_active_vip_plan', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->has_active_vip_plan ? 'checked' : null) . '>';
             });
+            $table->editColumn('has_active_maintenance_plan', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->has_active_maintenance_plan ? 'checked' : null) . '>';
+            });
             $table->editColumn('defaulter', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->defaulter ? 'checked' : null) . '>';
             });
@@ -119,7 +122,7 @@ class ClientsController extends Controller
                 return $row->link_b_description ? $row->link_b_description : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'has_active_vip_plan', 'defaulter', 'contacts', 'boats']);
+            $table->rawColumns(['actions', 'placeholder', 'has_active_vip_plan', 'has_active_maintenance_plan', 'defaulter', 'contacts', 'boats']);
 
             return $table->make(true);
         }
@@ -176,7 +179,7 @@ class ClientsController extends Controller
     {
         abort_if(Gate::denies('client_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $client->load('contacts', 'boats', 'clientProformas', 'clientWlists', 'clientAppointments', 'clientBookingLists', 'clientAssetsRentals', 'clientClientsReviews', 'clientSuscriptions', 'clientMaintenanceSuscriptions', 'fromClientEmployeeRatings', 'clientsBoats');
+        $client->load('contacts', 'boats', 'clientWlists', 'clientAppointments', 'clientBookingLists', 'clientAssetsRentals', 'clientClientsReviews', 'clientSuscriptions', 'clientMaintenanceSuscriptions', 'fromClientEmployeeRatings', 'clientIotSuscriptions', 'clientFinalcialDocuments', 'clientsBoats');
 
         return view('admin.clients.show', compact('client'));
     }

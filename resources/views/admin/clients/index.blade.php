@@ -32,6 +32,9 @@
                         {{ trans('cruds.client.fields.has_active_vip_plan') }}
                     </th>
                     <th>
+                        {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.client.fields.defaulter') }}
                     </th>
                     <th>
@@ -100,6 +103,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -229,6 +234,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'has_active_vip_plan', name: 'has_active_vip_plan' },
+{ data: 'has_active_maintenance_plan', name: 'has_active_maintenance_plan' },
 { data: 'defaulter', name: 'defaulter' },
 { data: 'ref', name: 'ref' },
 { data: 'name', name: 'name' },

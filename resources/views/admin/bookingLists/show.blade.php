@@ -113,22 +113,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.bookingList.fields.notes') }}
-                        </th>
-                        <td>
-                            {{ $bookingList->notes }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.bookingList.fields.internal_notes') }}
-                        </th>
-                        <td>
-                            {{ $bookingList->internal_notes }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.bookingList.fields.confirmed') }}
                         </th>
                         <td>
@@ -145,10 +129,42 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.bookingList.fields.is_invoiced') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $bookingList->is_invoiced ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.bookingList.fields.notes') }}
+                        </th>
+                        <td>
+                            {{ $bookingList->notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.bookingList.fields.internal_notes') }}
+                        </th>
+                        <td>
+                            {{ $bookingList->internal_notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.bookingList.fields.completed_at') }}
                         </th>
                         <td>
                             {{ $bookingList->completed_at }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.bookingList.fields.financial_document') }}
+                        </th>
+                        <td>
+                            {{ $bookingList->financial_document->reference_number ?? '' }}
                         </td>
                     </tr>
                 </tbody>

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyVideoTutorialRequest;
 use App\Http\Requests\StoreVideoTutorialRequest;
 use App\Http\Requests\UpdateVideoTutorialRequest;
+use App\Models\Role;
+use App\Models\User;
 use App\Models\VideoCategory;
 use App\Models\VideoTutorial;
 use Gate;
@@ -16,13 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class VideoTutorialsController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('video_tutorial_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $videoTutorials = VideoTutorial::with(['subjects', 'media'])->get();
+        $videoTutorials = VideoTutorial::with(['subjects', 'authorized_roles', 'authorized_users', 'media'])->get();
 
         return view('frontend.videoTutorials.index', compact('videoTutorials'));
     }
@@ -33,13 +36,19 @@ class VideoTutorialsController extends Controller
 
         $subjects = VideoCategory::pluck('subject', 'id');
 
-        return view('frontend.videoTutorials.create', compact('subjects'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('frontend.videoTutorials.create', compact('authorized_roles', 'authorized_users', 'subjects'));
     }
 
     public function store(StoreVideoTutorialRequest $request)
     {
         $videoTutorial = VideoTutorial::create($request->all());
         $videoTutorial->subjects()->sync($request->input('subjects', []));
+        $videoTutorial->authorized_roles()->sync($request->input('authorized_roles', []));
+        $videoTutorial->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('image', false)) {
             $videoTutorial->addMedia(storage_path('tmp/uploads/' . basename($request->input('image'))))->toMediaCollection('image');
         }
@@ -57,15 +66,21 @@ class VideoTutorialsController extends Controller
 
         $subjects = VideoCategory::pluck('subject', 'id');
 
-        $videoTutorial->load('subjects');
+        $authorized_roles = Role::pluck('title', 'id');
 
-        return view('frontend.videoTutorials.edit', compact('subjects', 'videoTutorial'));
+        $authorized_users = User::pluck('name', 'id');
+
+        $videoTutorial->load('subjects', 'authorized_roles', 'authorized_users');
+
+        return view('frontend.videoTutorials.edit', compact('authorized_roles', 'authorized_users', 'subjects', 'videoTutorial'));
     }
 
     public function update(UpdateVideoTutorialRequest $request, VideoTutorial $videoTutorial)
     {
         $videoTutorial->update($request->all());
         $videoTutorial->subjects()->sync($request->input('subjects', []));
+        $videoTutorial->authorized_roles()->sync($request->input('authorized_roles', []));
+        $videoTutorial->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('image', false)) {
             if (! $videoTutorial->image || $request->input('image') !== $videoTutorial->image->file_name) {
                 if ($videoTutorial->image) {
@@ -84,7 +99,7 @@ class VideoTutorialsController extends Controller
     {
         abort_if(Gate::denies('video_tutorial_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $videoTutorial->load('subjects');
+        $videoTutorial->load('subjects', 'authorized_roles', 'authorized_users');
 
         return view('frontend.videoTutorials.show', compact('videoTutorial'));
     }

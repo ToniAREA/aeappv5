@@ -36,6 +36,34 @@
                 <span class="help-block">{{ trans('cruds.marina.fields.coordinates_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="contacts">{{ trans('cruds.marina.fields.contacts') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('contacts') ? 'is-invalid' : '' }}" name="contacts[]" id="contacts" multiple>
+                    @foreach($contacts as $id => $contact)
+                        <option value="{{ $id }}" {{ (in_array($id, old('contacts', [])) || $marina->contacts->contains($id)) ? 'selected' : '' }}>{{ $contact }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('contacts'))
+                    <span class="text-danger">{{ $errors->first('contacts') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.marina.fields.contacts_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="contact_docs_id">{{ trans('cruds.marina.fields.contact_docs') }}</label>
+                <select class="form-control select2 {{ $errors->has('contact_docs') ? 'is-invalid' : '' }}" name="contact_docs_id" id="contact_docs_id">
+                    @foreach($contact_docs as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('contact_docs_id') ? old('contact_docs_id') : $marina->contact_docs->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('contact_docs'))
+                    <span class="text-danger">{{ $errors->first('contact_docs') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.marina.fields.contact_docs_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="link">{{ trans('cruds.marina.fields.link') }}</label>
                 <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', $marina->link) }}">
                 @if($errors->has('link'))
@@ -66,18 +94,6 @@
                     <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.marina.fields.internal_notes_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="contact_docs_id">{{ trans('cruds.marina.fields.contact_docs') }}</label>
-                <select class="form-control select2 {{ $errors->has('contact_docs') ? 'is-invalid' : '' }}" name="contact_docs_id" id="contact_docs_id">
-                    @foreach($contact_docs as $id => $entry)
-                        <option value="{{ $id }}" {{ (old('contact_docs_id') ? old('contact_docs_id') : $marina->contact_docs->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('contact_docs'))
-                    <span class="text-danger">{{ $errors->first('contact_docs') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.marina.fields.contact_docs_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="last_use">{{ trans('cruds.marina.fields.last_use') }}</label>

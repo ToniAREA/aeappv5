@@ -12,6 +12,7 @@ use App\Models\BookingList;
 use App\Models\BookingSlot;
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\FinalcialDocument;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ class BookingListController extends Controller
     {
         abort_if(Gate::denies('booking_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bookingLists = BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot'])->get();
+        $bookingLists = BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot', 'financial_document'])->get();
 
         $users = User::get();
 
@@ -37,7 +38,9 @@ class BookingListController extends Controller
 
         $booking_slots = BookingSlot::get();
 
-        return view('frontend.bookingLists.index', compact('boats', 'bookingLists', 'booking_slots', 'clients', 'employees', 'users'));
+        $finalcial_documents = FinalcialDocument::get();
+
+        return view('frontend.bookingLists.index', compact('boats', 'bookingLists', 'booking_slots', 'clients', 'employees', 'finalcial_documents', 'users'));
     }
 
     public function create()
@@ -54,7 +57,9 @@ class BookingListController extends Controller
 
         $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.bookingLists.create', compact('boats', 'booking_slots', 'clients', 'employees', 'users'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.bookingLists.create', compact('boats', 'booking_slots', 'clients', 'employees', 'financial_documents', 'users'));
     }
 
     public function store(StoreBookingListRequest $request)
@@ -78,9 +83,11 @@ class BookingListController extends Controller
 
         $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.bookingLists.edit', compact('boats', 'bookingList', 'booking_slots', 'clients', 'employees', 'users'));
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot', 'financial_document');
+
+        return view('frontend.bookingLists.edit', compact('boats', 'bookingList', 'booking_slots', 'clients', 'employees', 'financial_documents', 'users'));
     }
 
     public function update(UpdateBookingListRequest $request, BookingList $bookingList)
@@ -94,7 +101,7 @@ class BookingListController extends Controller
     {
         abort_if(Gate::denies('booking_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot', 'financial_document');
 
         return view('frontend.bookingLists.show', compact('bookingList'));
     }

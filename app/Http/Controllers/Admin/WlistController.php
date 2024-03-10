@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateWlistRequest;
 use App\Models\Boat;
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\FinalcialDocument;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Wlist;
@@ -30,7 +31,7 @@ class WlistController extends Controller
         abort_if(Gate::denies('wlist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status'])->select(sprintf('%s.*', (new Wlist)->table));
+            $query = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document'])->select(sprintf('%s.*', (new Wlist)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -121,6 +122,13 @@ class WlistController extends Controller
             $table->editColumn('priority', function ($row) {
                 return $row->priority ? $row->priority : '';
             });
+            $table->addColumn('financial_document_reference_number', function ($row) {
+                return $row->financial_document ? $row->financial_document->reference_number : '';
+            });
+
+            $table->editColumn('financial_document.doc_type', function ($row) {
+                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
+            });
             $table->editColumn('proforma_link', function ($row) {
                 return $row->proforma_link ? $row->proforma_link : '';
             });
@@ -137,19 +145,20 @@ class WlistController extends Controller
                 return $row->link_description ? $row->link_description : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'client', 'boat', 'from_user', 'for_role', 'for_employee', 'photos', 'status']);
+            $table->rawColumns(['actions', 'placeholder', 'client', 'boat', 'from_user', 'for_role', 'for_employee', 'photos', 'status', 'financial_document']);
 
             return $table->make(true);
         }
 
-        $clients        = Client::get();
-        $boats          = Boat::get();
-        $users          = User::get();
-        $roles          = Role::get();
-        $employees      = Employee::get();
-        $wlist_statuses = WlistStatus::get();
+        $clients             = Client::get();
+        $boats               = Boat::get();
+        $users               = User::get();
+        $roles               = Role::get();
+        $employees           = Employee::get();
+        $wlist_statuses      = WlistStatus::get();
+        $finalcial_documents = FinalcialDocument::get();
 
-        return view('admin.wlists.index', compact('clients', 'boats', 'users', 'roles', 'employees', 'wlist_statuses'));
+        return view('admin.wlists.index', compact('clients', 'boats', 'users', 'roles', 'employees', 'wlist_statuses', 'finalcial_documents'));
     }
 
     public function create()
@@ -168,7 +177,9 @@ class WlistController extends Controller
 
         $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.wlists.create', compact('boats', 'clients', 'for_employees', 'for_roles', 'from_users', 'statuses'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.wlists.create', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses'));
     }
 
     public function store(StoreWlistRequest $request)
@@ -202,9 +213,11 @@ class WlistController extends Controller
 
         $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.wlists.edit', compact('boats', 'clients', 'for_employees', 'for_roles', 'from_users', 'statuses', 'wlist'));
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document');
+
+        return view('admin.wlists.edit', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses', 'wlist'));
     }
 
     public function update(UpdateWlistRequest $request, Wlist $wlist)
@@ -232,7 +245,7 @@ class WlistController extends Controller
     {
         abort_if(Gate::denies('wlist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'wlistWlogs', 'wlistComments', 'wlistMlogs', 'forWlistEmployeeRatings', 'wlistsAppointments', 'wlistsProformas');
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document', 'wlistWlogs', 'wlistComments', 'wlistMlogs', 'forWlistEmployeeRatings', 'wlistsAppointments');
 
         return view('admin.wlists.show', compact('wlist'));
     }

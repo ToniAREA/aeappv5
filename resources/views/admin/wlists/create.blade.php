@@ -95,8 +95,8 @@
                 <span class="help-block">{{ trans('cruds.wlist.fields.boat_namecomplete_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.wlist.fields.description') }}</label>
-                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', '') }}">
+                <label class="required" for="description">{{ trans('cruds.wlist.fields.description') }}</label>
+                <input class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" type="text" name="description" id="description" value="{{ old('description', '') }}" required>
                 @if($errors->has('description'))
                     <span class="text-danger">{{ $errors->first('description') }}</span>
                 @endif
@@ -202,6 +202,18 @@
                     <span class="text-danger">{{ $errors->first('completed_at') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.wlist.fields.completed_at_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="financial_document_id">{{ trans('cruds.wlist.fields.financial_document') }}</label>
+                <select class="form-control select2 {{ $errors->has('financial_document') ? 'is-invalid' : '' }}" name="financial_document_id" id="financial_document_id">
+                    @foreach($financial_documents as $id => $entry)
+                        <option value="{{ $id }}" {{ old('financial_document_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('financial_document'))
+                    <span class="text-danger">{{ $errors->first('financial_document') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlist.fields.financial_document_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

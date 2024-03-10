@@ -20,7 +20,7 @@ class ContentPageApiController extends Controller
     {
         abort_if(Gate::denies('content_page_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ContentPageResource(ContentPage::with(['categories', 'tags'])->get());
+        return new ContentPageResource(ContentPage::with(['categories', 'tags', 'authorized_roles', 'authorized_users'])->get());
     }
 
     public function store(StoreContentPageRequest $request)
@@ -28,6 +28,8 @@ class ContentPageApiController extends Controller
         $contentPage = ContentPage::create($request->all());
         $contentPage->categories()->sync($request->input('categories', []));
         $contentPage->tags()->sync($request->input('tags', []));
+        $contentPage->authorized_roles()->sync($request->input('authorized_roles', []));
+        $contentPage->authorized_users()->sync($request->input('authorized_users', []));
         foreach ($request->input('featured_image', []) as $file) {
             $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
         }
@@ -45,7 +47,7 @@ class ContentPageApiController extends Controller
     {
         abort_if(Gate::denies('content_page_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ContentPageResource($contentPage->load(['categories', 'tags']));
+        return new ContentPageResource($contentPage->load(['categories', 'tags', 'authorized_roles', 'authorized_users']));
     }
 
     public function update(UpdateContentPageRequest $request, ContentPage $contentPage)
@@ -53,6 +55,8 @@ class ContentPageApiController extends Controller
         $contentPage->update($request->all());
         $contentPage->categories()->sync($request->input('categories', []));
         $contentPage->tags()->sync($request->input('tags', []));
+        $contentPage->authorized_roles()->sync($request->input('authorized_roles', []));
+        $contentPage->authorized_users()->sync($request->input('authorized_users', []));
         if (count($contentPage->featured_image) > 0) {
             foreach ($contentPage->featured_image as $media) {
                 if (! in_array($media->file_name, $request->input('featured_image', []))) {

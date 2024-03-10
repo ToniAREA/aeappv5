@@ -64,11 +64,11 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.appointment.fields.for_user') }}
+                                        {{ trans('cruds.appointment.fields.for_employees') }}
                                     </th>
                                     <td>
-                                        @foreach($appointment->for_users as $key => $for_user)
-                                            <span class="label label-info">{{ $for_user->name }}</span>
+                                        @foreach($appointment->for_employees as $key => $for_employees)
+                                            <span class="label label-info">{{ $for_employees->id_employee }}</span>
                                         @endforeach
                                     </td>
                                 </tr>
@@ -78,6 +78,14 @@
                                     </th>
                                     <td>
                                         {{ $appointment->boat_namecomplete }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.appointment.fields.in_marina') }}
+                                    </th>
+                                    <td>
+                                        {{ $appointment->in_marina->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,7 +125,7 @@
                                         {{ trans('cruds.appointment.fields.priority') }}
                                     </th>
                                     <td>
-                                        {{ $appointment->priority->name ?? '' }}
+                                        {{ $appointment->priority }}
                                     </td>
                                 </tr>
                                 <tr>

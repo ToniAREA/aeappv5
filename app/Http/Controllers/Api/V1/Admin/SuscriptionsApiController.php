@@ -20,7 +20,7 @@ class SuscriptionsApiController extends Controller
     {
         abort_if(Gate::denies('suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SuscriptionResource(Suscription::with(['user', 'proforma', 'client', 'boats', 'plan'])->get());
+        return new SuscriptionResource(Suscription::with(['user', 'client', 'boats', 'plan', 'financial_document'])->get());
     }
 
     public function store(StoreSuscriptionRequest $request)
@@ -40,7 +40,7 @@ class SuscriptionsApiController extends Controller
     {
         abort_if(Gate::denies('suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SuscriptionResource($suscription->load(['user', 'proforma', 'client', 'boats', 'plan']));
+        return new SuscriptionResource($suscription->load(['user', 'client', 'boats', 'plan', 'financial_document']));
     }
 
     public function update(UpdateSuscriptionRequest $request, Suscription $suscription)

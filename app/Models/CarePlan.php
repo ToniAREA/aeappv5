@@ -26,6 +26,7 @@ class CarePlan extends Model
         'semiannually' => 'Semi-Annually',
         'annually'     => 'Annually',
         'biennially'   => 'Biennially',
+        'onetime'      => 'One-Time',
     ];
 
     protected $fillable = [

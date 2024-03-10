@@ -111,6 +111,11 @@ class Employee extends Model implements HasMedia
         return $this->hasMany(EmployeeRating::class, 'employee_id', 'id');
     }
 
+    public function forEmployeesAppointments()
+    {
+        return $this->belongsToMany(Appointment::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

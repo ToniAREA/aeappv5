@@ -39,6 +39,10 @@ class StoreBoatRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'sat_phone' => [
+                'string',
+                'nullable',
+            ],
             'notes' => [
                 'string',
                 'nullable',
@@ -53,10 +57,6 @@ class StoreBoatRequest extends FormRequest
             'clients' => [
                 'array',
             ],
-            'coordinates' => [
-                'string',
-                'nullable',
-            ],
             'link' => [
                 'string',
                 'nullable',
@@ -67,6 +67,14 @@ class StoreBoatRequest extends FormRequest
             ],
             'last_use' => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable',
+            ],
+            'public_ip' => [
+                'string',
+                'nullable',
+            ],
+            'coordinates' => [
+                'string',
                 'nullable',
             ],
         ];

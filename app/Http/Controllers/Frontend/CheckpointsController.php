@@ -9,6 +9,7 @@ use App\Http\Requests\MassDestroyCheckpointRequest;
 use App\Http\Requests\StoreCheckpointRequest;
 use App\Http\Requests\UpdateCheckpointRequest;
 use App\Models\Checkpoint;
+use App\Models\CheckpointsGroup;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,7 +23,7 @@ class CheckpointsController extends Controller
     {
         abort_if(Gate::denies('checkpoint_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $checkpoints = Checkpoint::with(['media'])->get();
+        $checkpoints = Checkpoint::with(['groups', 'media'])->get();
 
         return view('frontend.checkpoints.index', compact('checkpoints'));
     }
@@ -31,13 +32,15 @@ class CheckpointsController extends Controller
     {
         abort_if(Gate::denies('checkpoint_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.checkpoints.create');
+        $groups = CheckpointsGroup::pluck('group', 'id');
+
+        return view('frontend.checkpoints.create', compact('groups'));
     }
 
     public function store(StoreCheckpointRequest $request)
     {
         $checkpoint = Checkpoint::create($request->all());
-
+        $checkpoint->groups()->sync($request->input('groups', []));
         if ($request->input('file', false)) {
             $checkpoint->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
         }
@@ -57,13 +60,17 @@ class CheckpointsController extends Controller
     {
         abort_if(Gate::denies('checkpoint_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.checkpoints.edit', compact('checkpoint'));
+        $groups = CheckpointsGroup::pluck('group', 'id');
+
+        $checkpoint->load('groups');
+
+        return view('frontend.checkpoints.edit', compact('checkpoint', 'groups'));
     }
 
     public function update(UpdateCheckpointRequest $request, Checkpoint $checkpoint)
     {
         $checkpoint->update($request->all());
-
+        $checkpoint->groups()->sync($request->input('groups', []));
         if ($request->input('file', false)) {
             if (! $checkpoint->file || $request->input('file') !== $checkpoint->file->file_name) {
                 if ($checkpoint->file) {
@@ -92,6 +99,8 @@ class CheckpointsController extends Controller
     public function show(Checkpoint $checkpoint)
     {
         abort_if(Gate::denies('checkpoint_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $checkpoint->load('groups', 'checkpointsCarePlans');
 
         return view('frontend.checkpoints.show', compact('checkpoint'));
     }

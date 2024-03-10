@@ -23,10 +23,10 @@ class Payment extends Model
     protected $fillable = [
         'payment_gateway',
         'id_transaction',
-        'proforma_number_id',
+        'financial_document_id',
         'total_amount',
-        'currency',
         'status',
+        'currency_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -43,8 +43,13 @@ class Payment extends Model
         self::observe(new \App\Observers\PaymentActionObserver);
     }
 
-    public function proforma_number()
+    public function financial_document()
     {
-        return $this->belongsTo(Proforma::class, 'proforma_number_id');
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo(Currency::class, 'currency_id');
     }
 }

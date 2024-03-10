@@ -45,10 +45,6 @@ class StoreBankRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'is_active' => [
-                'string',
-                'nullable',
-            ],
             'notes' => [
                 'string',
                 'nullable',
@@ -72,6 +68,9 @@ class StoreBankRequest extends FormRequest
             'link_b_description' => [
                 'string',
                 'nullable',
+            ],
+            'files' => [
+                'array',
             ],
         ];
     }

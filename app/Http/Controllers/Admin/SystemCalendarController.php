@@ -112,6 +112,22 @@ class SystemCalendarController extends Controller
             'suffix'     => 'ENDS today',
             'route'      => 'admin.maintenance-suscriptions.edit',
         ],
+        [
+            'model'      => '\App\Models\IotSuscription',
+            'date_field' => 'end_date',
+            'field'      => 'id',
+            'prefix'     => 'IOT suscription of user:',
+            'suffix'     => 'ENDs today',
+            'route'      => 'admin.iot-suscriptions.edit',
+        ],
+        [
+            'model'      => '\App\Models\Payment',
+            'date_field' => 'created_at',
+            'field'      => 'total_amount',
+            'prefix'     => 'Payment confirmed  of',
+            'suffix'     => 'today.',
+            'route'      => 'admin.payments.edit',
+        ],
     ];
 
     public function index()

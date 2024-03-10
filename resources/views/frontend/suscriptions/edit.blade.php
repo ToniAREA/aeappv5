@@ -41,20 +41,6 @@
                             <span class="help-block">{{ trans('cruds.suscription.fields.is_active_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="proforma_id">{{ trans('cruds.suscription.fields.proforma') }}</label>
-                            <select class="form-control select2" name="proforma_id" id="proforma_id">
-                                @foreach($proformas as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('proforma_id') ? old('proforma_id') : $suscription->proforma->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('proforma'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('proforma') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.suscription.fields.proforma_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label for="client_id">{{ trans('cruds.suscription.fields.client') }}</label>
                             <select class="form-control select2" name="client_id" id="client_id">
                                 @foreach($clients as $id => $entry)
@@ -132,26 +118,6 @@
                             <span class="help-block">{{ trans('cruds.suscription.fields.end_date_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="hourly_rate_discount">{{ trans('cruds.suscription.fields.hourly_rate_discount') }}</label>
-                            <input class="form-control" type="number" name="hourly_rate_discount" id="hourly_rate_discount" value="{{ old('hourly_rate_discount', $suscription->hourly_rate_discount) }}" step="0.01">
-                            @if($errors->has('hourly_rate_discount'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('hourly_rate_discount') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.suscription.fields.hourly_rate_discount_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="material_discount">{{ trans('cruds.suscription.fields.material_discount') }}</label>
-                            <input class="form-control" type="number" name="material_discount" id="material_discount" value="{{ old('material_discount', $suscription->material_discount) }}" step="0.01">
-                            @if($errors->has('material_discount'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('material_discount') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.suscription.fields.material_discount_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label for="link">{{ trans('cruds.suscription.fields.link') }}</label>
                             <input class="form-control" type="text" name="link" id="link" value="{{ old('link', $suscription->link) }}">
                             @if($errors->has('link'))
@@ -200,6 +166,20 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.suscription.fields.completed_at_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="financial_document_id">{{ trans('cruds.suscription.fields.financial_document') }}</label>
+                            <select class="form-control select2" name="financial_document_id" id="financial_document_id">
+                                @foreach($financial_documents as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('financial_document_id') ? old('financial_document_id') : $suscription->financial_document->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('financial_document'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('financial_document') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.suscription.fields.financial_document_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

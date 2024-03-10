@@ -44,6 +44,16 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.checkpoint.fields.group') }}
+                                    </th>
+                                    <td>
+                                        @foreach($checkpoint->groups as $key => $group)
+                                            <span class="label label-info">{{ $group->group }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.checkpoint.fields.is_available') }}
                                     </th>
                                     <td>

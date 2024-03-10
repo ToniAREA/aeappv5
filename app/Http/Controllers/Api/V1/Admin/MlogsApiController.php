@@ -20,7 +20,7 @@ class MlogsApiController extends Controller
     {
         abort_if(Gate::denies('mlog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MlogResource(Mlog::with(['boat', 'wlist', 'employee', 'product', 'proforma_number'])->get());
+        return new MlogResource(Mlog::with(['boat', 'wlist', 'employee', 'product', 'financial_document'])->get());
     }
 
     public function store(StoreMlogRequest $request)
@@ -40,7 +40,7 @@ class MlogsApiController extends Controller
     {
         abort_if(Gate::denies('mlog_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new MlogResource($mlog->load(['boat', 'wlist', 'employee', 'product', 'proforma_number']));
+        return new MlogResource($mlog->load(['boat', 'wlist', 'employee', 'product', 'financial_document']));
     }
 
     public function update(UpdateMlogRequest $request, Mlog $mlog)

@@ -89,18 +89,34 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.wlog.fields.wlist_finished') }}
+                            {{ trans('cruds.wlog.fields.travel_cost_included') }}
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
+                            <input type="checkbox" disabled="disabled" {{ $wlog->travel_cost_included ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.wlog.fields.proforma_number') }}
+                            {{ trans('cruds.wlog.fields.total_travel_cost') }}
                         </th>
                         <td>
-                            {{ $wlog->proforma_number->proforma_number ?? '' }}
+                            {{ $wlog->total_travel_cost }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.total_access_cost') }}
+                        </th>
+                        <td>
+                            {{ $wlog->total_access_cost }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.wlist_finished') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
@@ -137,6 +153,14 @@
                                     <img src="{{ $media->getUrl('thumb') }}">
                                 </a>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.financial_document') }}
+                        </th>
+                        <td>
+                            {{ $wlog->financial_document->reference_number ?? '' }}
                         </td>
                     </tr>
                 </tbody>

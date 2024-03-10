@@ -82,6 +82,16 @@ class Product extends Model implements HasMedia
         return $this->hasMany(TechnicalDocumentation::class, 'product_id', 'id');
     }
 
+    public function productIotDevices()
+    {
+        return $this->hasMany(IotDevice::class, 'product_id', 'id');
+    }
+
+    public function productFinancialDocumentItems()
+    {
+        return $this->hasMany(FinancialDocumentItem::class, 'product_id', 'id');
+    }
+
     public function categories()
     {
         return $this->belongsToMany(ProductCategory::class);

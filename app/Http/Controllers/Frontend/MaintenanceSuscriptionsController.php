@@ -11,8 +11,8 @@ use App\Http\Requests\UpdateMaintenanceSuscriptionRequest;
 use App\Models\Boat;
 use App\Models\CarePlan;
 use App\Models\Client;
+use App\Models\FinalcialDocument;
 use App\Models\MaintenanceSuscription;
-use App\Models\Proforma;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -27,7 +27,7 @@ class MaintenanceSuscriptionsController extends Controller
     {
         abort_if(Gate::denies('maintenance_suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $maintenanceSuscriptions = MaintenanceSuscription::with(['user', 'proforma', 'client', 'boats', 'care_plan', 'media'])->get();
+        $maintenanceSuscriptions = MaintenanceSuscription::with(['user', 'client', 'boats', 'care_plan', 'financial_document', 'media'])->get();
 
         return view('frontend.maintenanceSuscriptions.index', compact('maintenanceSuscriptions'));
     }
@@ -38,15 +38,15 @@ class MaintenanceSuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
 
         $care_plans = CarePlan::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.maintenanceSuscriptions.create', compact('boats', 'care_plans', 'clients', 'proformas', 'users'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.maintenanceSuscriptions.create', compact('boats', 'care_plans', 'clients', 'financial_documents', 'users'));
     }
 
     public function store(StoreMaintenanceSuscriptionRequest $request)
@@ -70,17 +70,17 @@ class MaintenanceSuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
 
         $care_plans = CarePlan::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $maintenanceSuscription->load('user', 'proforma', 'client', 'boats', 'care_plan');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.maintenanceSuscriptions.edit', compact('boats', 'care_plans', 'clients', 'maintenanceSuscription', 'proformas', 'users'));
+        $maintenanceSuscription->load('user', 'client', 'boats', 'care_plan', 'financial_document');
+
+        return view('frontend.maintenanceSuscriptions.edit', compact('boats', 'care_plans', 'clients', 'financial_documents', 'maintenanceSuscription', 'users'));
     }
 
     public function update(UpdateMaintenanceSuscriptionRequest $request, MaintenanceSuscription $maintenanceSuscription)
@@ -105,7 +105,7 @@ class MaintenanceSuscriptionsController extends Controller
     {
         abort_if(Gate::denies('maintenance_suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $maintenanceSuscription->load('user', 'proforma', 'client', 'boats', 'care_plan');
+        $maintenanceSuscription->load('user', 'client', 'boats', 'care_plan', 'financial_document');
 
         return view('frontend.maintenanceSuscriptions.show', compact('maintenanceSuscription'));
     }

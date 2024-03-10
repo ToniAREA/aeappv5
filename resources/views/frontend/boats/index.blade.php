@@ -51,6 +51,9 @@
                                         {{ trans('cruds.boat.fields.marina') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.boat.fields.sat_phone') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.boat.fields.notes') }}
                                     </th>
                                     <th>
@@ -60,9 +63,6 @@
                                         {{ trans('cruds.boat.fields.clients') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.boat.fields.coordinates') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.boat.fields.link') }}
                                     </th>
                                     <th>
@@ -70,6 +70,15 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.boat.fields.last_use') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.settings_data') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.public_ip') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.coordinates') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -113,12 +122,21 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($clients as $key => $item)
                                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -168,6 +186,9 @@
                                             {{ $boat->marina->name ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $boat->sat_phone ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $boat->notes ?? '' }}
                                         </td>
                                         <td>
@@ -179,9 +200,6 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            {{ $boat->coordinates ?? '' }}
-                                        </td>
-                                        <td>
                                             {{ $boat->link ?? '' }}
                                         </td>
                                         <td>
@@ -189,6 +207,15 @@
                                         </td>
                                         <td>
                                             {{ $boat->last_use ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->settings_data ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->public_ip ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->coordinates ?? '' }}
                                         </td>
                                         <td>
                                             @can('boat_show')

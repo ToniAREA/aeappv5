@@ -36,11 +36,11 @@ class Marina extends Model implements HasMedia
     protected $fillable = [
         'name',
         'coordinates',
+        'contact_docs_id',
         'link',
         'link_description',
         'notes',
         'internal_notes',
-        'contact_docs_id',
         'last_use',
         'created_at',
         'updated_at',
@@ -68,6 +68,11 @@ class Marina extends Model implements HasMedia
         return $this->hasMany(Wlog::class, 'marina_id', 'id');
     }
 
+    public function inMarinaAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'in_marina_id', 'id');
+    }
+
     public function getMarinaPhotoAttribute()
     {
         $file = $this->getMedia('marina_photo')->last();
@@ -78,6 +83,11 @@ class Marina extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function contacts()
+    {
+        return $this->belongsToMany(ContactContact::class);
     }
 
     public function contact_docs()

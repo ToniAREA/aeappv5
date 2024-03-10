@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateWlistRequest;
 use App\Models\Boat;
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\FinalcialDocument;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Wlist;
@@ -28,7 +29,7 @@ class WlistController extends Controller
     {
         abort_if(Gate::denies('wlist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlists = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'media'])->get();
+        $wlists = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document', 'media'])->get();
 
         $clients = Client::get();
 
@@ -42,7 +43,9 @@ class WlistController extends Controller
 
         $wlist_statuses = WlistStatus::get();
 
-        return view('frontend.wlists.index', compact('boats', 'clients', 'employees', 'roles', 'users', 'wlist_statuses', 'wlists'));
+        $finalcial_documents = FinalcialDocument::get();
+
+        return view('frontend.wlists.index', compact('boats', 'clients', 'employees', 'finalcial_documents', 'roles', 'users', 'wlist_statuses', 'wlists'));
     }
 
     public function create()
@@ -61,7 +64,9 @@ class WlistController extends Controller
 
         $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.wlists.create', compact('boats', 'clients', 'for_employees', 'for_roles', 'from_users', 'statuses'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.wlists.create', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses'));
     }
 
     public function store(StoreWlistRequest $request)
@@ -95,9 +100,11 @@ class WlistController extends Controller
 
         $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.wlists.edit', compact('boats', 'clients', 'for_employees', 'for_roles', 'from_users', 'statuses', 'wlist'));
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document');
+
+        return view('frontend.wlists.edit', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses', 'wlist'));
     }
 
     public function update(UpdateWlistRequest $request, Wlist $wlist)
@@ -125,7 +132,7 @@ class WlistController extends Controller
     {
         abort_if(Gate::denies('wlist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'wlistWlogs', 'wlistMatLogs', 'wlistComments', 'wlistsAppointments', 'wlistsProformas');
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document', 'wlistWlogs', 'wlistComments', 'wlistMlogs', 'forWlistEmployeeRatings', 'wlistsAppointments');
 
         return view('frontend.wlists.show', compact('wlist'));
     }

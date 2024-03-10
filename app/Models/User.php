@@ -170,9 +170,69 @@ class User extends Authenticatable
         return $this->hasMany(EmployeeRating::class, 'from_user_id', 'id');
     }
 
-    public function forUserAppointments()
+    public function userIotSuscriptions()
     {
-        return $this->belongsToMany(Appointment::class);
+        return $this->hasMany(IotSuscription::class, 'user_id', 'id');
+    }
+
+    public function userUserSettings()
+    {
+        return $this->hasMany(UserSetting::class, 'user_id', 'id');
+    }
+
+    public function authorizedUsersProductCategories()
+    {
+        return $this->belongsToMany(ProductCategory::class);
+    }
+
+    public function authorizedUsersAssetCategories()
+    {
+        return $this->belongsToMany(AssetCategory::class);
+    }
+
+    public function authorizedUsersContentCategories()
+    {
+        return $this->belongsToMany(ContentCategory::class);
+    }
+
+    public function authorizedUsersTechnicalDocumentations()
+    {
+        return $this->belongsToMany(TechnicalDocumentation::class);
+    }
+
+    public function authorizedUsersDocumentationCategories()
+    {
+        return $this->belongsToMany(DocumentationCategory::class);
+    }
+
+    public function authorizedUsersContentPages()
+    {
+        return $this->belongsToMany(ContentPage::class);
+    }
+
+    public function authorizedUsersTechDocsTypes()
+    {
+        return $this->belongsToMany(TechDocsType::class);
+    }
+
+    public function authorizedUsersVideoTutorials()
+    {
+        return $this->belongsToMany(VideoTutorial::class);
+    }
+
+    public function authorizedUsersFaqCategories()
+    {
+        return $this->belongsToMany(FaqCategory::class);
+    }
+
+    public function authorizedUsersFaqQuestions()
+    {
+        return $this->belongsToMany(FaqQuestion::class);
+    }
+
+    public function authorizedUsersVideoCategories()
+    {
+        return $this->belongsToMany(VideoCategory::class);
     }
 
     public function getEmailVerifiedAtAttribute($value)

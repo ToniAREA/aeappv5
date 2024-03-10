@@ -200,6 +200,11 @@
                 {{ trans('cruds.employeeRating.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#for_employees_appointments" role="tab" data-toggle="tab">
+                {{ trans('cruds.appointment.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="employee_booking_lists">
@@ -228,6 +233,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="employee_employee_ratings">
             @includeIf('admin.employees.relationships.employeeEmployeeRatings', ['employeeRatings' => $employee->employeeEmployeeRatings])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="for_employees_appointments">
+            @includeIf('admin.employees.relationships.forEmployeesAppointments', ['appointments' => $employee->forEmployeesAppointments])
         </div>
     </div>
 </div>

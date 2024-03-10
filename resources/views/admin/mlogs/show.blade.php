@@ -117,14 +117,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.mlog.fields.proforma_number') }}
-                        </th>
-                        <td>
-                            {{ $mlog->proforma_number->proforma_number ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.mlog.fields.invoiced_line') }}
                         </th>
                         <td>
@@ -137,6 +129,14 @@
                         </th>
                         <td>
                             {{ $mlog->internal_notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.mlog.fields.financial_document') }}
+                        </th>
+                        <td>
+                            {{ $mlog->financial_document->reference_number ?? '' }}
                         </td>
                     </tr>
                 </tbody>

@@ -25,6 +25,18 @@ class StoreContentCategoryRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'authorized_roles.*' => [
+                'integer',
+            ],
+            'authorized_roles' => [
+                'array',
+            ],
+            'authorized_users.*' => [
+                'integer',
+            ],
+            'authorized_users' => [
+                'array',
+            ],
         ];
     }
 }

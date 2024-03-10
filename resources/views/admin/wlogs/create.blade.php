@@ -62,16 +62,16 @@
                 <span class="help-block">{{ trans('cruds.wlog.fields.marina_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="description">{{ trans('cruds.wlog.fields.description') }}</label>
-                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description">{{ old('description') }}</textarea>
+                <label class="required" for="description">{{ trans('cruds.wlog.fields.description') }}</label>
+                <textarea class="form-control {{ $errors->has('description') ? 'is-invalid' : '' }}" name="description" id="description" required>{{ old('description') }}</textarea>
                 @if($errors->has('description'))
                     <span class="text-danger">{{ $errors->first('description') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.wlog.fields.description_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="hours">{{ trans('cruds.wlog.fields.hours') }}</label>
-                <input class="form-control {{ $errors->has('hours') ? 'is-invalid' : '' }}" type="number" name="hours" id="hours" value="{{ old('hours', '') }}" step="0.01" max="24">
+                <label class="required" for="hours">{{ trans('cruds.wlog.fields.hours') }}</label>
+                <input class="form-control {{ $errors->has('hours') ? 'is-invalid' : '' }}" type="number" name="hours" id="hours" value="{{ old('hours', '') }}" step="0.01" required max="24">
                 @if($errors->has('hours'))
                     <span class="text-danger">{{ $errors->first('hours') }}</span>
                 @endif
@@ -86,6 +86,33 @@
                 <span class="help-block">{{ trans('cruds.wlog.fields.hourly_rate_helper') }}</span>
             </div>
             <div class="form-group">
+                <div class="form-check {{ $errors->has('travel_cost_included') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="travel_cost_included" value="0">
+                    <input class="form-check-input" type="checkbox" name="travel_cost_included" id="travel_cost_included" value="1" {{ old('travel_cost_included', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="travel_cost_included">{{ trans('cruds.wlog.fields.travel_cost_included') }}</label>
+                </div>
+                @if($errors->has('travel_cost_included'))
+                    <span class="text-danger">{{ $errors->first('travel_cost_included') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.travel_cost_included_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="total_travel_cost">{{ trans('cruds.wlog.fields.total_travel_cost') }}</label>
+                <input class="form-control {{ $errors->has('total_travel_cost') ? 'is-invalid' : '' }}" type="number" name="total_travel_cost" id="total_travel_cost" value="{{ old('total_travel_cost', '') }}" step="0.01">
+                @if($errors->has('total_travel_cost'))
+                    <span class="text-danger">{{ $errors->first('total_travel_cost') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.total_travel_cost_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="total_access_cost">{{ trans('cruds.wlog.fields.total_access_cost') }}</label>
+                <input class="form-control {{ $errors->has('total_access_cost') ? 'is-invalid' : '' }}" type="number" name="total_access_cost" id="total_access_cost" value="{{ old('total_access_cost', '') }}" step="0.01">
+                @if($errors->has('total_access_cost'))
+                    <span class="text-danger">{{ $errors->first('total_access_cost') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.total_access_cost_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <div class="form-check {{ $errors->has('wlist_finished') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="wlist_finished" value="0">
                     <input class="form-check-input" type="checkbox" name="wlist_finished" id="wlist_finished" value="1" {{ old('wlist_finished', 0) == 1 ? 'checked' : '' }}>
@@ -95,18 +122,6 @@
                     <span class="text-danger">{{ $errors->first('wlist_finished') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.wlog.fields.wlist_finished_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="proforma_number_id">{{ trans('cruds.wlog.fields.proforma_number') }}</label>
-                <select class="form-control select2 {{ $errors->has('proforma_number') ? 'is-invalid' : '' }}" name="proforma_number_id" id="proforma_number_id">
-                    @foreach($proforma_numbers as $id => $entry)
-                        <option value="{{ $id }}" {{ old('proforma_number_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('proforma_number'))
-                    <span class="text-danger">{{ $errors->first('proforma_number') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.wlog.fields.proforma_number_helper') }}</span>
             </div>
             <div class="form-group">
                 <div class="form-check {{ $errors->has('invoiced_line') ? 'is-invalid' : '' }}">
@@ -143,6 +158,18 @@
                     <span class="text-danger">{{ $errors->first('photos') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.wlog.fields.photos_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="financial_document_id">{{ trans('cruds.wlog.fields.financial_document') }}</label>
+                <select class="form-control select2 {{ $errors->has('financial_document') ? 'is-invalid' : '' }}" name="financial_document_id" id="financial_document_id">
+                    @foreach($financial_documents as $id => $entry)
+                        <option value="{{ $id }}" {{ old('financial_document_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('financial_document'))
+                    <span class="text-danger">{{ $errors->first('financial_document') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.wlog.fields.financial_document_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

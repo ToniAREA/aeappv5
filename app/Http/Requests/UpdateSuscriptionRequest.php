@@ -31,12 +31,6 @@ class UpdateSuscriptionRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'hourly_rate_discount' => [
-                'numeric',
-            ],
-            'material_discount' => [
-                'numeric',
-            ],
             'link' => [
                 'string',
                 'nullable',

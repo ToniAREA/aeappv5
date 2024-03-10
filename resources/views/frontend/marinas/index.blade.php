@@ -39,6 +39,15 @@
                                         {{ trans('cruds.marina.fields.coordinates') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.marina.fields.contacts') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.marina.fields.contact_docs') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.contact_email') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.marina.fields.link') }}
                                     </th>
                                     <th>
@@ -49,12 +58,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.marina.fields.internal_notes') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.marina.fields.contact_docs') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.contactContact.fields.contact_email') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.marina.fields.last_use') }}
@@ -84,6 +87,17 @@
                                             {{ $marina->coordinates ?? '' }}
                                         </td>
                                         <td>
+                                            @foreach($marina->contacts as $key => $item)
+                                                <span>{{ $item->contact_first_name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $marina->contact_docs->contact_first_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $marina->contact_docs->contact_email ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $marina->link ?? '' }}
                                         </td>
                                         <td>
@@ -94,12 +108,6 @@
                                         </td>
                                         <td>
                                             {{ $marina->internal_notes ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $marina->contact_docs->contact_first_name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $marina->contact_docs->contact_email ?? '' }}
                                         </td>
                                         <td>
                                             {{ $marina->last_use ?? '' }}

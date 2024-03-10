@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.documentations.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.documentation.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'Documentation', 'route' => 'admin.documentations.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -56,6 +60,12 @@
                                         {{ trans('cruds.documentation.fields.link_description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.documentation.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.documentation.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -100,6 +110,16 @@
                                         </td>
                                         <td>
                                             {{ $documentation->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($documentation->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($documentation->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('documentation_show')

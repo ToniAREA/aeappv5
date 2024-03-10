@@ -19,187 +19,81 @@
     </div>
 
     <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-MaintenanceSuscription">
-                <thead>
-                    <tr>
-                        <th width="10">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-MaintenanceSuscription">
+            <thead>
+                <tr>
+                    <th width="10">
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.id') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.user') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.email') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.is_active') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.proforma') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.proforma.fields.description') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.client') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.client.fields.lastname') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.boats') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.care_plan') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.carePlan.fields.period') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.signed_contract') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.start_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.end_date') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.hourly_rate_discount') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.material_discount') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.link') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.link_description') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.notes') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.internalnotes') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.maintenanceSuscription.fields.completed_at') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($maintenanceSuscriptions as $key => $maintenanceSuscription)
-                        <tr data-entry-id="{{ $maintenanceSuscription->id }}">
-                            <td>
-
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->id ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->user->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->user->email ?? '' }}
-                            </td>
-                            <td>
-                                <span style="display:none">{{ $maintenanceSuscription->is_active ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $maintenanceSuscription->is_active ? 'checked' : '' }}>
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->proforma->proforma_number ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->proforma->description ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->client->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->client->lastname ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($maintenanceSuscription->boats as $key => $item)
-                                    <span class="badge badge-info">{{ $item->name }}</span>
-                                @endforeach
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->care_plan->name ?? '' }}
-                            </td>
-                            <td>
-                                @if($maintenanceSuscription->care_plan)
-                                    {{ $maintenanceSuscription->care_plan::PERIOD_RADIO[$maintenanceSuscription->care_plan->period] ?? '' }}
-                                @endif
-                            </td>
-                            <td>
-                                @if($maintenanceSuscription->signed_contract)
-                                    <a href="{{ $maintenanceSuscription->signed_contract->getUrl() }}" target="_blank">
-                                        {{ trans('global.view_file') }}
-                                    </a>
-                                @endif
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->start_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->end_date ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->hourly_rate_discount ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->material_discount ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->link ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->link_description ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->notes ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->internalnotes ?? '' }}
-                            </td>
-                            <td>
-                                {{ $maintenanceSuscription->completed_at ?? '' }}
-                            </td>
-                            <td>
-                                @can('maintenance_suscription_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.maintenance-suscriptions.show', $maintenanceSuscription->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
-
-                                @can('maintenance_suscription_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.maintenance-suscriptions.edit', $maintenanceSuscription->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
-
-                                @can('maintenance_suscription_delete')
-                                    <form action="{{ route('admin.maintenance-suscriptions.destroy', $maintenanceSuscription->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.id') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.user') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.user.fields.email') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.is_active') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.client') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.client.fields.lastname') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.boats') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.care_plan') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.carePlan.fields.period') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.signed_contract') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.start_date') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.end_date') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.hourly_rate_discount') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.material_discount') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.link') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.link_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.internalnotes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.completed_at') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.maintenanceSuscription.fields.financial_document') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                    </th>
+                    <th>
+                        &nbsp;
+                    </th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 
@@ -212,14 +106,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('maintenance_suscription_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.maintenance-suscriptions.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -241,18 +135,49 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.maintenance-suscriptions.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id' },
+{ data: 'user_name', name: 'user.name' },
+{ data: 'user.email', name: 'user.email' },
+{ data: 'is_active', name: 'is_active' },
+{ data: 'client_name', name: 'client.name' },
+{ data: 'client.lastname', name: 'client.lastname' },
+{ data: 'boats', name: 'boats.name' },
+{ data: 'care_plan_name', name: 'care_plan.name' },
+{ data: 'care_plan.period', name: 'care_plan.period' },
+{ data: 'signed_contract', name: 'signed_contract', sortable: false, searchable: false },
+{ data: 'start_date', name: 'start_date' },
+{ data: 'end_date', name: 'end_date' },
+{ data: 'hourly_rate_discount', name: 'hourly_rate_discount' },
+{ data: 'material_discount', name: 'material_discount' },
+{ data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
+{ data: 'notes', name: 'notes' },
+{ data: 'internalnotes', name: 'internalnotes' },
+{ data: 'completed_at', name: 'completed_at' },
+{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
+{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  });
-  let table = $('.datatable-MaintenanceSuscription:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  };
+  let table = $('.datatable-MaintenanceSuscription').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-})
+});
 
 </script>
 @endsection

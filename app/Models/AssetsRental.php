@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AssetsRental extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, Auditable, HasFactory;
 
     public $table = 'assets_rentals';
 
@@ -34,13 +35,13 @@ class AssetsRental extends Model
         'asset_id',
         'user_id',
         'client_id',
+        'financial_document_id',
         'boat_id',
         'start_date',
         'end_date',
         'rental_details',
         'active',
         'invoiced',
-        'proforma_id',
         'link',
         'link_description',
         'completed_at',
@@ -71,6 +72,11 @@ class AssetsRental extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
+    }
+
     public function boat()
     {
         return $this->belongsTo(Boat::class, 'boat_id');
@@ -84,11 +90,6 @@ class AssetsRental extends Model
     public function setStartDateAttribute($value)
     {
         $this->attributes['start_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    public function proforma()
-    {
-        return $this->belongsTo(Proforma::class, 'proforma_id');
     }
 
     public function getCompletedAtAttribute($value)

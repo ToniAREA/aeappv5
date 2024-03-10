@@ -26,6 +26,12 @@ class UpdateMarinaRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'contacts.*' => [
+                'integer',
+            ],
+            'contacts' => [
+                'array',
+            ],
             'link' => [
                 'string',
                 'nullable',

@@ -20,13 +20,13 @@ class CheckpointsApiController extends Controller
     {
         abort_if(Gate::denies('checkpoint_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CheckpointResource(Checkpoint::all());
+        return new CheckpointResource(Checkpoint::with(['groups'])->get());
     }
 
     public function store(StoreCheckpointRequest $request)
     {
         $checkpoint = Checkpoint::create($request->all());
-
+        $checkpoint->groups()->sync($request->input('groups', []));
         if ($request->input('file', false)) {
             $checkpoint->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
         }
@@ -44,13 +44,13 @@ class CheckpointsApiController extends Controller
     {
         abort_if(Gate::denies('checkpoint_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CheckpointResource($checkpoint);
+        return new CheckpointResource($checkpoint->load(['groups']));
     }
 
     public function update(UpdateCheckpointRequest $request, Checkpoint $checkpoint)
     {
         $checkpoint->update($request->all());
-
+        $checkpoint->groups()->sync($request->input('groups', []));
         if ($request->input('file', false)) {
             if (! $checkpoint->file || $request->input('file') !== $checkpoint->file->file_name) {
                 if ($checkpoint->file) {

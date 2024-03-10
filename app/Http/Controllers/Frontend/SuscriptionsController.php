@@ -3,14 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySuscriptionRequest;
 use App\Http\Requests\StoreSuscriptionRequest;
 use App\Http\Requests\UpdateSuscriptionRequest;
 use App\Models\Boat;
 use App\Models\Client;
+use App\Models\FinalcialDocument;
 use App\Models\Plan;
-use App\Models\Proforma;
 use App\Models\Suscription;
 use App\Models\User;
 use Gate;
@@ -20,13 +21,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SuscriptionsController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $suscriptions = Suscription::with(['user', 'proforma', 'client', 'boats', 'plan', 'media'])->get();
+        $suscriptions = Suscription::with(['user', 'client', 'boats', 'plan', 'financial_document', 'media'])->get();
 
         return view('frontend.suscriptions.index', compact('suscriptions'));
     }
@@ -37,15 +38,15 @@ class SuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
 
         $plans = Plan::pluck('plan_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.suscriptions.create', compact('boats', 'clients', 'plans', 'proformas', 'users'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.suscriptions.create', compact('boats', 'clients', 'financial_documents', 'plans', 'users'));
     }
 
     public function store(StoreSuscriptionRequest $request)
@@ -69,17 +70,17 @@ class SuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
 
         $plans = Plan::pluck('plan_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $suscription->load('user', 'proforma', 'client', 'boats', 'plan');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.suscriptions.edit', compact('boats', 'clients', 'plans', 'proformas', 'suscription', 'users'));
+        $suscription->load('user', 'client', 'boats', 'plan', 'financial_document');
+
+        return view('frontend.suscriptions.edit', compact('boats', 'clients', 'financial_documents', 'plans', 'suscription', 'users'));
     }
 
     public function update(UpdateSuscriptionRequest $request, Suscription $suscription)
@@ -104,7 +105,7 @@ class SuscriptionsController extends Controller
     {
         abort_if(Gate::denies('suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $suscription->load('user', 'proforma', 'client', 'boats', 'plan');
+        $suscription->load('user', 'client', 'boats', 'plan', 'financial_document');
 
         return view('frontend.suscriptions.show', compact('suscription'));
     }

@@ -113,8 +113,8 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.boat_namecomplete_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.wlist.fields.description') }}</label>
-                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $wlist->description) }}">
+                            <label class="required" for="description">{{ trans('cruds.wlist.fields.description') }}</label>
+                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', $wlist->description) }}" required>
                             @if($errors->has('description'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('description') }}
@@ -246,6 +246,20 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.wlist.fields.completed_at_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="financial_document_id">{{ trans('cruds.wlist.fields.financial_document') }}</label>
+                            <select class="form-control select2" name="financial_document_id" id="financial_document_id">
+                                @foreach($financial_documents as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('financial_document_id') ? old('financial_document_id') : $wlist->financial_document->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('financial_document'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('financial_document') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.financial_document_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
