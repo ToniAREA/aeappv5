@@ -109,6 +109,12 @@ class User extends Authenticatable
         });
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new \App\Observers\UserActionObserver);
+    }
+
     public function userEmployees()
     {
         return $this->hasMany(Employee::class, 'user_id', 'id');
@@ -117,11 +123,6 @@ class User extends Authenticatable
     public function employeeWlogs()
     {
         return $this->hasMany(Wlog::class, 'employee_id', 'id');
-    }
-
-    public function employeeMatLogs()
-    {
-        return $this->hasMany(MatLog::class, 'employee_id', 'id');
     }
 
     public function fromUserWlists()
@@ -139,19 +140,99 @@ class User extends Authenticatable
         return $this->hasMany(BookingList::class, 'user_id', 'id');
     }
 
-    public function forUserToDos()
+    public function actualHolderAssets()
     {
-        return $this->belongsToMany(ToDo::class);
+        return $this->hasMany(Asset::class, 'actual_holder_id', 'id');
     }
 
-    public function forUserAppointments()
+    public function employeeMlogs()
     {
-        return $this->belongsToMany(Appointment::class);
+        return $this->hasMany(Mlog::class, 'employee_id', 'id');
     }
 
-    public function forUserWlists()
+    public function userAssetsRentals()
     {
-        return $this->belongsToMany(Wlist::class);
+        return $this->hasMany(AssetsRental::class, 'user_id', 'id');
+    }
+
+    public function userSuscriptions()
+    {
+        return $this->hasMany(Suscription::class, 'user_id', 'id');
+    }
+
+    public function userMaintenanceSuscriptions()
+    {
+        return $this->hasMany(MaintenanceSuscription::class, 'user_id', 'id');
+    }
+
+    public function fromUserEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'from_user_id', 'id');
+    }
+
+    public function userIotSuscriptions()
+    {
+        return $this->hasMany(IotSuscription::class, 'user_id', 'id');
+    }
+
+    public function userUserSettings()
+    {
+        return $this->hasMany(UserSetting::class, 'user_id', 'id');
+    }
+
+    public function authorizedUsersProductCategories()
+    {
+        return $this->belongsToMany(ProductCategory::class);
+    }
+
+    public function authorizedUsersAssetCategories()
+    {
+        return $this->belongsToMany(AssetCategory::class);
+    }
+
+    public function authorizedUsersContentCategories()
+    {
+        return $this->belongsToMany(ContentCategory::class);
+    }
+
+    public function authorizedUsersTechnicalDocumentations()
+    {
+        return $this->belongsToMany(TechnicalDocumentation::class);
+    }
+
+    public function authorizedUsersDocumentationCategories()
+    {
+        return $this->belongsToMany(DocumentationCategory::class);
+    }
+
+    public function authorizedUsersContentPages()
+    {
+        return $this->belongsToMany(ContentPage::class);
+    }
+
+    public function authorizedUsersTechDocsTypes()
+    {
+        return $this->belongsToMany(TechDocsType::class);
+    }
+
+    public function authorizedUsersVideoTutorials()
+    {
+        return $this->belongsToMany(VideoTutorial::class);
+    }
+
+    public function authorizedUsersFaqCategories()
+    {
+        return $this->belongsToMany(FaqCategory::class);
+    }
+
+    public function authorizedUsersFaqQuestions()
+    {
+        return $this->belongsToMany(FaqQuestion::class);
+    }
+
+    public function authorizedUsersVideoCategories()
+    {
+        return $this->belongsToMany(VideoCategory::class);
     }
 
     public function getEmailVerifiedAtAttribute($value)

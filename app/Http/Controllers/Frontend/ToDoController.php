@@ -8,10 +8,9 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyToDoRequest;
 use App\Http\Requests\StoreToDoRequest;
 use App\Http\Requests\UpdateToDoRequest;
-use App\Models\Priority;
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\ToDo;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -25,15 +24,13 @@ class ToDoController extends Controller
     {
         abort_if(Gate::denies('to_do_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $toDos = ToDo::with(['for_roles', 'for_users', 'priority', 'media'])->get();
+        $toDos = ToDo::with(['for_roles', 'for_employee'])->get();
 
         $roles = Role::get();
 
-        $users = User::get();
+        $employees = Employee::get();
 
-        $priorities = Priority::get();
-
-        return view('frontend.toDos.index', compact('priorities', 'roles', 'toDos', 'users'));
+        return view('frontend.toDos.index', compact('employees', 'roles', 'toDos'));
     }
 
     public function create()
@@ -42,22 +39,15 @@ class ToDoController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('frontend.toDos.create', compact('for_roles', 'for_users', 'priorities'));
+        return view('frontend.toDos.create', compact('for_employees', 'for_roles'));
     }
 
     public function store(StoreToDoRequest $request)
     {
         $toDo = ToDo::create($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        foreach ($request->input('photo', []) as $file) {
-            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
-        }
-
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $toDo->id]);
         }
@@ -71,33 +61,17 @@ class ToDoController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $toDo->load('for_roles', 'for_employee');
 
-        $toDo->load('for_roles', 'for_users', 'priority');
-
-        return view('frontend.toDos.edit', compact('for_roles', 'for_users', 'priorities', 'toDo'));
+        return view('frontend.toDos.edit', compact('for_employees', 'for_roles', 'toDo'));
     }
 
     public function update(UpdateToDoRequest $request, ToDo $toDo)
     {
         $toDo->update($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        if (count($toDo->photo) > 0) {
-            foreach ($toDo->photo as $media) {
-                if (! in_array($media->file_name, $request->input('photo', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $toDo->photo->pluck('file_name')->toArray();
-        foreach ($request->input('photo', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
-            }
-        }
 
         return redirect()->route('frontend.to-dos.index');
     }
@@ -106,7 +80,7 @@ class ToDoController extends Controller
     {
         abort_if(Gate::denies('to_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $toDo->load('for_roles', 'for_users', 'priority');
+        $toDo->load('for_roles', 'for_employee');
 
         return view('frontend.toDos.show', compact('toDo'));
     }

@@ -72,6 +72,56 @@
                 {{ trans('cruds.wlist.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_product_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.productCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_asset_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.assetCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_documentations" role="tab" data-toggle="tab">
+                {{ trans('cruds.documentation.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_content_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.contentCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_technical_documentations" role="tab" data-toggle="tab">
+                {{ trans('cruds.technicalDocumentation.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_documentation_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.documentationCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_content_pages" role="tab" data-toggle="tab">
+                {{ trans('cruds.contentPage.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_tech_docs_types" role="tab" data-toggle="tab">
+                {{ trans('cruds.techDocsType.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_video_tutorials" role="tab" data-toggle="tab">
+                {{ trans('cruds.videoTutorial.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_faq_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.faqCategory.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="for_role_to_dos">
@@ -82,6 +132,36 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="for_role_wlists">
             @includeIf('admin.roles.relationships.forRoleWlists', ['wlists' => $role->forRoleWlists])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_product_categories">
+            @includeIf('admin.roles.relationships.authorizedRolesProductCategories', ['productCategories' => $role->authorizedRolesProductCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_asset_categories">
+            @includeIf('admin.roles.relationships.authorizedRolesAssetCategories', ['assetCategories' => $role->authorizedRolesAssetCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_documentations">
+            @includeIf('admin.roles.relationships.authorizedRolesDocumentations', ['documentations' => $role->authorizedRolesDocumentations])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_content_categories">
+            @includeIf('admin.roles.relationships.authorizedRolesContentCategories', ['contentCategories' => $role->authorizedRolesContentCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_technical_documentations">
+            @includeIf('admin.roles.relationships.authorizedRolesTechnicalDocumentations', ['technicalDocumentations' => $role->authorizedRolesTechnicalDocumentations])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_documentation_categories">
+            @includeIf('admin.roles.relationships.authorizedRolesDocumentationCategories', ['documentationCategories' => $role->authorizedRolesDocumentationCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_content_pages">
+            @includeIf('admin.roles.relationships.authorizedRolesContentPages', ['contentPages' => $role->authorizedRolesContentPages])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_tech_docs_types">
+            @includeIf('admin.roles.relationships.authorizedRolesTechDocsTypes', ['techDocsTypes' => $role->authorizedRolesTechDocsTypes])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_video_tutorials">
+            @includeIf('admin.roles.relationships.authorizedRolesVideoTutorials', ['videoTutorials' => $role->authorizedRolesVideoTutorials])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_faq_categories">
+            @includeIf('admin.roles.relationships.authorizedRolesFaqCategories', ['faqCategories' => $role->authorizedRolesFaqCategories])
         </div>
     </div>
 </div>

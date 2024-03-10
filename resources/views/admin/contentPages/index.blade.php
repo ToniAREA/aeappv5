@@ -32,6 +32,9 @@
                         {{ trans('cruds.contentPage.fields.title') }}
                     </th>
                     <th>
+                        {{ trans('cruds.contentPage.fields.show_online') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.contentPage.fields.slug') }}
                     </th>
                     <th>
@@ -47,6 +50,42 @@
                         {{ trans('cruds.contentPage.fields.file') }}
                     </th>
                     <th>
+                        {{ trans('cruds.contentPage.fields.seo_title') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.seo_meta_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.seo_slug') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.link_a') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.link_a_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.show_online_link_a') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.link_b') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.link_b_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.show_online_link_b') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.view_count') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.authorized_roles') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contentPage.fields.authorized_users') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -58,6 +97,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -81,6 +122,50 @@
                     <td>
                     </td>
                     <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($roles as $key => $item)
+                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                     </td>
@@ -139,11 +224,24 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
+{ data: 'show_online', name: 'show_online' },
 { data: 'slug', name: 'slug' },
 { data: 'category', name: 'categories.name' },
 { data: 'tag', name: 'tags.name' },
 { data: 'featured_image', name: 'featured_image', sortable: false, searchable: false },
 { data: 'file', name: 'file', sortable: false, searchable: false },
+{ data: 'seo_title', name: 'seo_title' },
+{ data: 'seo_meta_description', name: 'seo_meta_description' },
+{ data: 'seo_slug', name: 'seo_slug' },
+{ data: 'link_a', name: 'link_a' },
+{ data: 'link_a_description', name: 'link_a_description' },
+{ data: 'show_online_link_a', name: 'show_online_link_a' },
+{ data: 'link_b', name: 'link_b' },
+{ data: 'link_b_description', name: 'link_b_description' },
+{ data: 'show_online_link_b', name: 'show_online_link_b' },
+{ data: 'view_count', name: 'view_count' },
+{ data: 'authorized_roles', name: 'authorized_roles.title' },
+{ data: 'authorized_users', name: 'authorized_users.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

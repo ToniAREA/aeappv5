@@ -17,7 +17,7 @@ class ClaimApiController extends Controller
     {
         abort_if(Gate::denies('claim_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClaimResource(Claim::with(['proforma_number'])->get());
+        return new ClaimResource(Claim::all());
     }
 
     public function store(StoreClaimRequest $request)
@@ -33,7 +33,7 @@ class ClaimApiController extends Controller
     {
         abort_if(Gate::denies('claim_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClaimResource($claim->load(['proforma_number']));
+        return new ClaimResource($claim);
     }
 
     public function update(UpdateClaimRequest $request, Claim $claim)

@@ -8,15 +8,22 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Marina extends Model
+class Marina extends Model implements HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'marinas';
 
     public static $searchable = [
         'name',
+    ];
+
+    protected $appends = [
+        'marina_photo',
     ];
 
     protected $dates = [
@@ -29,7 +36,9 @@ class Marina extends Model
     protected $fillable = [
         'name',
         'coordinates',
+        'contact_docs_id',
         'link',
+        'link_description',
         'notes',
         'internal_notes',
         'last_use',
@@ -43,6 +52,12 @@ class Marina extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
     public function marinaBoats()
     {
         return $this->hasMany(Boat::class, 'marina_id', 'id');
@@ -51,6 +66,33 @@ class Marina extends Model
     public function marinaWlogs()
     {
         return $this->hasMany(Wlog::class, 'marina_id', 'id');
+    }
+
+    public function inMarinaAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'in_marina_id', 'id');
+    }
+
+    public function getMarinaPhotoAttribute()
+    {
+        $file = $this->getMedia('marina_photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
+    }
+
+    public function contacts()
+    {
+        return $this->belongsToMany(ContactContact::class);
+    }
+
+    public function contact_docs()
+    {
+        return $this->belongsTo(ContactContact::class, 'contact_docs_id');
     }
 
     public function getLastUseAttribute($value)

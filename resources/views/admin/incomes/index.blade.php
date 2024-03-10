@@ -29,16 +29,25 @@
                         {{ trans('cruds.income.fields.id') }}
                     </th>
                     <th>
+                        {{ trans('cruds.income.fields.employee') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.employee.fields.namecomplete') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.income.fields.income_category') }}
                     </th>
                     <th>
                         {{ trans('cruds.income.fields.entry_date') }}
                     </th>
                     <th>
+                        {{ trans('cruds.income.fields.description') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.income.fields.amount') }}
                     </th>
                     <th>
-                        {{ trans('cruds.income.fields.description') }}
+                        {{ trans('cruds.income.fields.is_accounted') }}
                     </th>
                     <th>
                         &nbsp;
@@ -49,6 +58,16 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($employees as $key => $item)
+                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <select class="search">
@@ -65,6 +84,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -122,10 +143,13 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
+{ data: 'employee_id_employee', name: 'employee.id_employee' },
+{ data: 'employee.namecomplete', name: 'employee.namecomplete' },
 { data: 'income_category_name', name: 'income_category.name' },
 { data: 'entry_date', name: 'entry_date' },
-{ data: 'amount', name: 'amount' },
 { data: 'description', name: 'description' },
+{ data: 'amount', name: 'amount' },
+{ data: 'is_accounted', name: 'is_accounted' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

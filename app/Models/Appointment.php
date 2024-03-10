@@ -31,11 +31,12 @@ class Appointment extends Model
         'client_id',
         'boat_id',
         'boat_namecomplete',
+        'in_marina_id',
         'description',
         'private_comment',
         'when_starts',
         'when_ends',
-        'priority_id',
+        'priority',
         'status',
         'notes',
         'coordinates',
@@ -69,9 +70,14 @@ class Appointment extends Model
         return $this->belongsToMany(Role::class);
     }
 
-    public function for_users()
+    public function for_employees()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(Employee::class);
+    }
+
+    public function in_marina()
+    {
+        return $this->belongsTo(Marina::class, 'in_marina_id');
     }
 
     public function getWhenStartsAttribute($value)
@@ -92,10 +98,5 @@ class Appointment extends Model
     public function setWhenEndsAttribute($value)
     {
         $this->attributes['when_ends'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-    }
-
-    public function priority()
-    {
-        return $this->belongsTo(Priority::class, 'priority_id');
     }
 }

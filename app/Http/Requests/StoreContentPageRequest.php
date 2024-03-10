@@ -43,6 +43,52 @@ class StoreContentPageRequest extends FormRequest
             'file' => [
                 'array',
             ],
+            'seo_title' => [
+                'string',
+                'nullable',
+            ],
+            'seo_meta_description' => [
+                'string',
+                'nullable',
+            ],
+            'seo_slug' => [
+                'string',
+                'nullable',
+            ],
+            'link_a' => [
+                'string',
+                'nullable',
+            ],
+            'link_a_description' => [
+                'string',
+                'nullable',
+            ],
+            'link_b' => [
+                'string',
+                'nullable',
+            ],
+            'link_b_description' => [
+                'string',
+                'nullable',
+            ],
+            'view_count' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'authorized_roles.*' => [
+                'integer',
+            ],
+            'authorized_roles' => [
+                'array',
+            ],
+            'authorized_users.*' => [
+                'integer',
+            ],
+            'authorized_users' => [
+                'array',
+            ],
         ];
     }
 }

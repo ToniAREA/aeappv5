@@ -63,7 +63,10 @@
                                         {{ trans('cruds.wlist.fields.for_role') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.for_user') }}
+                                        {{ trans('cruds.wlist.fields.for_employee') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.namecomplete') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.wlist.fields.boat_namecomplete') }}
@@ -72,28 +75,46 @@
                                         {{ trans('cruds.wlist.fields.description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.wlist.fields.estimated_hours') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.wlist.fields.photos') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.wlist.fields.deadline') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.priority') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.priority.fields.weight') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.wlist.fields.status') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.url_invoice') }}
+                                        {{ trans('cruds.wlist.fields.priority') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.proforma_link') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.wlist.fields.notes') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.wlist.fields.internal_notes') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.link_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.last_use') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.completed_at') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.financial_document') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -154,10 +175,15 @@
                                     <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @foreach($employees as $key => $item)
+                                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -172,29 +198,44 @@
                                     <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
-                                            @foreach($priorities as $key => $item)
+                                            @foreach($wlist_statuses as $key => $item)
                                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <select class="search" strict="true">
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
-                                            @foreach(App\Models\Wlist::STATUS_RADIO as $key => $item)
-                                                <option value="{{ $item }}">{{ $item }}</option>
+                                            @foreach($finalcial_documents as $key => $item)
+                                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                     </td>
@@ -233,15 +274,19 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @foreach($wlist->for_users as $key => $item)
-                                                <span>{{ $item->name }}</span>
-                                            @endforeach
+                                            {{ $wlist->for_employee->id_employee ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->for_employee->namecomplete ?? '' }}
                                         </td>
                                         <td>
                                             {{ $wlist->boat_namecomplete ?? '' }}
                                         </td>
                                         <td>
                                             {{ $wlist->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->estimated_hours ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($wlist->photos as $key => $media)
@@ -254,22 +299,39 @@
                                             {{ $wlist->deadline ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $wlist->priority->name ?? '' }}
+                                            {{ $wlist->status->name ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $wlist->priority->weight ?? '' }}
+                                            {{ $wlist->priority ?? '' }}
                                         </td>
                                         <td>
-                                            {{ App\Models\Wlist::STATUS_RADIO[$wlist->status] ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $wlist->url_invoice ?? '' }}
+                                            {{ $wlist->proforma_link ?? '' }}
                                         </td>
                                         <td>
                                             {{ $wlist->notes ?? '' }}
                                         </td>
                                         <td>
                                             {{ $wlist->internal_notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->last_use ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->completed_at ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $wlist->financial_document->reference_number ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($wlist->financial_document)
+                                                {{ $wlist->financial_document::DOC_TYPE_RADIO[$wlist->financial_document->doc_type] ?? '' }}
+                                            @endif
                                         </td>
                                         <td>
                                             @can('wlist_show')

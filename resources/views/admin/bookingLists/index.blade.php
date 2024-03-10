@@ -53,6 +53,12 @@
                         {{ trans('cruds.employee.fields.category') }}
                     </th>
                     <th>
+                        {{ trans('cruds.bookingList.fields.booking_slot') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingSlot.fields.end_time') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.bookingList.fields.date') }}
                     </th>
                     <th>
@@ -65,10 +71,19 @@
                         {{ trans('cruds.bookingList.fields.end_time') }}
                     </th>
                     <th>
-                        {{ trans('cruds.bookingList.fields.hour_rate') }}
+                        {{ trans('cruds.bookingList.fields.hourly_rate') }}
                     </th>
                     <th>
-                        {{ trans('cruds.bookingList.fields.total_price') }}
+                        {{ trans('cruds.bookingList.fields.total_amount') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingList.fields.confirmed') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingList.fields.status') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingList.fields.is_invoiced') }}
                     </th>
                     <th>
                         {{ trans('cruds.bookingList.fields.notes') }}
@@ -77,10 +92,13 @@
                         {{ trans('cruds.bookingList.fields.internal_notes') }}
                     </th>
                     <th>
-                        {{ trans('cruds.bookingList.fields.confirmed') }}
+                        {{ trans('cruds.bookingList.fields.completed_at') }}
                     </th>
                     <th>
-                        {{ trans('cruds.bookingList.fields.status') }}
+                        {{ trans('cruds.bookingList.fields.financial_document') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                     </th>
                     <th>
                         &nbsp;
@@ -133,6 +151,16 @@
                     <td>
                     </td>
                     <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($booking_slots as $key => $item)
+                                <option value="{{ $item->star_time }}">{{ $item->star_time }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -148,7 +176,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -157,6 +184,22 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($finalcial_documents as $key => $item)
+                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -222,16 +265,22 @@
 { data: 'boat.boat_type', name: 'boat.boat_type' },
 { data: 'employee_id_employee', name: 'employee.id_employee' },
 { data: 'employee.category', name: 'employee.category' },
+{ data: 'booking_slot_star_time', name: 'booking_slot.star_time' },
+{ data: 'booking_slot.end_time', name: 'booking_slot.end_time' },
 { data: 'date', name: 'date' },
 { data: 'hours', name: 'hours' },
 { data: 'start_time', name: 'start_time' },
 { data: 'end_time', name: 'end_time' },
-{ data: 'hour_rate', name: 'hour_rate' },
-{ data: 'total_price', name: 'total_price' },
-{ data: 'notes', name: 'notes' },
-{ data: 'internal_notes', name: 'internal_notes' },
+{ data: 'hourly_rate', name: 'hourly_rate' },
+{ data: 'total_amount', name: 'total_amount' },
 { data: 'confirmed', name: 'confirmed' },
 { data: 'status', name: 'status' },
+{ data: 'is_invoiced', name: 'is_invoiced' },
+{ data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
+{ data: 'completed_at', name: 'completed_at' },
+{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
+{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

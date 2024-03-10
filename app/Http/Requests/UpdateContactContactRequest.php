@@ -69,6 +69,18 @@ class UpdateContactContactRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
+                'string',
+                'nullable',
+            ],
+            'last_use' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable',
+            ],
         ];
     }
 }

@@ -28,7 +28,7 @@ class AssetController extends Controller
         abort_if(Gate::denies('asset_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Asset::with(['category', 'status', 'location', 'assigned_to'])->select(sprintf('%s.*', (new Asset)->table));
+            $query = Asset::with(['category', 'status', 'location', 'actual_holder'])->select(sprintf('%s.*', (new Asset)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -59,9 +59,6 @@ class AssetController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->editColumn('serial_number', function ($row) {
-                return $row->serial_number ? $row->serial_number : '';
-            });
             $table->editColumn('photos', function ($row) {
                 if (! $row->photos) {
                     return '';
@@ -77,21 +74,63 @@ class AssetController extends Controller
                 return $row->status ? $row->status->name : '';
             });
 
+            $table->editColumn('available', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->available ? 'checked' : null) . '>';
+            });
             $table->addColumn('location_name', function ($row) {
                 return $row->location ? $row->location->name : '';
             });
 
+            $table->addColumn('actual_holder_name', function ($row) {
+                return $row->actual_holder ? $row->actual_holder->name : '';
+            });
+
+            $table->editColumn('actual_holder.email', function ($row) {
+                return $row->actual_holder ? (is_string($row->actual_holder) ? $row->actual_holder : $row->actual_holder->email) : '';
+            });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
-            $table->addColumn('assigned_to_name', function ($row) {
-                return $row->assigned_to ? $row->assigned_to->name : '';
+            $table->editColumn('data_1', function ($row) {
+                return $row->data_1 ? $row->data_1 : '';
+            });
+            $table->editColumn('data_1_description', function ($row) {
+                return $row->data_1_description ? $row->data_1_description : '';
+            });
+            $table->editColumn('data_2', function ($row) {
+                return $row->data_2 ? $row->data_2 : '';
+            });
+            $table->editColumn('data_2_description', function ($row) {
+                return $row->data_2_description ? $row->data_2_description : '';
+            });
+            $table->editColumn('files', function ($row) {
+                if (! $row->files) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->files as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+            $table->editColumn('link_a', function ($row) {
+                return $row->link_a ? $row->link_a : '';
+            });
+            $table->editColumn('link_a_description', function ($row) {
+                return $row->link_a_description ? $row->link_a_description : '';
+            });
+            $table->editColumn('link_b', function ($row) {
+                return $row->link_b ? $row->link_b : '';
+            });
+            $table->editColumn('link_b_description', function ($row) {
+                return $row->link_b_description ? $row->link_b_description : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'photos', 'status', 'location', 'assigned_to']);
+            $table->rawColumns(['actions', 'placeholder', 'category', 'photos', 'status', 'available', 'location', 'actual_holder', 'files']);
 
             return $table->make(true);
         }
@@ -114,9 +153,9 @@ class AssetController extends Controller
 
         $locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actual_holders = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.assets.create', compact('assigned_tos', 'categories', 'locations', 'statuses'));
+        return view('admin.assets.create', compact('actual_holders', 'categories', 'locations', 'statuses'));
     }
 
     public function store(StoreAssetRequest $request)
@@ -125,6 +164,10 @@ class AssetController extends Controller
 
         foreach ($request->input('photos', []) as $file) {
             $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        foreach ($request->input('files', []) as $file) {
+            $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -144,11 +187,11 @@ class AssetController extends Controller
 
         $locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actual_holders = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'actual_holder');
 
-        return view('admin.assets.edit', compact('asset', 'assigned_tos', 'categories', 'locations', 'statuses'));
+        return view('admin.assets.edit', compact('actual_holders', 'asset', 'categories', 'locations', 'statuses'));
     }
 
     public function update(UpdateAssetRequest $request, Asset $asset)
@@ -169,6 +212,20 @@ class AssetController extends Controller
             }
         }
 
+        if (count($asset->files) > 0) {
+            foreach ($asset->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $asset->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+            }
+        }
+
         return redirect()->route('admin.assets.index');
     }
 
@@ -176,7 +233,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'actual_holder', 'assetAssetsRentals');
 
         return view('admin.assets.show', compact('asset'));
     }

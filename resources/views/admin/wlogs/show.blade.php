@@ -81,10 +81,42 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.wlog.fields.proforma_number') }}
+                            {{ trans('cruds.wlog.fields.hourly_rate') }}
                         </th>
                         <td>
-                            {{ $wlog->proforma_number->proforma_number ?? '' }}
+                            {{ $wlog->hourly_rate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.travel_cost_included') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $wlog->travel_cost_included ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.total_travel_cost') }}
+                        </th>
+                        <td>
+                            {{ $wlog->total_travel_cost }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.total_access_cost') }}
+                        </th>
+                        <td>
+                            {{ $wlog->total_access_cost }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.wlist_finished') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
@@ -93,14 +125,6 @@
                         </th>
                         <td>
                             <input type="checkbox" disabled="disabled" {{ $wlog->invoiced_line ? 'checked' : '' }}>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.wlog.fields.status') }}
-                        </th>
-                        <td>
-                            {{ $wlog->status }}
                         </td>
                     </tr>
                     <tr>
@@ -119,6 +143,26 @@
                             {{ $wlog->internal_notes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.photos') }}
+                        </th>
+                        <td>
+                            @foreach($wlog->photos as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlog.fields.financial_document') }}
+                        </th>
+                        <td>
+                            {{ $wlog->financial_document->reference_number ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -130,6 +174,22 @@
     </div>
 </div>
 
-
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#for_wlog_employee_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeRating.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="for_wlog_employee_ratings">
+            @includeIf('admin.wlogs.relationships.forWlogEmployeeRatings', ['employeeRatings' => $wlog->forWlogEmployeeRatings])
+        </div>
+    </div>
+</div>
 
 @endsection

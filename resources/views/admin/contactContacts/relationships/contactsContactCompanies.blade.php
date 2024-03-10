@@ -55,6 +55,15 @@
                                 {{ trans('cruds.contactCompany.fields.contacts') }}
                             </th>
                             <th>
+                                {{ trans('cruds.contactCompany.fields.link') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.contactCompany.fields.link_description') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.contactCompany.fields.last_use') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -100,6 +109,15 @@
                                     @foreach($contactCompany->contacts as $key => $item)
                                         <span class="badge badge-info">{{ $item->contact_first_name }}</span>
                                     @endforeach
+                                </td>
+                                <td>
+                                    {{ $contactCompany->link ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $contactCompany->link_description ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $contactCompany->last_use ?? '' }}
                                 </td>
                                 <td>
                                     @can('contact_company_show')

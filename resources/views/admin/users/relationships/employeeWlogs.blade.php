@@ -49,22 +49,37 @@
                                 {{ trans('cruds.wlog.fields.hours') }}
                             </th>
                             <th>
-                                {{ trans('cruds.wlog.fields.proforma_number') }}
+                                {{ trans('cruds.wlog.fields.hourly_rate') }}
                             </th>
                             <th>
-                                {{ trans('cruds.proforma.fields.description') }}
+                                {{ trans('cruds.wlog.fields.travel_cost_included') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.total_travel_cost') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.total_access_cost') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.wlist_finished') }}
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.invoiced_line') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.wlog.fields.status') }}
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.notes') }}
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.internal_notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.photos') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.financial_document') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -105,23 +120,46 @@
                                     {{ $wlog->hours ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $wlog->proforma_number->proforma_number ?? '' }}
+                                    {{ $wlog->hourly_rate ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $wlog->proforma_number->description ?? '' }}
+                                    <span style="display:none">{{ $wlog->travel_cost_included ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $wlog->travel_cost_included ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    {{ $wlog->total_travel_cost ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlog->total_access_cost ?? '' }}
+                                </td>
+                                <td>
+                                    <span style="display:none">{{ $wlog->wlist_finished ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     <span style="display:none">{{ $wlog->invoiced_line ?? '' }}</span>
                                     <input type="checkbox" disabled="disabled" {{ $wlog->invoiced_line ? 'checked' : '' }}>
                                 </td>
                                 <td>
-                                    {{ $wlog->status ?? '' }}
-                                </td>
-                                <td>
                                     {{ $wlog->notes ?? '' }}
                                 </td>
                                 <td>
                                     {{ $wlog->internal_notes ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($wlog->photos as $key => $media)
+                                        <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                            <img src="{{ $media->getUrl('thumb') }}">
+                                        </a>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    {{ $wlog->financial_document->reference_number ?? '' }}
+                                </td>
+                                <td>
+                                    @if($wlog->financial_document)
+                                        {{ $wlog->financial_document::DOC_TYPE_RADIO[$wlog->financial_document->doc_type] ?? '' }}
+                                    @endif
                                 </td>
                                 <td>
                                     @can('wlog_show')

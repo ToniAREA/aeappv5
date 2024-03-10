@@ -69,6 +69,15 @@
                                         {{ trans('cruds.contactContact.fields.contact_internalnotes') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contactContact.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.link_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.last_use') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -117,6 +126,15 @@
                                         </td>
                                         <td>
                                             {{ $contactContact->contact_internalnotes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactContact->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactContact->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactContact->last_use ?? '' }}
                                         </td>
                                         <td>
                                             @can('contact_contact_show')

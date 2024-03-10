@@ -13,6 +13,7 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
+use App\Models\Provider;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -28,7 +29,7 @@ class ProductController extends Controller
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Product::with(['categories', 'brand', 'product_location', 'tags'])->select(sprintf('%s.*', (new Product)->table));
+            $query = Product::with(['categories', 'brand', 'providers', 'product_location', 'tags'])->select(sprintf('%s.*', (new Product)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -67,6 +68,14 @@ class ProductController extends Controller
             $table->editColumn('ref_manu', function ($row) {
                 return $row->ref_manu ? $row->ref_manu : '';
             });
+            $table->editColumn('providers', function ($row) {
+                $labels = [];
+                foreach ($row->providers as $provider) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $provider->name);
+                }
+
+                return implode(' ', $labels);
+            });
             $table->editColumn('ref_provider', function ($row) {
                 return $row->ref_provider ? $row->ref_provider : '';
             });
@@ -76,8 +85,8 @@ class ProductController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
-            $table->editColumn('product_slug', function ($row) {
-                return $row->product_slug ? $row->product_slug : '';
+            $table->editColumn('show_online', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online ? 'checked' : null) . '>';
             });
             $table->editColumn('photos', function ($row) {
                 if (! $row->photos) {
@@ -90,14 +99,17 @@ class ProductController extends Controller
 
                 return implode(' ', $links);
             });
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : '';
+            $table->editColumn('product_price', function ($row) {
+                return $row->product_price ? $row->product_price : '';
             });
-            $table->editColumn('pro_discount', function ($row) {
-                return $row->pro_discount ? $row->pro_discount : '';
+            $table->editColumn('purchase_discount', function ($row) {
+                return $row->purchase_discount ? $row->purchase_discount : '';
             });
-            $table->editColumn('stock', function ($row) {
-                return $row->stock ? $row->stock : '';
+            $table->editColumn('purchase_price', function ($row) {
+                return $row->purchase_price ? $row->purchase_price : '';
+            });
+            $table->editColumn('has_stock', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->has_stock ? 'checked' : null) . '>';
             });
             $table->editColumn('local_stock', function ($row) {
                 return $row->local_stock ? $row->local_stock : '';
@@ -117,29 +129,40 @@ class ProductController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->editColumn('file', function ($row) {
-                if (! $row->file) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->file as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
+            $table->editColumn('link_a', function ($row) {
+                return $row->link_a ? $row->link_a : '';
+            });
+            $table->editColumn('link_a_description', function ($row) {
+                return $row->link_a_description ? $row->link_a_description : '';
+            });
+            $table->editColumn('link_b', function ($row) {
+                return $row->link_b ? $row->link_b : '';
+            });
+            $table->editColumn('link_b_description', function ($row) {
+                return $row->link_b_description ? $row->link_b_description : '';
+            });
+            $table->editColumn('seo_title', function ($row) {
+                return $row->seo_title ? $row->seo_title : '';
+            });
+            $table->editColumn('seo_meta_description', function ($row) {
+                return $row->seo_meta_description ? $row->seo_meta_description : '';
+            });
+            $table->editColumn('seo_slug', function ($row) {
+                return $row->seo_slug ? $row->seo_slug : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'brand', 'photos', 'product_location', 'tag', 'file']);
+            $table->rawColumns(['actions', 'placeholder', 'category', 'brand', 'providers', 'show_online', 'photos', 'has_stock', 'product_location', 'tag']);
 
             return $table->make(true);
         }
 
         $product_categories = ProductCategory::get();
         $brands             = Brand::get();
+        $providers          = Provider::get();
         $asset_locations    = AssetLocation::get();
         $product_tags       = ProductTag::get();
 
-        return view('admin.products.index', compact('product_categories', 'brands', 'asset_locations', 'product_tags'));
+        return view('admin.products.index', compact('product_categories', 'brands', 'providers', 'asset_locations', 'product_tags'));
     }
 
     public function create()
@@ -150,24 +173,23 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $providers = Provider::pluck('name', 'id');
+
         $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tags = ProductTag::pluck('name', 'id');
 
-        return view('admin.products.create', compact('brands', 'categories', 'product_locations', 'tags'));
+        return view('admin.products.create', compact('brands', 'categories', 'product_locations', 'providers', 'tags'));
     }
 
     public function store(StoreProductRequest $request)
     {
         $product = Product::create($request->all());
         $product->categories()->sync($request->input('categories', []));
+        $product->providers()->sync($request->input('providers', []));
         $product->tags()->sync($request->input('tags', []));
         foreach ($request->input('photos', []) as $file) {
             $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
-        }
-
-        foreach ($request->input('file', []) as $file) {
-            $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -185,19 +207,22 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $providers = Provider::pluck('name', 'id');
+
         $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tags = ProductTag::pluck('name', 'id');
 
-        $product->load('categories', 'brand', 'product_location', 'tags');
+        $product->load('categories', 'brand', 'providers', 'product_location', 'tags');
 
-        return view('admin.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'tags'));
+        return view('admin.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'providers', 'tags'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
         $product->categories()->sync($request->input('categories', []));
+        $product->providers()->sync($request->input('providers', []));
         $product->tags()->sync($request->input('tags', []));
         if (count($product->photos) > 0) {
             foreach ($product->photos as $media) {
@@ -213,20 +238,6 @@ class ProductController extends Controller
             }
         }
 
-        if (count($product->file) > 0) {
-            foreach ($product->file as $media) {
-                if (! in_array($media->file_name, $request->input('file', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $product->file->pluck('file_name')->toArray();
-        foreach ($request->input('file', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
-            }
-        }
-
         return redirect()->route('admin.products.index');
     }
 
@@ -234,7 +245,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'brand', 'product_location', 'tags', 'productMatLogs');
+        $product->load('categories', 'brand', 'providers', 'product_location', 'tags', 'productMlogs', 'productTechnicalDocumentations', 'productIotDevices', 'productFinancialDocumentItems');
 
         return view('admin.products.show', compact('product'));
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyBoatRequest;
 use App\Http\Requests\StoreBoatRequest;
 use App\Http\Requests\UpdateBoatRequest;
@@ -12,12 +13,13 @@ use App\Models\Client;
 use App\Models\Marina;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 class BoatsController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index(Request $request)
     {
@@ -57,6 +59,17 @@ class BoatsController extends Controller
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : '';
             });
+            $table->editColumn('boat_photo', function ($row) {
+                if ($photo = $row->boat_photo) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
+            });
             $table->editColumn('imo', function ($row) {
                 return $row->imo ? $row->imo : '';
             });
@@ -67,6 +80,9 @@ class BoatsController extends Controller
                 return $row->marina ? $row->marina->name : '';
             });
 
+            $table->editColumn('sat_phone', function ($row) {
+                return $row->sat_phone ? $row->sat_phone : '';
+            });
             $table->editColumn('notes', function ($row) {
                 return $row->notes ? $row->notes : '';
             });
@@ -81,14 +97,24 @@ class BoatsController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->editColumn('coordinates', function ($row) {
-                return $row->coordinates ? $row->coordinates : '';
-            });
             $table->editColumn('link', function ($row) {
                 return $row->link ? $row->link : '';
             });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'marina', 'clients']);
+            $table->editColumn('settings_data', function ($row) {
+                return $row->settings_data ? $row->settings_data : '';
+            });
+            $table->editColumn('public_ip', function ($row) {
+                return $row->public_ip ? $row->public_ip : '';
+            });
+            $table->editColumn('coordinates', function ($row) {
+                return $row->coordinates ? $row->coordinates : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'boat_photo', 'marina', 'clients']);
 
             return $table->make(true);
         }
@@ -114,6 +140,13 @@ class BoatsController extends Controller
     {
         $boat = Boat::create($request->all());
         $boat->clients()->sync($request->input('clients', []));
+        if ($request->input('boat_photo', false)) {
+            $boat->addMedia(storage_path('tmp/uploads/' . basename($request->input('boat_photo'))))->toMediaCollection('boat_photo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $boat->id]);
+        }
 
         return redirect()->route('admin.boats.index');
     }
@@ -135,6 +168,16 @@ class BoatsController extends Controller
     {
         $boat->update($request->all());
         $boat->clients()->sync($request->input('clients', []));
+        if ($request->input('boat_photo', false)) {
+            if (! $boat->boat_photo || $request->input('boat_photo') !== $boat->boat_photo->file_name) {
+                if ($boat->boat_photo) {
+                    $boat->boat_photo->delete();
+                }
+                $boat->addMedia(storage_path('tmp/uploads/' . basename($request->input('boat_photo'))))->toMediaCollection('boat_photo');
+            }
+        } elseif ($boat->boat_photo) {
+            $boat->boat_photo->delete();
+        }
 
         return redirect()->route('admin.boats.index');
     }
@@ -143,7 +186,7 @@ class BoatsController extends Controller
     {
         abort_if(Gate::denies('boat_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $boat->load('marina', 'clients', 'boatWlists', 'boatAppointments', 'boatMatLogs', 'boatBookingLists', 'boatsClients', 'boatsProformas');
+        $boat->load('marina', 'clients', 'boatWlists', 'boatAppointments', 'boatBookingLists', 'boatMlogs', 'boatAssetsRentals', 'boatsClients', 'boatsClientsReviews', 'boatsSuscriptions', 'boatsMaintenanceSuscriptions', 'boatsIotSuscriptions');
 
         return view('admin.boats.show', compact('boat'));
     }
@@ -166,5 +209,17 @@ class BoatsController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('boat_create') && Gate::denies('boat_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Boat();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

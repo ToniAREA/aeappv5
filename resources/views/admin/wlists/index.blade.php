@@ -53,7 +53,10 @@
                         {{ trans('cruds.wlist.fields.for_role') }}
                     </th>
                     <th>
-                        {{ trans('cruds.wlist.fields.for_user') }}
+                        {{ trans('cruds.wlist.fields.for_employee') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.employee.fields.namecomplete') }}
                     </th>
                     <th>
                         {{ trans('cruds.wlist.fields.boat_namecomplete') }}
@@ -62,28 +65,46 @@
                         {{ trans('cruds.wlist.fields.description') }}
                     </th>
                     <th>
+                        {{ trans('cruds.wlist.fields.estimated_hours') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.wlist.fields.photos') }}
                     </th>
                     <th>
                         {{ trans('cruds.wlist.fields.deadline') }}
                     </th>
                     <th>
-                        {{ trans('cruds.wlist.fields.priority') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.priority.fields.weight') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.wlist.fields.status') }}
                     </th>
                     <th>
-                        {{ trans('cruds.wlist.fields.url_invoice') }}
+                        {{ trans('cruds.wlist.fields.priority') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlist.fields.proforma_link') }}
                     </th>
                     <th>
                         {{ trans('cruds.wlist.fields.notes') }}
                     </th>
                     <th>
                         {{ trans('cruds.wlist.fields.internal_notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlist.fields.link') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlist.fields.link_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlist.fields.last_use') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlist.fields.completed_at') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlist.fields.financial_document') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                     </th>
                     <th>
                         &nbsp;
@@ -144,10 +165,15 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @foreach($employees as $key => $item)
+                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
                             @endforeach
                         </select>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -162,29 +188,44 @@
                     <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($priorities as $key => $item)
+                            @foreach($wlist_statuses as $key => $item)
                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <select class="search" strict="true">
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Wlist::STATUS_RADIO as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
+                            @foreach($finalcial_documents as $key => $item)
+                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -250,17 +291,24 @@
 { data: 'from_user_name', name: 'from_user.name' },
 { data: 'from_user.email', name: 'from_user.email' },
 { data: 'for_role', name: 'for_roles.title' },
-{ data: 'for_user', name: 'for_users.name' },
+{ data: 'for_employee_id_employee', name: 'for_employee.id_employee' },
+{ data: 'for_employee.namecomplete', name: 'for_employee.namecomplete' },
 { data: 'boat_namecomplete', name: 'boat_namecomplete' },
 { data: 'description', name: 'description' },
+{ data: 'estimated_hours', name: 'estimated_hours' },
 { data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'deadline', name: 'deadline' },
-{ data: 'priority_name', name: 'priority.name' },
-{ data: 'priority.weight', name: 'priority.weight' },
-{ data: 'status', name: 'status' },
-{ data: 'url_invoice', name: 'url_invoice' },
+{ data: 'status_name', name: 'status.name' },
+{ data: 'priority', name: 'priority' },
+{ data: 'proforma_link', name: 'proforma_link' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
+{ data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
+{ data: 'last_use', name: 'last_use' },
+{ data: 'completed_at', name: 'completed_at' },
+{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
+{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

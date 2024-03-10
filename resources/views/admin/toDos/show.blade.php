@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.toDo.fields.task') }}
+                        </th>
+                        <td>
+                            {{ $toDo->task }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.toDo.fields.notes') }}
+                        </th>
+                        <td>
+                            {!! $toDo->notes !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.toDo.fields.for_role') }}
                         </th>
                         <td>
@@ -35,32 +51,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.toDo.fields.for_user') }}
+                            {{ trans('cruds.toDo.fields.for_employee') }}
                         </th>
                         <td>
-                            @foreach($toDo->for_users as $key => $for_user)
-                                <span class="label label-info">{{ $for_user->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.toDo.fields.task') }}
-                        </th>
-                        <td>
-                            {{ $toDo->task }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.toDo.fields.photo') }}
-                        </th>
-                        <td>
-                            @foreach($toDo->photo as $key => $media)
-                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $media->getUrl('thumb') }}">
-                                </a>
-                            @endforeach
+                            {{ $toDo->for_employee->id_employee ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -76,15 +70,31 @@
                             {{ trans('cruds.toDo.fields.priority') }}
                         </th>
                         <td>
-                            {{ $toDo->priority->name ?? '' }}
+                            {{ $toDo->priority }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.toDo.fields.notes') }}
+                            {{ trans('cruds.toDo.fields.is_repetitive') }}
                         </th>
                         <td>
-                            {!! $toDo->notes !!}
+                            <input type="checkbox" disabled="disabled" {{ $toDo->is_repetitive ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.toDo.fields.repeat_interval_value') }}
+                        </th>
+                        <td>
+                            {{ $toDo->repeat_interval_value }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.toDo.fields.repeat_interval_unit') }}
+                        </th>
+                        <td>
+                            {{ App\Models\ToDo::REPEAT_INTERVAL_UNIT_SELECT[$toDo->repeat_interval_unit] ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -93,6 +103,14 @@
                         </th>
                         <td>
                             {{ $toDo->internal_notes }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.toDo.fields.completed_at') }}
+                        </th>
+                        <td>
+                            {{ $toDo->completed_at }}
                         </td>
                     </tr>
                 </tbody>

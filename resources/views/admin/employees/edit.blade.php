@@ -19,6 +19,14 @@
                 <span class="help-block">{{ trans('cruds.employee.fields.id_employee_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="namecomplete">{{ trans('cruds.employee.fields.namecomplete') }}</label>
+                <input class="form-control {{ $errors->has('namecomplete') ? 'is-invalid' : '' }}" type="text" name="namecomplete" id="namecomplete" value="{{ old('namecomplete', $employee->namecomplete) }}">
+                @if($errors->has('namecomplete'))
+                    <span class="text-danger">{{ $errors->first('namecomplete') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.employee.fields.namecomplete_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="user_id">{{ trans('cruds.employee.fields.user') }}</label>
                 <select class="form-control select2 {{ $errors->has('user') ? 'is-invalid' : '' }}" name="user_id" id="user_id">
                     @foreach($users as $id => $entry)
@@ -106,6 +114,14 @@
                     <span class="text-danger">{{ $errors->first('link') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.employee.fields.link_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_description">{{ trans('cruds.employee.fields.link_description') }}</label>
+                <input class="form-control {{ $errors->has('link_description') ? 'is-invalid' : '' }}" type="text" name="link_description" id="link_description" value="{{ old('link_description', $employee->link_description) }}">
+                @if($errors->has('link_description'))
+                    <span class="text-danger">{{ $errors->first('link_description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.employee.fields.link_description_helper') }}</span>
             </div>
             <div class="form-group">
                 <div class="form-check {{ $errors->has('active') ? 'is-invalid' : '' }}">

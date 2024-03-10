@@ -17,12 +17,14 @@ class AssetCategoryApiController extends Controller
     {
         abort_if(Gate::denies('asset_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AssetCategoryResource(AssetCategory::all());
+        return new AssetCategoryResource(AssetCategory::with(['authorized_roles', 'authorized_users'])->get());
     }
 
     public function store(StoreAssetCategoryRequest $request)
     {
         $assetCategory = AssetCategory::create($request->all());
+        $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
 
         return (new AssetCategoryResource($assetCategory))
             ->response()
@@ -33,12 +35,14 @@ class AssetCategoryApiController extends Controller
     {
         abort_if(Gate::denies('asset_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AssetCategoryResource($assetCategory);
+        return new AssetCategoryResource($assetCategory->load(['authorized_roles', 'authorized_users']));
     }
 
     public function update(UpdateAssetCategoryRequest $request, AssetCategory $assetCategory)
     {
         $assetCategory->update($request->all());
+        $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
 
         return (new AssetCategoryResource($assetCategory))
             ->response()

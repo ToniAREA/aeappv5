@@ -73,11 +73,23 @@ class StoreClientRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'link' => [
+            'coordinates' => [
                 'string',
                 'nullable',
             ],
-            'coordinates' => [
+            'link_a' => [
+                'string',
+                'nullable',
+            ],
+            'link_a_description' => [
+                'string',
+                'nullable',
+            ],
+            'link_b' => [
+                'string',
+                'nullable',
+            ],
+            'link_b_description' => [
                 'string',
                 'nullable',
             ],

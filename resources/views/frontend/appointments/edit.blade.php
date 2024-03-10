@@ -78,22 +78,22 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.for_role_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="for_users">{{ trans('cruds.appointment.fields.for_user') }}</label>
+                            <label for="for_employees">{{ trans('cruds.appointment.fields.for_employees') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                 <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                             </div>
-                            <select class="form-control select2" name="for_users[]" id="for_users" multiple>
-                                @foreach($for_users as $id => $for_user)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('for_users', [])) || $appointment->for_users->contains($id)) ? 'selected' : '' }}>{{ $for_user }}</option>
+                            <select class="form-control select2" name="for_employees[]" id="for_employees" multiple>
+                                @foreach($for_employees as $id => $for_employee)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('for_employees', [])) || $appointment->for_employees->contains($id)) ? 'selected' : '' }}>{{ $for_employee }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('for_users'))
+                            @if($errors->has('for_employees'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('for_users') }}
+                                    {{ $errors->first('for_employees') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.appointment.fields.for_user_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.appointment.fields.for_employees_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="boat_namecomplete">{{ trans('cruds.appointment.fields.boat_namecomplete') }}</label>
@@ -104,6 +104,20 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.appointment.fields.boat_namecomplete_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="in_marina_id">{{ trans('cruds.appointment.fields.in_marina') }}</label>
+                            <select class="form-control select2" name="in_marina_id" id="in_marina_id">
+                                @foreach($in_marinas as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('in_marina_id') ? old('in_marina_id') : $appointment->in_marina->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('in_marina'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('in_marina') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.appointment.fields.in_marina_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label class="required" for="description">{{ trans('cruds.appointment.fields.description') }}</label>
@@ -146,12 +160,8 @@
                             <span class="help-block">{{ trans('cruds.appointment.fields.when_ends_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="priority_id">{{ trans('cruds.appointment.fields.priority') }}</label>
-                            <select class="form-control select2" name="priority_id" id="priority_id">
-                                @foreach($priorities as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('priority_id') ? old('priority_id') : $appointment->priority->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
+                            <label for="priority">{{ trans('cruds.appointment.fields.priority') }}</label>
+                            <input class="form-control" type="number" name="priority" id="priority" value="{{ old('priority', $appointment->priority) }}" step="1">
                             @if($errors->has('priority'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('priority') }}

@@ -10,10 +10,12 @@ use App\Http\Requests\StoreWlistRequest;
 use App\Http\Requests\UpdateWlistRequest;
 use App\Models\Boat;
 use App\Models\Client;
-use App\Models\Priority;
+use App\Models\Employee;
+use App\Models\FinalcialDocument;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Wlist;
+use App\Models\WlistStatus;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -27,7 +29,7 @@ class WlistController extends Controller
     {
         abort_if(Gate::denies('wlist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlists = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority', 'media'])->get();
+        $wlists = Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document', 'media'])->get();
 
         $clients = Client::get();
 
@@ -37,9 +39,13 @@ class WlistController extends Controller
 
         $roles = Role::get();
 
-        $priorities = Priority::get();
+        $employees = Employee::get();
 
-        return view('frontend.wlists.index', compact('boats', 'clients', 'priorities', 'roles', 'users', 'wlists'));
+        $wlist_statuses = WlistStatus::get();
+
+        $finalcial_documents = FinalcialDocument::get();
+
+        return view('frontend.wlists.index', compact('boats', 'clients', 'employees', 'finalcial_documents', 'roles', 'users', 'wlist_statuses', 'wlists'));
     }
 
     public function create()
@@ -54,18 +60,19 @@ class WlistController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.wlists.create', compact('boats', 'clients', 'for_roles', 'for_users', 'from_users', 'priorities'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('frontend.wlists.create', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses'));
     }
 
     public function store(StoreWlistRequest $request)
     {
         $wlist = Wlist::create($request->all());
         $wlist->for_roles()->sync($request->input('for_roles', []));
-        $wlist->for_users()->sync($request->input('for_users', []));
         foreach ($request->input('photos', []) as $file) {
             $wlist->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
@@ -89,20 +96,21 @@ class WlistController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.wlists.edit', compact('boats', 'clients', 'for_roles', 'for_users', 'from_users', 'priorities', 'wlist'));
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document');
+
+        return view('frontend.wlists.edit', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses', 'wlist'));
     }
 
     public function update(UpdateWlistRequest $request, Wlist $wlist)
     {
         $wlist->update($request->all());
         $wlist->for_roles()->sync($request->input('for_roles', []));
-        $wlist->for_users()->sync($request->input('for_users', []));
         if (count($wlist->photos) > 0) {
             foreach ($wlist->photos as $media) {
                 if (! in_array($media->file_name, $request->input('photos', []))) {
@@ -124,7 +132,7 @@ class WlistController extends Controller
     {
         abort_if(Gate::denies('wlist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_users', 'priority', 'wlistWlogs', 'wlistMatLogs', 'wlistComments', 'wlistsAppointments', 'wlistsProformas');
+        $wlist->load('client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document', 'wlistWlogs', 'wlistComments', 'wlistMlogs', 'forWlistEmployeeRatings', 'wlistsAppointments');
 
         return view('frontend.wlists.show', compact('wlist'));
     }

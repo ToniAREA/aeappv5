@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateContentPageRequest;
 use App\Models\ContentCategory;
 use App\Models\ContentPage;
 use App\Models\ContentTag;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -26,7 +28,7 @@ class ContentPageController extends Controller
         abort_if(Gate::denies('content_page_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ContentPage::with(['categories', 'tags'])->select(sprintf('%s.*', (new ContentPage)->table));
+            $query = ContentPage::with(['categories', 'tags', 'authorized_roles', 'authorized_users'])->select(sprintf('%s.*', (new ContentPage)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,6 +54,9 @@ class ContentPageController extends Controller
             });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : '';
+            });
+            $table->editColumn('show_online', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online ? 'checked' : null) . '>';
             });
             $table->editColumn('slug', function ($row) {
                 return $row->slug ? $row->slug : '';
@@ -94,16 +99,64 @@ class ContentPageController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->editColumn('seo_title', function ($row) {
+                return $row->seo_title ? $row->seo_title : '';
+            });
+            $table->editColumn('seo_meta_description', function ($row) {
+                return $row->seo_meta_description ? $row->seo_meta_description : '';
+            });
+            $table->editColumn('seo_slug', function ($row) {
+                return $row->seo_slug ? $row->seo_slug : '';
+            });
+            $table->editColumn('link_a', function ($row) {
+                return $row->link_a ? $row->link_a : '';
+            });
+            $table->editColumn('link_a_description', function ($row) {
+                return $row->link_a_description ? $row->link_a_description : '';
+            });
+            $table->editColumn('show_online_link_a', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online_link_a ? 'checked' : null) . '>';
+            });
+            $table->editColumn('link_b', function ($row) {
+                return $row->link_b ? $row->link_b : '';
+            });
+            $table->editColumn('link_b_description', function ($row) {
+                return $row->link_b_description ? $row->link_b_description : '';
+            });
+            $table->editColumn('show_online_link_b', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->show_online_link_b ? 'checked' : null) . '>';
+            });
+            $table->editColumn('view_count', function ($row) {
+                return $row->view_count ? $row->view_count : '';
+            });
+            $table->editColumn('authorized_roles', function ($row) {
+                $labels = [];
+                foreach ($row->authorized_roles as $authorized_role) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_role->title);
+                }
 
-            $table->rawColumns(['actions', 'placeholder', 'category', 'tag', 'featured_image', 'file']);
+                return implode(' ', $labels);
+            });
+            $table->editColumn('authorized_users', function ($row) {
+                $labels = [];
+                foreach ($row->authorized_users as $authorized_user) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_user->name);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'show_online', 'category', 'tag', 'featured_image', 'file', 'show_online_link_a', 'show_online_link_b', 'authorized_roles', 'authorized_users']);
 
             return $table->make(true);
         }
 
         $content_categories = ContentCategory::get();
         $content_tags       = ContentTag::get();
+        $roles              = Role::get();
+        $users              = User::get();
 
-        return view('admin.contentPages.index', compact('content_categories', 'content_tags'));
+        return view('admin.contentPages.index', compact('content_categories', 'content_tags', 'roles', 'users'));
     }
 
     public function create()
@@ -114,7 +167,11 @@ class ContentPageController extends Controller
 
         $tags = ContentTag::pluck('name', 'id');
 
-        return view('admin.contentPages.create', compact('categories', 'tags'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('admin.contentPages.create', compact('authorized_roles', 'authorized_users', 'categories', 'tags'));
     }
 
     public function store(StoreContentPageRequest $request)
@@ -122,6 +179,8 @@ class ContentPageController extends Controller
         $contentPage = ContentPage::create($request->all());
         $contentPage->categories()->sync($request->input('categories', []));
         $contentPage->tags()->sync($request->input('tags', []));
+        $contentPage->authorized_roles()->sync($request->input('authorized_roles', []));
+        $contentPage->authorized_users()->sync($request->input('authorized_users', []));
         foreach ($request->input('featured_image', []) as $file) {
             $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
         }
@@ -145,9 +204,13 @@ class ContentPageController extends Controller
 
         $tags = ContentTag::pluck('name', 'id');
 
-        $contentPage->load('categories', 'tags');
+        $authorized_roles = Role::pluck('title', 'id');
 
-        return view('admin.contentPages.edit', compact('categories', 'contentPage', 'tags'));
+        $authorized_users = User::pluck('name', 'id');
+
+        $contentPage->load('categories', 'tags', 'authorized_roles', 'authorized_users');
+
+        return view('admin.contentPages.edit', compact('authorized_roles', 'authorized_users', 'categories', 'contentPage', 'tags'));
     }
 
     public function update(UpdateContentPageRequest $request, ContentPage $contentPage)
@@ -155,6 +218,8 @@ class ContentPageController extends Controller
         $contentPage->update($request->all());
         $contentPage->categories()->sync($request->input('categories', []));
         $contentPage->tags()->sync($request->input('tags', []));
+        $contentPage->authorized_roles()->sync($request->input('authorized_roles', []));
+        $contentPage->authorized_users()->sync($request->input('authorized_users', []));
         if (count($contentPage->featured_image) > 0) {
             foreach ($contentPage->featured_image as $media) {
                 if (! in_array($media->file_name, $request->input('featured_image', []))) {
@@ -190,7 +255,7 @@ class ContentPageController extends Controller
     {
         abort_if(Gate::denies('content_page_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contentPage->load('categories', 'tags');
+        $contentPage->load('categories', 'tags', 'authorized_roles', 'authorized_users');
 
         return view('admin.contentPages.show', compact('contentPage'));
     }

@@ -111,6 +111,233 @@
                         </div>
                     </div>
 
+<<<<<<< HEAD
+=======
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-Boat">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.id') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.ref') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.boat_type') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.name') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.boat_photo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.imo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.mmsi') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.marina') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.sat_phone') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.notes') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.internal_notes') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.clients') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.link_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.last_use') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.settings_data') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.public_ip') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.coordinates') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($marinas as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($clients as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($boats as $key => $boat)
+                                    <tr data-entry-id="{{ $boat->id }}">
+                                        <td>
+                                            {{ $boat->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->ref ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->boat_type ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($boat->boat_photo)
+                                                <a href="{{ $boat->boat_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $boat->boat_photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $boat->imo ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->mmsi ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->marina->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->sat_phone ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->internal_notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($boat->clients as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $boat->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->last_use ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->settings_data ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->public_ip ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $boat->coordinates ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('boat_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('frontend.boats.show', $boat->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('boat_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('frontend.boats.edit', $boat->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('boat_delete')
+                                                <form action="{{ route('frontend.boats.destroy', $boat->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+>>>>>>> master
                 </div>
             </div>
         </div>

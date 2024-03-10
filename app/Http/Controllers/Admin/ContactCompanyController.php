@@ -82,6 +82,12 @@ class ContactCompanyController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'defaulter', 'contacts']);
 
@@ -133,7 +139,7 @@ class ContactCompanyController extends Controller
     {
         abort_if(Gate::denies('contact_company_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contactCompany->load('contacts', 'companyProviders');
+        $contactCompany->load('contacts', 'companyProviders', 'companyInsurances');
 
         return view('admin.contactCompanies.show', compact('contactCompany'));
     }

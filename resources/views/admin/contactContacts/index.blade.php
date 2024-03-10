@@ -68,6 +68,15 @@
                         {{ trans('cruds.contactContact.fields.contact_internalnotes') }}
                     </th>
                     <th>
+                        {{ trans('cruds.contactContact.fields.link') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contactContact.fields.link_description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.contactContact.fields.last_use') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -137,6 +146,9 @@
 { data: 'contact_tags', name: 'contact_tags' },
 { data: 'contact_notes', name: 'contact_notes' },
 { data: 'contact_internalnotes', name: 'contact_internalnotes' },
+{ data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
+{ data: 'last_use', name: 'last_use' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

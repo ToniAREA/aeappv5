@@ -44,10 +44,16 @@
                         {{ trans('cruds.appointment.fields.for_role') }}
                     </th>
                     <th>
-                        {{ trans('cruds.appointment.fields.for_user') }}
+                        {{ trans('cruds.appointment.fields.for_employees') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.boat_namecomplete') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.appointment.fields.in_marina') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.marina.fields.notes') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.description') }}
@@ -63,9 +69,6 @@
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.priority') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.priority.fields.weight') }}
                     </th>
                     <th>
                         {{ trans('cruds.appointment.fields.status') }}
@@ -138,14 +141,15 @@
 { data: 'boat_name', name: 'boat.name' },
 { data: 'wlists', name: 'wlists.description' },
 { data: 'for_role', name: 'for_roles.title' },
-{ data: 'for_user', name: 'for_users.name' },
+{ data: 'for_employees', name: 'for_employees.id_employee' },
 { data: 'boat_namecomplete', name: 'boat_namecomplete' },
+{ data: 'in_marina_name', name: 'in_marina.name' },
+{ data: 'in_marina.notes', name: 'in_marina.notes' },
 { data: 'description', name: 'description' },
 { data: 'private_comment', name: 'private_comment' },
 { data: 'when_starts', name: 'when_starts' },
 { data: 'when_ends', name: 'when_ends' },
-{ data: 'priority_name', name: 'priority.name' },
-{ data: 'priority.weight', name: 'priority.weight' },
+{ data: 'priority', name: 'priority' },
 { data: 'status', name: 'status' },
 { data: 'notes', name: 'notes' },
 { data: 'coordinates', name: 'coordinates' },

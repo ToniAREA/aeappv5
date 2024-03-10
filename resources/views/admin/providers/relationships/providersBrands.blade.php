@@ -43,6 +43,12 @@
                                 {{ trans('cruds.brand.fields.internal_notes') }}
                             </th>
                             <th>
+                                {{ trans('cruds.brand.fields.link') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.brand.fields.link_description') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -79,6 +85,12 @@
                                 </td>
                                 <td>
                                     {{ $brand->internal_notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $brand->link ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $brand->link_description ?? '' }}
                                 </td>
                                 <td>
                                     @can('brand_show')

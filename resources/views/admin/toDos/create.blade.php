@@ -10,6 +10,22 @@
         <form method="POST" action="{{ route("admin.to-dos.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <label for="task">{{ trans('cruds.toDo.fields.task') }}</label>
+                <input class="form-control {{ $errors->has('task') ? 'is-invalid' : '' }}" type="text" name="task" id="task" value="{{ old('task', '') }}">
+                @if($errors->has('task'))
+                    <span class="text-danger">{{ $errors->first('task') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.toDo.fields.task_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="notes">{{ trans('cruds.toDo.fields.notes') }}</label>
+                <textarea class="form-control ckeditor {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{!! old('notes') !!}</textarea>
+                @if($errors->has('notes'))
+                    <span class="text-danger">{{ $errors->first('notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.toDo.fields.notes_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="for_roles">{{ trans('cruds.toDo.fields.for_role') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -26,37 +42,16 @@
                 <span class="help-block">{{ trans('cruds.toDo.fields.for_role_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="for_users">{{ trans('cruds.toDo.fields.for_user') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('for_users') ? 'is-invalid' : '' }}" name="for_users[]" id="for_users" multiple>
-                    @foreach($for_users as $id => $for_user)
-                        <option value="{{ $id }}" {{ in_array($id, old('for_users', [])) ? 'selected' : '' }}>{{ $for_user }}</option>
+                <label for="for_employee_id">{{ trans('cruds.toDo.fields.for_employee') }}</label>
+                <select class="form-control select2 {{ $errors->has('for_employee') ? 'is-invalid' : '' }}" name="for_employee_id" id="for_employee_id">
+                    @foreach($for_employees as $id => $entry)
+                        <option value="{{ $id }}" {{ old('for_employee_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('for_users'))
-                    <span class="text-danger">{{ $errors->first('for_users') }}</span>
+                @if($errors->has('for_employee'))
+                    <span class="text-danger">{{ $errors->first('for_employee') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.toDo.fields.for_user_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="task">{{ trans('cruds.toDo.fields.task') }}</label>
-                <input class="form-control {{ $errors->has('task') ? 'is-invalid' : '' }}" type="text" name="task" id="task" value="{{ old('task', '') }}">
-                @if($errors->has('task'))
-                    <span class="text-danger">{{ $errors->first('task') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.toDo.fields.task_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="photo">{{ trans('cruds.toDo.fields.photo') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('photo') ? 'is-invalid' : '' }}" id="photo-dropzone">
-                </div>
-                @if($errors->has('photo'))
-                    <span class="text-danger">{{ $errors->first('photo') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.toDo.fields.photo_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.toDo.fields.for_employee_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="deadline">{{ trans('cruds.toDo.fields.deadline') }}</label>
@@ -67,24 +62,44 @@
                 <span class="help-block">{{ trans('cruds.toDo.fields.deadline_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="priority_id">{{ trans('cruds.toDo.fields.priority') }}</label>
-                <select class="form-control select2 {{ $errors->has('priority') ? 'is-invalid' : '' }}" name="priority_id" id="priority_id">
-                    @foreach($priorities as $id => $entry)
-                        <option value="{{ $id }}" {{ old('priority_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
+                <label for="priority">{{ trans('cruds.toDo.fields.priority') }}</label>
+                <input class="form-control {{ $errors->has('priority') ? 'is-invalid' : '' }}" type="number" name="priority" id="priority" value="{{ old('priority', '') }}" step="1">
                 @if($errors->has('priority'))
                     <span class="text-danger">{{ $errors->first('priority') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.toDo.fields.priority_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="notes">{{ trans('cruds.toDo.fields.notes') }}</label>
-                <textarea class="form-control ckeditor {{ $errors->has('notes') ? 'is-invalid' : '' }}" name="notes" id="notes">{!! old('notes') !!}</textarea>
-                @if($errors->has('notes'))
-                    <span class="text-danger">{{ $errors->first('notes') }}</span>
+                <div class="form-check {{ $errors->has('is_repetitive') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_repetitive" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_repetitive" id="is_repetitive" value="1" {{ old('is_repetitive', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_repetitive">{{ trans('cruds.toDo.fields.is_repetitive') }}</label>
+                </div>
+                @if($errors->has('is_repetitive'))
+                    <span class="text-danger">{{ $errors->first('is_repetitive') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.toDo.fields.notes_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.toDo.fields.is_repetitive_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="repeat_interval_value">{{ trans('cruds.toDo.fields.repeat_interval_value') }}</label>
+                <input class="form-control {{ $errors->has('repeat_interval_value') ? 'is-invalid' : '' }}" type="number" name="repeat_interval_value" id="repeat_interval_value" value="{{ old('repeat_interval_value', '') }}" step="1">
+                @if($errors->has('repeat_interval_value'))
+                    <span class="text-danger">{{ $errors->first('repeat_interval_value') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.toDo.fields.repeat_interval_value_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label>{{ trans('cruds.toDo.fields.repeat_interval_unit') }}</label>
+                <select class="form-control {{ $errors->has('repeat_interval_unit') ? 'is-invalid' : '' }}" name="repeat_interval_unit" id="repeat_interval_unit">
+                    <option value disabled {{ old('repeat_interval_unit', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                    @foreach(App\Models\ToDo::REPEAT_INTERVAL_UNIT_SELECT as $key => $label)
+                        <option value="{{ $key }}" {{ old('repeat_interval_unit', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('repeat_interval_unit'))
+                    <span class="text-danger">{{ $errors->first('repeat_interval_unit') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.toDo.fields.repeat_interval_unit_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="internal_notes">{{ trans('cruds.toDo.fields.internal_notes') }}</label>
@@ -93,6 +108,14 @@
                     <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.toDo.fields.internal_notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="completed_at">{{ trans('cruds.toDo.fields.completed_at') }}</label>
+                <input class="form-control datetime {{ $errors->has('completed_at') ? 'is-invalid' : '' }}" type="text" name="completed_at" id="completed_at" value="{{ old('completed_at') }}">
+                @if($errors->has('completed_at'))
+                    <span class="text-danger">{{ $errors->first('completed_at') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.toDo.fields.completed_at_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -108,67 +131,6 @@
 @endsection
 
 @section('scripts')
-<script>
-    var uploadedPhotoMap = {}
-Dropzone.options.photoDropzone = {
-    url: '{{ route('admin.to-dos.storeMedia') }}',
-    maxFilesize: 2, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 2,
-      width: 4096,
-      height: 4096
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="photo[]" value="' + response.name + '">')
-      uploadedPhotoMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      console.log(file)
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedPhotoMap[file.name]
-      }
-      $('form').find('input[name="photo[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($toDo) && $toDo->photo)
-      var files = {!! json_encode($toDo->photo) !!}
-          for (var i in files) {
-          var file = files[i]
-          this.options.addedfile.call(this, file)
-          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-          file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="photo[]" value="' + file.file_name + '">')
-        }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
-
-         return _results
-     }
-}
-
-</script>
 <script>
     $(document).ready(function () {
   function SimpleUploadAdapter(editor) {

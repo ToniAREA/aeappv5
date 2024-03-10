@@ -25,6 +25,22 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.client.fields.has_active_vip_plan') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $client->has_active_vip_plan ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $client->has_active_maintenance_plan ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.client.fields.defaulter') }}
                         </th>
                         <td>
@@ -141,18 +157,42 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.client.fields.link') }}
-                        </th>
-                        <td>
-                            {{ $client->link }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.client.fields.coordinates') }}
                         </th>
                         <td>
                             {{ $client->coordinates }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.client.fields.link_a') }}
+                        </th>
+                        <td>
+                            {{ $client->link_a }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.client.fields.link_a_description') }}
+                        </th>
+                        <td>
+                            {{ $client->link_a_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.client.fields.link_b') }}
+                        </th>
+                        <td>
+                            {{ $client->link_b }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.client.fields.link_b_description') }}
+                        </th>
+                        <td>
+                            {{ $client->link_b_description }}
                         </td>
                     </tr>
                     <tr>
@@ -180,11 +220,6 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#client_proformas" role="tab" data-toggle="tab">
-                {{ trans('cruds.proforma.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#client_wlists" role="tab" data-toggle="tab">
                 {{ trans('cruds.wlist.title') }}
             </a>
@@ -200,15 +235,47 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#client_assets_rentals" role="tab" data-toggle="tab">
+                {{ trans('cruds.assetsRental.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_clients_reviews" role="tab" data-toggle="tab">
+                {{ trans('cruds.clientsReview.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.suscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_maintenance_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.maintenanceSuscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#from_client_employee_ratings" role="tab" data-toggle="tab">
+                {{ trans('cruds.employeeRating.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_iot_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.iotSuscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_finalcial_documents" role="tab" data-toggle="tab">
+                {{ trans('cruds.finalcialDocument.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#clients_boats" role="tab" data-toggle="tab">
                 {{ trans('cruds.boat.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="client_proformas">
-            @includeIf('admin.clients.relationships.clientProformas', ['proformas' => $client->clientProformas])
-        </div>
         <div class="tab-pane" role="tabpanel" id="client_wlists">
             @includeIf('admin.clients.relationships.clientWlists', ['wlists' => $client->clientWlists])
         </div>
@@ -217,6 +284,27 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="client_booking_lists">
             @includeIf('admin.clients.relationships.clientBookingLists', ['bookingLists' => $client->clientBookingLists])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_assets_rentals">
+            @includeIf('admin.clients.relationships.clientAssetsRentals', ['assetsRentals' => $client->clientAssetsRentals])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_clients_reviews">
+            @includeIf('admin.clients.relationships.clientClientsReviews', ['clientsReviews' => $client->clientClientsReviews])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_suscriptions">
+            @includeIf('admin.clients.relationships.clientSuscriptions', ['suscriptions' => $client->clientSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_maintenance_suscriptions">
+            @includeIf('admin.clients.relationships.clientMaintenanceSuscriptions', ['maintenanceSuscriptions' => $client->clientMaintenanceSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="from_client_employee_ratings">
+            @includeIf('admin.clients.relationships.fromClientEmployeeRatings', ['employeeRatings' => $client->fromClientEmployeeRatings])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_iot_suscriptions">
+            @includeIf('admin.clients.relationships.clientIotSuscriptions', ['iotSuscriptions' => $client->clientIotSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_finalcial_documents">
+            @includeIf('admin.clients.relationships.clientFinalcialDocuments', ['finalcialDocuments' => $client->clientFinalcialDocuments])
         </div>
         <div class="tab-pane" role="tabpanel" id="clients_boats">
             @includeIf('admin.clients.relationships.clientsBoats', ['boats' => $client->clientsBoats])

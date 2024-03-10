@@ -35,6 +35,12 @@
                         {{ trans('cruds.assetCategory.fields.description') }}
                     </th>
                     <th>
+                        {{ trans('cruds.assetCategory.fields.authorized_roles') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.assetCategory.fields.authorized_users') }}
+                    </th>
+                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -49,6 +55,22 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($roles as $key => $item)
+                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                     </td>
@@ -108,6 +130,8 @@
 { data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'description', name: 'description' },
+{ data: 'authorized_roles', name: 'authorized_roles.title' },
+{ data: 'authorized_users', name: 'authorized_users.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

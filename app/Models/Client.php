@@ -28,6 +28,8 @@ class Client extends Model
     ];
 
     protected $fillable = [
+        'has_active_vip_plan',
+        'has_active_maintenance_plan',
         'defaulter',
         'ref',
         'name',
@@ -40,8 +42,11 @@ class Client extends Model
         'email',
         'notes',
         'internal_notes',
-        'link',
         'coordinates',
+        'link_a',
+        'link_a_description',
+        'link_b',
+        'link_b_description',
         'last_use',
         'created_at',
         'updated_at',
@@ -51,11 +56,6 @@ class Client extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function clientProformas()
-    {
-        return $this->hasMany(Proforma::class, 'client_id', 'id');
     }
 
     public function clientWlists()
@@ -71,6 +71,41 @@ class Client extends Model
     public function clientBookingLists()
     {
         return $this->hasMany(BookingList::class, 'client_id', 'id');
+    }
+
+    public function clientAssetsRentals()
+    {
+        return $this->hasMany(AssetsRental::class, 'client_id', 'id');
+    }
+
+    public function clientClientsReviews()
+    {
+        return $this->hasMany(ClientsReview::class, 'client_id', 'id');
+    }
+
+    public function clientSuscriptions()
+    {
+        return $this->hasMany(Suscription::class, 'client_id', 'id');
+    }
+
+    public function clientMaintenanceSuscriptions()
+    {
+        return $this->hasMany(MaintenanceSuscription::class, 'client_id', 'id');
+    }
+
+    public function fromClientEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'from_client_id', 'id');
+    }
+
+    public function clientIotSuscriptions()
+    {
+        return $this->hasMany(IotSuscription::class, 'client_id', 'id');
+    }
+
+    public function clientFinalcialDocuments()
+    {
+        return $this->hasMany(FinalcialDocument::class, 'client_id', 'id');
     }
 
     public function clientsBoats()

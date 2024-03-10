@@ -126,8 +126,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.wlist.fields.for_role_helper') }}</span>
                         </div>
-
-                           <div class="form-group">
+                        <div class="form-group">
                             <label for="for_users">{{ trans('cruds.wlist.fields.for_user') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -138,12 +137,12 @@
                                     <option value="{{ $id }}" {{ in_array($id, old('for_users', [])) ? 'selected' : '' }}>{{ $for_user }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('for_users'))
+                            @if($errors->has('for_employee'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('for_users') }}
+                                    {{ $errors->first('for_employee') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.wlist.fields.for_user_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.wlist.fields.for_employee_helper') }}</span>
                         </div>
 
                             @if ($errors->has('priority'))
@@ -154,101 +153,109 @@
 
                             @if ($errors->has('status'))
                                 <div class="invalid-feedback">
+                                    {{ $errors->first('boat_namecomplete') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.boat_namecomplete_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">{{ trans('cruds.wlist.fields.description') }}</label>
+                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', '') }}">
+                            @if($errors->has('description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="photos">{{ trans('cruds.wlist.fields.photos') }}</label>
+                            <div class="needsclick dropzone" id="photos-dropzone">
+                            </div>
+                            @if($errors->has('photos'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('photos') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.photos_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="deadline">{{ trans('cruds.wlist.fields.deadline') }}</label>
+                            <input class="form-control date" type="text" name="deadline" id="deadline" value="{{ old('deadline') }}">
+                            @if($errors->has('deadline'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('deadline') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.deadline_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="priority_id">{{ trans('cruds.wlist.fields.priority') }}</label>
+                            <select class="form-control select2" name="priority_id" id="priority_id">
+                                @foreach($priorities as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('priority_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('priority'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('priority') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.priority_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label>{{ trans('cruds.wlist.fields.status') }}</label>
+                            @foreach(App\Models\Wlist::STATUS_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="status_{{ $key }}" name="status" value="{{ $key }}" {{ old('status', '') === (string) $key ? 'checked' : '' }}>
+                                    <label for="status_{{ $key }}">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('status'))
+                                <div class="invalid-feedback">
                                     {{ $errors->first('status') }}
                                 </div>
                             @endif
-
-
-
-
-                            <div class="form-group">
-                                <label for="boat_namecomplete">{{ trans('cruds.wlist.fields.boat_namecomplete') }}</label>
-                                <input class="form-control" type="text" name="boat_namecomplete" id="boat_namecomplete"
-                                    value="{{ old('boat_namecomplete', '') }}">
-                                @if ($errors->has('boat_namecomplete'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('boat_namecomplete') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.boat_namecomplete_helper') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="description">{{ trans('cruds.wlist.fields.description') }}</label>
-                                <textarea class="form-control" name="description" id="description" rows="4">{{ old('description', '') }}</textarea>
-                                @if ($errors->has('description'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('description') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.description_helper') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="photos">{{ trans('cruds.wlist.fields.photos') }}</label>
-                                <div class="needsclick dropzone" id="photos-dropzone">
+                            <span class="help-block">{{ trans('cruds.wlist.fields.status_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="url_invoice">{{ trans('cruds.wlist.fields.url_invoice') }}</label>
+                            <input class="form-control" type="text" name="url_invoice" id="url_invoice" value="{{ old('url_invoice', '') }}">
+                            @if($errors->has('url_invoice'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('url_invoice') }}
                                 </div>
-                                @if ($errors->has('photos'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('photos') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.photos_helper') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="deadline">{{ trans('cruds.wlist.fields.deadline') }}</label>
-                                <input class="form-control date" type="text" name="deadline" id="deadline"
-                                    value="{{ old('deadline') }}">
-                                @if ($errors->has('deadline'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('deadline') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.deadline_helper') }}</span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="url_invoice">{{ trans('cruds.wlist.fields.url_invoice') }}</label>
-                                <input class="form-control" type="text" name="url_invoice" id="url_invoice"
-                                    value="{{ old('url_invoice', '') }}">
-                                @if ($errors->has('url_invoice'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('url_invoice') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.url_invoice_helper') }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="notes">{{ trans('cruds.wlist.fields.notes') }}</label>
-                                <input class="form-control" type="text" name="notes" id="notes"
-                                    value="{{ old('notes', '') }}">
-                                @if ($errors->has('notes'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('notes') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.notes_helper') }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="internal_notes">{{ trans('cruds.wlist.fields.internal_notes') }}</label>
-                                <input class="form-control" type="text" name="internal_notes" id="internal_notes"
-                                    value="{{ old('internal_notes', '') }}">
-                                @if ($errors->has('internal_notes'))
-                                    <div class="invalid-feedback">
-                                        {{ $errors->first('internal_notes') }}
-                                    </div>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.wlist.fields.internal_notes_helper') }}</span>
-                            </div>
-                            <div class="form-group">
-                                <button class="btn btn-danger" type="submit">
-                                    {{ trans('global.save') }}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.url_invoice_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="notes">{{ trans('cruds.wlist.fields.notes') }}</label>
+                            <input class="form-control" type="text" name="notes" id="notes" value="{{ old('notes', '') }}">
+                            @if($errors->has('notes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('notes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.notes_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="internal_notes">{{ trans('cruds.wlist.fields.internal_notes') }}</label>
+                            <input class="form-control" type="text" name="internal_notes" id="internal_notes" value="{{ old('internal_notes', '') }}">
+                            @if($errors->has('internal_notes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('internal_notes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.internal_notes_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </form>
                 </div>
+            </div>
 
             </div>
         </div>

@@ -8,6 +8,8 @@ use App\Http\Requests\MassDestroyAssetCategoryRequest;
 use App\Http\Requests\StoreAssetCategoryRequest;
 use App\Http\Requests\UpdateAssetCategoryRequest;
 use App\Models\AssetCategory;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,21 +22,31 @@ class AssetCategoryController extends Controller
     {
         abort_if(Gate::denies('asset_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assetCategories = AssetCategory::all();
+        $assetCategories = AssetCategory::with(['authorized_roles', 'authorized_users'])->get();
 
-        return view('frontend.assetCategories.index', compact('assetCategories'));
+        $roles = Role::get();
+
+        $users = User::get();
+
+        return view('frontend.assetCategories.index', compact('assetCategories', 'roles', 'users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('asset_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.assetCategories.create');
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('frontend.assetCategories.create', compact('authorized_roles', 'authorized_users'));
     }
 
     public function store(StoreAssetCategoryRequest $request)
     {
         $assetCategory = AssetCategory::create($request->all());
+        $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
 
         return redirect()->route('frontend.asset-categories.index');
     }
@@ -43,12 +55,20 @@ class AssetCategoryController extends Controller
     {
         abort_if(Gate::denies('asset_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.assetCategories.edit', compact('assetCategory'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        $assetCategory->load('authorized_roles', 'authorized_users');
+
+        return view('frontend.assetCategories.edit', compact('assetCategory', 'authorized_roles', 'authorized_users'));
     }
 
     public function update(UpdateAssetCategoryRequest $request, AssetCategory $assetCategory)
     {
         $assetCategory->update($request->all());
+        $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
 
         return redirect()->route('frontend.asset-categories.index');
     }
@@ -56,6 +76,8 @@ class AssetCategoryController extends Controller
     public function show(AssetCategory $assetCategory)
     {
         abort_if(Gate::denies('asset_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $assetCategory->load('authorized_roles', 'authorized_users');
 
         return view('frontend.assetCategories.show', compact('assetCategory'));
     }

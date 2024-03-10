@@ -26,7 +26,17 @@ class StoreMarinaRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'contacts.*' => [
+                'integer',
+            ],
+            'contacts' => [
+                'array',
+            ],
             'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
                 'string',
                 'nullable',
             ],

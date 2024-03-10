@@ -47,13 +47,9 @@ class UpdateBookingListRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.time_format'),
             ],
-            'hour_rate' => [
-                'numeric',
-                'required',
-            ],
-            'total_price' => [
-                'numeric',
-                'required',
+            'status' => [
+                'string',
+                'nullable',
             ],
             'notes' => [
                 'string',
@@ -63,11 +59,8 @@ class UpdateBookingListRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'confirmed' => [
-                'required',
-            ],
-            'status' => [
-                'string',
+            'completed_at' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
         ];

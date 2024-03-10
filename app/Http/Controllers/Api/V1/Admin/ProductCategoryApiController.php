@@ -20,13 +20,14 @@ class ProductCategoryApiController extends Controller
     {
         abort_if(Gate::denies('product_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProductCategoryResource(ProductCategory::all());
+        return new ProductCategoryResource(ProductCategory::with(['authorized_roles', 'authorized_users'])->get());
     }
 
     public function store(StoreProductCategoryRequest $request)
     {
         $productCategory = ProductCategory::create($request->all());
-
+        $productCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $productCategory->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('photo', false)) {
             $productCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
         }
@@ -40,13 +41,14 @@ class ProductCategoryApiController extends Controller
     {
         abort_if(Gate::denies('product_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ProductCategoryResource($productCategory);
+        return new ProductCategoryResource($productCategory->load(['authorized_roles', 'authorized_users']));
     }
 
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
         $productCategory->update($request->all());
-
+        $productCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $productCategory->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('photo', false)) {
             if (! $productCategory->photo || $request->input('photo') !== $productCategory->photo->file_name) {
                 if ($productCategory->photo) {

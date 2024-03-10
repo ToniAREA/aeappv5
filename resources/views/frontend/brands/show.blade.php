@@ -88,6 +88,22 @@
                                         {{ $brand->internal_notes }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.brand.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $brand->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.brand.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $brand->link_description }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

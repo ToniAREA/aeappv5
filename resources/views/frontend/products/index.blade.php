@@ -39,6 +39,9 @@
                                         {{ trans('cruds.product.fields.ref_manu') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.product.fields.providers') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.product.fields.ref_provider') }}
                                     </th>
                                     <th>
@@ -48,19 +51,22 @@
                                         {{ trans('cruds.product.fields.name') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.product.fields.product_slug') }}
+                                        {{ trans('cruds.product.fields.show_online') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.product.fields.photos') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.product.fields.price') }}
+                                        {{ trans('cruds.product.fields.product_price') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.product.fields.pro_discount') }}
+                                        {{ trans('cruds.product.fields.purchase_discount') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.product.fields.stock') }}
+                                        {{ trans('cruds.product.fields.purchase_price') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.has_stock') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.product.fields.local_stock') }}
@@ -75,7 +81,25 @@
                                         {{ trans('cruds.product.fields.tag') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.product.fields.file') }}
+                                        {{ trans('cruds.product.fields.link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.link_a_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.link_b_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.seo_title') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.seo_meta_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.product.fields.seo_slug') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -107,7 +131,12 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($providers as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -121,13 +150,17 @@
                                     <td>
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -151,6 +184,25 @@
                                         </select>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                     </td>
@@ -174,6 +226,11 @@
                                             {{ $product->ref_manu ?? '' }}
                                         </td>
                                         <td>
+                                            @foreach($product->providers as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
                                             {{ $product->ref_provider ?? '' }}
                                         </td>
                                         <td>
@@ -183,7 +240,8 @@
                                             {{ $product->name ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $product->product_slug ?? '' }}
+                                            <span style="display:none">{{ $product->show_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $product->show_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @foreach($product->photos as $key => $media)
@@ -193,13 +251,17 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            {{ $product->price ?? '' }}
+                                            {{ $product->product_price ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $product->pro_discount ?? '' }}
+                                            {{ $product->purchase_discount ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $product->stock ?? '' }}
+                                            {{ $product->purchase_price ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $product->has_stock ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $product->has_stock ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $product->local_stock ?? '' }}
@@ -216,11 +278,25 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @foreach($product->file as $key => $media)
-                                                <a href="{{ $media->getUrl() }}" target="_blank">
-                                                    {{ trans('global.view_file') }}
-                                                </a>
-                                            @endforeach
+                                            {{ $product->link_a ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->link_a_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->link_b ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->link_b_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->seo_title ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->seo_meta_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $product->seo_slug ?? '' }}
                                         </td>
                                         <td>
                                             @can('product_show')

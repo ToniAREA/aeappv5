@@ -48,6 +48,12 @@ class ClientsController extends Controller
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : '';
             });
+            $table->editColumn('has_active_vip_plan', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->has_active_vip_plan ? 'checked' : null) . '>';
+            });
+            $table->editColumn('has_active_maintenance_plan', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->has_active_maintenance_plan ? 'checked' : null) . '>';
+            });
             $table->editColumn('defaulter', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->defaulter ? 'checked' : null) . '>';
             });
@@ -100,14 +106,23 @@ class ClientsController extends Controller
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
             $table->editColumn('coordinates', function ($row) {
                 return $row->coordinates ? $row->coordinates : '';
             });
+            $table->editColumn('link_a', function ($row) {
+                return $row->link_a ? $row->link_a : '';
+            });
+            $table->editColumn('link_a_description', function ($row) {
+                return $row->link_a_description ? $row->link_a_description : '';
+            });
+            $table->editColumn('link_b', function ($row) {
+                return $row->link_b ? $row->link_b : '';
+            });
+            $table->editColumn('link_b_description', function ($row) {
+                return $row->link_b_description ? $row->link_b_description : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'defaulter', 'contacts', 'boats']);
+            $table->rawColumns(['actions', 'placeholder', 'has_active_vip_plan', 'has_active_maintenance_plan', 'defaulter', 'contacts', 'boats']);
 
             return $table->make(true);
         }
@@ -164,7 +179,7 @@ class ClientsController extends Controller
     {
         abort_if(Gate::denies('client_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $client->load('contacts', 'boats', 'clientProformas', 'clientWlists', 'clientAppointments', 'clientBookingLists', 'clientsBoats');
+        $client->load('contacts', 'boats', 'clientWlists', 'clientAppointments', 'clientBookingLists', 'clientAssetsRentals', 'clientClientsReviews', 'clientSuscriptions', 'clientMaintenanceSuscriptions', 'fromClientEmployeeRatings', 'clientIotSuscriptions', 'clientFinalcialDocuments', 'clientsBoats');
 
         return view('admin.clients.show', compact('client'));
     }

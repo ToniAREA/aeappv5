@@ -39,6 +39,9 @@
                                         {{ trans('cruds.assetLocation.fields.photo') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetLocation.fields.available') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -53,6 +56,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -78,6 +83,10 @@
                                                     <img src="{{ $assetLocation->photo->getUrl('thumb') }}">
                                                 </a>
                                             @endif
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $assetLocation->available ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $assetLocation->available ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @can('asset_location_show')

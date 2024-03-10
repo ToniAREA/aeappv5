@@ -8,6 +8,8 @@ use App\Http\Requests\MassDestroyAssetCategoryRequest;
 use App\Http\Requests\StoreAssetCategoryRequest;
 use App\Http\Requests\UpdateAssetCategoryRequest;
 use App\Models\AssetCategory;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +24,7 @@ class AssetCategoryController extends Controller
         abort_if(Gate::denies('asset_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AssetCategory::query()->select(sprintf('%s.*', (new AssetCategory)->table));
+            $query = AssetCategory::with(['authorized_roles', 'authorized_users'])->select(sprintf('%s.*', (new AssetCategory)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -52,25 +54,50 @@ class AssetCategoryController extends Controller
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : '';
             });
+            $table->editColumn('authorized_roles', function ($row) {
+                $labels = [];
+                foreach ($row->authorized_roles as $authorized_role) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_role->title);
+                }
 
-            $table->rawColumns(['actions', 'placeholder']);
+                return implode(' ', $labels);
+            });
+            $table->editColumn('authorized_users', function ($row) {
+                $labels = [];
+                foreach ($row->authorized_users as $authorized_user) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_user->name);
+                }
+
+                return implode(' ', $labels);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'authorized_roles', 'authorized_users']);
 
             return $table->make(true);
         }
 
-        return view('admin.assetCategories.index');
+        $roles = Role::get();
+        $users = User::get();
+
+        return view('admin.assetCategories.index', compact('roles', 'users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('asset_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.assetCategories.create');
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('admin.assetCategories.create', compact('authorized_roles', 'authorized_users'));
     }
 
     public function store(StoreAssetCategoryRequest $request)
     {
         $assetCategory = AssetCategory::create($request->all());
+        $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
 
         return redirect()->route('admin.asset-categories.index');
     }
@@ -79,12 +106,20 @@ class AssetCategoryController extends Controller
     {
         abort_if(Gate::denies('asset_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.assetCategories.edit', compact('assetCategory'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        $assetCategory->load('authorized_roles', 'authorized_users');
+
+        return view('admin.assetCategories.edit', compact('assetCategory', 'authorized_roles', 'authorized_users'));
     }
 
     public function update(UpdateAssetCategoryRequest $request, AssetCategory $assetCategory)
     {
         $assetCategory->update($request->all());
+        $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
 
         return redirect()->route('admin.asset-categories.index');
     }
@@ -92,6 +127,8 @@ class AssetCategoryController extends Controller
     public function show(AssetCategory $assetCategory)
     {
         abort_if(Gate::denies('asset_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $assetCategory->load('authorized_roles', 'authorized_users');
 
         return view('admin.assetCategories.show', compact('assetCategory'));
     }

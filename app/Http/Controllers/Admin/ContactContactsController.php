@@ -85,6 +85,12 @@ class ContactContactsController extends Controller
             $table->editColumn('contact_internalnotes', function ($row) {
                 return $row->contact_internalnotes ? $row->contact_internalnotes : '';
             });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder']);
 
@@ -126,7 +132,7 @@ class ContactContactsController extends Controller
     {
         abort_if(Gate::denies('contact_contact_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contactContact->load('contactEmployees', 'contactsClients', 'contactsContactCompanies');
+        $contactContact->load('contactEmployees', 'contactDocsMarinas', 'contactsClients', 'contactsContactCompanies', 'contactsMarinas');
 
         return view('admin.contactContacts.show', compact('contactContact'));
     }

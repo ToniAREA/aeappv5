@@ -25,10 +25,6 @@ class UpdateAssetRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'serial_number' => [
-                'string',
-                'nullable',
-            ],
             'photos' => [
                 'array',
             ],
@@ -42,6 +38,45 @@ class UpdateAssetRequest extends FormRequest
             ],
             'internal_notes' => [
                 'string',
+                'nullable',
+            ],
+            'data_1' => [
+                'string',
+                'nullable',
+            ],
+            'data_1_description' => [
+                'string',
+                'nullable',
+            ],
+            'data_2' => [
+                'string',
+                'nullable',
+            ],
+            'data_2_description' => [
+                'string',
+                'nullable',
+            ],
+            'files' => [
+                'array',
+            ],
+            'link_a' => [
+                'string',
+                'nullable',
+            ],
+            'link_a_description' => [
+                'string',
+                'nullable',
+            ],
+            'link_b' => [
+                'string',
+                'nullable',
+            ],
+            'link_b_description' => [
+                'string',
+                'nullable',
+            ],
+            'last_use' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
         ];

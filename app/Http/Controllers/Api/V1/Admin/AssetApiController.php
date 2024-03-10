@@ -20,7 +20,7 @@ class AssetApiController extends Controller
     {
         abort_if(Gate::denies('asset_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AssetResource(Asset::with(['category', 'status', 'location', 'assigned_to'])->get());
+        return new AssetResource(Asset::with(['category', 'status', 'location', 'actual_holder'])->get());
     }
 
     public function store(StoreAssetRequest $request)
@@ -29,6 +29,10 @@ class AssetApiController extends Controller
 
         foreach ($request->input('photos', []) as $file) {
             $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        foreach ($request->input('files', []) as $file) {
+            $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
 
         return (new AssetResource($asset))
@@ -40,7 +44,7 @@ class AssetApiController extends Controller
     {
         abort_if(Gate::denies('asset_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AssetResource($asset->load(['category', 'status', 'location', 'assigned_to']));
+        return new AssetResource($asset->load(['category', 'status', 'location', 'actual_holder']));
     }
 
     public function update(UpdateAssetRequest $request, Asset $asset)
@@ -58,6 +62,20 @@ class AssetApiController extends Controller
         foreach ($request->input('photos', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
+        }
+
+        if (count($asset->files) > 0) {
+            foreach ($asset->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $asset->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
             }
         }
 

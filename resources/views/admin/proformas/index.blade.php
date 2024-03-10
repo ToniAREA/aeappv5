@@ -32,6 +32,12 @@
                         {{ trans('cruds.proforma.fields.proforma_number') }}
                     </th>
                     <th>
+                        {{ trans('cruds.proforma.fields.closed_and_protected') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.proforma.fields.invoice_link') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.proforma.fields.client') }}
                     </th>
                     <th>
@@ -68,10 +74,19 @@
                         {{ trans('cruds.proforma.fields.link') }}
                     </th>
                     <th>
+                        {{ trans('cruds.proforma.fields.link_description') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.proforma.fields.status') }}
                     </th>
                     <th>
                         {{ trans('cruds.proforma.fields.notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.proforma.fields.internal_notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.proforma.fields.completed_at') }}
                     </th>
                     <th>
                         &nbsp;
@@ -131,6 +146,8 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'proforma_number', name: 'proforma_number' },
+{ data: 'closed_and_protected', name: 'closed_and_protected' },
+{ data: 'invoice_link', name: 'invoice_link' },
 { data: 'client_name', name: 'client.name' },
 { data: 'client.lastname', name: 'client.lastname' },
 { data: 'boats', name: 'boats.name' },
@@ -143,8 +160,11 @@
 { data: 'paid', name: 'paid' },
 { data: 'claims', name: 'claims' },
 { data: 'link', name: 'link' },
+{ data: 'link_description', name: 'link_description' },
 { data: 'status', name: 'status' },
 { data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
+{ data: 'completed_at', name: 'completed_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

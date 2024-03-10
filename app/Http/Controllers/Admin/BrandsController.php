@@ -80,6 +80,12 @@ class BrandsController extends Controller
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
+            $table->editColumn('link', function ($row) {
+                return $row->link ? $row->link : '';
+            });
+            $table->editColumn('link_description', function ($row) {
+                return $row->link_description ? $row->link_description : '';
+            });
 
             $table->rawColumns(['actions', 'placeholder', 'brand_logo', 'providers']);
 
@@ -148,7 +154,7 @@ class BrandsController extends Controller
     {
         abort_if(Gate::denies('brand_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $brand->load('providers', 'brandProducts', 'brandsProviders');
+        $brand->load('providers', 'brandProducts', 'brandTechnicalDocumentations', 'brandsProviders');
 
         return view('admin.brands.show', compact('brand'));
     }

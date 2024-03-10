@@ -22,6 +22,10 @@ class UpdateProformaRequest extends FormRequest
                 'required',
                 'unique:proformas,proforma_number,' . request()->route('proforma')->id,
             ],
+            'invoice_link' => [
+                'string',
+                'nullable',
+            ],
             'boats.*' => [
                 'integer',
             ],
@@ -42,9 +46,6 @@ class UpdateProformaRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'total_amount' => [
-                'numeric',
-            ],
             'currency' => [
                 'string',
                 'max:3',
@@ -60,12 +61,24 @@ class UpdateProformaRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'link_description' => [
+                'string',
+                'nullable',
+            ],
             'status' => [
                 'string',
                 'nullable',
             ],
             'notes' => [
                 'string',
+                'nullable',
+            ],
+            'internal_notes' => [
+                'string',
+                'nullable',
+            ],
+            'completed_at' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
         ];
