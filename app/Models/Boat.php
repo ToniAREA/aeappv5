@@ -43,12 +43,15 @@ class Boat extends Model implements HasMedia
         'imo',
         'mmsi',
         'marina_id',
+        'sat_phone',
         'notes',
         'internal_notes',
-        'coordinates',
         'link',
         'link_description',
         'last_use',
+        'settings_data',
+        'public_ip',
+        'coordinates',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -95,11 +98,6 @@ class Boat extends Model implements HasMedia
         return $this->belongsToMany(Client::class);
     }
 
-    public function boatsProformas()
-    {
-        return $this->belongsToMany(Proforma::class);
-    }
-
     public function boatsClientsReviews()
     {
         return $this->belongsToMany(ClientsReview::class);
@@ -113,6 +111,11 @@ class Boat extends Model implements HasMedia
     public function boatsMaintenanceSuscriptions()
     {
         return $this->belongsToMany(MaintenanceSuscription::class);
+    }
+
+    public function boatsIotSuscriptions()
+    {
+        return $this->belongsToMany(IotSuscription::class);
     }
 
     public function getBoatPhotoAttribute()

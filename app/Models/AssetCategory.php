@@ -36,4 +36,14 @@ class AssetCategory extends Model
     {
         return $date->format('Y-m-d H:i:s');
     }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

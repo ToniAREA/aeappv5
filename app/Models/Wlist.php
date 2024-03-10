@@ -55,6 +55,7 @@ class Wlist extends Model implements HasMedia
         'deadline',
         'status_id',
         'priority',
+        'financial_document_id',
         'proforma_link',
         'notes',
         'internal_notes',
@@ -101,11 +102,6 @@ class Wlist extends Model implements HasMedia
     public function wlistsAppointments()
     {
         return $this->belongsToMany(Appointment::class);
-    }
-
-    public function wlistsProformas()
-    {
-        return $this->belongsToMany(Proforma::class);
     }
 
     public function client()
@@ -158,6 +154,11 @@ class Wlist extends Model implements HasMedia
     public function status()
     {
         return $this->belongsTo(WlistStatus::class, 'status_id');
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 
     public function getLastUseAttribute($value)

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAssetsRentalRequest;
 use App\Http\Requests\StoreAssetsRentalRequest;
 use App\Http\Requests\UpdateAssetsRentalRequest;
@@ -10,7 +11,7 @@ use App\Models\Asset;
 use App\Models\AssetsRental;
 use App\Models\Boat;
 use App\Models\Client;
-use App\Models\Proforma;
+use App\Models\FinalcialDocument;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -18,11 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AssetsRentalsController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('assets_rental_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assetsRentals = AssetsRental::with(['asset', 'user', 'client', 'boat', 'proforma'])->get();
+        $assetsRentals = AssetsRental::with(['asset', 'user', 'client', 'boat', 'financial_document'])->get();
 
         return view('frontend.assetsRentals.index', compact('assetsRentals'));
     }
@@ -39,9 +42,9 @@ class AssetsRentalsController extends Controller
 
         $boats = Boat::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.assetsRentals.create', compact('assets', 'boats', 'clients', 'proformas', 'users'));
+        return view('frontend.assetsRentals.create', compact('assets', 'boats', 'clients', 'financial_documents', 'users'));
     }
 
     public function store(StoreAssetsRentalRequest $request)
@@ -63,11 +66,11 @@ class AssetsRentalsController extends Controller
 
         $boats = Boat::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assetsRental->load('asset', 'user', 'client', 'boat', 'proforma');
+        $assetsRental->load('asset', 'user', 'client', 'boat', 'financial_document');
 
-        return view('frontend.assetsRentals.edit', compact('assets', 'assetsRental', 'boats', 'clients', 'proformas', 'users'));
+        return view('frontend.assetsRentals.edit', compact('assets', 'assetsRental', 'boats', 'clients', 'financial_documents', 'users'));
     }
 
     public function update(UpdateAssetsRentalRequest $request, AssetsRental $assetsRental)
@@ -81,7 +84,7 @@ class AssetsRentalsController extends Controller
     {
         abort_if(Gate::denies('assets_rental_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assetsRental->load('asset', 'user', 'client', 'boat', 'proforma');
+        $assetsRental->load('asset', 'user', 'client', 'boat', 'financial_document');
 
         return view('frontend.assetsRentals.show', compact('assetsRental'));
     }

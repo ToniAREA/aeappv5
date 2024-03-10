@@ -56,13 +56,16 @@
                         {{ trans('cruds.wlog.fields.hourly_rate') }}
                     </th>
                     <th>
+                        {{ trans('cruds.wlog.fields.travel_cost_included') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.total_travel_cost') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.total_access_cost') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.wlog.fields.wlist_finished') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlog.fields.proforma_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.proforma.fields.description') }}
                     </th>
                     <th>
                         {{ trans('cruds.wlog.fields.invoiced_line') }}
@@ -75,6 +78,12 @@
                     </th>
                     <th>
                         {{ trans('cruds.wlog.fields.photos') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.wlog.fields.financial_document') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                     </th>
                     <th>
                         &nbsp;
@@ -129,22 +138,30 @@
                     <td>
                     </td>
                     <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                    </td>
+                    <td>
                         <select class="search">
                             <option value>{{ trans('global.all') }}</option>
-                            @foreach($proformas as $key => $item)
-                                <option value="{{ $item->proforma_number }}">{{ $item->proforma_number }}</option>
+                            @foreach($finalcial_documents as $key => $item)
+                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
                             @endforeach
                         </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                     </td>
@@ -213,13 +230,16 @@
 { data: 'description', name: 'description' },
 { data: 'hours', name: 'hours' },
 { data: 'hourly_rate', name: 'hourly_rate' },
+{ data: 'travel_cost_included', name: 'travel_cost_included' },
+{ data: 'total_travel_cost', name: 'total_travel_cost' },
+{ data: 'total_access_cost', name: 'total_access_cost' },
 { data: 'wlist_finished', name: 'wlist_finished' },
-{ data: 'proforma_number_proforma_number', name: 'proforma_number.proforma_number' },
-{ data: 'proforma_number.description', name: 'proforma_number.description' },
 { data: 'invoiced_line', name: 'invoiced_line' },
 { data: 'notes', name: 'notes' },
 { data: 'internal_notes', name: 'internal_notes' },
 { data: 'photos', name: 'photos', sortable: false, searchable: false },
+{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
+{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -64,12 +64,6 @@
                                 {{ trans('cruds.assetsRental.fields.invoiced') }}
                             </th>
                             <th>
-                                {{ trans('cruds.assetsRental.fields.proforma') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.proforma.fields.description') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.assetsRental.fields.link') }}
                             </th>
                             <th>
@@ -83,6 +77,12 @@
                             </th>
                             <th>
                                 {{ trans('cruds.assetsRental.fields.rental_quantity') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.assetsRental.fields.financial_document') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -140,12 +140,6 @@
                                     <input type="checkbox" disabled="disabled" {{ $assetsRental->invoiced ? 'checked' : '' }}>
                                 </td>
                                 <td>
-                                    {{ $assetsRental->proforma->proforma_number ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $assetsRental->proforma->description ?? '' }}
-                                </td>
-                                <td>
                                     {{ $assetsRental->link ?? '' }}
                                 </td>
                                 <td>
@@ -159,6 +153,14 @@
                                 </td>
                                 <td>
                                     {{ $assetsRental->rental_quantity ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $assetsRental->financial_document->reference_number ?? '' }}
+                                </td>
+                                <td>
+                                    @if($assetsRental->financial_document)
+                                        {{ $assetsRental->financial_document::DOC_TYPE_RADIO[$assetsRental->financial_document->doc_type] ?? '' }}
+                                    @endif
                                 </td>
                                 <td>
                                     @can('assets_rental_show')

@@ -71,6 +71,14 @@
                 <span class="help-block">{{ trans('cruds.boat.fields.marina_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="sat_phone">{{ trans('cruds.boat.fields.sat_phone') }}</label>
+                <input class="form-control {{ $errors->has('sat_phone') ? 'is-invalid' : '' }}" type="text" name="sat_phone" id="sat_phone" value="{{ old('sat_phone', '') }}">
+                @if($errors->has('sat_phone'))
+                    <span class="text-danger">{{ $errors->first('sat_phone') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.boat.fields.sat_phone_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="notes">{{ trans('cruds.boat.fields.notes') }}</label>
                 <input class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" type="text" name="notes" id="notes" value="{{ old('notes', '') }}">
                 @if($errors->has('notes'))
@@ -103,14 +111,6 @@
                 <span class="help-block">{{ trans('cruds.boat.fields.clients_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="coordinates">{{ trans('cruds.boat.fields.coordinates') }}</label>
-                <input class="form-control {{ $errors->has('coordinates') ? 'is-invalid' : '' }}" type="text" name="coordinates" id="coordinates" value="{{ old('coordinates', '') }}">
-                @if($errors->has('coordinates'))
-                    <span class="text-danger">{{ $errors->first('coordinates') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.boat.fields.coordinates_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="link">{{ trans('cruds.boat.fields.link') }}</label>
                 <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', '') }}">
                 @if($errors->has('link'))
@@ -133,6 +133,30 @@
                     <span class="text-danger">{{ $errors->first('last_use') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.boat.fields.last_use_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="settings_data">{{ trans('cruds.boat.fields.settings_data') }}</label>
+                <textarea class="form-control {{ $errors->has('settings_data') ? 'is-invalid' : '' }}" name="settings_data" id="settings_data">{{ old('settings_data') }}</textarea>
+                @if($errors->has('settings_data'))
+                    <span class="text-danger">{{ $errors->first('settings_data') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.boat.fields.settings_data_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="public_ip">{{ trans('cruds.boat.fields.public_ip') }}</label>
+                <input class="form-control {{ $errors->has('public_ip') ? 'is-invalid' : '' }}" type="text" name="public_ip" id="public_ip" value="{{ old('public_ip', '') }}">
+                @if($errors->has('public_ip'))
+                    <span class="text-danger">{{ $errors->first('public_ip') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.boat.fields.public_ip_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="coordinates">{{ trans('cruds.boat.fields.coordinates') }}</label>
+                <input class="form-control {{ $errors->has('coordinates') ? 'is-invalid' : '' }}" type="text" name="coordinates" id="coordinates" value="{{ old('coordinates', '') }}">
+                @if($errors->has('coordinates'))
+                    <span class="text-danger">{{ $errors->first('coordinates') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.boat.fields.coordinates_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

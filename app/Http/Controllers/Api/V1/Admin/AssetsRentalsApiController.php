@@ -17,7 +17,7 @@ class AssetsRentalsApiController extends Controller
     {
         abort_if(Gate::denies('assets_rental_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AssetsRentalResource(AssetsRental::with(['asset', 'user', 'client', 'boat', 'proforma'])->get());
+        return new AssetsRentalResource(AssetsRental::with(['asset', 'user', 'client', 'boat', 'financial_document'])->get());
     }
 
     public function store(StoreAssetsRentalRequest $request)
@@ -33,7 +33,7 @@ class AssetsRentalsApiController extends Controller
     {
         abort_if(Gate::denies('assets_rental_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AssetsRentalResource($assetsRental->load(['asset', 'user', 'client', 'boat', 'proforma']));
+        return new AssetsRentalResource($assetsRental->load(['asset', 'user', 'client', 'boat', 'financial_document']));
     }
 
     public function update(UpdateAssetsRentalRequest $request, AssetsRental $assetsRental)

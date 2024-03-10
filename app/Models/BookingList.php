@@ -39,11 +39,13 @@ class BookingList extends Model
         'end_time',
         'hourly_rate',
         'total_amount',
-        'notes',
-        'internal_notes',
         'confirmed',
         'status',
+        'is_invoiced',
+        'notes',
+        'internal_notes',
         'completed_at',
+        'financial_document_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -97,5 +99,10 @@ class BookingList extends Model
     public function setCompletedAtAttribute($value)
     {
         $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

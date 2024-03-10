@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTechnicalDocumentationRequest;
 use App\Http\Requests\StoreTechnicalDocumentationRequest;
 use App\Http\Requests\UpdateTechnicalDocumentationRequest;
 use App\Models\Brand;
 use App\Models\Product;
+use App\Models\Role;
 use App\Models\TechDocsType;
 use App\Models\TechnicalDocumentation;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -18,13 +21,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TechnicalDocumentationController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('technical_documentation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $technicalDocumentations = TechnicalDocumentation::with(['doc_type', 'brand', 'product', 'media'])->get();
+        $technicalDocumentations = TechnicalDocumentation::with(['doc_type', 'brand', 'product', 'authorized_roles', 'authorized_users', 'media'])->get();
 
         return view('frontend.technicalDocumentations.index', compact('technicalDocumentations'));
     }
@@ -39,13 +42,18 @@ class TechnicalDocumentationController extends Controller
 
         $products = Product::pluck('model', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.technicalDocumentations.create', compact('brands', 'doc_types', 'products'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('frontend.technicalDocumentations.create', compact('authorized_roles', 'authorized_users', 'brands', 'doc_types', 'products'));
     }
 
     public function store(StoreTechnicalDocumentationRequest $request)
     {
         $technicalDocumentation = TechnicalDocumentation::create($request->all());
-
+        $technicalDocumentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $technicalDocumentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             $technicalDocumentation->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
         }
@@ -71,15 +79,20 @@ class TechnicalDocumentationController extends Controller
 
         $products = Product::pluck('model', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $technicalDocumentation->load('doc_type', 'brand', 'product');
+        $authorized_roles = Role::pluck('title', 'id');
 
-        return view('frontend.technicalDocumentations.edit', compact('brands', 'doc_types', 'products', 'technicalDocumentation'));
+        $authorized_users = User::pluck('name', 'id');
+
+        $technicalDocumentation->load('doc_type', 'brand', 'product', 'authorized_roles', 'authorized_users');
+
+        return view('frontend.technicalDocumentations.edit', compact('authorized_roles', 'authorized_users', 'brands', 'doc_types', 'products', 'technicalDocumentation'));
     }
 
     public function update(UpdateTechnicalDocumentationRequest $request, TechnicalDocumentation $technicalDocumentation)
     {
         $technicalDocumentation->update($request->all());
-
+        $technicalDocumentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $technicalDocumentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             if (! $technicalDocumentation->file || $request->input('file') !== $technicalDocumentation->file->file_name) {
                 if ($technicalDocumentation->file) {
@@ -109,7 +122,7 @@ class TechnicalDocumentationController extends Controller
     {
         abort_if(Gate::denies('technical_documentation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $technicalDocumentation->load('doc_type', 'brand', 'product');
+        $technicalDocumentation->load('doc_type', 'brand', 'product', 'authorized_roles', 'authorized_users');
 
         return view('frontend.technicalDocumentations.show', compact('technicalDocumentation'));
     }

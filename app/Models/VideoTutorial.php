@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class VideoTutorial extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'video_tutorials';
 
@@ -35,6 +36,9 @@ class VideoTutorial extends Model implements HasMedia
         'show_online',
         'description',
         'video_url',
+        'seo_title',
+        'seo_meta_description',
+        'seo_slug',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,5 +70,15 @@ class VideoTutorial extends Model implements HasMedia
     public function subjects()
     {
         return $this->belongsToMany(VideoCategory::class);
+    }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

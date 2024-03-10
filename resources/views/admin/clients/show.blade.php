@@ -33,6 +33,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $client->has_active_maintenance_plan ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.client.fields.defaulter') }}
                         </th>
                         <td>
@@ -212,11 +220,6 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#client_proformas" role="tab" data-toggle="tab">
-                {{ trans('cruds.proforma.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#client_wlists" role="tab" data-toggle="tab">
                 {{ trans('cruds.wlist.title') }}
             </a>
@@ -257,15 +260,22 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#client_iot_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.iotSuscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#client_finalcial_documents" role="tab" data-toggle="tab">
+                {{ trans('cruds.finalcialDocument.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#clients_boats" role="tab" data-toggle="tab">
                 {{ trans('cruds.boat.title') }}
             </a>
         </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="client_proformas">
-            @includeIf('admin.clients.relationships.clientProformas', ['proformas' => $client->clientProformas])
-        </div>
         <div class="tab-pane" role="tabpanel" id="client_wlists">
             @includeIf('admin.clients.relationships.clientWlists', ['wlists' => $client->clientWlists])
         </div>
@@ -289,6 +299,12 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="from_client_employee_ratings">
             @includeIf('admin.clients.relationships.fromClientEmployeeRatings', ['employeeRatings' => $client->fromClientEmployeeRatings])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_iot_suscriptions">
+            @includeIf('admin.clients.relationships.clientIotSuscriptions', ['iotSuscriptions' => $client->clientIotSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_finalcial_documents">
+            @includeIf('admin.clients.relationships.clientFinalcialDocuments', ['finalcialDocuments' => $client->clientFinalcialDocuments])
         </div>
         <div class="tab-pane" role="tabpanel" id="clients_boats">
             @includeIf('admin.clients.relationships.clientsBoats', ['boats' => $client->clientsBoats])

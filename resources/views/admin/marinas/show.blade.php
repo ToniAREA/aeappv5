@@ -53,6 +53,24 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.marina.fields.contacts') }}
+                        </th>
+                        <td>
+                            @foreach($marina->contacts as $key => $contacts)
+                                <span class="label label-info">{{ $contacts->contact_first_name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.marina.fields.contact_docs') }}
+                        </th>
+                        <td>
+                            {{ $marina->contact_docs->contact_first_name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.marina.fields.link') }}
                         </th>
                         <td>
@@ -81,14 +99,6 @@
                         </th>
                         <td>
                             {{ $marina->internal_notes }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.marina.fields.contact_docs') }}
-                        </th>
-                        <td>
-                            {{ $marina->contact_docs->contact_first_name ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -125,6 +135,11 @@
                 {{ trans('cruds.wlog.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#in_marina_appointments" role="tab" data-toggle="tab">
+                {{ trans('cruds.appointment.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="marina_boats">
@@ -132,6 +147,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="marina_wlogs">
             @includeIf('admin.marinas.relationships.marinaWlogs', ['wlogs' => $marina->marinaWlogs])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="in_marina_appointments">
+            @includeIf('admin.marinas.relationships.inMarinaAppointments', ['appointments' => $marina->inMarinaAppointments])
         </div>
     </div>
 </div>

@@ -43,14 +43,6 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.clientsReview.fields.proforma') }}
-                        </th>
-                        <td>
-                            {{ $clientsReview->proforma->proforma_number ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.clientsReview.fields.for_wlists') }}
                         </th>
                         <td>

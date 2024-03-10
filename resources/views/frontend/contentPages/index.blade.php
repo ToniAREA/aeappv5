@@ -81,6 +81,12 @@
                                         {{ trans('cruds.contentPage.fields.view_count') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contentPage.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -145,6 +151,22 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                     </td>
@@ -221,6 +243,16 @@
                                         </td>
                                         <td>
                                             {{ $contentPage->view_count ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($contentPage->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($contentPage->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('content_page_show')

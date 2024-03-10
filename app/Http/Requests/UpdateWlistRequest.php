@@ -36,7 +36,7 @@ class UpdateWlistRequest extends FormRequest
             ],
             'description' => [
                 'string',
-                'nullable',
+                'required',
             ],
             'estimated_hours' => [
                 'numeric',

@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.tech-docs-types.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.techDocsType.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'TechDocsType', 'route' => 'admin.tech-docs-types.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -32,6 +36,12 @@
                                         {{ trans('cruds.techDocsType.fields.description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.techDocsType.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.techDocsType.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -47,6 +57,16 @@
                                         </td>
                                         <td>
                                             {{ $techDocsType->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($techDocsType->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($techDocsType->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('tech_docs_type_show')

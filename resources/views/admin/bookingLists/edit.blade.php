@@ -119,6 +119,36 @@
                 <span class="help-block">{{ trans('cruds.bookingList.fields.total_amount_helper') }}</span>
             </div>
             <div class="form-group">
+                <div class="form-check {{ $errors->has('confirmed') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="confirmed" value="0">
+                    <input class="form-check-input" type="checkbox" name="confirmed" id="confirmed" value="1" {{ $bookingList->confirmed || old('confirmed', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="confirmed">{{ trans('cruds.bookingList.fields.confirmed') }}</label>
+                </div>
+                @if($errors->has('confirmed'))
+                    <span class="text-danger">{{ $errors->first('confirmed') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.bookingList.fields.confirmed_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="status">{{ trans('cruds.bookingList.fields.status') }}</label>
+                <input class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" type="text" name="status" id="status" value="{{ old('status', $bookingList->status) }}">
+                @if($errors->has('status'))
+                    <span class="text-danger">{{ $errors->first('status') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.bookingList.fields.status_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <div class="form-check {{ $errors->has('is_invoiced') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_invoiced" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_invoiced" id="is_invoiced" value="1" {{ $bookingList->is_invoiced || old('is_invoiced', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_invoiced">{{ trans('cruds.bookingList.fields.is_invoiced') }}</label>
+                </div>
+                @if($errors->has('is_invoiced'))
+                    <span class="text-danger">{{ $errors->first('is_invoiced') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.bookingList.fields.is_invoiced_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="notes">{{ trans('cruds.bookingList.fields.notes') }}</label>
                 <input class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" type="text" name="notes" id="notes" value="{{ old('notes', $bookingList->notes) }}">
                 @if($errors->has('notes'))
@@ -135,30 +165,24 @@
                 <span class="help-block">{{ trans('cruds.bookingList.fields.internal_notes_helper') }}</span>
             </div>
             <div class="form-group">
-                <div class="form-check {{ $errors->has('confirmed') ? 'is-invalid' : '' }}">
-                    <input class="form-check-input" type="checkbox" name="confirmed" id="confirmed" value="1" {{ $bookingList->confirmed || old('confirmed', 0) === 1 ? 'checked' : '' }} required>
-                    <label class="required form-check-label" for="confirmed">{{ trans('cruds.bookingList.fields.confirmed') }}</label>
-                </div>
-                @if($errors->has('confirmed'))
-                    <span class="text-danger">{{ $errors->first('confirmed') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.bookingList.fields.confirmed_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="status">{{ trans('cruds.bookingList.fields.status') }}</label>
-                <input class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" type="text" name="status" id="status" value="{{ old('status', $bookingList->status) }}">
-                @if($errors->has('status'))
-                    <span class="text-danger">{{ $errors->first('status') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.bookingList.fields.status_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="completed_at">{{ trans('cruds.bookingList.fields.completed_at') }}</label>
                 <input class="form-control datetime {{ $errors->has('completed_at') ? 'is-invalid' : '' }}" type="text" name="completed_at" id="completed_at" value="{{ old('completed_at', $bookingList->completed_at) }}">
                 @if($errors->has('completed_at'))
                     <span class="text-danger">{{ $errors->first('completed_at') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.bookingList.fields.completed_at_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="financial_document_id">{{ trans('cruds.bookingList.fields.financial_document') }}</label>
+                <select class="form-control select2 {{ $errors->has('financial_document') ? 'is-invalid' : '' }}" name="financial_document_id" id="financial_document_id">
+                    @foreach($financial_documents as $id => $entry)
+                        <option value="{{ $id }}" {{ (old('financial_document_id') ? old('financial_document_id') : $bookingList->financial_document->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('financial_document'))
+                    <span class="text-danger">{{ $errors->first('financial_document') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.bookingList.fields.financial_document_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

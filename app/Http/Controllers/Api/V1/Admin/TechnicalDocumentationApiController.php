@@ -20,13 +20,14 @@ class TechnicalDocumentationApiController extends Controller
     {
         abort_if(Gate::denies('technical_documentation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TechnicalDocumentationResource(TechnicalDocumentation::with(['doc_type', 'brand', 'product'])->get());
+        return new TechnicalDocumentationResource(TechnicalDocumentation::with(['doc_type', 'brand', 'product', 'authorized_roles', 'authorized_users'])->get());
     }
 
     public function store(StoreTechnicalDocumentationRequest $request)
     {
         $technicalDocumentation = TechnicalDocumentation::create($request->all());
-
+        $technicalDocumentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $technicalDocumentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             $technicalDocumentation->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
         }
@@ -44,13 +45,14 @@ class TechnicalDocumentationApiController extends Controller
     {
         abort_if(Gate::denies('technical_documentation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TechnicalDocumentationResource($technicalDocumentation->load(['doc_type', 'brand', 'product']));
+        return new TechnicalDocumentationResource($technicalDocumentation->load(['doc_type', 'brand', 'product', 'authorized_roles', 'authorized_users']));
     }
 
     public function update(UpdateTechnicalDocumentationRequest $request, TechnicalDocumentation $technicalDocumentation)
     {
         $technicalDocumentation->update($request->all());
-
+        $technicalDocumentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $technicalDocumentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             if (! $technicalDocumentation->file || $request->input('file') !== $technicalDocumentation->file->file_name) {
                 if ($technicalDocumentation->file) {

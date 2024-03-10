@@ -100,14 +100,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.assetsRental.fields.proforma') }}
-                                    </th>
-                                    <td>
-                                        {{ $assetsRental->proforma->proforma_number ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.assetsRental.fields.link') }}
                                     </th>
                                     <td>
@@ -144,6 +136,14 @@
                                     </th>
                                     <td>
                                         {{ $assetsRental->rental_quantity }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.assetsRental.fields.financial_document') }}
+                                    </th>
+                                    <td>
+                                        {{ $assetsRental->financial_document->reference_number ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

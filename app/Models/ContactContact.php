@@ -76,6 +76,11 @@ class ContactContact extends Model
         return $this->belongsToMany(ContactCompany::class);
     }
 
+    public function contactsMarinas()
+    {
+        return $this->belongsToMany(Marina::class);
+    }
+
     public function getLastUseAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;

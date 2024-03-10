@@ -20,7 +20,7 @@ class WlistApiController extends Controller
     {
         abort_if(Gate::denies('wlist_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WlistResource(Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status'])->get());
+        return new WlistResource(Wlist::with(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document'])->get());
     }
 
     public function store(StoreWlistRequest $request)
@@ -40,7 +40,7 @@ class WlistApiController extends Controller
     {
         abort_if(Gate::denies('wlist_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WlistResource($wlist->load(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status']));
+        return new WlistResource($wlist->load(['client', 'boat', 'from_user', 'for_roles', 'for_employee', 'status', 'financial_document']));
     }
 
     public function update(UpdateWlistRequest $request, Wlist $wlist)

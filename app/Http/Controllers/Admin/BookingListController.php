@@ -12,6 +12,7 @@ use App\Models\BookingList;
 use App\Models\BookingSlot;
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\FinalcialDocument;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class BookingListController extends Controller
         abort_if(Gate::denies('booking_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot'])->select(sprintf('%s.*', (new BookingList)->table));
+            $query = BookingList::with(['user', 'client', 'boat', 'employee', 'booking_slot', 'financial_document'])->select(sprintf('%s.*', (new BookingList)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -102,31 +103,43 @@ class BookingListController extends Controller
             $table->editColumn('total_amount', function ($row) {
                 return $row->total_amount ? $row->total_amount : '';
             });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
             $table->editColumn('confirmed', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->confirmed ? 'checked' : null) . '>';
             });
             $table->editColumn('status', function ($row) {
                 return $row->status ? $row->status : '';
             });
+            $table->editColumn('is_invoiced', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->is_invoiced ? 'checked' : null) . '>';
+            });
+            $table->editColumn('notes', function ($row) {
+                return $row->notes ? $row->notes : '';
+            });
+            $table->editColumn('internal_notes', function ($row) {
+                return $row->internal_notes ? $row->internal_notes : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'user', 'client', 'boat', 'employee', 'booking_slot', 'confirmed']);
+            $table->addColumn('financial_document_reference_number', function ($row) {
+                return $row->financial_document ? $row->financial_document->reference_number : '';
+            });
+
+            $table->editColumn('financial_document.doc_type', function ($row) {
+                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'user', 'client', 'boat', 'employee', 'booking_slot', 'confirmed', 'is_invoiced', 'financial_document']);
 
             return $table->make(true);
         }
 
-        $users         = User::get();
-        $clients       = Client::get();
-        $boats         = Boat::get();
-        $employees     = Employee::get();
-        $booking_slots = BookingSlot::get();
+        $users               = User::get();
+        $clients             = Client::get();
+        $boats               = Boat::get();
+        $employees           = Employee::get();
+        $booking_slots       = BookingSlot::get();
+        $finalcial_documents = FinalcialDocument::get();
 
-        return view('admin.bookingLists.index', compact('users', 'clients', 'boats', 'employees', 'booking_slots'));
+        return view('admin.bookingLists.index', compact('users', 'clients', 'boats', 'employees', 'booking_slots', 'finalcial_documents'));
     }
 
     public function create()
@@ -143,7 +156,9 @@ class BookingListController extends Controller
 
         $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.bookingLists.create', compact('boats', 'booking_slots', 'clients', 'employees', 'users'));
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.bookingLists.create', compact('boats', 'booking_slots', 'clients', 'employees', 'financial_documents', 'users'));
     }
 
     public function store(StoreBookingListRequest $request)
@@ -167,9 +182,11 @@ class BookingListController extends Controller
 
         $booking_slots = BookingSlot::pluck('star_time', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.bookingLists.edit', compact('boats', 'bookingList', 'booking_slots', 'clients', 'employees', 'users'));
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot', 'financial_document');
+
+        return view('admin.bookingLists.edit', compact('boats', 'bookingList', 'booking_slots', 'clients', 'employees', 'financial_documents', 'users'));
     }
 
     public function update(UpdateBookingListRequest $request, BookingList $bookingList)
@@ -183,7 +200,7 @@ class BookingListController extends Controller
     {
         abort_if(Gate::denies('booking_list_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot');
+        $bookingList->load('user', 'client', 'boat', 'employee', 'booking_slot', 'financial_document');
 
         return view('admin.bookingLists.show', compact('bookingList'));
     }

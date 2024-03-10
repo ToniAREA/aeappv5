@@ -189,6 +189,14 @@
                             {{ $wlist->completed_at }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.wlist.fields.financial_document') }}
+                        </th>
+                        <td>
+                            {{ $wlist->financial_document->reference_number ?? '' }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -230,11 +238,6 @@
                 {{ trans('cruds.appointment.title') }}
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#wlists_proformas" role="tab" data-toggle="tab">
-                {{ trans('cruds.proforma.title') }}
-            </a>
-        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="wlist_wlogs">
@@ -251,9 +254,6 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="wlists_appointments">
             @includeIf('admin.wlists.relationships.wlistsAppointments', ['appointments' => $wlist->wlistsAppointments])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="wlists_proformas">
-            @includeIf('admin.wlists.relationships.wlistsProformas', ['proformas' => $wlist->wlistsProformas])
         </div>
     </div>
 </div>

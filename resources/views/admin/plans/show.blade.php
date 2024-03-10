@@ -49,6 +49,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.plan.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($plan->photo)
+                                <a href="{{ $plan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $plan->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.plan.fields.show_online') }}
                         </th>
                         <td>
@@ -73,26 +85,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.plan.fields.seo_title') }}
+                            {{ trans('cruds.plan.fields.hourly_rate_discount') }}
                         </th>
                         <td>
-                            {{ $plan->seo_title }}
+                            {{ $plan->hourly_rate_discount }}
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.plan.fields.seo_meta_description') }}
+                            {{ trans('cruds.plan.fields.material_discount') }}
                         </th>
                         <td>
-                            {{ $plan->seo_meta_description }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.plan.fields.seo_slug') }}
-                        </th>
-                        <td>
-                            {{ $plan->seo_slug }}
+                            {{ $plan->material_discount }}
                         </td>
                     </tr>
                     <tr>
@@ -121,6 +125,30 @@
                         </th>
                         <td>
                             {{ $plan->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.seo_title') }}
+                        </th>
+                        <td>
+                            {{ $plan->seo_title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.seo_meta_description') }}
+                        </th>
+                        <td>
+                            {{ $plan->seo_meta_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.plan.fields.seo_slug') }}
+                        </th>
+                        <td>
+                            {{ $plan->seo_slug }}
                         </td>
                     </tr>
                 </tbody>

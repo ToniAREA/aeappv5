@@ -19,14 +19,31 @@ class StorePlanRequest extends FormRequest
         return [
             'plan_name' => [
                 'string',
-                'nullable',
+                'required',
             ],
             'short_description' => [
                 'string',
                 'required',
             ],
+            'period' => [
+                'required',
+            ],
             'period_price' => [
                 'required',
+            ],
+            'hourly_rate_discount' => [
+                'numeric',
+            ],
+            'material_discount' => [
+                'numeric',
+            ],
+            'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
+                'string',
+                'nullable',
             ],
             'seo_title' => [
                 'string',
@@ -37,14 +54,6 @@ class StorePlanRequest extends FormRequest
                 'nullable',
             ],
             'seo_slug' => [
-                'string',
-                'nullable',
-            ],
-            'link' => [
-                'string',
-                'nullable',
-            ],
-            'link_description' => [
                 'string',
                 'nullable',
             ],

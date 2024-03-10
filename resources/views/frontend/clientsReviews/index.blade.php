@@ -39,12 +39,6 @@
                                         {{ trans('cruds.client.fields.lastname') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.clientsReview.fields.proforma') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.proforma.fields.description') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.clientsReview.fields.for_wlists') }}
                                     </th>
                                     <th>
@@ -74,12 +68,6 @@
                                         </td>
                                         <td>
                                             {{ $clientsReview->client->lastname ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $clientsReview->proforma->proforma_number ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $clientsReview->proforma->description ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($clientsReview->for_wlists as $key => $item)

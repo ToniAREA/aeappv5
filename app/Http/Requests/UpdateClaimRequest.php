@@ -17,12 +17,12 @@ class UpdateClaimRequest extends FormRequest
     public function rules()
     {
         return [
-            'note' => [
-                'string',
-                'nullable',
-            ],
             'claim_date' => [
                 'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'note' => [
+                'string',
                 'nullable',
             ],
         ];

@@ -61,12 +61,6 @@
                                 {{ trans('cruds.mlog.fields.price_unit') }}
                             </th>
                             <th>
-                                {{ trans('cruds.mlog.fields.proforma_number') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.proforma.fields.description') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.mlog.fields.invoiced_line') }}
                             </th>
                             <th>
@@ -125,12 +119,6 @@
                                 </td>
                                 <td>
                                     {{ $mlog->price_unit ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $mlog->proforma_number->proforma_number ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $mlog->proforma_number->description ?? '' }}
                                 </td>
                                 <td>
                                     <span style="display:none">{{ $mlog->invoiced_line ?? '' }}</span>

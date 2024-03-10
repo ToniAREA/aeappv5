@@ -9,6 +9,8 @@ use App\Http\Requests\MassDestroyProductCategoryRequest;
 use App\Http\Requests\StoreProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -22,22 +24,31 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $productCategories = ProductCategory::with(['media'])->get();
+        $productCategories = ProductCategory::with(['authorized_roles', 'authorized_users', 'media'])->get();
 
-        return view('frontend.productCategories.index', compact('productCategories'));
+        $roles = Role::get();
+
+        $users = User::get();
+
+        return view('frontend.productCategories.index', compact('productCategories', 'roles', 'users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('product_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.productCategories.create');
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('frontend.productCategories.create', compact('authorized_roles', 'authorized_users'));
     }
 
     public function store(StoreProductCategoryRequest $request)
     {
         $productCategory = ProductCategory::create($request->all());
-
+        $productCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $productCategory->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('photo', false)) {
             $productCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
         }
@@ -53,13 +64,20 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('frontend.productCategories.edit', compact('productCategory'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        $productCategory->load('authorized_roles', 'authorized_users');
+
+        return view('frontend.productCategories.edit', compact('authorized_roles', 'authorized_users', 'productCategory'));
     }
 
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
         $productCategory->update($request->all());
-
+        $productCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $productCategory->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('photo', false)) {
             if (! $productCategory->photo || $request->input('photo') !== $productCategory->photo->file_name) {
                 if ($productCategory->photo) {
@@ -77,6 +95,8 @@ class ProductCategoryController extends Controller
     public function show(ProductCategory $productCategory)
     {
         abort_if(Gate::denies('product_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $productCategory->load('authorized_roles', 'authorized_users');
 
         return view('frontend.productCategories.show', compact('productCategory'));
     }

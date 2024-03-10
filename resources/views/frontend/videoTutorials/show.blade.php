@@ -80,6 +80,50 @@
                                         @endforeach
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.videoTutorial.fields.seo_title') }}
+                                    </th>
+                                    <td>
+                                        {{ $videoTutorial->seo_title }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.videoTutorial.fields.seo_meta_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $videoTutorial->seo_meta_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.videoTutorial.fields.seo_slug') }}
+                                    </th>
+                                    <td>
+                                        {{ $videoTutorial->seo_slug }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.videoTutorial.fields.authorized_roles') }}
+                                    </th>
+                                    <td>
+                                        @foreach($videoTutorial->authorized_roles as $key => $authorized_roles)
+                                            <span class="label label-info">{{ $authorized_roles->title }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.videoTutorial.fields.authorized_users') }}
+                                    </th>
+                                    <td>
+                                        @foreach($videoTutorial->authorized_users as $key => $authorized_users)
+                                            <span class="label label-info">{{ $authorized_users->name }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

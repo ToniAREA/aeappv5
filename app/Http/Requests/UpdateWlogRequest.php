@@ -29,10 +29,20 @@ class UpdateWlogRequest extends FormRequest
                 'required',
                 'integer',
             ],
+            'description' => [
+                'required',
+            ],
             'hours' => [
                 'numeric',
+                'required',
                 'min:0',
                 'max:24',
+            ],
+            'total_travel_cost' => [
+                'numeric',
+            ],
+            'total_access_cost' => [
+                'numeric',
             ],
             'internal_notes' => [
                 'string',

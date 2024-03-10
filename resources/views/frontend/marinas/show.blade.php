@@ -56,6 +56,24 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.marina.fields.contacts') }}
+                                    </th>
+                                    <td>
+                                        @foreach($marina->contacts as $key => $contacts)
+                                            <span class="label label-info">{{ $contacts->contact_first_name }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.marina.fields.contact_docs') }}
+                                    </th>
+                                    <td>
+                                        {{ $marina->contact_docs->contact_first_name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.marina.fields.link') }}
                                     </th>
                                     <td>
@@ -84,14 +102,6 @@
                                     </th>
                                     <td>
                                         {{ $marina->internal_notes }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.marina.fields.contact_docs') }}
-                                    </th>
-                                    <td>
-                                        {{ $marina->contact_docs->contact_first_name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

@@ -24,6 +24,19 @@
                             <span class="help-block">{{ trans('cruds.bank.fields.name_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ $bank->is_active || old('is_active', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_active">{{ trans('cruds.bank.fields.is_active') }}</label>
+                            </div>
+                            @if($errors->has('is_active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.bank.fields.is_active_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="branch">{{ trans('cruds.bank.fields.branch') }}</label>
                             <input class="form-control" type="text" name="branch" id="branch" value="{{ old('branch', $bank->branch) }}">
                             @if($errors->has('branch'))
@@ -82,16 +95,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.bank.fields.join_date_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="is_active">{{ trans('cruds.bank.fields.is_active') }}</label>
-                            <input class="form-control" type="text" name="is_active" id="is_active" value="{{ old('is_active', $bank->is_active) }}">
-                            @if($errors->has('is_active'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('is_active') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.bank.fields.is_active_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="current_balance">{{ trans('cruds.bank.fields.current_balance') }}</label>
@@ -164,6 +167,17 @@
                             <span class="help-block">{{ trans('cruds.bank.fields.link_b_description_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="files">{{ trans('cruds.bank.fields.files') }}</label>
+                            <div class="needsclick dropzone" id="files-dropzone">
+                            </div>
+                            @if($errors->has('files'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('files') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.bank.fields.files_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -175,4 +189,63 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    var uploadedFilesMap = {}
+Dropzone.options.filesDropzone = {
+    url: '{{ route('frontend.banks.storeMedia') }}',
+    maxFilesize: 10, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 10
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="files[]" value="' + response.name + '">')
+      uploadedFilesMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedFilesMap[file.name]
+      }
+      $('form').find('input[name="files[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($bank) && $bank->files)
+          var files =
+            {!! json_encode($bank->files) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="files[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
 @endsection

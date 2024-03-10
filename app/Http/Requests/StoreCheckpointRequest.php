@@ -25,6 +25,13 @@ class StoreCheckpointRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'groups.*' => [
+                'integer',
+            ],
+            'groups' => [
+                'required',
+                'array',
+            ],
         ];
     }
 }

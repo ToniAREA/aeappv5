@@ -18,6 +18,7 @@ class Plan extends Model implements HasMedia
     public $table = 'plans';
 
     protected $appends = [
+        'photo',
         'contract',
     ];
 
@@ -42,11 +43,13 @@ class Plan extends Model implements HasMedia
         'show_online',
         'period',
         'period_price',
+        'hourly_rate_discount',
+        'material_discount',
+        'link',
+        'link_description',
         'seo_title',
         'seo_meta_description',
         'seo_slug',
-        'link',
-        'link_description',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,6 +69,18 @@ class Plan extends Model implements HasMedia
     public function planSuscriptions()
     {
         return $this->hasMany(Suscription::class, 'plan_id', 'id');
+    }
+
+    public function getPhotoAttribute()
+    {
+        $file = $this->getMedia('photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function getContractAttribute()

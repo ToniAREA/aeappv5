@@ -52,13 +52,16 @@
                                 {{ trans('cruds.wlog.fields.hourly_rate') }}
                             </th>
                             <th>
+                                {{ trans('cruds.wlog.fields.travel_cost_included') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.total_travel_cost') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.total_access_cost') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.wlog.fields.wlist_finished') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.wlog.fields.proforma_number') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.proforma.fields.description') }}
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.invoiced_line') }}
@@ -71,6 +74,12 @@
                             </th>
                             <th>
                                 {{ trans('cruds.wlog.fields.photos') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.wlog.fields.financial_document') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -114,14 +123,18 @@
                                     {{ $wlog->hourly_rate ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $wlog->travel_cost_included ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $wlog->travel_cost_included ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    {{ $wlog->total_travel_cost ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $wlog->total_access_cost ?? '' }}
+                                </td>
+                                <td>
                                     <span style="display:none">{{ $wlog->wlist_finished ?? '' }}</span>
                                     <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
-                                </td>
-                                <td>
-                                    {{ $wlog->proforma_number->proforma_number ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $wlog->proforma_number->description ?? '' }}
                                 </td>
                                 <td>
                                     <span style="display:none">{{ $wlog->invoiced_line ?? '' }}</span>
@@ -139,6 +152,14 @@
                                             <img src="{{ $media->getUrl('thumb') }}">
                                         </a>
                                     @endforeach
+                                </td>
+                                <td>
+                                    {{ $wlog->financial_document->reference_number ?? '' }}
+                                </td>
+                                <td>
+                                    @if($wlog->financial_document)
+                                        {{ $wlog->financial_document::DOC_TYPE_RADIO[$wlog->financial_document->doc_type] ?? '' }}
+                                    @endif
                                 </td>
                                 <td>
                                     @can('wlog_show')

@@ -9,9 +9,9 @@ use App\Http\Requests\MassDestroyMlogRequest;
 use App\Http\Requests\StoreMlogRequest;
 use App\Http\Requests\UpdateMlogRequest;
 use App\Models\Boat;
+use App\Models\FinalcialDocument;
 use App\Models\Mlog;
 use App\Models\Product;
-use App\Models\Proforma;
 use App\Models\User;
 use App\Models\Wlist;
 use Gate;
@@ -29,7 +29,7 @@ class MlogsController extends Controller
         abort_if(Gate::denies('mlog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Mlog::with(['boat', 'wlist', 'employee', 'product', 'proforma_number'])->select(sprintf('%s.*', (new Mlog)->table));
+            $query = Mlog::with(['boat', 'wlist', 'employee', 'product', 'financial_document'])->select(sprintf('%s.*', (new Mlog)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -101,32 +101,32 @@ class MlogsController extends Controller
             $table->editColumn('price_unit', function ($row) {
                 return $row->price_unit ? $row->price_unit : '';
             });
-            $table->addColumn('proforma_number_proforma_number', function ($row) {
-                return $row->proforma_number ? $row->proforma_number->proforma_number : '';
-            });
-
-            $table->editColumn('proforma_number.description', function ($row) {
-                return $row->proforma_number ? (is_string($row->proforma_number) ? $row->proforma_number : $row->proforma_number->description) : '';
-            });
             $table->editColumn('invoiced_line', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->invoiced_line ? 'checked' : null) . '>';
+            });
+            $table->addColumn('financial_document_reference_number', function ($row) {
+                return $row->financial_document ? $row->financial_document->reference_number : '';
+            });
+
+            $table->editColumn('financial_document.doc_type', function ($row) {
+                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
             });
             $table->editColumn('internal_notes', function ($row) {
                 return $row->internal_notes ? $row->internal_notes : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'boat', 'wlist', 'employee', 'product', 'photos', 'proforma_number', 'invoiced_line']);
+            $table->rawColumns(['actions', 'placeholder', 'boat', 'wlist', 'employee', 'product', 'photos', 'invoiced_line', 'financial_document']);
 
             return $table->make(true);
         }
 
-        $boats     = Boat::get();
-        $wlists    = Wlist::get();
-        $users     = User::get();
-        $products  = Product::get();
-        $proformas = Proforma::get();
+        $boats               = Boat::get();
+        $wlists              = Wlist::get();
+        $users               = User::get();
+        $products            = Product::get();
+        $finalcial_documents = FinalcialDocument::get();
 
-        return view('admin.mlogs.index', compact('boats', 'wlists', 'users', 'products', 'proformas'));
+        return view('admin.mlogs.index', compact('boats', 'wlists', 'users', 'products', 'finalcial_documents'));
     }
 
     public function create()
@@ -141,9 +141,9 @@ class MlogsController extends Controller
 
         $products = Product::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proforma_numbers = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.mlogs.create', compact('boats', 'employees', 'products', 'proforma_numbers', 'wlists'));
+        return view('admin.mlogs.create', compact('boats', 'employees', 'financial_documents', 'products', 'wlists'));
     }
 
     public function store(StoreMlogRequest $request)
@@ -173,11 +173,11 @@ class MlogsController extends Controller
 
         $products = Product::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proforma_numbers = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $mlog->load('boat', 'wlist', 'employee', 'product', 'proforma_number');
+        $mlog->load('boat', 'wlist', 'employee', 'product', 'financial_document');
 
-        return view('admin.mlogs.edit', compact('boats', 'employees', 'mlog', 'products', 'proforma_numbers', 'wlists'));
+        return view('admin.mlogs.edit', compact('boats', 'employees', 'financial_documents', 'mlog', 'products', 'wlists'));
     }
 
     public function update(UpdateMlogRequest $request, Mlog $mlog)
@@ -205,7 +205,7 @@ class MlogsController extends Controller
     {
         abort_if(Gate::denies('mlog_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $mlog->load('boat', 'wlist', 'employee', 'product', 'proforma_number');
+        $mlog->load('boat', 'wlist', 'employee', 'product', 'financial_document');
 
         return view('admin.mlogs.show', compact('mlog'));
     }

@@ -104,18 +104,6 @@
                 <span class="help-block">{{ trans('cruds.assetsRental.fields.invoiced_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="proforma_id">{{ trans('cruds.assetsRental.fields.proforma') }}</label>
-                <select class="form-control select2 {{ $errors->has('proforma') ? 'is-invalid' : '' }}" name="proforma_id" id="proforma_id">
-                    @foreach($proformas as $id => $entry)
-                        <option value="{{ $id }}" {{ old('proforma_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('proforma'))
-                    <span class="text-danger">{{ $errors->first('proforma') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.assetsRental.fields.proforma_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="link">{{ trans('cruds.assetsRental.fields.link') }}</label>
                 <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', '') }}">
                 @if($errors->has('link'))
@@ -159,6 +147,18 @@
                     <span class="text-danger">{{ $errors->first('rental_quantity') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.assetsRental.fields.rental_quantity_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="financial_document_id">{{ trans('cruds.assetsRental.fields.financial_document') }}</label>
+                <select class="form-control select2 {{ $errors->has('financial_document') ? 'is-invalid' : '' }}" name="financial_document_id" id="financial_document_id">
+                    @foreach($financial_documents as $id => $entry)
+                        <option value="{{ $id }}" {{ old('financial_document_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('financial_document'))
+                    <span class="text-danger">{{ $errors->first('financial_document') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.assetsRental.fields.financial_document_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">

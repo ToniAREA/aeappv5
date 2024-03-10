@@ -55,6 +55,12 @@
                                 {{ trans('cruds.documentation.fields.link_description') }}
                             </th>
                             <th>
+                                {{ trans('cruds.documentation.fields.authorized_roles') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.documentation.fields.authorized_users') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -102,6 +108,16 @@
                                 </td>
                                 <td>
                                     {{ $documentation->link_description ?? '' }}
+                                </td>
+                                <td>
+                                    @foreach($documentation->authorized_roles as $key => $item)
+                                        <span class="badge badge-info">{{ $item->title }}</span>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach($documentation->authorized_users as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
+                                    @endforeach
                                 </td>
                                 <td>
                                     @can('documentation_show')

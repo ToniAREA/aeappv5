@@ -38,18 +38,6 @@
                 <span class="help-block">{{ trans('cruds.clientsReview.fields.client_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="proforma_id">{{ trans('cruds.clientsReview.fields.proforma') }}</label>
-                <select class="form-control select2 {{ $errors->has('proforma') ? 'is-invalid' : '' }}" name="proforma_id" id="proforma_id">
-                    @foreach($proformas as $id => $entry)
-                        <option value="{{ $id }}" {{ old('proforma_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('proforma'))
-                    <span class="text-danger">{{ $errors->first('proforma') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.clientsReview.fields.proforma_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="for_wlists">{{ trans('cruds.clientsReview.fields.for_wlists') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>

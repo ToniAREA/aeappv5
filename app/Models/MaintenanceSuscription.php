@@ -33,8 +33,8 @@ class MaintenanceSuscription extends Model implements HasMedia
 
     protected $fillable = [
         'user_id',
+        'financial_document_id',
         'is_active',
-        'proforma_id',
         'client_id',
         'care_plan_id',
         'start_date',
@@ -67,9 +67,9 @@ class MaintenanceSuscription extends Model implements HasMedia
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function proforma()
+    public function financial_document()
     {
-        return $this->belongsTo(Proforma::class, 'proforma_id');
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 
     public function client()

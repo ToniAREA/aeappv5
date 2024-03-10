@@ -23,7 +23,7 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $marinas = Marina::with(['contact_docs', 'media'])->get();
+        $marinas = Marina::with(['contacts', 'contact_docs', 'media'])->get();
 
         return view('frontend.marinas.index', compact('marinas'));
     }
@@ -32,15 +32,17 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $contacts = ContactContact::pluck('contact_first_name', 'id');
+
         $contact_docs = ContactContact::pluck('contact_first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.marinas.create', compact('contact_docs'));
+        return view('frontend.marinas.create', compact('contact_docs', 'contacts'));
     }
 
     public function store(StoreMarinaRequest $request)
     {
         $marina = Marina::create($request->all());
-
+        $marina->contacts()->sync($request->input('contacts', []));
         if ($request->input('marina_photo', false)) {
             $marina->addMedia(storage_path('tmp/uploads/' . basename($request->input('marina_photo'))))->toMediaCollection('marina_photo');
         }
@@ -56,17 +58,19 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $contacts = ContactContact::pluck('contact_first_name', 'id');
+
         $contact_docs = ContactContact::pluck('contact_first_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $marina->load('contact_docs');
+        $marina->load('contacts', 'contact_docs');
 
-        return view('frontend.marinas.edit', compact('contact_docs', 'marina'));
+        return view('frontend.marinas.edit', compact('contact_docs', 'contacts', 'marina'));
     }
 
     public function update(UpdateMarinaRequest $request, Marina $marina)
     {
         $marina->update($request->all());
-
+        $marina->contacts()->sync($request->input('contacts', []));
         if ($request->input('marina_photo', false)) {
             if (! $marina->marina_photo || $request->input('marina_photo') !== $marina->marina_photo->file_name) {
                 if ($marina->marina_photo) {
@@ -85,7 +89,7 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $marina->load('contact_docs', 'marinaBoats', 'marinaWlogs');
+        $marina->load('contacts', 'contact_docs', 'marinaBoats', 'marinaWlogs');
 
         return view('frontend.marinas.show', compact('marina'));
     }

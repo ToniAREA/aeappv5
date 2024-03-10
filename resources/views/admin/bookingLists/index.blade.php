@@ -77,19 +77,28 @@
                         {{ trans('cruds.bookingList.fields.total_amount') }}
                     </th>
                     <th>
-                        {{ trans('cruds.bookingList.fields.notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bookingList.fields.internal_notes') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.bookingList.fields.confirmed') }}
                     </th>
                     <th>
                         {{ trans('cruds.bookingList.fields.status') }}
                     </th>
                     <th>
+                        {{ trans('cruds.bookingList.fields.is_invoiced') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingList.fields.notes') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingList.fields.internal_notes') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.bookingList.fields.completed_at') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.bookingList.fields.financial_document') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                     </th>
                     <th>
                         &nbsp;
@@ -167,7 +176,6 @@
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -179,6 +187,19 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($finalcial_documents as $key => $item)
+                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
                     </td>
                     <td>
                     </td>
@@ -252,11 +273,14 @@
 { data: 'end_time', name: 'end_time' },
 { data: 'hourly_rate', name: 'hourly_rate' },
 { data: 'total_amount', name: 'total_amount' },
-{ data: 'notes', name: 'notes' },
-{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'confirmed', name: 'confirmed' },
 { data: 'status', name: 'status' },
+{ data: 'is_invoiced', name: 'is_invoiced' },
+{ data: 'notes', name: 'notes' },
+{ data: 'internal_notes', name: 'internal_notes' },
 { data: 'completed_at', name: 'completed_at' },
+{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
+{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

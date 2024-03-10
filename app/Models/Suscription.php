@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +14,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Suscription extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'suscriptions';
 
@@ -33,18 +34,16 @@ class Suscription extends Model implements HasMedia
     protected $fillable = [
         'user_id',
         'is_active',
-        'proforma_id',
         'client_id',
         'plan_id',
         'start_date',
         'end_date',
-        'hourly_rate_discount',
-        'material_discount',
         'link',
         'link_description',
         'notes',
         'internalnotes',
         'completed_at',
+        'financial_document_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -64,11 +63,6 @@ class Suscription extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function proforma()
-    {
-        return $this->belongsTo(Proforma::class, 'proforma_id');
     }
 
     public function client()
@@ -119,5 +113,10 @@ class Suscription extends Model implements HasMedia
     public function setCompletedAtAttribute($value)
     {
         $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

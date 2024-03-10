@@ -39,12 +39,6 @@
                                         {{ trans('cruds.maintenanceSuscription.fields.is_active') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.maintenanceSuscription.fields.proforma') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.proforma.fields.description') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.maintenanceSuscription.fields.client') }}
                                     </th>
                                     <th>
@@ -90,6 +84,12 @@
                                         {{ trans('cruds.maintenanceSuscription.fields.completed_at') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.maintenanceSuscription.fields.financial_document') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -109,12 +109,6 @@
                                         <td>
                                             <span style="display:none">{{ $maintenanceSuscription->is_active ?? '' }}</span>
                                             <input type="checkbox" disabled="disabled" {{ $maintenanceSuscription->is_active ? 'checked' : '' }}>
-                                        </td>
-                                        <td>
-                                            {{ $maintenanceSuscription->proforma->proforma_number ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $maintenanceSuscription->proforma->description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $maintenanceSuscription->client->name ?? '' }}
@@ -168,6 +162,14 @@
                                         </td>
                                         <td>
                                             {{ $maintenanceSuscription->completed_at ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $maintenanceSuscription->financial_document->reference_number ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($maintenanceSuscription->financial_document)
+                                                {{ $maintenanceSuscription->financial_document::DOC_TYPE_RADIO[$maintenanceSuscription->financial_document->doc_type] ?? '' }}
+                                            @endif
                                         </td>
                                         <td>
                                             @can('maintenance_suscription_show')

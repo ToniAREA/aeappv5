@@ -16,6 +16,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/parse-csv-import', 'UsersController@parseCsvImport')->name('users.parseCsvImport');
+    Route::post('users/process-csv-import', 'UsersController@processCsvImport')->name('users.processCsvImport');
     Route::resource('users', 'UsersController');
 
     // Clients
@@ -36,6 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('content-categories/destroy', 'ContentCategoryController@massDestroy')->name('content-categories.massDestroy');
     Route::post('content-categories/media', 'ContentCategoryController@storeMedia')->name('content-categories.storeMedia');
     Route::post('content-categories/ckmedia', 'ContentCategoryController@storeCKEditorImages')->name('content-categories.storeCKEditorImages');
+    Route::post('content-categories/parse-csv-import', 'ContentCategoryController@parseCsvImport')->name('content-categories.parseCsvImport');
+    Route::post('content-categories/process-csv-import', 'ContentCategoryController@processCsvImport')->name('content-categories.processCsvImport');
     Route::resource('content-categories', 'ContentCategoryController');
 
     // Content Tag
@@ -149,18 +153,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('brands/process-csv-import', 'BrandsController@processCsvImport')->name('brands.processCsvImport');
     Route::resource('brands', 'BrandsController');
 
-    // Proforma
-    Route::delete('proformas/destroy', 'ProformaController@massDestroy')->name('proformas.massDestroy');
-    Route::post('proformas/parse-csv-import', 'ProformaController@parseCsvImport')->name('proformas.parseCsvImport');
-    Route::post('proformas/process-csv-import', 'ProformaController@processCsvImport')->name('proformas.processCsvImport');
-    Route::resource('proformas', 'ProformaController');
-
     // Claim
     Route::delete('claims/destroy', 'ClaimController@massDestroy')->name('claims.massDestroy');
+    Route::post('claims/parse-csv-import', 'ClaimController@parseCsvImport')->name('claims.parseCsvImport');
+    Route::post('claims/process-csv-import', 'ClaimController@processCsvImport')->name('claims.processCsvImport');
     Route::resource('claims', 'ClaimController');
 
     // Payment
     Route::delete('payments/destroy', 'PaymentController@massDestroy')->name('payments.massDestroy');
+    Route::post('payments/parse-csv-import', 'PaymentController@parseCsvImport')->name('payments.parseCsvImport');
+    Route::post('payments/process-csv-import', 'PaymentController@processCsvImport')->name('payments.processCsvImport');
     Route::resource('payments', 'PaymentController');
 
     // Asset Category
@@ -190,10 +192,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('assets', 'AssetController');
 
     // Assets History
-    Route::resource('assets-histories', 'AssetsHistoryController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::delete('assets-histories/destroy', 'AssetsHistoryController@massDestroy')->name('assets-histories.massDestroy');
+    Route::post('assets-histories/parse-csv-import', 'AssetsHistoryController@parseCsvImport')->name('assets-histories.parseCsvImport');
+    Route::post('assets-histories/process-csv-import', 'AssetsHistoryController@processCsvImport')->name('assets-histories.processCsvImport');
+    Route::resource('assets-histories', 'AssetsHistoryController');
 
     // Faq Category
     Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
+    Route::post('faq-categories/media', 'FaqCategoryController@storeMedia')->name('faq-categories.storeMedia');
+    Route::post('faq-categories/ckmedia', 'FaqCategoryController@storeCKEditorImages')->name('faq-categories.storeCKEditorImages');
     Route::post('faq-categories/parse-csv-import', 'FaqCategoryController@parseCsvImport')->name('faq-categories.parseCsvImport');
     Route::post('faq-categories/process-csv-import', 'FaqCategoryController@processCsvImport')->name('faq-categories.processCsvImport');
     Route::resource('faq-categories', 'FaqCategoryController');
@@ -202,6 +209,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
     Route::post('faq-questions/media', 'FaqQuestionController@storeMedia')->name('faq-questions.storeMedia');
     Route::post('faq-questions/ckmedia', 'FaqQuestionController@storeCKEditorImages')->name('faq-questions.storeCKEditorImages');
+    Route::post('faq-questions/parse-csv-import', 'FaqQuestionController@parseCsvImport')->name('faq-questions.parseCsvImport');
+    Route::post('faq-questions/process-csv-import', 'FaqQuestionController@processCsvImport')->name('faq-questions.processCsvImport');
     Route::resource('faq-questions', 'FaqQuestionController');
 
     // Expense Category
@@ -234,10 +243,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('contact-tags/destroy', 'ContactTagController@massDestroy')->name('contact-tags.massDestroy');
     Route::resource('contact-tags', 'ContactTagController');
 
-    // Priorities
-    Route::delete('priorities/destroy', 'PrioritiesController@massDestroy')->name('priorities.massDestroy');
-    Route::resource('priorities', 'PrioritiesController');
-
     // Comments
     Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
     Route::post('comments/media', 'CommentsController@storeMedia')->name('comments.storeMedia');
@@ -266,6 +271,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Assets Rentals
     Route::delete('assets-rentals/destroy', 'AssetsRentalsController@massDestroy')->name('assets-rentals.massDestroy');
+    Route::post('assets-rentals/parse-csv-import', 'AssetsRentalsController@parseCsvImport')->name('assets-rentals.parseCsvImport');
+    Route::post('assets-rentals/process-csv-import', 'AssetsRentalsController@processCsvImport')->name('assets-rentals.processCsvImport');
     Route::resource('assets-rentals', 'AssetsRentalsController');
 
     // Booking Statuses
@@ -286,10 +293,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('technical-documentations/destroy', 'TechnicalDocumentationController@massDestroy')->name('technical-documentations.massDestroy');
     Route::post('technical-documentations/media', 'TechnicalDocumentationController@storeMedia')->name('technical-documentations.storeMedia');
     Route::post('technical-documentations/ckmedia', 'TechnicalDocumentationController@storeCKEditorImages')->name('technical-documentations.storeCKEditorImages');
+    Route::post('technical-documentations/parse-csv-import', 'TechnicalDocumentationController@parseCsvImport')->name('technical-documentations.parseCsvImport');
+    Route::post('technical-documentations/process-csv-import', 'TechnicalDocumentationController@processCsvImport')->name('technical-documentations.processCsvImport');
     Route::resource('technical-documentations', 'TechnicalDocumentationController');
 
     // Tech Docs Types
     Route::delete('tech-docs-types/destroy', 'TechDocsTypesController@massDestroy')->name('tech-docs-types.massDestroy');
+    Route::post('tech-docs-types/parse-csv-import', 'TechDocsTypesController@parseCsvImport')->name('tech-docs-types.parseCsvImport');
+    Route::post('tech-docs-types/process-csv-import', 'TechDocsTypesController@processCsvImport')->name('tech-docs-types.processCsvImport');
     Route::resource('tech-docs-types', 'TechDocsTypesController');
 
     // Skills Categories
@@ -306,28 +317,40 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('video-tutorials/destroy', 'VideoTutorialsController@massDestroy')->name('video-tutorials.massDestroy');
     Route::post('video-tutorials/media', 'VideoTutorialsController@storeMedia')->name('video-tutorials.storeMedia');
     Route::post('video-tutorials/ckmedia', 'VideoTutorialsController@storeCKEditorImages')->name('video-tutorials.storeCKEditorImages');
+    Route::post('video-tutorials/parse-csv-import', 'VideoTutorialsController@parseCsvImport')->name('video-tutorials.parseCsvImport');
+    Route::post('video-tutorials/process-csv-import', 'VideoTutorialsController@processCsvImport')->name('video-tutorials.processCsvImport');
     Route::resource('video-tutorials', 'VideoTutorialsController');
 
     // Video Categories
     Route::delete('video-categories/destroy', 'VideoCategoriesController@massDestroy')->name('video-categories.massDestroy');
+    Route::post('video-categories/media', 'VideoCategoriesController@storeMedia')->name('video-categories.storeMedia');
+    Route::post('video-categories/ckmedia', 'VideoCategoriesController@storeCKEditorImages')->name('video-categories.storeCKEditorImages');
+    Route::post('video-categories/parse-csv-import', 'VideoCategoriesController@parseCsvImport')->name('video-categories.parseCsvImport');
+    Route::post('video-categories/process-csv-import', 'VideoCategoriesController@processCsvImport')->name('video-categories.processCsvImport');
     Route::resource('video-categories', 'VideoCategoriesController');
 
     // Suscriptions
     Route::delete('suscriptions/destroy', 'SuscriptionsController@massDestroy')->name('suscriptions.massDestroy');
     Route::post('suscriptions/media', 'SuscriptionsController@storeMedia')->name('suscriptions.storeMedia');
     Route::post('suscriptions/ckmedia', 'SuscriptionsController@storeCKEditorImages')->name('suscriptions.storeCKEditorImages');
+    Route::post('suscriptions/parse-csv-import', 'SuscriptionsController@parseCsvImport')->name('suscriptions.parseCsvImport');
+    Route::post('suscriptions/process-csv-import', 'SuscriptionsController@processCsvImport')->name('suscriptions.processCsvImport');
     Route::resource('suscriptions', 'SuscriptionsController');
 
     // Plans
     Route::delete('plans/destroy', 'PlansController@massDestroy')->name('plans.massDestroy');
     Route::post('plans/media', 'PlansController@storeMedia')->name('plans.storeMedia');
     Route::post('plans/ckmedia', 'PlansController@storeCKEditorImages')->name('plans.storeCKEditorImages');
+    Route::post('plans/parse-csv-import', 'PlansController@parseCsvImport')->name('plans.parseCsvImport');
+    Route::post('plans/process-csv-import', 'PlansController@processCsvImport')->name('plans.processCsvImport');
     Route::resource('plans', 'PlansController');
 
     // Documentation
     Route::delete('documentations/destroy', 'DocumentationController@massDestroy')->name('documentations.massDestroy');
     Route::post('documentations/media', 'DocumentationController@storeMedia')->name('documentations.storeMedia');
     Route::post('documentations/ckmedia', 'DocumentationController@storeCKEditorImages')->name('documentations.storeCKEditorImages');
+    Route::post('documentations/parse-csv-import', 'DocumentationController@parseCsvImport')->name('documentations.parseCsvImport');
+    Route::post('documentations/process-csv-import', 'DocumentationController@processCsvImport')->name('documentations.processCsvImport');
     Route::resource('documentations', 'DocumentationController');
 
     // Insurances
@@ -338,10 +361,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Banks
     Route::delete('banks/destroy', 'BanksController@massDestroy')->name('banks.massDestroy');
+    Route::post('banks/media', 'BanksController@storeMedia')->name('banks.storeMedia');
+    Route::post('banks/ckmedia', 'BanksController@storeCKEditorImages')->name('banks.storeCKEditorImages');
+    Route::post('banks/parse-csv-import', 'BanksController@parseCsvImport')->name('banks.parseCsvImport');
+    Route::post('banks/process-csv-import', 'BanksController@processCsvImport')->name('banks.processCsvImport');
     Route::resource('banks', 'BanksController');
 
     // Documentation Categories
     Route::delete('documentation-categories/destroy', 'DocumentationCategoriesController@massDestroy')->name('documentation-categories.massDestroy');
+    Route::post('documentation-categories/media', 'DocumentationCategoriesController@storeMedia')->name('documentation-categories.storeMedia');
+    Route::post('documentation-categories/ckmedia', 'DocumentationCategoriesController@storeCKEditorImages')->name('documentation-categories.storeCKEditorImages');
+    Route::post('documentation-categories/parse-csv-import', 'DocumentationCategoriesController@parseCsvImport')->name('documentation-categories.parseCsvImport');
+    Route::post('documentation-categories/process-csv-import', 'DocumentationCategoriesController@processCsvImport')->name('documentation-categories.processCsvImport');
     Route::resource('documentation-categories', 'DocumentationCategoriesController');
 
     // Checkpoints
@@ -374,6 +405,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Employee Skills
     Route::delete('employee-skills/destroy', 'EmployeeSkillsController@massDestroy')->name('employee-skills.massDestroy');
+    Route::post('employee-skills/parse-csv-import', 'EmployeeSkillsController@parseCsvImport')->name('employee-skills.parseCsvImport');
+    Route::post('employee-skills/process-csv-import', 'EmployeeSkillsController@processCsvImport')->name('employee-skills.processCsvImport');
     Route::resource('employee-skills', 'EmployeeSkillsController');
 
     // Employee Rating
@@ -381,6 +414,81 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('employee-ratings/parse-csv-import', 'EmployeeRatingController@parseCsvImport')->name('employee-ratings.parseCsvImport');
     Route::post('employee-ratings/process-csv-import', 'EmployeeRatingController@processCsvImport')->name('employee-ratings.processCsvImport');
     Route::resource('employee-ratings', 'EmployeeRatingController');
+
+    // Iot Plans
+    Route::delete('iot-plans/destroy', 'IotPlansController@massDestroy')->name('iot-plans.massDestroy');
+    Route::post('iot-plans/media', 'IotPlansController@storeMedia')->name('iot-plans.storeMedia');
+    Route::post('iot-plans/ckmedia', 'IotPlansController@storeCKEditorImages')->name('iot-plans.storeCKEditorImages');
+    Route::post('iot-plans/parse-csv-import', 'IotPlansController@parseCsvImport')->name('iot-plans.parseCsvImport');
+    Route::post('iot-plans/process-csv-import', 'IotPlansController@processCsvImport')->name('iot-plans.processCsvImport');
+    Route::resource('iot-plans', 'IotPlansController');
+
+    // Iot Suscriptions
+    Route::delete('iot-suscriptions/destroy', 'IotSuscriptionsController@massDestroy')->name('iot-suscriptions.massDestroy');
+    Route::post('iot-suscriptions/media', 'IotSuscriptionsController@storeMedia')->name('iot-suscriptions.storeMedia');
+    Route::post('iot-suscriptions/ckmedia', 'IotSuscriptionsController@storeCKEditorImages')->name('iot-suscriptions.storeCKEditorImages');
+    Route::post('iot-suscriptions/parse-csv-import', 'IotSuscriptionsController@parseCsvImport')->name('iot-suscriptions.parseCsvImport');
+    Route::post('iot-suscriptions/process-csv-import', 'IotSuscriptionsController@processCsvImport')->name('iot-suscriptions.processCsvImport');
+    Route::resource('iot-suscriptions', 'IotSuscriptionsController');
+
+    // Iot Devices
+    Route::delete('iot-devices/destroy', 'IotDevicesController@massDestroy')->name('iot-devices.massDestroy');
+    Route::post('iot-devices/parse-csv-import', 'IotDevicesController@parseCsvImport')->name('iot-devices.parseCsvImport');
+    Route::post('iot-devices/process-csv-import', 'IotDevicesController@processCsvImport')->name('iot-devices.processCsvImport');
+    Route::resource('iot-devices', 'IotDevicesController');
+
+    // Iot Received Data
+    Route::delete('iot-received-datas/destroy', 'IotReceivedDataController@massDestroy')->name('iot-received-datas.massDestroy');
+    Route::post('iot-received-datas/parse-csv-import', 'IotReceivedDataController@parseCsvImport')->name('iot-received-datas.parseCsvImport');
+    Route::post('iot-received-datas/process-csv-import', 'IotReceivedDataController@processCsvImport')->name('iot-received-datas.processCsvImport');
+    Route::resource('iot-received-datas', 'IotReceivedDataController');
+
+    // Checkpoints Groups
+    Route::delete('checkpoints-groups/destroy', 'CheckpointsGroupsController@massDestroy')->name('checkpoints-groups.massDestroy');
+    Route::post('checkpoints-groups/parse-csv-import', 'CheckpointsGroupsController@parseCsvImport')->name('checkpoints-groups.parseCsvImport');
+    Route::post('checkpoints-groups/process-csv-import', 'CheckpointsGroupsController@processCsvImport')->name('checkpoints-groups.processCsvImport');
+    Route::resource('checkpoints-groups', 'CheckpointsGroupsController');
+
+    // Currencies
+    Route::delete('currencies/destroy', 'CurrenciesController@massDestroy')->name('currencies.massDestroy');
+    Route::post('currencies/parse-csv-import', 'CurrenciesController@parseCsvImport')->name('currencies.parseCsvImport');
+    Route::post('currencies/process-csv-import', 'CurrenciesController@processCsvImport')->name('currencies.processCsvImport');
+    Route::resource('currencies', 'CurrenciesController');
+
+    // Finalcial Documents
+    Route::delete('finalcial-documents/destroy', 'FinalcialDocumentsController@massDestroy')->name('finalcial-documents.massDestroy');
+    Route::post('finalcial-documents/parse-csv-import', 'FinalcialDocumentsController@parseCsvImport')->name('finalcial-documents.parseCsvImport');
+    Route::post('finalcial-documents/process-csv-import', 'FinalcialDocumentsController@processCsvImport')->name('finalcial-documents.processCsvImport');
+    Route::resource('finalcial-documents', 'FinalcialDocumentsController');
+
+    // Social Accounts
+    Route::post('social-accounts/parse-csv-import', 'SocialAccountsController@parseCsvImport')->name('social-accounts.parseCsvImport');
+    Route::post('social-accounts/process-csv-import', 'SocialAccountsController@processCsvImport')->name('social-accounts.processCsvImport');
+    Route::resource('social-accounts', 'SocialAccountsController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+    // Financial Document Items
+    Route::delete('financial-document-items/destroy', 'FinancialDocumentItemsController@massDestroy')->name('financial-document-items.massDestroy');
+    Route::post('financial-document-items/parse-csv-import', 'FinancialDocumentItemsController@parseCsvImport')->name('financial-document-items.parseCsvImport');
+    Route::post('financial-document-items/process-csv-import', 'FinancialDocumentItemsController@processCsvImport')->name('financial-document-items.processCsvImport');
+    Route::resource('financial-document-items', 'FinancialDocumentItemsController');
+
+    // Finantial Document Taxes
+    Route::delete('finantial-document-taxes/destroy', 'FinantialDocumentTaxesController@massDestroy')->name('finantial-document-taxes.massDestroy');
+    Route::post('finantial-document-taxes/parse-csv-import', 'FinantialDocumentTaxesController@parseCsvImport')->name('finantial-document-taxes.parseCsvImport');
+    Route::post('finantial-document-taxes/process-csv-import', 'FinantialDocumentTaxesController@processCsvImport')->name('finantial-document-taxes.processCsvImport');
+    Route::resource('finantial-document-taxes', 'FinantialDocumentTaxesController');
+
+    // Finantial Document Discounts
+    Route::delete('finantial-document-discounts/destroy', 'FinantialDocumentDiscountsController@massDestroy')->name('finantial-document-discounts.massDestroy');
+    Route::post('finantial-document-discounts/parse-csv-import', 'FinantialDocumentDiscountsController@parseCsvImport')->name('finantial-document-discounts.parseCsvImport');
+    Route::post('finantial-document-discounts/process-csv-import', 'FinantialDocumentDiscountsController@processCsvImport')->name('finantial-document-discounts.processCsvImport');
+    Route::resource('finantial-document-discounts', 'FinantialDocumentDiscountsController');
+
+    // User Settings
+    Route::delete('user-settings/destroy', 'UserSettingsController@massDestroy')->name('user-settings.massDestroy');
+    Route::post('user-settings/parse-csv-import', 'UserSettingsController@parseCsvImport')->name('user-settings.parseCsvImport');
+    Route::post('user-settings/process-csv-import', 'UserSettingsController@processCsvImport')->name('user-settings.processCsvImport');
+    Route::resource('user-settings', 'UserSettingsController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
@@ -506,10 +614,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('brands/ckmedia', 'BrandsController@storeCKEditorImages')->name('brands.storeCKEditorImages');
     Route::resource('brands', 'BrandsController');
 
-    // Proforma
-    Route::delete('proformas/destroy', 'ProformaController@massDestroy')->name('proformas.massDestroy');
-    Route::resource('proformas', 'ProformaController');
-
     // Claim
     Route::delete('claims/destroy', 'ClaimController@massDestroy')->name('claims.massDestroy');
     Route::resource('claims', 'ClaimController');
@@ -539,10 +643,13 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('assets', 'AssetController');
 
     // Assets History
-    Route::resource('assets-histories', 'AssetsHistoryController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::delete('assets-histories/destroy', 'AssetsHistoryController@massDestroy')->name('assets-histories.massDestroy');
+    Route::resource('assets-histories', 'AssetsHistoryController');
 
     // Faq Category
     Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
+    Route::post('faq-categories/media', 'FaqCategoryController@storeMedia')->name('faq-categories.storeMedia');
+    Route::post('faq-categories/ckmedia', 'FaqCategoryController@storeCKEditorImages')->name('faq-categories.storeCKEditorImages');
     Route::resource('faq-categories', 'FaqCategoryController');
 
     // Faq Question
@@ -572,10 +679,6 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Contact Tag
     Route::delete('contact-tags/destroy', 'ContactTagController@massDestroy')->name('contact-tags.massDestroy');
     Route::resource('contact-tags', 'ContactTagController');
-
-    // Priorities
-    Route::delete('priorities/destroy', 'PrioritiesController@massDestroy')->name('priorities.massDestroy');
-    Route::resource('priorities', 'PrioritiesController');
 
     // Comments
     Route::delete('comments/destroy', 'CommentsController@massDestroy')->name('comments.massDestroy');
@@ -639,6 +742,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Video Categories
     Route::delete('video-categories/destroy', 'VideoCategoriesController@massDestroy')->name('video-categories.massDestroy');
+    Route::post('video-categories/media', 'VideoCategoriesController@storeMedia')->name('video-categories.storeMedia');
+    Route::post('video-categories/ckmedia', 'VideoCategoriesController@storeCKEditorImages')->name('video-categories.storeCKEditorImages');
     Route::resource('video-categories', 'VideoCategoriesController');
 
     // Suscriptions
@@ -667,10 +772,14 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Banks
     Route::delete('banks/destroy', 'BanksController@massDestroy')->name('banks.massDestroy');
+    Route::post('banks/media', 'BanksController@storeMedia')->name('banks.storeMedia');
+    Route::post('banks/ckmedia', 'BanksController@storeCKEditorImages')->name('banks.storeCKEditorImages');
     Route::resource('banks', 'BanksController');
 
     // Documentation Categories
     Route::delete('documentation-categories/destroy', 'DocumentationCategoriesController@massDestroy')->name('documentation-categories.massDestroy');
+    Route::post('documentation-categories/media', 'DocumentationCategoriesController@storeMedia')->name('documentation-categories.storeMedia');
+    Route::post('documentation-categories/ckmedia', 'DocumentationCategoriesController@storeCKEditorImages')->name('documentation-categories.storeCKEditorImages');
     Route::resource('documentation-categories', 'DocumentationCategoriesController');
 
     // Checkpoints
@@ -700,6 +809,57 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // Employee Rating
     Route::delete('employee-ratings/destroy', 'EmployeeRatingController@massDestroy')->name('employee-ratings.massDestroy');
     Route::resource('employee-ratings', 'EmployeeRatingController');
+
+    // Iot Plans
+    Route::delete('iot-plans/destroy', 'IotPlansController@massDestroy')->name('iot-plans.massDestroy');
+    Route::post('iot-plans/media', 'IotPlansController@storeMedia')->name('iot-plans.storeMedia');
+    Route::post('iot-plans/ckmedia', 'IotPlansController@storeCKEditorImages')->name('iot-plans.storeCKEditorImages');
+    Route::resource('iot-plans', 'IotPlansController');
+
+    // Iot Suscriptions
+    Route::delete('iot-suscriptions/destroy', 'IotSuscriptionsController@massDestroy')->name('iot-suscriptions.massDestroy');
+    Route::post('iot-suscriptions/media', 'IotSuscriptionsController@storeMedia')->name('iot-suscriptions.storeMedia');
+    Route::post('iot-suscriptions/ckmedia', 'IotSuscriptionsController@storeCKEditorImages')->name('iot-suscriptions.storeCKEditorImages');
+    Route::resource('iot-suscriptions', 'IotSuscriptionsController');
+
+    // Iot Devices
+    Route::delete('iot-devices/destroy', 'IotDevicesController@massDestroy')->name('iot-devices.massDestroy');
+    Route::resource('iot-devices', 'IotDevicesController');
+
+    // Iot Received Data
+    Route::delete('iot-received-datas/destroy', 'IotReceivedDataController@massDestroy')->name('iot-received-datas.massDestroy');
+    Route::resource('iot-received-datas', 'IotReceivedDataController');
+
+    // Checkpoints Groups
+    Route::delete('checkpoints-groups/destroy', 'CheckpointsGroupsController@massDestroy')->name('checkpoints-groups.massDestroy');
+    Route::resource('checkpoints-groups', 'CheckpointsGroupsController');
+
+    // Currencies
+    Route::delete('currencies/destroy', 'CurrenciesController@massDestroy')->name('currencies.massDestroy');
+    Route::resource('currencies', 'CurrenciesController');
+
+    // Finalcial Documents
+    Route::delete('finalcial-documents/destroy', 'FinalcialDocumentsController@massDestroy')->name('finalcial-documents.massDestroy');
+    Route::resource('finalcial-documents', 'FinalcialDocumentsController');
+
+    // Social Accounts
+    Route::resource('social-accounts', 'SocialAccountsController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+    // Financial Document Items
+    Route::delete('financial-document-items/destroy', 'FinancialDocumentItemsController@massDestroy')->name('financial-document-items.massDestroy');
+    Route::resource('financial-document-items', 'FinancialDocumentItemsController');
+
+    // Finantial Document Taxes
+    Route::delete('finantial-document-taxes/destroy', 'FinantialDocumentTaxesController@massDestroy')->name('finantial-document-taxes.massDestroy');
+    Route::resource('finantial-document-taxes', 'FinantialDocumentTaxesController');
+
+    // Finantial Document Discounts
+    Route::delete('finantial-document-discounts/destroy', 'FinantialDocumentDiscountsController@massDestroy')->name('finantial-document-discounts.massDestroy');
+    Route::resource('finantial-document-discounts', 'FinantialDocumentDiscountsController');
+
+    // User Settings
+    Route::delete('user-settings/destroy', 'UserSettingsController@massDestroy')->name('user-settings.massDestroy');
+    Route::resource('user-settings', 'UserSettingsController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
     Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');

@@ -73,19 +73,28 @@
                                 {{ trans('cruds.bookingList.fields.total_amount') }}
                             </th>
                             <th>
-                                {{ trans('cruds.bookingList.fields.notes') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.bookingList.fields.internal_notes') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.bookingList.fields.confirmed') }}
                             </th>
                             <th>
                                 {{ trans('cruds.bookingList.fields.status') }}
                             </th>
                             <th>
+                                {{ trans('cruds.bookingList.fields.is_invoiced') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.bookingList.fields.notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.bookingList.fields.internal_notes') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.bookingList.fields.completed_at') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.bookingList.fields.financial_document') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -150,12 +159,6 @@
                                     {{ $bookingList->total_amount ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $bookingList->notes ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $bookingList->internal_notes ?? '' }}
-                                </td>
-                                <td>
                                     <span style="display:none">{{ $bookingList->confirmed ?? '' }}</span>
                                     <input type="checkbox" disabled="disabled" {{ $bookingList->confirmed ? 'checked' : '' }}>
                                 </td>
@@ -163,7 +166,25 @@
                                     {{ $bookingList->status ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $bookingList->is_invoiced ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $bookingList->is_invoiced ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    {{ $bookingList->notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $bookingList->internal_notes ?? '' }}
+                                </td>
+                                <td>
                                     {{ $bookingList->completed_at ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $bookingList->financial_document->reference_number ?? '' }}
+                                </td>
+                                <td>
+                                    @if($bookingList->financial_document)
+                                        {{ $bookingList->financial_document::DOC_TYPE_RADIO[$bookingList->financial_document->doc_type] ?? '' }}
+                                    @endif
                                 </td>
                                 <td>
                                     @can('booking_list_show')

@@ -153,8 +153,68 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#for_user_appointments" role="tab" data-toggle="tab">
-                {{ trans('cruds.appointment.title') }}
+            <a class="nav-link" href="#user_iot_suscriptions" role="tab" data-toggle="tab">
+                {{ trans('cruds.iotSuscription.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#user_user_settings" role="tab" data-toggle="tab">
+                {{ trans('cruds.userSetting.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_product_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.productCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_asset_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.assetCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_content_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.contentCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_technical_documentations" role="tab" data-toggle="tab">
+                {{ trans('cruds.technicalDocumentation.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_documentation_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.documentationCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_content_pages" role="tab" data-toggle="tab">
+                {{ trans('cruds.contentPage.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_tech_docs_types" role="tab" data-toggle="tab">
+                {{ trans('cruds.techDocsType.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_video_tutorials" role="tab" data-toggle="tab">
+                {{ trans('cruds.videoTutorial.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_faq_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.faqCategory.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_faq_questions" role="tab" data-toggle="tab">
+                {{ trans('cruds.faqQuestion.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_users_video_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.videoCategory.title') }}
             </a>
         </li>
     </ul>
@@ -192,8 +252,44 @@
         <div class="tab-pane" role="tabpanel" id="from_user_employee_ratings">
             @includeIf('admin.users.relationships.fromUserEmployeeRatings', ['employeeRatings' => $user->fromUserEmployeeRatings])
         </div>
-        <div class="tab-pane" role="tabpanel" id="for_user_appointments">
-            @includeIf('admin.users.relationships.forUserAppointments', ['appointments' => $user->forUserAppointments])
+        <div class="tab-pane" role="tabpanel" id="user_iot_suscriptions">
+            @includeIf('admin.users.relationships.userIotSuscriptions', ['iotSuscriptions' => $user->userIotSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="user_user_settings">
+            @includeIf('admin.users.relationships.userUserSettings', ['userSettings' => $user->userUserSettings])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_product_categories">
+            @includeIf('admin.users.relationships.authorizedUsersProductCategories', ['productCategories' => $user->authorizedUsersProductCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_asset_categories">
+            @includeIf('admin.users.relationships.authorizedUsersAssetCategories', ['assetCategories' => $user->authorizedUsersAssetCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_content_categories">
+            @includeIf('admin.users.relationships.authorizedUsersContentCategories', ['contentCategories' => $user->authorizedUsersContentCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_technical_documentations">
+            @includeIf('admin.users.relationships.authorizedUsersTechnicalDocumentations', ['technicalDocumentations' => $user->authorizedUsersTechnicalDocumentations])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_documentation_categories">
+            @includeIf('admin.users.relationships.authorizedUsersDocumentationCategories', ['documentationCategories' => $user->authorizedUsersDocumentationCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_content_pages">
+            @includeIf('admin.users.relationships.authorizedUsersContentPages', ['contentPages' => $user->authorizedUsersContentPages])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_tech_docs_types">
+            @includeIf('admin.users.relationships.authorizedUsersTechDocsTypes', ['techDocsTypes' => $user->authorizedUsersTechDocsTypes])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_video_tutorials">
+            @includeIf('admin.users.relationships.authorizedUsersVideoTutorials', ['videoTutorials' => $user->authorizedUsersVideoTutorials])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_faq_categories">
+            @includeIf('admin.users.relationships.authorizedUsersFaqCategories', ['faqCategories' => $user->authorizedUsersFaqCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_faq_questions">
+            @includeIf('admin.users.relationships.authorizedUsersFaqQuestions', ['faqQuestions' => $user->authorizedUsersFaqQuestions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_users_video_categories">
+            @includeIf('admin.users.relationships.authorizedUsersVideoCategories', ['videoCategories' => $user->authorizedUsersVideoCategories])
         </div>
     </div>
 </div>

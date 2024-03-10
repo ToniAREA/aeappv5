@@ -42,6 +42,26 @@
                                         {{ $documentationCategory->description }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.documentationCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <td>
+                                        @foreach($documentationCategory->authorized_roles as $key => $authorized_roles)
+                                            <span class="label label-info">{{ $authorized_roles->title }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.documentationCategory.fields.authorized_users') }}
+                                    </th>
+                                    <td>
+                                        @foreach($documentationCategory->authorized_users as $key => $authorized_users)
+                                            <span class="label label-info">{{ $authorized_users->name }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class TechDocsType extends Model
 {
-    use SoftDeletes, HasFactory;
+    use SoftDeletes, Auditable, HasFactory;
 
     public $table = 'tech_docs_types';
 
@@ -35,5 +36,15 @@ class TechDocsType extends Model
     public function docTypeTechnicalDocumentations()
     {
         return $this->hasMany(TechnicalDocumentation::class, 'doc_type_id', 'id');
+    }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

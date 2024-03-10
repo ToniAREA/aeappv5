@@ -8,12 +8,19 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Bank extends Model
+class Bank extends Model implements HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'banks';
+
+    protected $appends = [
+        'files',
+    ];
 
     protected $dates = [
         'join_date',
@@ -24,13 +31,13 @@ class Bank extends Model
 
     protected $fillable = [
         'name',
+        'is_active',
         'branch',
         'account_number',
         'account_name',
         'swift_code',
         'address',
         'join_date',
-        'is_active',
         'current_balance',
         'notes',
         'internal_notes',
@@ -48,6 +55,12 @@ class Bank extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
     public function getJoinDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
@@ -56,5 +69,10 @@ class Bank extends Model
     public function setJoinDateAttribute($value)
     {
         $this->attributes['join_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getFilesAttribute()
+    {
+        return $this->getMedia('files');
     }
 }

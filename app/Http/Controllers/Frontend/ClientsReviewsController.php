@@ -10,7 +10,6 @@ use App\Http\Requests\UpdateClientsReviewRequest;
 use App\Models\Boat;
 use App\Models\Client;
 use App\Models\ClientsReview;
-use App\Models\Proforma;
 use App\Models\Wlist;
 use Gate;
 use Illuminate\Http\Request;
@@ -24,7 +23,7 @@ class ClientsReviewsController extends Controller
     {
         abort_if(Gate::denies('clients_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clientsReviews = ClientsReview::with(['boats', 'client', 'proforma', 'for_wlists'])->get();
+        $clientsReviews = ClientsReview::with(['boats', 'client', 'for_wlists'])->get();
 
         return view('frontend.clientsReviews.index', compact('clientsReviews'));
     }
@@ -37,11 +36,9 @@ class ClientsReviewsController extends Controller
 
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $for_wlists = Wlist::pluck('deadline', 'id');
 
-        return view('frontend.clientsReviews.create', compact('boats', 'clients', 'for_wlists', 'proformas'));
+        return view('frontend.clientsReviews.create', compact('boats', 'clients', 'for_wlists'));
     }
 
     public function store(StoreClientsReviewRequest $request)
@@ -61,13 +58,11 @@ class ClientsReviewsController extends Controller
 
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $proformas = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $for_wlists = Wlist::pluck('deadline', 'id');
 
-        $clientsReview->load('boats', 'client', 'proforma', 'for_wlists');
+        $clientsReview->load('boats', 'client', 'for_wlists');
 
-        return view('frontend.clientsReviews.edit', compact('boats', 'clients', 'clientsReview', 'for_wlists', 'proformas'));
+        return view('frontend.clientsReviews.edit', compact('boats', 'clients', 'clientsReview', 'for_wlists'));
     }
 
     public function update(UpdateClientsReviewRequest $request, ClientsReview $clientsReview)
@@ -83,7 +78,7 @@ class ClientsReviewsController extends Controller
     {
         abort_if(Gate::denies('clients_review_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $clientsReview->load('boats', 'client', 'proforma', 'for_wlists');
+        $clientsReview->load('boats', 'client', 'for_wlists');
 
         return view('frontend.clientsReviews.show', compact('clientsReview'));
     }

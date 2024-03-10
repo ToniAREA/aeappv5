@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDocumentationRequest;
 use App\Http\Requests\StoreDocumentationRequest;
 use App\Http\Requests\UpdateDocumentationRequest;
 use App\Models\Documentation;
 use App\Models\DocumentationCategory;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -16,13 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DocumentationController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('documentation_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documentations = Documentation::with(['category', 'media'])->get();
+        $documentations = Documentation::with(['category', 'authorized_roles', 'authorized_users', 'media'])->get();
 
         return view('frontend.documentations.index', compact('documentations'));
     }
@@ -33,13 +36,18 @@ class DocumentationController extends Controller
 
         $categories = DocumentationCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.documentations.create', compact('categories'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('frontend.documentations.create', compact('authorized_roles', 'authorized_users', 'categories'));
     }
 
     public function store(StoreDocumentationRequest $request)
     {
         $documentation = Documentation::create($request->all());
-
+        $documentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $documentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             $documentation->addMedia(storage_path('tmp/uploads/' . basename($request->input('file'))))->toMediaCollection('file');
         }
@@ -57,15 +65,20 @@ class DocumentationController extends Controller
 
         $categories = DocumentationCategory::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $documentation->load('category');
+        $authorized_roles = Role::pluck('title', 'id');
 
-        return view('frontend.documentations.edit', compact('categories', 'documentation'));
+        $authorized_users = User::pluck('name', 'id');
+
+        $documentation->load('category', 'authorized_roles', 'authorized_users');
+
+        return view('frontend.documentations.edit', compact('authorized_roles', 'authorized_users', 'categories', 'documentation'));
     }
 
     public function update(UpdateDocumentationRequest $request, Documentation $documentation)
     {
         $documentation->update($request->all());
-
+        $documentation->authorized_roles()->sync($request->input('authorized_roles', []));
+        $documentation->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('file', false)) {
             if (! $documentation->file || $request->input('file') !== $documentation->file->file_name) {
                 if ($documentation->file) {
@@ -84,7 +97,7 @@ class DocumentationController extends Controller
     {
         abort_if(Gate::denies('documentation_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documentation->load('category');
+        $documentation->load('category', 'authorized_roles', 'authorized_users');
 
         return view('frontend.documentations.show', compact('documentation'));
     }

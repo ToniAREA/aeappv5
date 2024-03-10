@@ -177,14 +177,59 @@
                                             {{ trans('cruds.checkpoint.title') }}
                                         </a>
                                     @endcan
+                                    @can('checkpoints_group_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.checkpoints-groups.index') }}">
+                                            {{ trans('cruds.checkpointsGroup.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('remote_device_access')
+                                        <a class="dropdown-item disabled" href="#">
+                                            {{ trans('cruds.remoteDevice.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('iot_suscription_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.iot-suscriptions.index') }}">
+                                            {{ trans('cruds.iotSuscription.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('iot_received_data_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.iot-received-datas.index') }}">
+                                            {{ trans('cruds.iotReceivedData.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('iot_plan_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.iot-plans.index') }}">
+                                            {{ trans('cruds.iotPlan.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('iot_device_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.iot-devices.index') }}">
+                                            {{ trans('cruds.iotDevice.title') }}
+                                        </a>
+                                    @endcan
                                     @can('billing_access')
                                         <a class="dropdown-item disabled" href="#">
                                             {{ trans('cruds.billing.title') }}
                                         </a>
                                     @endcan
-                                    @can('proforma_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.proformas.index') }}">
-                                            {{ trans('cruds.proforma.title') }}
+                                    @can('finalcial_document_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finalcial-documents.index') }}">
+                                            {{ trans('cruds.finalcialDocument.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('financial_document_item_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.financial-document-items.index') }}">
+                                            {{ trans('cruds.financialDocumentItem.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('finantial_document_tax_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finantial-document-taxes.index') }}">
+                                            {{ trans('cruds.finantialDocumentTax.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('finantial_document_discount_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finantial-document-discounts.index') }}">
+                                            {{ trans('cruds.finantialDocumentDiscount.title') }}
                                         </a>
                                     @endcan
                                     @can('payment_access')
@@ -195,6 +240,11 @@
                                     @can('claim_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.claims.index') }}">
                                             {{ trans('cruds.claim.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('currency_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.currencies.index') }}">
+                                            {{ trans('cruds.currency.title') }}
                                         </a>
                                     @endcan
                                     @can('expense_management_access')
@@ -242,14 +292,14 @@
                                             {{ trans('cruds.assetManagement.title') }}
                                         </a>
                                     @endcan
-                                    @can('asset_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.assets.index') }}">
-                                            {{ trans('cruds.asset.title') }}
-                                        </a>
-                                    @endcan
                                     @can('assets_rental_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.assets-rentals.index') }}">
                                             {{ trans('cruds.assetsRental.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('asset_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.assets.index') }}">
+                                            {{ trans('cruds.asset.title') }}
                                         </a>
                                     @endcan
                                     @can('asset_category_access')
@@ -330,6 +380,11 @@
                                     @can('user_access')
                                         <a class="dropdown-item ml-3" href="{{ route('frontend.users.index') }}">
                                             {{ trans('cruds.user.title') }}
+                                        </a>
+                                    @endcan
+                                    @can('social_account_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.social-accounts.index') }}">
+                                            {{ trans('cruds.socialAccount.title') }}
                                         </a>
                                     @endcan
                                     @can('role_access')
@@ -462,9 +517,9 @@
                                             {{ trans('cruds.videoCategory.title') }}
                                         </a>
                                     @endcan
-                                    @can('priority_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.priorities.index') }}">
-                                            {{ trans('cruds.priority.title') }}
+                                    @can('user_setting_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.user-settings.index') }}">
+                                            {{ trans('cruds.userSetting.title') }}
                                         </a>
                                     @endcan
 

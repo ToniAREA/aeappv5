@@ -36,6 +36,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.bank.fields.is_active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $bank->is_active ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.bank.fields.branch') }}
                                     </th>
                                     <td>
@@ -80,14 +88,6 @@
                                     </th>
                                     <td>
                                         {{ $bank->join_date }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.bank.fields.is_active') }}
-                                    </th>
-                                    <td>
-                                        {{ $bank->is_active }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,6 +144,18 @@
                                     </th>
                                     <td>
                                         {{ $bank->link_b_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.bank.fields.files') }}
+                                    </th>
+                                    <td>
+                                        @foreach($bank->files as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

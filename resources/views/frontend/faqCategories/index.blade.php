@@ -36,6 +36,15 @@
                                         {{ trans('cruds.faqCategory.fields.description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.faqCategory.fields.photo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqCategory.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -53,6 +62,24 @@
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,6 +93,23 @@
                                         </td>
                                         <td>
                                             {{ $faqCategory->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($faqCategory->photo)
+                                                <a href="{{ $faqCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $faqCategory->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @foreach($faqCategory->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($faqCategory->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('faq_category_show')

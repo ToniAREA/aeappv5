@@ -77,4 +77,14 @@ class Documentation extends Model implements HasMedia
     {
         return $this->getMedia('file')->last();
     }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

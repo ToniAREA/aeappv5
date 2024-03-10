@@ -17,7 +17,7 @@ class ClientsReviewsApiController extends Controller
     {
         abort_if(Gate::denies('clients_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClientsReviewResource(ClientsReview::with(['boats', 'client', 'proforma', 'for_wlists'])->get());
+        return new ClientsReviewResource(ClientsReview::with(['boats', 'client', 'for_wlists'])->get());
     }
 
     public function store(StoreClientsReviewRequest $request)
@@ -35,7 +35,7 @@ class ClientsReviewsApiController extends Controller
     {
         abort_if(Gate::denies('clients_review_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ClientsReviewResource($clientsReview->load(['boats', 'client', 'proforma', 'for_wlists']));
+        return new ClientsReviewResource($clientsReview->load(['boats', 'client', 'for_wlists']));
     }
 
     public function update(UpdateClientsReviewRequest $request, ClientsReview $clientsReview)

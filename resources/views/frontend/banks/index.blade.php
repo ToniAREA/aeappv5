@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.banks.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.bank.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'Bank', 'route' => 'admin.banks.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -29,6 +33,9 @@
                                         {{ trans('cruds.bank.fields.name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.bank.fields.is_active') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.bank.fields.branch') }}
                                     </th>
                                     <th>
@@ -45,9 +52,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.bank.fields.join_date') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.bank.fields.is_active') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.bank.fields.current_balance') }}
@@ -71,6 +75,9 @@
                                         {{ trans('cruds.bank.fields.link_b_description') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.bank.fields.files') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -83,6 +90,10 @@
                                         </td>
                                         <td>
                                             {{ $bank->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $bank->is_active ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $bank->is_active ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $bank->branch ?? '' }}
@@ -101,9 +112,6 @@
                                         </td>
                                         <td>
                                             {{ $bank->join_date ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $bank->is_active ?? '' }}
                                         </td>
                                         <td>
                                             {{ $bank->current_balance ?? '' }}
@@ -125,6 +133,13 @@
                                         </td>
                                         <td>
                                             {{ $bank->link_b_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($bank->files as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('bank_show')

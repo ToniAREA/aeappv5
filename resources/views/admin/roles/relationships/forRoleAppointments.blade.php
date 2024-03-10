@@ -40,10 +40,16 @@
                                 {{ trans('cruds.appointment.fields.for_role') }}
                             </th>
                             <th>
-                                {{ trans('cruds.appointment.fields.for_user') }}
+                                {{ trans('cruds.appointment.fields.for_employees') }}
                             </th>
                             <th>
                                 {{ trans('cruds.appointment.fields.boat_namecomplete') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.appointment.fields.in_marina') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.marina.fields.notes') }}
                             </th>
                             <th>
                                 {{ trans('cruds.appointment.fields.description') }}
@@ -59,9 +65,6 @@
                             </th>
                             <th>
                                 {{ trans('cruds.appointment.fields.priority') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.priority.fields.weight') }}
                             </th>
                             <th>
                                 {{ trans('cruds.appointment.fields.status') }}
@@ -106,12 +109,18 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach($appointment->for_users as $key => $item)
-                                        <span class="badge badge-info">{{ $item->name }}</span>
+                                    @foreach($appointment->for_employees as $key => $item)
+                                        <span class="badge badge-info">{{ $item->id_employee }}</span>
                                     @endforeach
                                 </td>
                                 <td>
                                     {{ $appointment->boat_namecomplete ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $appointment->in_marina->name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $appointment->in_marina->notes ?? '' }}
                                 </td>
                                 <td>
                                     {{ $appointment->description ?? '' }}
@@ -126,10 +135,7 @@
                                     {{ $appointment->when_ends ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $appointment->priority->name ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $appointment->priority->weight ?? '' }}
+                                    {{ $appointment->priority ?? '' }}
                                 </td>
                                 <td>
                                     {{ $appointment->status ?? '' }}

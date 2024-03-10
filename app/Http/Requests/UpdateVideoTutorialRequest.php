@@ -35,6 +35,30 @@ class UpdateVideoTutorialRequest extends FormRequest
             'subjects' => [
                 'array',
             ],
+            'seo_title' => [
+                'string',
+                'nullable',
+            ],
+            'seo_meta_description' => [
+                'string',
+                'nullable',
+            ],
+            'seo_slug' => [
+                'string',
+                'nullable',
+            ],
+            'authorized_roles.*' => [
+                'integer',
+            ],
+            'authorized_roles' => [
+                'array',
+            ],
+            'authorized_users.*' => [
+                'integer',
+            ],
+            'authorized_users' => [
+                'array',
+            ],
         ];
     }
 }

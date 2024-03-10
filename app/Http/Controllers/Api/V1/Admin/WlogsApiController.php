@@ -20,7 +20,7 @@ class WlogsApiController extends Controller
     {
         abort_if(Gate::denies('wlog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WlogResource(Wlog::with(['wlist', 'employee', 'marina', 'proforma_number'])->get());
+        return new WlogResource(Wlog::with(['wlist', 'employee', 'marina', 'financial_document'])->get());
     }
 
     public function store(StoreWlogRequest $request)
@@ -40,7 +40,7 @@ class WlogsApiController extends Controller
     {
         abort_if(Gate::denies('wlog_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WlogResource($wlog->load(['wlist', 'employee', 'marina', 'proforma_number']));
+        return new WlogResource($wlog->load(['wlist', 'employee', 'marina', 'financial_document']));
     }
 
     public function update(UpdateWlogRequest $request, Wlog $wlog)

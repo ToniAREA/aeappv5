@@ -88,6 +88,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.boat.fields.sat_phone') }}
+                                    </th>
+                                    <td>
+                                        {{ $boat->sat_phone }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.boat.fields.notes') }}
                                     </th>
                                     <td>
@@ -114,14 +122,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.boat.fields.coordinates') }}
-                                    </th>
-                                    <td>
-                                        {{ $boat->coordinates }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.boat.fields.link') }}
                                     </th>
                                     <td>
@@ -142,6 +142,30 @@
                                     </th>
                                     <td>
                                         {{ $boat->last_use }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.settings_data') }}
+                                    </th>
+                                    <td>
+                                        {{ $boat->settings_data }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.public_ip') }}
+                                    </th>
+                                    <td>
+                                        {{ $boat->public_ip }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boat.fields.coordinates') }}
+                                    </th>
+                                    <td>
+                                        {{ $boat->coordinates }}
                                     </td>
                                 </tr>
                             </tbody>
