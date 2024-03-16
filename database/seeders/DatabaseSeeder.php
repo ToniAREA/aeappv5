@@ -15,6 +15,9 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             AssetStatusTableSeeder::class,
+            AssetTypeTableSeeder::class,
+            DemoClientsTableSeeder::class,
+            DemoBoatsTableSeeder::class,
         ]);
     }
 }
