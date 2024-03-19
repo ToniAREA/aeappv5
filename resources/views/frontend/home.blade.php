@@ -8,15 +8,67 @@
                 {{ session('status') }}
             </div>
         @endif
-        <div class="row mb-3">
-            <div class="col d-flex justify-content-center">
-                <a href="/clients" class="btn btn-link text-white"><i class="fa fa-users"></i> Clients</a>
-                <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> Boats</a>
-                <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> Marinas</a>
-                <a href="/wlists" class="btn btn-link text-white"><i class="fa fa-briefcase"></i> Works</a>
-            </div>
-        </div>
+
         <div class="row">
+            <div class="col-md-6 col-lg-3">
+                <div class="card custom-card">
+                    <div class="card-header bg-secondary text-white">
+                        <a href="/clients" class="btn btn-link text-white"><i class="fa fa-users"></i> {{ $clientscount }}
+                            CLIENTS</a>
+                    </div>
+                    <div class="card-body">Cuerpo</div>
+                    <div class="card-footer">Pie de página</div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card custom-card">
+                    <div class="card-header bg-secondary text-white">
+                        <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> {{ $boatscount }}
+                            BOATS</a>
+                    </div>
+                    <div class="card-body">Cuerpo</div>
+                    <div class="card-footer">Pie de página</div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card custom-card">
+                    <div class="card-header bg-secondary text-white">
+                        <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> {{ $marinascount }}
+                            MARINAS</a>
+                    </div>
+                    <div class="card-body">Cuerpo</div>
+                    <div class="card-footer">Pie de página</div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card custom-card">
+                    <div class="card-header bg-secondary text-white">
+                        <a href="/wlists" class="btn btn-link text-white"><i class="fa fa-briefcase"></i>
+                            {{ $wlistscount }} WLISTS</a>
+                    </div>
+                    <div class="card-body">Cuerpo</div>
+                    <div class="card-footer">Pie de página</div>
+                </div>
+            </div>
+
+            <div class="col-md-6 col-lg-3">
+                <div class="card custom-card">
+                    <div class="card-header bg-secondary text-white">
+                        <a href="/wlogs" class="btn btn-link text-white"><i class="fa fa-briefcase"></i>
+                            {{ $wlogscount }} WLOGS</a>
+                    </div>
+                    <div class="card-body">Cuerpo</div>
+                    <div class="card-footer">Pie de página</div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            HERE GOES:
             @foreach ($progressing as $wlist)
                 <div class="col-sm-12 col-md-6 col-lg-4 ">
                     <div class="card custom-card m-1">

@@ -6,6 +6,11 @@ class HomeController
 {
     public function index()
     {
-        return view('home');
+        $clientscount = \App\Models\Client::count();
+        $boatscount = \App\Models\Boat::count();
+        $wlistscount = \App\Models\Wlist::count();
+        $wlogscount = \App\Models\Wlog::count();
+
+        return view('home', compact('clientscount', 'boatscount', 'wlistscount', 'wlogscount'));
     }
 }

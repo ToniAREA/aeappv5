@@ -9,10 +9,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'AEAPP') }}</title>
- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-    <link href="{{ asset('css/adminltev3.css') }}" rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+        rel="stylesheet" />
+    {{-- <link href="{{ asset('css/adminltev3.css') }}" rel="stylesheet" /> --}}
     <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" />
@@ -22,7 +24,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     @yield('styles')
-    
+
 </head>
 
 <body>
@@ -30,8 +32,8 @@
         <!-- Navbar and content goes here -->
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container-fluid">
-                <a class="navbar-brand" href="{{ url('/') }}" style="font-size: 1.5em;">
-                    <b><i class="fa fa-ship"></i> AREA</b> ELECTRONICA
+                <a class="navbar-brand" href={{ route('frontend.home') }} style="font-size: 1.5em;">
+                    <b>AREA</b> ELECTRONICA
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -68,7 +70,7 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                                    {{ Auth::user()->name }} ({{ Auth::user()->roles->first()->title ?? 'no role' }})<span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
@@ -162,7 +164,8 @@
                                         </a>
                                     @endcan
                                     @can('maintenance_suscription_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.maintenance-suscriptions.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.maintenance-suscriptions.index') }}">
                                             {{ trans('cruds.maintenanceSuscription.title') }}
                                         </a>
                                     @endcan
@@ -177,7 +180,8 @@
                                         </a>
                                     @endcan
                                     @can('checkpoints_group_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.checkpoints-groups.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.checkpoints-groups.index') }}">
                                             {{ trans('cruds.checkpointsGroup.title') }}
                                         </a>
                                     @endcan
@@ -192,7 +196,8 @@
                                         </a>
                                     @endcan
                                     @can('iot_received_data_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.iot-received-datas.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.iot-received-datas.index') }}">
                                             {{ trans('cruds.iotReceivedData.title') }}
                                         </a>
                                     @endcan
@@ -212,22 +217,26 @@
                                         </a>
                                     @endcan
                                     @can('finalcial_document_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finalcial-documents.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.finalcial-documents.index') }}">
                                             {{ trans('cruds.finalcialDocument.title') }}
                                         </a>
                                     @endcan
                                     @can('financial_document_item_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.financial-document-items.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.financial-document-items.index') }}">
                                             {{ trans('cruds.financialDocumentItem.title') }}
                                         </a>
                                     @endcan
                                     @can('finantial_document_tax_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finantial-document-taxes.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.finantial-document-taxes.index') }}">
                                             {{ trans('cruds.finantialDocumentTax.title') }}
                                         </a>
                                     @endcan
                                     @can('finantial_document_discount_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finantial-document-discounts.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.finantial-document-discounts.index') }}">
                                             {{ trans('cruds.finantialDocumentDiscount.title') }}
                                         </a>
                                     @endcan
@@ -343,12 +352,14 @@
                                         </a>
                                     @endcan
                                     @can('employee_attendance_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employee-attendances.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.employee-attendances.index') }}">
                                             {{ trans('cruds.employeeAttendance.title') }}
                                         </a>
                                     @endcan
                                     @can('employee_holiday_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employee-holidays.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.employee-holidays.index') }}">
                                             {{ trans('cruds.employeeHoliday.title') }}
                                         </a>
                                     @endcan
@@ -358,7 +369,8 @@
                                         </a>
                                     @endcan
                                     @can('skills_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.skills-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.skills-categories.index') }}">
                                             {{ trans('cruds.skillsCategory.title') }}
                                         </a>
                                     @endcan
@@ -408,7 +420,8 @@
                                         </a>
                                     @endcan
                                     @can('contact_company_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.contact-companies.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.contact-companies.index') }}">
                                             {{ trans('cruds.contactCompany.title') }}
                                         </a>
                                     @endcan
@@ -434,7 +447,8 @@
                                         </a>
                                     @endcan
                                     @can('technical_documentation_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.technical-documentations.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.technical-documentations.index') }}">
                                             {{ trans('cruds.technicalDocumentation.title') }}
                                         </a>
                                     @endcan
@@ -469,7 +483,8 @@
                                         </a>
                                     @endcan
                                     @can('documentation_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.documentation-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.documentation-categories.index') }}">
                                             {{ trans('cruds.documentationCategory.title') }}
                                         </a>
                                     @endcan
@@ -544,14 +559,7 @@
             </div>
         </nav>
 
-        <!-- Example for updated Bootstrap 5 navbar toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-            aria-label="{{ __('Toggle navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <main class="">
+        <main class="mt-2">
             @if (session('message'))
                 <div class="container">
                     <div class="row">
@@ -599,9 +607,12 @@
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
     @yield('scripts')
 </body>
+
 </html>
