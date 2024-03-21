@@ -180,6 +180,11 @@ class User extends Authenticatable
         return $this->hasMany(UserSetting::class, 'user_id', 'id');
     }
 
+    public function userWaitingLists()
+    {
+        return $this->hasMany(WaitingList::class, 'user_id', 'id');
+    }
+
     public function authorizedUsersProductCategories()
     {
         return $this->belongsToMany(ProductCategory::class);

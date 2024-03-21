@@ -157,6 +157,11 @@
                                             {{ trans('cruds.plan.title') }}
                                         </a>
                                     @endcan
+                                    @can('waiting_list_access')
+                                        <a class="dropdown-item ml-3" href="{{ route('frontend.waiting-lists.index') }}">
+                                            {{ trans('cruds.waitingList.title') }}
+                                        </a>
+                                    @endcan
                                     @can('maintenance_plan_access')
                                         <a class="dropdown-item disabled" href="#">
                                             {{ trans('cruds.maintenancePlan.title') }}

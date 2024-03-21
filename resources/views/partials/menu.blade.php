@@ -188,8 +188,8 @@
                     </li>
                 @endcan
                 @can('vip_plan_access')
-                    <li class="nav-item has-treeview {{ request()->is("admin/suscriptions*") ? "menu-open" : "" }} {{ request()->is("admin/plans*") ? "menu-open" : "" }}">
-                        <a class="nav-link nav-dropdown-toggle {{ request()->is("admin/suscriptions*") ? "active" : "" }} {{ request()->is("admin/plans*") ? "active" : "" }}" href="#">
+                    <li class="nav-item has-treeview {{ request()->is("admin/suscriptions*") ? "menu-open" : "" }} {{ request()->is("admin/plans*") ? "menu-open" : "" }} {{ request()->is("admin/waiting-lists*") ? "menu-open" : "" }}">
+                        <a class="nav-link nav-dropdown-toggle {{ request()->is("admin/suscriptions*") ? "active" : "" }} {{ request()->is("admin/plans*") ? "active" : "" }} {{ request()->is("admin/waiting-lists*") ? "active" : "" }}" href="#">
                             <i class="fa-fw nav-icon fas fa-star">
 
                             </i>
@@ -219,6 +219,18 @@
                                         </i>
                                         <p>
                                             {{ trans('cruds.plan.title') }}
+                                        </p>
+                                    </a>
+                                </li>
+                            @endcan
+                            @can('waiting_list_access')
+                                <li class="nav-item">
+                                    <a href="{{ route("admin.waiting-lists.index") }}" class="nav-link {{ request()->is("admin/waiting-lists") || request()->is("admin/waiting-lists/*") ? "active" : "" }}">
+                                        <i class="fa-fw nav-icon fas fa-pause">
+
+                                        </i>
+                                        <p>
+                                            {{ trans('cruds.waitingList.title') }}
                                         </p>
                                     </a>
                                 </li>

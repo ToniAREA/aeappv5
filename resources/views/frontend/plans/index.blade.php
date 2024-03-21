@@ -51,6 +51,9 @@
                                         {{ trans('cruds.plan.fields.period_price') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.plan.fields.hourly_rate') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.plan.fields.hourly_rate_discount') }}
                                     </th>
                                     <th>
@@ -110,6 +113,9 @@
                                         </td>
                                         <td>
                                             {{ $plan->period_price ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $plan->hourly_rate ?? '' }}
                                         </td>
                                         <td>
                                             {{ $plan->hourly_rate_discount ?? '' }}
