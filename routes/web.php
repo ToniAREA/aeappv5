@@ -490,6 +490,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('user-settings/process-csv-import', 'UserSettingsController@processCsvImport')->name('user-settings.processCsvImport');
     Route::resource('user-settings', 'UserSettingsController');
 
+    // Waiting List
+    Route::delete('waiting-lists/destroy', 'WaitingListController@massDestroy')->name('waiting-lists.massDestroy');
+    Route::post('waiting-lists/parse-csv-import', 'WaitingListController@parseCsvImport')->name('waiting-lists.parseCsvImport');
+    Route::post('waiting-lists/process-csv-import', 'WaitingListController@processCsvImport')->name('waiting-lists.processCsvImport');
+    Route::resource('waiting-lists', 'WaitingListController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
 });
@@ -860,6 +866,10 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     // User Settings
     Route::delete('user-settings/destroy', 'UserSettingsController@massDestroy')->name('user-settings.massDestroy');
     Route::resource('user-settings', 'UserSettingsController');
+
+    // Waiting List
+    Route::delete('waiting-lists/destroy', 'WaitingListController@massDestroy')->name('waiting-lists.massDestroy');
+    Route::resource('waiting-lists', 'WaitingListController');
 
     Route::get('frontend/profile', 'ProfileController@index')->name('profile.index');
     Route::post('frontend/profile', 'ProfileController@update')->name('profile.update');

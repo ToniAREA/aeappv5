@@ -270,6 +270,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#client_waiting_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.waitingList.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#clients_boats" role="tab" data-toggle="tab">
                 {{ trans('cruds.boat.title') }}
             </a>
@@ -305,6 +310,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="client_finalcial_documents">
             @includeIf('admin.clients.relationships.clientFinalcialDocuments', ['finalcialDocuments' => $client->clientFinalcialDocuments])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="client_waiting_lists">
+            @includeIf('admin.clients.relationships.clientWaitingLists', ['waitingLists' => $client->clientWaitingLists])
         </div>
         <div class="tab-pane" role="tabpanel" id="clients_boats">
             @includeIf('admin.clients.relationships.clientsBoats', ['boats' => $client->clientsBoats])

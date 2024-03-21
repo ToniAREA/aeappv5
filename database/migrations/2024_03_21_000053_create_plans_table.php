@@ -16,6 +16,7 @@ class CreatePlansTable extends Migration
             $table->boolean('show_online')->default(0)->nullable();
             $table->string('period');
             $table->decimal('period_price', 15, 2);
+            $table->decimal('hourly_rate', 15, 2)->nullable();
             $table->float('hourly_rate_discount', 5, 2)->nullable();
             $table->float('material_discount', 5, 2)->nullable();
             $table->string('link')->nullable();

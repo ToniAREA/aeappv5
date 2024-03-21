@@ -118,6 +118,11 @@ class Boat extends Model implements HasMedia
         return $this->belongsToMany(IotSuscription::class);
     }
 
+    public function boatsWaitingLists()
+    {
+        return $this->belongsToMany(WaitingList::class);
+    }
+
     public function getBoatPhotoAttribute()
     {
         $file = $this->getMedia('boat_photo')->last();

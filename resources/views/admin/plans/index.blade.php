@@ -50,6 +50,9 @@
                         {{ trans('cruds.plan.fields.period_price') }}
                     </th>
                     <th>
+                        {{ trans('cruds.plan.fields.hourly_rate') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.plan.fields.hourly_rate_discount') }}
                     </th>
                     <th>
@@ -137,6 +140,7 @@
 { data: 'show_online', name: 'show_online' },
 { data: 'period', name: 'period' },
 { data: 'period_price', name: 'period_price' },
+{ data: 'hourly_rate', name: 'hourly_rate' },
 { data: 'hourly_rate_discount', name: 'hourly_rate_discount' },
 { data: 'material_discount', name: 'material_discount' },
 { data: 'contract', name: 'contract', sortable: false, searchable: false },

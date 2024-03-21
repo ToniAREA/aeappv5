@@ -1548,6 +1548,26 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 385,
+                'title' => 'waiting_list_create',
+            ],
+            [
+                'id'    => 386,
+                'title' => 'waiting_list_edit',
+            ],
+            [
+                'id'    => 387,
+                'title' => 'waiting_list_show',
+            ],
+            [
+                'id'    => 388,
+                'title' => 'waiting_list_delete',
+            ],
+            [
+                'id'    => 389,
+                'title' => 'waiting_list_access',
+            ],
+            [
+                'id'    => 390,
                 'title' => 'profile_password_edit',
             ],
         ];
