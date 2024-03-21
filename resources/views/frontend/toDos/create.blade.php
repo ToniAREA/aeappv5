@@ -116,16 +116,16 @@
 
                                 <div class="col-12 col-sm-6 col-lg-3">{{-- Priority --}}
                                     <div class="form-group">
-                                        <label for="priority">{{ trans('cruds.toDo.fields.priority') }}</label> <span
-                                            id="priorityValue">{{ old('priority', '') }}</span>
+                                        <label for="priority">{{ trans('cruds.toDo.fields.priority') }}</label>
+                                        <span id="priorityValue">5</span>
+                                        <span id="priorityStatus"></span>
                                         <input class="form-control" type="range" name="priority" id="priority"
-                                            value="{{ old('priority', '') }}"  value="5" min="1" max="10" step="1">
+                                            value="5" min="1" max="10" step="1">
                                         @if ($errors->has('priority'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('priority') }}
                                             </div>
                                         @endif
-                                        <span class="help-block">{{ trans('cruds.toDo.fields.priority_helper') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -297,16 +297,36 @@
         });
     </script>
     <script>
-        // Obtiene el slider y el span donde se mostrará el valor
-        var slider = document.getElementById("priority");
-        var output = document.getElementById("priorityValue");
+        document.addEventListener('DOMContentLoaded', function() {
+            var slider = document.getElementById("priority");
+            var valueOutput = document.getElementById("priorityValue");
+            var statusOutput = document.getElementById("priorityStatus");
 
-        // Actualiza el texto del span con el valor actual del slider
-        output.innerHTML = slider.value;
+            // Función para actualizar el texto del estado y mostrar el valor
+            function updateSliderDisplay(value) {
+                valueOutput.innerHTML = value; // Muestra el valor numérico
+                let statusText = ""; // Texto del estado inicialmente vacío
 
-        // Añade un event listener al slider para cambiar el valor del span cada vez que se mueva el slider
-        slider.oninput = function() {
-            output.innerHTML = this.value;
-        }
+                if (value == 10) {
+                    statusText = "Urgent";
+                } else if (value == 5) {
+                    statusText = "Normal";
+                } else if (value == 1) {
+                    statusText = "Low";
+                } else {
+                    statusText = ""; // Opcional: definir un texto por defecto para otros valores
+                }
+
+                statusOutput.innerHTML = statusText;
+            }
+
+            // Establece el valor y estado iniciales
+            updateSliderDisplay(slider.value);
+
+            // Actualiza el valor y el estado cuando el slider cambia
+            slider.oninput = function() {
+                updateSliderDisplay(this.value);
+            }
+        });
     </script>
 @endsection
