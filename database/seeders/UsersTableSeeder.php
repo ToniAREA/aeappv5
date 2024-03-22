@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
                 'verified_at'        => '2024-03-08 05:33:21',
                 'two_factor_code'    => '',
                 'verification_token' => '',
-            ]
+            ],
         ];
 
         User::insert($users);

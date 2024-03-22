@@ -77,6 +77,9 @@ class PlansController extends Controller
             $table->editColumn('period_price', function ($row) {
                 return $row->period_price ? $row->period_price : '';
             });
+            $table->editColumn('hourly_rate', function ($row) {
+                return $row->hourly_rate ? $row->hourly_rate : '';
+            });
             $table->editColumn('hourly_rate_discount', function ($row) {
                 return $row->hourly_rate_discount ? $row->hourly_rate_discount : '';
             });
@@ -176,7 +179,7 @@ class PlansController extends Controller
     {
         abort_if(Gate::denies('plan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $plan->load('planSuscriptions');
+        $plan->load('planSuscriptions', 'planWaitingLists');
 
         return view('admin.plans.show', compact('plan'));
     }

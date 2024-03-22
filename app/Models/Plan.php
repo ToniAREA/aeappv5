@@ -43,6 +43,7 @@ class Plan extends Model implements HasMedia
         'show_online',
         'period',
         'period_price',
+        'hourly_rate',
         'hourly_rate_discount',
         'material_discount',
         'link',
@@ -69,6 +70,11 @@ class Plan extends Model implements HasMedia
     public function planSuscriptions()
     {
         return $this->hasMany(Suscription::class, 'plan_id', 'id');
+    }
+
+    public function planWaitingLists()
+    {
+        return $this->hasMany(WaitingList::class, 'plan_id', 'id');
     }
 
     public function getPhotoAttribute()

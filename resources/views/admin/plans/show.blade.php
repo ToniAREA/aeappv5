@@ -85,6 +85,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.plan.fields.hourly_rate') }}
+                        </th>
+                        <td>
+                            {{ $plan->hourly_rate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.plan.fields.hourly_rate_discount') }}
                         </th>
                         <td>
@@ -172,10 +180,18 @@
                 {{ trans('cruds.suscription.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#plan_waiting_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.waitingList.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="plan_suscriptions">
             @includeIf('admin.plans.relationships.planSuscriptions', ['suscriptions' => $plan->planSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="plan_waiting_lists">
+            @includeIf('admin.plans.relationships.planWaitingLists', ['waitingLists' => $plan->planWaitingLists])
         </div>
     </div>
 </div>

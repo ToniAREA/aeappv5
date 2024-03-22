@@ -163,6 +163,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#user_waiting_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.waitingList.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#authorized_users_product_categories" role="tab" data-toggle="tab">
                 {{ trans('cruds.productCategory.title') }}
             </a>
@@ -217,6 +222,11 @@
                 {{ trans('cruds.videoCategory.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#to_users_comments" role="tab" data-toggle="tab">
+                {{ trans('cruds.comment.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="user_employees">
@@ -258,6 +268,9 @@
         <div class="tab-pane" role="tabpanel" id="user_user_settings">
             @includeIf('admin.users.relationships.userUserSettings', ['userSettings' => $user->userUserSettings])
         </div>
+        <div class="tab-pane" role="tabpanel" id="user_waiting_lists">
+            @includeIf('admin.users.relationships.userWaitingLists', ['waitingLists' => $user->userWaitingLists])
+        </div>
         <div class="tab-pane" role="tabpanel" id="authorized_users_product_categories">
             @includeIf('admin.users.relationships.authorizedUsersProductCategories', ['productCategories' => $user->authorizedUsersProductCategories])
         </div>
@@ -290,6 +303,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="authorized_users_video_categories">
             @includeIf('admin.users.relationships.authorizedUsersVideoCategories', ['videoCategories' => $user->authorizedUsersVideoCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="to_users_comments">
+            @includeIf('admin.users.relationships.toUsersComments', ['comments' => $user->toUsersComments])
         </div>
     </div>
 </div>

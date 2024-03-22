@@ -42,8 +42,26 @@
                             <span class="help-block">{{ trans('cruds.comment.fields.from_user_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="to_users">{{ trans('cruds.comment.fields.to_users') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="to_users[]" id="to_users" multiple>
+                                @foreach($to_users as $id => $to_user)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('to_users', [])) || $comment->to_users->contains($id)) ? 'selected' : '' }}>{{ $to_user }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('to_users'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('to_users') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.comment.fields.to_users_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="comment">{{ trans('cruds.comment.fields.comment') }}</label>
-                            <textarea class="form-control" name="comment" id="comment">{{ old('comment', $comment->comment) }}</textarea>
+                            <textarea class="form-control ckeditor" name="comment" id="comment">{!! old('comment', $comment->comment) !!}</textarea>
                             @if($errors->has('comment'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('comment') }}
@@ -98,6 +116,70 @@
 @endsection
 
 @section('scripts')
+<script>
+    $(document).ready(function () {
+  function SimpleUploadAdapter(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+      return {
+        upload: function() {
+          return loader.file
+            .then(function (file) {
+              return new Promise(function(resolve, reject) {
+                // Init request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{{ route('frontend.comments.storeCKEditorImages') }}', true);
+                xhr.setRequestHeader('x-csrf-token', window._token);
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.responseType = 'json';
+
+                // Init listeners
+                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
+                xhr.addEventListener('error', function() { reject(genericErrorText) });
+                xhr.addEventListener('abort', function() { reject() });
+                xhr.addEventListener('load', function() {
+                  var response = xhr.response;
+
+                  if (!response || xhr.status !== 201) {
+                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
+                  }
+
+                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+
+                  resolve({ default: response.url });
+                });
+
+                if (xhr.upload) {
+                  xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                      loader.uploadTotal = e.total;
+                      loader.uploaded = e.loaded;
+                    }
+                  });
+                }
+
+                // Send request
+                var data = new FormData();
+                data.append('upload', file);
+                data.append('crud_id', '{{ $comment->id ?? 0 }}');
+                xhr.send(data);
+              });
+            })
+        }
+      };
+    }
+  }
+
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: [SimpleUploadAdapter]
+      }
+    );
+  }
+});
+</script>
+
 <script>
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {

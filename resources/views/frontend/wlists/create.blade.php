@@ -1,114 +1,76 @@
 @extends('layouts.frontend')
 @section('content')
-    <!--  -->
-    @dump(get_defined_vars())
-    <div class="container-fluid">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
 
-                <div class="card custom-card">
-                    <div class="card-header">
-                        <strong style="text-transform: uppercase;">
-                            {{ trans('global.create') }} {{ trans('cruds.wlist.title_singular') }} for:
-                        </strong>
-                        {{ $boats[request('boat_id')] ?? 'boat not found' }}
-                        ({{ $clients[request('client_id')] }})
-                        <a class="btn btn-link" href="{{ route('frontend.boats.show', request('boat_id')) }}">
-                            &lt;&lt;</a>
+            <div class="card">
+                <div class="card-header">
+                    {{ trans('global.create') }} {{ trans('cruds.wlist.title_singular') }}
+                </div>
 
-                    </div>
-
-                    <div class="card-body">
-
-                        <form method="POST" action="{{ route('frontend.wlists.store') }}" enctype="multipart/form-data">
-                            @method('POST')
-                            @csrf
-                            <input type="hidden" name="client_id" value="{{ request('client_id') }}">
-                            <input type="hidden" name="boat_id" value="{{ request('boat_id') }}">
-                            <input type="hidden" name="marina_id" value="{{ request('marina_id') }}">
-                            <input type="hidden" name="from_user_id" value="{{ auth()->user()->id }}">
-
-                            @if ($errors->has('client'))
+                <div class="card-body">
+                    <form method="POST" action="{{ route("frontend.wlists.store") }}" enctype="multipart/form-data">
+                        @method('POST')
+                        @csrf
+                        <div class="form-group">
+                            <label for="client_id">{{ trans('cruds.wlist.fields.client') }}</label>
+                            <select class="form-control select2" name="client_id" id="client_id">
+                                @foreach($clients as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('client_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('client'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('client') }}
                                 </div>
                             @endif
-
-                            <div class="form-group">
-                                <div class="btn-group btn-group-sm d-flex flex-wrap m-1" role="group"
-                                    aria-label="Basic radio toggle button group">
-                                    @foreach (App\Models\Wlist::ORDER_TYPE_RADIO as $key => $label)
-                                        <input type="radio" class="btn-check" id="order_type_{{ $key }}"
-                                            name="order_type" value="{{ $key }}"
-                                            {{ old('order_type', '') === (string) $key ? 'checked' : '' }} required>
-                                        <label class="btn btn-outline-secondary"
-                                            for="order_type_{{ $key }}">{{ $label }}</label>
-                                    @endforeach
-                                    @if ($errors->has('order_type'))
-                                        <div class="invalid-feedback">
-                                            {{ $errors->first('order_type') }}
-                                        </div>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.wlist.fields.order_type_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.wlist.fields.client_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="required">{{ trans('cruds.wlist.fields.order_type') }}</label>
+                            @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="order_type_{{ $key }}" name="order_type" value="{{ $key }}" {{ old('order_type', '') === (string) $key ? 'checked' : '' }} required>
+                                    <label for="order_type_{{ $key }}">{{ $label }}</label>
                                 </div>
-
-
-                                <div class="form-group-dropdowns">
-                                    <select class="form-select form-select-sm" aria-label="Small select example">
-                                        <option>For role...</option>
-                                        @foreach ($for_roles as $id => $for_role)
-                                            <option value="{{ $id }}"
-                                                {{ in_array($id, old('for_roles', [])) ? 'selected' : '' }}>
-                                                {{ $for_role }}</option>
-                                        @endforeach
-                                    </select>
-                                    <select class="form-select form-select-sm" aria-label="Small select example">
-                                        <option>For user...</option>
-                                        @foreach ($for_users as $id => $for_user)
-                                            <option value="{{ $id }}"
-                                                {{ in_array($id, old('for_users', [])) ? 'selected' : '' }}>
-                                                {{ $for_user }}</option>
-                                        @endforeach
-                                    </select>
+                            @endforeach
+                            @if($errors->has('order_type'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('order_type') }}
                                 </div>
-
-                                <div class="form-group-dropdowns">
-                                    <select class="form-select form-select-sm" aria-label="Small select example">
-                                        <option>Priority...</option>
-                                        @foreach ($priorities as $id => $entry)
-                                            <option value="{{ $id }}"
-                                                {{ old('priority_id') == $id ? 'selected' : '' }}>{{ $entry }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <select class="form-select form-select-sm" aria-label="Small select example">
-                                        <option>Status...</option>
-                                        @foreach (App\Models\Wlist::STATUS_RADIO as $key => $label)
-                                            <option value="{{ $key }}"
-                                                {{ old('status', '') === (string) $key ? 'checked' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                            </div>
-
-
-
-                            @if ($errors->has('boat'))
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.order_type_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label class="required" for="boat_id">{{ trans('cruds.wlist.fields.boat') }}</label>
+                            <select class="form-control select2" name="boat_id" id="boat_id" required>
+                                @foreach($boats as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('boat_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boat'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('boat') }}
                                 </div>
                             @endif
-
-                            @if ($errors->has('from_user'))
+                            <span class="help-block">{{ trans('cruds.wlist.fields.boat_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="from_user_id">{{ trans('cruds.wlist.fields.from_user') }}</label>
+                            <select class="form-control select2" name="from_user_id" id="from_user_id">
+                                @foreach($from_users as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('from_user_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('from_user'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('from_user') }}
                                 </div>
                             @endif
-
-                           <div class="form-group">
+                            <span class="help-block">{{ trans('cruds.wlist.fields.from_user_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="for_roles">{{ trans('cruds.wlist.fields.for_role') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -127,14 +89,10 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.for_role_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="for_users">{{ trans('cruds.wlist.fields.for_user') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="for_users[]" id="for_users" multiple>
-                                @foreach($for_users as $id => $for_user)
-                                    <option value="{{ $id }}" {{ in_array($id, old('for_users', [])) ? 'selected' : '' }}>{{ $for_user }}</option>
+                            <label for="for_employee_id">{{ trans('cruds.wlist.fields.for_employee') }}</label>
+                            <select class="form-control select2" name="for_employee_id" id="for_employee_id">
+                                @foreach($for_employees as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('for_employee_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('for_employee'))
@@ -144,14 +102,10 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.wlist.fields.for_employee_helper') }}</span>
                         </div>
-
-                            @if ($errors->has('priority'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('priority') }}
-                                </div>
-                            @endif
-
-                            @if ($errors->has('status'))
+                        <div class="form-group">
+                            <label for="boat_namecomplete">{{ trans('cruds.wlist.fields.boat_namecomplete') }}</label>
+                            <input class="form-control" type="text" name="boat_namecomplete" id="boat_namecomplete" value="{{ old('boat_namecomplete', '') }}">
+                            @if($errors->has('boat_namecomplete'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('boat_namecomplete') }}
                                 </div>
@@ -159,14 +113,24 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.boat_namecomplete_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="description">{{ trans('cruds.wlist.fields.description') }}</label>
-                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', '') }}">
+                            <label class="required" for="description">{{ trans('cruds.wlist.fields.description') }}</label>
+                            <input class="form-control" type="text" name="description" id="description" value="{{ old('description', '') }}" required>
                             @if($errors->has('description'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('description') }}
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.wlist.fields.description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="estimated_hours">{{ trans('cruds.wlist.fields.estimated_hours') }}</label>
+                            <input class="form-control" type="number" name="estimated_hours" id="estimated_hours" value="{{ old('estimated_hours', '') }}" step="0.01">
+                            @if($errors->has('estimated_hours'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('estimated_hours') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.estimated_hours_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="photos">{{ trans('cruds.wlist.fields.photos') }}</label>
@@ -190,27 +154,12 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.deadline_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="priority_id">{{ trans('cruds.wlist.fields.priority') }}</label>
-                            <select class="form-control select2" name="priority_id" id="priority_id">
-                                @foreach($priorities as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('priority_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            <label for="status_id">{{ trans('cruds.wlist.fields.status') }}</label>
+                            <select class="form-control select2" name="status_id" id="status_id">
+                                @foreach($statuses as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('priority'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('priority') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.wlist.fields.priority_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label>{{ trans('cruds.wlist.fields.status') }}</label>
-                            @foreach(App\Models\Wlist::STATUS_RADIO as $key => $label)
-                                <div>
-                                    <input type="radio" id="status_{{ $key }}" name="status" value="{{ $key }}" {{ old('status', '') === (string) $key ? 'checked' : '' }}>
-                                    <label for="status_{{ $key }}">{{ $label }}</label>
-                                </div>
-                            @endforeach
                             @if($errors->has('status'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('status') }}
@@ -219,14 +168,24 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.status_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="url_invoice">{{ trans('cruds.wlist.fields.url_invoice') }}</label>
-                            <input class="form-control" type="text" name="url_invoice" id="url_invoice" value="{{ old('url_invoice', '') }}">
-                            @if($errors->has('url_invoice'))
+                            <label for="priority">{{ trans('cruds.wlist.fields.priority') }}</label>
+                            <input class="form-control" type="number" name="priority" id="priority" value="{{ old('priority', '') }}" step="1">
+                            @if($errors->has('priority'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('url_invoice') }}
+                                    {{ $errors->first('priority') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.wlist.fields.url_invoice_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.wlist.fields.priority_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="proforma_link">{{ trans('cruds.wlist.fields.proforma_link') }}</label>
+                            <input class="form-control" type="text" name="proforma_link" id="proforma_link" value="{{ old('proforma_link', '') }}">
+                            @if($errors->has('proforma_link'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('proforma_link') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.proforma_link_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="notes">{{ trans('cruds.wlist.fields.notes') }}</label>
@@ -249,6 +208,60 @@
                             <span class="help-block">{{ trans('cruds.wlist.fields.internal_notes_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="link">{{ trans('cruds.wlist.fields.link') }}</label>
+                            <input class="form-control" type="text" name="link" id="link" value="{{ old('link', '') }}">
+                            @if($errors->has('link'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.link_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_description">{{ trans('cruds.wlist.fields.link_description') }}</label>
+                            <input class="form-control" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                            @if($errors->has('link_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.link_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_use">{{ trans('cruds.wlist.fields.last_use') }}</label>
+                            <input class="form-control datetime" type="text" name="last_use" id="last_use" value="{{ old('last_use') }}">
+                            @if($errors->has('last_use'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('last_use') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.last_use_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="completed_at">{{ trans('cruds.wlist.fields.completed_at') }}</label>
+                            <input class="form-control datetime" type="text" name="completed_at" id="completed_at" value="{{ old('completed_at') }}">
+                            @if($errors->has('completed_at'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('completed_at') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.completed_at_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="financial_document_id">{{ trans('cruds.wlist.fields.financial_document') }}</label>
+                            <select class="form-control select2" name="financial_document_id" id="financial_document_id">
+                                @foreach($financial_documents as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('financial_document_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('financial_document'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('financial_document') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wlist.fields.financial_document_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -257,70 +270,71 @@
                 </div>
             </div>
 
-            </div>
         </div>
     </div>
+</div>
 @endsection
 
 @section('scripts')
-    <script>
-        var uploadedPhotosMap = {}
-        Dropzone.options.photosDropzone = {
-            url: '{{ route('frontend.wlists.storeMedia') }}',
-            maxFilesize: 2, // MB
-            acceptedFiles: '.jpeg,.jpg,.png,.gif',
-            addRemoveLinks: true,
-            headers: {
-                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-            },
-            params: {
-                size: 2,
-                width: 4096,
-                height: 4096
-            },
-            success: function(file, response) {
-                $('form').append('<input type="hidden" name="photos[]" value="' + response.name + '">')
-                uploadedPhotosMap[file.name] = response.name
-            },
-            removedfile: function(file) {
-                console.log(file)
-                file.previewElement.remove()
-                var name = ''
-                if (typeof file.file_name !== 'undefined') {
-                    name = file.file_name
-                } else {
-                    name = uploadedPhotosMap[file.name]
-                }
-                $('form').find('input[name="photos[]"][value="' + name + '"]').remove()
-            },
-            init: function() {
-                @if (isset($wlist) && $wlist->photos)
-                    var files = {!! json_encode($wlist->photos) !!}
-                    for (var i in files) {
-                        var file = files[i]
-                        this.options.addedfile.call(this, file)
-                        this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
-                        file.previewElement.classList.add('dz-complete')
-                        $('form').append('<input type="hidden" name="photos[]" value="' + file.file_name + '">')
-                    }
-                @endif
-            },
-            error: function(file, response) {
-                if ($.type(response) === 'string') {
-                    var message = response //dropzone sends it's own error messages in string
-                } else {
-                    var message = response.errors.file
-                }
-                file.previewElement.classList.add('dz-error')
-                _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-                _results = []
-                for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-                    node = _ref[_i]
-                    _results.push(node.textContent = message)
-                }
-
-                return _results
-            }
+<script>
+    var uploadedPhotosMap = {}
+Dropzone.options.photosDropzone = {
+    url: '{{ route('frontend.wlists.storeMedia') }}',
+    maxFilesize: 2, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 2,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="photos[]" value="' + response.name + '">')
+      uploadedPhotosMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      console.log(file)
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedPhotosMap[file.name]
+      }
+      $('form').find('input[name="photos[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($wlist) && $wlist->photos)
+      var files = {!! json_encode($wlist->photos) !!}
+          for (var i in files) {
+          var file = files[i]
+          this.options.addedfile.call(this, file)
+          this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+          file.previewElement.classList.add('dz-complete')
+          $('form').append('<input type="hidden" name="photos[]" value="' + file.file_name + '">')
         }
-    </script>
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+
+</script>
 @endsection

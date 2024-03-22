@@ -41,7 +41,7 @@
                         {{ trans('cruds.user.fields.email') }}
                     </th>
                     <th>
-                        {{ trans('cruds.comment.fields.comment') }}
+                        {{ trans('cruds.comment.fields.to_users') }}
                     </th>
                     <th>
                         {{ trans('cruds.comment.fields.private_comment') }}
@@ -83,7 +83,12 @@
                     <td>
                     </td>
                     <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        <select class="search">
+                            <option value>{{ trans('global.all') }}</option>
+                            @foreach($users as $key => $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </select>
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -152,7 +157,7 @@
 { data: 'wlist.description', name: 'wlist.description' },
 { data: 'from_user_name', name: 'from_user.name' },
 { data: 'from_user.email', name: 'from_user.email' },
-{ data: 'comment', name: 'comment' },
+{ data: 'to_users', name: 'to_users.name' },
 { data: 'private_comment', name: 'private_comment' },
 { data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'files', name: 'files', sortable: false, searchable: false },

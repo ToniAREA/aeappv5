@@ -64,6 +64,11 @@ class Comment extends Model implements HasMedia
         return $this->belongsTo(User::class, 'from_user_id');
     }
 
+    public function to_users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function getPhotosAttribute()
     {
         $files = $this->getMedia('photos');

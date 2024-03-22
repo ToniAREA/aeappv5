@@ -2,8 +2,8 @@
 
 return [
     'userManagement' => [
-        'title'          => 'User',
-        'title_singular' => 'Users',
+        'title'          => 'User management',
+        'title_singular' => 'User management',
     ],
     'permission' => [
         'title'          => 'Permissions',
@@ -1092,8 +1092,8 @@ return [
         ],
     ],
     'expenseManagement' => [
-        'title'          => 'Accounting',
-        'title_singular' => 'Accounting',
+        'title'          => 'Expense Management',
+        'title_singular' => 'Expense Management',
     ],
     'expenseCategory' => [
         'title'          => 'Expense Categories',
@@ -1241,6 +1241,8 @@ return [
             'photos_helper'          => ' ',
             'files'                  => 'Files',
             'files_helper'           => ' ',
+            'to_users'               => 'To Users',
+            'to_users_helper'        => ' ',
         ],
     ],
     'booking' => [
@@ -1721,6 +1723,8 @@ return [
             'material_discount_helper'    => ' ',
             'photo'                       => 'Photo',
             'photo_helper'                => ' ',
+            'hourly_rate'                 => 'Hourly Rate',
+            'hourly_rate_helper'          => ' ',
         ],
     ],
     'company' => [
@@ -2433,6 +2437,34 @@ return [
             'updated_at_helper' => ' ',
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => ' ',
+        ],
+    ],
+    'waitingList' => [
+        'title'          => 'Waiting List',
+        'title_singular' => 'Waiting List',
+        'fields'         => [
+            'id'                 => 'ID',
+            'id_helper'          => ' ',
+            'user'               => 'User',
+            'user_helper'        => ' ',
+            'waiting_for'        => 'Waiting For',
+            'waiting_for_helper' => ' ',
+            'client'             => 'Client',
+            'client_helper'      => ' ',
+            'boats'              => 'Boats',
+            'boats_helper'       => ' ',
+            'created_at'         => 'Created at',
+            'created_at_helper'  => ' ',
+            'updated_at'         => 'Updated at',
+            'updated_at_helper'  => ' ',
+            'deleted_at'         => 'Deleted at',
+            'deleted_at_helper'  => ' ',
+            'plan'               => 'Plan',
+            'plan_helper'        => ' ',
+            'status'             => 'Status',
+            'status_helper'      => ' ',
+            'notes'              => 'Notes',
+            'notes_helper'       => ' ',
         ],
     ],
 

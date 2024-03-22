@@ -231,6 +231,11 @@
                 {{ trans('cruds.iotSuscription.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#boats_waiting_lists" role="tab" data-toggle="tab">
+                {{ trans('cruds.waitingList.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="boat_wlists">
@@ -262,6 +267,9 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="boats_iot_suscriptions">
             @includeIf('admin.boats.relationships.boatsIotSuscriptions', ['iotSuscriptions' => $boat->boatsIotSuscriptions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="boats_waiting_lists">
+            @includeIf('admin.boats.relationships.boatsWaitingLists', ['waitingLists' => $boat->boatsWaitingLists])
         </div>
     </div>
 </div>

@@ -42,7 +42,7 @@
                                         {{ trans('cruds.user.fields.email') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.comment.fields.comment') }}
+                                        {{ trans('cruds.comment.fields.to_users') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.comment.fields.private_comment') }}
@@ -84,7 +84,12 @@
                                     <td>
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -116,7 +121,9 @@
                                             {{ $comment->from_user->email ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $comment->comment ?? '' }}
+                                            @foreach($comment->to_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             {{ $comment->private_comment ?? '' }}

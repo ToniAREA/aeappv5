@@ -37,7 +37,7 @@
                                 {{ trans('cruds.user.fields.email') }}
                             </th>
                             <th>
-                                {{ trans('cruds.comment.fields.comment') }}
+                                {{ trans('cruds.comment.fields.to_users') }}
                             </th>
                             <th>
                                 {{ trans('cruds.comment.fields.private_comment') }}
@@ -75,7 +75,9 @@
                                     {{ $comment->from_user->email ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $comment->comment ?? '' }}
+                                    @foreach($comment->to_users as $key => $item)
+                                        <span class="badge badge-info">{{ $item->name }}</span>
+                                    @endforeach
                                 </td>
                                 <td>
                                     {{ $comment->private_comment ?? '' }}

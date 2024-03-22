@@ -1,23 +1,13 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container-fluid">
-    <div class="row mb-3">
-            <div class="col d-flex justify-content-center">
-                <a href="/home" class="btn btn-link text-white"><i class="fas fa-tachometer-alt"></i> Home</a>
-                <a href="/clients" class="btn btn-link text-white"><i class="fa fa-users"></i> Clients</a>
-                <a href="/boats" class="btn btn-link text-white"><i class="fa fa-ship"></i> boats</a>
-                <a href="/marinas" class="btn btn-link text-white"><i class="fa fa-anchor"></i> Marinas</a>
-            </div>
-        </div>
-    </div>
-
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
             @can('wlist_create')
                 <div style="margin-bottom: 10px;" class="row">
                     <div class="col-lg-12">
                         <a class="btn btn-success" href="{{ route('frontend.wlists.create') }}">
-                            <i class="fas fa-plus"></i>
+                            {{ trans('global.add') }} {{ trans('cruds.wlist.title_singular') }}
                         </a>
                         <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                             {{ trans('global.app_csvImport') }}
@@ -30,6 +20,7 @@
                 <div class="card-header">
                     {{ trans('cruds.wlist.title_singular') }} {{ trans('global.list') }}
                 </div>
+
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class=" table table-bordered table-striped table-hover datatable datatable-Wlist">
