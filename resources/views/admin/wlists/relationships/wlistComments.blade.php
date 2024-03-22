@@ -37,9 +37,6 @@
                                 {{ trans('cruds.user.fields.email') }}
                             </th>
                             <th>
-                                {{ trans('cruds.comment.fields.comment') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.comment.fields.private_comment') }}
                             </th>
                             <th>
@@ -73,9 +70,6 @@
                                 </td>
                                 <td>
                                     {{ $comment->from_user->email ?? '' }}
-                                </td>
-                                <td>
-                                    {{ $comment->comment ?? '' }}
                                 </td>
                                 <td>
                                     {{ $comment->private_comment ?? '' }}

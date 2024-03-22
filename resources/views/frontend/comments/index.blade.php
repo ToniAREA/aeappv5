@@ -42,9 +42,6 @@
                                         {{ trans('cruds.user.fields.email') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.comment.fields.comment') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.comment.fields.private_comment') }}
                                     </th>
                                     <th>
@@ -87,9 +84,6 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -114,9 +108,6 @@
                                         </td>
                                         <td>
                                             {{ $comment->from_user->email ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $comment->comment ?? '' }}
                                         </td>
                                         <td>
                                             {{ $comment->private_comment ?? '' }}

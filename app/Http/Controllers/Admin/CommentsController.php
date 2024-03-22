@@ -64,9 +64,6 @@ class CommentsController extends Controller
             $table->editColumn('from_user.email', function ($row) {
                 return $row->from_user ? (is_string($row->from_user) ? $row->from_user : $row->from_user->email) : '';
             });
-            $table->editColumn('comment', function ($row) {
-                return $row->comment ? $row->comment : '';
-            });
             $table->editColumn('private_comment', function ($row) {
                 return $row->private_comment ? $row->private_comment : '';
             });
