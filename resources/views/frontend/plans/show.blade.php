@@ -88,6 +88,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.plan.fields.hourly_rate') }}
+                                    </th>
+                                    <td>
+                                        {{ $plan->hourly_rate }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.plan.fields.hourly_rate_discount') }}
                                     </th>
                                     <td>

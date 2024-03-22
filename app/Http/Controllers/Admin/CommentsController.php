@@ -26,7 +26,7 @@ class CommentsController extends Controller
         abort_if(Gate::denies('comment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Comment::with(['wlist', 'from_user'])->select(sprintf('%s.*', (new Comment)->table));
+            $query = Comment::with(['wlist', 'from_user', 'to_users'])->select(sprintf('%s.*', (new Comment)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -64,8 +64,13 @@ class CommentsController extends Controller
             $table->editColumn('from_user.email', function ($row) {
                 return $row->from_user ? (is_string($row->from_user) ? $row->from_user : $row->from_user->email) : '';
             });
-            $table->editColumn('comment', function ($row) {
-                return $row->comment ? $row->comment : '';
+            $table->editColumn('to_users', function ($row) {
+                $labels = [];
+                foreach ($row->to_users as $to_user) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $to_user->name);
+                }
+
+                return implode(' ', $labels);
             });
             $table->editColumn('private_comment', function ($row) {
                 return $row->private_comment ? $row->private_comment : '';
@@ -93,7 +98,7 @@ class CommentsController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'wlist', 'from_user', 'photos', 'files']);
+            $table->rawColumns(['actions', 'placeholder', 'wlist', 'from_user', 'to_users', 'photos', 'files']);
 
             return $table->make(true);
         }
@@ -112,13 +117,15 @@ class CommentsController extends Controller
 
         $from_users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.comments.create', compact('from_users', 'wlists'));
+        $to_users = User::pluck('name', 'id');
+
+        return view('admin.comments.create', compact('from_users', 'to_users', 'wlists'));
     }
 
     public function store(StoreCommentRequest $request)
     {
         $comment = Comment::create($request->all());
-
+        $comment->to_users()->sync($request->input('to_users', []));
         foreach ($request->input('photos', []) as $file) {
             $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
@@ -142,15 +149,17 @@ class CommentsController extends Controller
 
         $from_users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $comment->load('wlist', 'from_user');
+        $to_users = User::pluck('name', 'id');
 
-        return view('admin.comments.edit', compact('comment', 'from_users', 'wlists'));
+        $comment->load('wlist', 'from_user', 'to_users');
+
+        return view('admin.comments.edit', compact('comment', 'from_users', 'to_users', 'wlists'));
     }
 
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
         $comment->update($request->all());
-
+        $comment->to_users()->sync($request->input('to_users', []));
         if (count($comment->photos) > 0) {
             foreach ($comment->photos as $media) {
                 if (! in_array($media->file_name, $request->input('photos', []))) {
@@ -186,7 +195,7 @@ class CommentsController extends Controller
     {
         abort_if(Gate::denies('comment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $comment->load('wlist', 'from_user');
+        $comment->load('wlist', 'from_user', 'to_users');
 
         return view('admin.comments.show', compact('comment'));
     }

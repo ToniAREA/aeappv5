@@ -120,7 +120,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('roles', 'userEmployees', 'employeeWlogs', 'fromUserWlists', 'fromUserComments', 'userBookingLists', 'actualHolderAssets', 'employeeMlogs', 'userAssetsRentals', 'userSuscriptions', 'userMaintenanceSuscriptions', 'fromUserEmployeeRatings', 'userIotSuscriptions', 'userUserSettings', 'authorizedUsersProductCategories', 'authorizedUsersAssetCategories', 'authorizedUsersContentCategories', 'authorizedUsersTechnicalDocumentations', 'authorizedUsersDocumentationCategories', 'authorizedUsersContentPages', 'authorizedUsersTechDocsTypes', 'authorizedUsersVideoTutorials', 'authorizedUsersFaqCategories', 'authorizedUsersFaqQuestions', 'authorizedUsersVideoCategories');
+        $user->load('roles', 'userEmployees', 'employeeWlogs', 'fromUserWlists', 'fromUserComments', 'userBookingLists', 'actualHolderAssets', 'employeeMlogs', 'userAssetsRentals', 'userSuscriptions', 'userMaintenanceSuscriptions', 'fromUserEmployeeRatings', 'userIotSuscriptions', 'userUserSettings', 'userWaitingLists', 'authorizedUsersProductCategories', 'authorizedUsersAssetCategories', 'authorizedUsersContentCategories', 'authorizedUsersTechnicalDocumentations', 'authorizedUsersDocumentationCategories', 'authorizedUsersContentPages', 'authorizedUsersTechDocsTypes', 'authorizedUsersVideoTutorials', 'authorizedUsersFaqCategories', 'authorizedUsersFaqQuestions', 'authorizedUsersVideoCategories', 'toUsersComments');
 
         return view('admin.users.show', compact('user'));
     }

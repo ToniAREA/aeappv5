@@ -217,4 +217,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // User Settings
     Route::apiResource('user-settings', 'UserSettingsApiController');
+
+    // Waiting List
+    Route::apiResource('waiting-lists', 'WaitingListApiController');
 });

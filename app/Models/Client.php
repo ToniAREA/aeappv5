@@ -108,6 +108,11 @@ class Client extends Model
         return $this->hasMany(FinalcialDocument::class, 'client_id', 'id');
     }
 
+    public function clientWaitingLists()
+    {
+        return $this->hasMany(WaitingList::class, 'client_id', 'id');
+    }
+
     public function clientsBoats()
     {
         return $this->belongsToMany(Boat::class);

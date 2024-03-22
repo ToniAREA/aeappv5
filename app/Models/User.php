@@ -180,6 +180,11 @@ class User extends Authenticatable
         return $this->hasMany(UserSetting::class, 'user_id', 'id');
     }
 
+    public function userWaitingLists()
+    {
+        return $this->hasMany(WaitingList::class, 'user_id', 'id');
+    }
+
     public function authorizedUsersProductCategories()
     {
         return $this->belongsToMany(ProductCategory::class);
@@ -233,6 +238,11 @@ class User extends Authenticatable
     public function authorizedUsersVideoCategories()
     {
         return $this->belongsToMany(VideoCategory::class);
+    }
+
+    public function toUsersComments()
+    {
+        return $this->belongsToMany(Comment::class);
     }
 
     public function getEmailVerifiedAtAttribute($value)

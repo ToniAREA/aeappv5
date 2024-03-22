@@ -20,13 +20,13 @@ class CommentsApiController extends Controller
     {
         abort_if(Gate::denies('comment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CommentResource(Comment::with(['wlist', 'from_user'])->get());
+        return new CommentResource(Comment::with(['wlist', 'from_user', 'to_users'])->get());
     }
 
     public function store(StoreCommentRequest $request)
     {
         $comment = Comment::create($request->all());
-
+        $comment->to_users()->sync($request->input('to_users', []));
         foreach ($request->input('photos', []) as $file) {
             $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
@@ -44,13 +44,13 @@ class CommentsApiController extends Controller
     {
         abort_if(Gate::denies('comment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CommentResource($comment->load(['wlist', 'from_user']));
+        return new CommentResource($comment->load(['wlist', 'from_user', 'to_users']));
     }
 
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
         $comment->update($request->all());
-
+        $comment->to_users()->sync($request->input('to_users', []));
         if (count($comment->photos) > 0) {
             foreach ($comment->photos as $media) {
                 if (! in_array($media->file_name, $request->input('photos', []))) {
