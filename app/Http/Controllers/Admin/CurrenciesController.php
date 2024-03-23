@@ -11,57 +11,18 @@ use App\Models\Currency;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CurrenciesController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('currency_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Currency::query()->select(sprintf('%s.*', (new Currency)->table));
-            $table = Datatables::of($query);
+        $currencies = Currency::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'currency_show';
-                $editGate      = 'currency_edit';
-                $deleteGate    = 'currency_delete';
-                $crudRoutePart = 'currencies';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('code', function ($row) {
-                return $row->code ? $row->code : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('symbol', function ($row) {
-                return $row->symbol ? $row->symbol : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.currencies.index');
+        return view('admin.currencies.index', compact('currencies'));
     }
 
     public function create()

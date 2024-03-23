@@ -18,109 +18,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class MaintenanceSuscriptionsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('maintenance_suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = MaintenanceSuscription::with(['user', 'financial_document', 'client', 'boats', 'care_plan'])->select(sprintf('%s.*', (new MaintenanceSuscription)->table));
-            $table = Datatables::of($query);
+        $maintenanceSuscriptions = MaintenanceSuscription::with(['user', 'client', 'boats', 'care_plan', 'financial_document', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'maintenance_suscription_show';
-                $editGate      = 'maintenance_suscription_edit';
-                $deleteGate    = 'maintenance_suscription_delete';
-                $crudRoutePart = 'maintenance-suscriptions';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('user.email', function ($row) {
-                return $row->user ? (is_string($row->user) ? $row->user : $row->user->email) : '';
-            });
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-            $table->editColumn('is_active', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->is_active ? 'checked' : null) . '>';
-            });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
-            });
-
-            $table->editColumn('client.lastname', function ($row) {
-                return $row->client ? (is_string($row->client) ? $row->client : $row->client->lastname) : '';
-            });
-            $table->editColumn('boats', function ($row) {
-                $labels = [];
-                foreach ($row->boats as $boat) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $boat->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('care_plan_name', function ($row) {
-                return $row->care_plan ? $row->care_plan->name : '';
-            });
-
-            $table->editColumn('care_plan.period', function ($row) {
-                return $row->care_plan ? (is_string($row->care_plan) ? $row->care_plan : $row->care_plan->period) : '';
-            });
-            $table->editColumn('signed_contract', function ($row) {
-                return $row->signed_contract ? '<a href="' . $row->signed_contract->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-
-            $table->editColumn('hourly_rate_discount', function ($row) {
-                return $row->hourly_rate_discount ? $row->hourly_rate_discount : '';
-            });
-            $table->editColumn('material_discount', function ($row) {
-                return $row->material_discount ? $row->material_discount : '';
-            });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internalnotes', function ($row) {
-                return $row->internalnotes ? $row->internalnotes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'financial_document', 'is_active', 'client', 'boats', 'care_plan', 'signed_contract']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.maintenanceSuscriptions.index');
+        return view('admin.maintenanceSuscriptions.index', compact('maintenanceSuscriptions'));
     }
 
     public function create()
@@ -129,13 +38,13 @@ class MaintenanceSuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
 
         $care_plans = CarePlan::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.maintenanceSuscriptions.create', compact('boats', 'care_plans', 'clients', 'financial_documents', 'users'));
     }
@@ -161,15 +70,15 @@ class MaintenanceSuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
 
         $care_plans = CarePlan::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $maintenanceSuscription->load('user', 'financial_document', 'client', 'boats', 'care_plan');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $maintenanceSuscription->load('user', 'client', 'boats', 'care_plan', 'financial_document');
 
         return view('admin.maintenanceSuscriptions.edit', compact('boats', 'care_plans', 'clients', 'financial_documents', 'maintenanceSuscription', 'users'));
     }
@@ -196,7 +105,7 @@ class MaintenanceSuscriptionsController extends Controller
     {
         abort_if(Gate::denies('maintenance_suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $maintenanceSuscription->load('user', 'financial_document', 'client', 'boats', 'care_plan');
+        $maintenanceSuscription->load('user', 'client', 'boats', 'care_plan', 'financial_document');
 
         return view('admin.maintenanceSuscriptions.show', compact('maintenanceSuscription'));
     }

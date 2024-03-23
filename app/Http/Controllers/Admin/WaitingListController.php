@@ -15,86 +15,18 @@ use App\Models\WaitingList;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class WaitingListController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('waiting_list_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = WaitingList::with(['user', 'client', 'boats', 'plan'])->select(sprintf('%s.*', (new WaitingList)->table));
-            $table = Datatables::of($query);
+        $waitingLists = WaitingList::with(['user', 'client', 'boats', 'plan'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'waiting_list_show';
-                $editGate      = 'waiting_list_edit';
-                $deleteGate    = 'waiting_list_delete';
-                $crudRoutePart = 'waiting-lists';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('user.email', function ($row) {
-                return $row->user ? (is_string($row->user) ? $row->user : $row->user->email) : '';
-            });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
-            });
-
-            $table->editColumn('client.lastname', function ($row) {
-                return $row->client ? (is_string($row->client) ? $row->client : $row->client->lastname) : '';
-            });
-            $table->editColumn('boats', function ($row) {
-                $labels = [];
-                foreach ($row->boats as $boat) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $boat->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('plan_plan_name', function ($row) {
-                return $row->plan ? $row->plan->plan_name : '';
-            });
-
-            $table->editColumn('plan.short_description', function ($row) {
-                return $row->plan ? (is_string($row->plan) ? $row->plan : $row->plan->short_description) : '';
-            });
-            $table->editColumn('waiting_for', function ($row) {
-                return $row->waiting_for ? $row->waiting_for : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? WaitingList::STATUS_SELECT[$row->status] : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'client', 'boats', 'plan']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.waitingLists.index');
+        return view('admin.waitingLists.index', compact('waitingLists'));
     }
 
     public function create()

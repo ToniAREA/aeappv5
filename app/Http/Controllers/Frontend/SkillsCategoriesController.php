@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroySkillsCategoryRequest;
 use App\Http\Requests\StoreSkillsCategoryRequest;
 use App\Http\Requests\UpdateSkillsCategoryRequest;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SkillsCategoriesController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('skills_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -53,6 +56,8 @@ class SkillsCategoriesController extends Controller
     public function show(SkillsCategory $skillsCategory)
     {
         abort_if(Gate::denies('skills_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $skillsCategory->load('subjectEmployeeSkills');
 
         return view('frontend.skillsCategories.show', compact('skillsCategory'));
     }

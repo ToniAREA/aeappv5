@@ -33,6 +33,9 @@
                                         {{ trans('cruds.toDo.fields.task') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.toDo.fields.photos') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.toDo.fields.for_role') }}
                                     </th>
                                     <th>
@@ -74,6 +77,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <select class="search">
@@ -129,6 +134,13 @@
                                         </td>
                                         <td>
                                             {{ $toDo->task ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($toDo->photos as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $media->getUrl('thumb') }}">
+                                                </a>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @foreach($toDo->for_roles as $key => $item)

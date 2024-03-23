@@ -57,6 +57,8 @@ class CheckpointsGroupsController extends Controller
     {
         abort_if(Gate::denies('checkpoints_group_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $checkpointsGroup->load('groupCheckpoints');
+
         return view('frontend.checkpointsGroups.show', compact('checkpointsGroup'));
     }
 

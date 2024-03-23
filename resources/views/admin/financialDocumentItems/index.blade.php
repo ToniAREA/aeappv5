@@ -19,51 +19,120 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FinancialDocumentItem">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-FinancialDocumentItem">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.financial_document') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.product') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.product.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.quantity') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.unit_price') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.line_position') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.subtotal') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.total_amount') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.financial_document') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.product') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.product.fields.name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.quantity') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.unit_price') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.line_position') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.subtotal') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.total_amount') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($financialDocumentItems as $key => $financialDocumentItem)
+                        <tr data-entry-id="{{ $financialDocumentItem->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->financial_document->reference_number ?? '' }}
+                            </td>
+                            <td>
+                                @if($financialDocumentItem->financial_document)
+                                    {{ $financialDocumentItem->financial_document::DOC_TYPE_RADIO[$financialDocumentItem->financial_document->doc_type] ?? '' }}
+                                @endif
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->product->model ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->product->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->quantity ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->unit_price ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->line_position ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->subtotal ?? '' }}
+                            </td>
+                            <td>
+                                {{ $financialDocumentItem->total_amount ?? '' }}
+                            </td>
+                            <td>
+                                @can('financial_document_item_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.financial-document-items.show', $financialDocumentItem->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('financial_document_item_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.financial-document-items.edit', $financialDocumentItem->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('financial_document_item_delete')
+                                    <form action="{{ route('admin.financial-document-items.destroy', $financialDocumentItem->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -76,14 +145,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('financial_document_item_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.financial-document-items.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -105,39 +174,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.financial-document-items.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
-{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
-{ data: 'product_model', name: 'product.model' },
-{ data: 'product.name', name: 'product.name' },
-{ data: 'description', name: 'description' },
-{ data: 'quantity', name: 'quantity' },
-{ data: 'unit_price', name: 'unit_price' },
-{ data: 'line_position', name: 'line_position' },
-{ data: 'subtotal', name: 'subtotal' },
-{ data: 'total_amount', name: 'total_amount' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-FinancialDocumentItem').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-FinancialDocumentItem:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

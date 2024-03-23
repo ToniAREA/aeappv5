@@ -15,84 +15,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class FaqCategoryController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('faq_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = FaqCategory::with(['authorized_roles', 'authorized_users'])->select(sprintf('%s.*', (new FaqCategory)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'faq_category_show';
-                $editGate      = 'faq_category_edit';
-                $deleteGate    = 'faq_category_delete';
-                $crudRoutePart = 'faq-categories';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('category', function ($row) {
-                return $row->category ? $row->category : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('photo', function ($row) {
-                if ($photo = $row->photo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-            $table->editColumn('authorized_roles', function ($row) {
-                $labels = [];
-                foreach ($row->authorized_roles as $authorized_role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('authorized_users', function ($row) {
-                $labels = [];
-                foreach ($row->authorized_users as $authorized_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'photo', 'authorized_roles', 'authorized_users']);
-
-            return $table->make(true);
-        }
+        $faqCategories = FaqCategory::with(['authorized_roles', 'authorized_users', 'media'])->get();
 
         $roles = Role::get();
+
         $users = User::get();
 
-        return view('admin.faqCategories.index', compact('roles', 'users'));
+        return view('admin.faqCategories.index', compact('faqCategories', 'roles', 'users'));
     }
 
     public function create()

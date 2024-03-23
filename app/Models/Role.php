@@ -96,6 +96,16 @@ class Role extends Model
         return $this->belongsToMany(FaqCategory::class);
     }
 
+    public function authorizedRolesFaqQuestions()
+    {
+        return $this->belongsToMany(FaqQuestion::class);
+    }
+
+    public function authorizedRolesVideoCategories()
+    {
+        return $this->belongsToMany(VideoCategory::class);
+    }
+
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);

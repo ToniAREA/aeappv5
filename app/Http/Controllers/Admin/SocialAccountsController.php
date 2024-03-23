@@ -4,70 +4,88 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Requests\MassDestroySocialAccountRequest;
+use App\Http\Requests\StoreSocialAccountRequest;
+use App\Http\Requests\UpdateSocialAccountRequest;
 use App\Models\SocialAccount;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class SocialAccountsController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('social_account_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = SocialAccount::with(['user'])->select(sprintf('%s.*', (new SocialAccount)->table));
-            $table = Datatables::of($query);
+        $socialAccounts = SocialAccount::with(['user'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        return view('admin.socialAccounts.index', compact('socialAccounts'));
+    }
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'social_account_show';
-                $editGate      = 'social_account_edit';
-                $deleteGate    = 'social_account_delete';
-                $crudRoutePart = 'social-accounts';
+    public function create()
+    {
+        abort_if(Gate::denies('social_account_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
+        return view('admin.socialAccounts.create', compact('users'));
+    }
 
-            $table->editColumn('provider', function ($row) {
-                return $row->provider ? $row->provider : '';
-            });
-            $table->editColumn('id_provider', function ($row) {
-                return $row->id_provider ? $row->id_provider : '';
-            });
-            $table->editColumn('token', function ($row) {
-                return $row->token ? $row->token : '';
-            });
-            $table->editColumn('refresh_token', function ($row) {
-                return $row->refresh_token ? $row->refresh_token : '';
-            });
-            $table->editColumn('expires_in', function ($row) {
-                return $row->expires_in ? $row->expires_in : '';
-            });
+    public function store(StoreSocialAccountRequest $request)
+    {
+        $socialAccount = SocialAccount::create($request->all());
 
-            $table->rawColumns(['actions', 'placeholder', 'user']);
+        return redirect()->route('admin.social-accounts.index');
+    }
 
-            return $table->make(true);
+    public function edit(SocialAccount $socialAccount)
+    {
+        abort_if(Gate::denies('social_account_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $socialAccount->load('user');
+
+        return view('admin.socialAccounts.edit', compact('socialAccount', 'users'));
+    }
+
+    public function update(UpdateSocialAccountRequest $request, SocialAccount $socialAccount)
+    {
+        $socialAccount->update($request->all());
+
+        return redirect()->route('admin.social-accounts.index');
+    }
+
+    public function show(SocialAccount $socialAccount)
+    {
+        abort_if(Gate::denies('social_account_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $socialAccount->load('user');
+
+        return view('admin.socialAccounts.show', compact('socialAccount'));
+    }
+
+    public function destroy(SocialAccount $socialAccount)
+    {
+        abort_if(Gate::denies('social_account_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $socialAccount->delete();
+
+        return back();
+    }
+
+    public function massDestroy(MassDestroySocialAccountRequest $request)
+    {
+        $socialAccounts = SocialAccount::find(request('ids'));
+
+        foreach ($socialAccounts as $socialAccount) {
+            $socialAccount->delete();
         }
 
-        return view('admin.socialAccounts.index');
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

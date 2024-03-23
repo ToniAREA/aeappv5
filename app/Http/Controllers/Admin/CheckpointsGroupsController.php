@@ -11,54 +11,18 @@ use App\Models\CheckpointsGroup;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CheckpointsGroupsController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('checkpoints_group_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = CheckpointsGroup::query()->select(sprintf('%s.*', (new CheckpointsGroup)->table));
-            $table = Datatables::of($query);
+        $checkpointsGroups = CheckpointsGroup::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'checkpoints_group_show';
-                $editGate      = 'checkpoints_group_edit';
-                $deleteGate    = 'checkpoints_group_delete';
-                $crudRoutePart = 'checkpoints-groups';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('group', function ($row) {
-                return $row->group ? $row->group : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.checkpointsGroups.index');
+        return view('admin.checkpointsGroups.index', compact('checkpointsGroups'));
     }
 
     public function create()

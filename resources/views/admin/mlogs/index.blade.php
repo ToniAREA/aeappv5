@@ -19,146 +19,238 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Mlog">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Mlog">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.boat') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.boat_namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.wlist') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.employee') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.email') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.item') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.product') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.photos') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.units') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.price_unit') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.invoiced_line') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.internal_notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.mlog.fields.financial_document') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($boats as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($wlists as $key => $item)
-                                <option value="{{ $item->description }}">{{ $item->description }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($products as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($finalcial_documents as $key => $item)
-                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.boat') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.boat_namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.wlist') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.date') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.employee') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.item') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.product') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.photos') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.units') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.price_unit') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.invoiced_line') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.internal_notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.mlog.fields.financial_document') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($boats as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($wlists as $key => $item)
+                                    <option value="{{ $item->description }}">{{ $item->description }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($users as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($products as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($finalcial_documents as $key => $item)
+                                    <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($mlogs as $key => $mlog)
+                        <tr data-entry-id="{{ $mlog->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $mlog->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->boat->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->boat_namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->wlist->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->date ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->employee->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->employee->email ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->item ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->product->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->description ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($mlog->photos as $key => $media)
+                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $media->getUrl('thumb') }}">
+                                    </a>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{ $mlog->units ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->price_unit ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $mlog->invoiced_line ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $mlog->invoiced_line ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $mlog->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $mlog->financial_document->reference_number ?? '' }}
+                            </td>
+                            <td>
+                                @if($mlog->financial_document)
+                                    {{ $mlog->financial_document::DOC_TYPE_RADIO[$mlog->financial_document->doc_type] ?? '' }}
+                                @endif
+                            </td>
+                            <td>
+                                @can('mlog_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.mlogs.show', $mlog->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('mlog_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.mlogs.edit', $mlog->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('mlog_delete')
+                                    <form action="{{ route('admin.mlogs.destroy', $mlog->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -171,14 +263,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('mlog_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.mlogs.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -200,39 +292,12 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.mlogs.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'boat_name', name: 'boat.name' },
-{ data: 'boat_namecomplete', name: 'boat_namecomplete' },
-{ data: 'wlist_description', name: 'wlist.description' },
-{ data: 'date', name: 'date' },
-{ data: 'employee_name', name: 'employee.name' },
-{ data: 'employee.email', name: 'employee.email' },
-{ data: 'item', name: 'item' },
-{ data: 'product_name', name: 'product.name' },
-{ data: 'description', name: 'description' },
-{ data: 'photos', name: 'photos', sortable: false, searchable: false },
-{ data: 'units', name: 'units' },
-{ data: 'price_unit', name: 'price_unit' },
-{ data: 'invoiced_line', name: 'invoiced_line' },
-{ data: 'internal_notes', name: 'internal_notes' },
-{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
-{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Mlog').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Mlog:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -259,7 +324,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
+})
 
 </script>
 @endsection

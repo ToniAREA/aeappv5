@@ -13,124 +13,22 @@ use App\Models\ContactContact;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ClientsController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('client_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Client::with(['contacts', 'boats'])->select(sprintf('%s.*', (new Client)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'client_show';
-                $editGate      = 'client_edit';
-                $deleteGate    = 'client_delete';
-                $crudRoutePart = 'clients';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('has_active_vip_plan', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->has_active_vip_plan ? 'checked' : null) . '>';
-            });
-            $table->editColumn('has_active_maintenance_plan', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->has_active_maintenance_plan ? 'checked' : null) . '>';
-            });
-            $table->editColumn('defaulter', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->defaulter ? 'checked' : null) . '>';
-            });
-            $table->editColumn('ref', function ($row) {
-                return $row->ref ? $row->ref : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('lastname', function ($row) {
-                return $row->lastname ? $row->lastname : '';
-            });
-            $table->editColumn('vat', function ($row) {
-                return $row->vat ? $row->vat : '';
-            });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : '';
-            });
-            $table->editColumn('country', function ($row) {
-                return $row->country ? $row->country : '';
-            });
-            $table->editColumn('telephone', function ($row) {
-                return $row->telephone ? $row->telephone : '';
-            });
-            $table->editColumn('mobile', function ($row) {
-                return $row->mobile ? $row->mobile : '';
-            });
-            $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : '';
-            });
-            $table->editColumn('contacts', function ($row) {
-                $labels = [];
-                foreach ($row->contacts as $contact) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $contact->contact_first_name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('boats', function ($row) {
-                $labels = [];
-                foreach ($row->boats as $boat) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $boat->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->editColumn('coordinates', function ($row) {
-                return $row->coordinates ? $row->coordinates : '';
-            });
-            $table->editColumn('link_a', function ($row) {
-                return $row->link_a ? $row->link_a : '';
-            });
-            $table->editColumn('link_a_description', function ($row) {
-                return $row->link_a_description ? $row->link_a_description : '';
-            });
-            $table->editColumn('link_b', function ($row) {
-                return $row->link_b ? $row->link_b : '';
-            });
-            $table->editColumn('link_b_description', function ($row) {
-                return $row->link_b_description ? $row->link_b_description : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'has_active_vip_plan', 'has_active_maintenance_plan', 'defaulter', 'contacts', 'boats']);
-
-            return $table->make(true);
-        }
+        $clients = Client::with(['contacts', 'boats'])->get();
 
         $contact_contacts = ContactContact::get();
-        $boats            = Boat::get();
 
-        return view('admin.clients.index', compact('contact_contacts', 'boats'));
+        $boats = Boat::get();
+
+        return view('admin.clients.index', compact('boats', 'clients', 'contact_contacts'));
     }
 
     public function create()

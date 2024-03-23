@@ -42,6 +42,9 @@
                                         {{ trans('cruds.documentationCategory.fields.authorized_users') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.documentationCategory.fields.photo') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -67,6 +70,13 @@
                                             @foreach($documentationCategory->authorized_users as $key => $item)
                                                 <span>{{ $item->name }}</span>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            @if($documentationCategory->photo)
+                                                <a href="{{ $documentationCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $documentationCategory->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('documentation_category_show')

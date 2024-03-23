@@ -15,114 +15,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class BoatsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('boat_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Boat::with(['marina', 'clients'])->select(sprintf('%s.*', (new Boat)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'boat_show';
-                $editGate      = 'boat_edit';
-                $deleteGate    = 'boat_delete';
-                $crudRoutePart = 'boats';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('ref', function ($row) {
-                return $row->ref ? $row->ref : '';
-            });
-            $table->editColumn('boat_type', function ($row) {
-                return $row->boat_type ? $row->boat_type : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('boat_photo', function ($row) {
-                if ($photo = $row->boat_photo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-            $table->editColumn('imo', function ($row) {
-                return $row->imo ? $row->imo : '';
-            });
-            $table->editColumn('mmsi', function ($row) {
-                return $row->mmsi ? $row->mmsi : '';
-            });
-            $table->addColumn('marina_name', function ($row) {
-                return $row->marina ? $row->marina->name : '';
-            });
-
-            $table->editColumn('sat_phone', function ($row) {
-                return $row->sat_phone ? $row->sat_phone : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->editColumn('clients', function ($row) {
-                $labels = [];
-                foreach ($row->clients as $client) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $client->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-
-            $table->editColumn('settings_data', function ($row) {
-                return $row->settings_data ? $row->settings_data : '';
-            });
-            $table->editColumn('public_ip', function ($row) {
-                return $row->public_ip ? $row->public_ip : '';
-            });
-            $table->editColumn('coordinates', function ($row) {
-                return $row->coordinates ? $row->coordinates : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'boat_photo', 'marina', 'clients']);
-
-            return $table->make(true);
-        }
+        $boats = Boat::with(['marina', 'clients', 'media'])->get();
 
         $marinas = Marina::get();
+
         $clients = Client::get();
 
-        return view('admin.boats.index', compact('marinas', 'clients'));
+        return view('admin.boats.index', compact('boats', 'clients', 'marinas'));
     }
 
     public function create()

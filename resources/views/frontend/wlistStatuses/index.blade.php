@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.wlist-statuses.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.wlistStatus.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'WlistStatus', 'route' => 'admin.wlist-statuses.parseCsvImport'])
                     </div>
                 </div>
             @endcan

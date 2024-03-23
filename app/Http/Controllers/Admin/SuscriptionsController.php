@@ -18,101 +18,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class SuscriptionsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Suscription::with(['user', 'client', 'boats', 'plan', 'financial_document'])->select(sprintf('%s.*', (new Suscription)->table));
-            $table = Datatables::of($query);
+        $suscriptions = Suscription::with(['user', 'client', 'boats', 'plan', 'financial_document', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'suscription_show';
-                $editGate      = 'suscription_edit';
-                $deleteGate    = 'suscription_delete';
-                $crudRoutePart = 'suscriptions';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('user.email', function ($row) {
-                return $row->user ? (is_string($row->user) ? $row->user : $row->user->email) : '';
-            });
-            $table->editColumn('is_active', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->is_active ? 'checked' : null) . '>';
-            });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
-            });
-
-            $table->editColumn('client.lastname', function ($row) {
-                return $row->client ? (is_string($row->client) ? $row->client : $row->client->lastname) : '';
-            });
-            $table->editColumn('boats', function ($row) {
-                $labels = [];
-                foreach ($row->boats as $boat) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $boat->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('plan_plan_name', function ($row) {
-                return $row->plan ? $row->plan->plan_name : '';
-            });
-
-            $table->editColumn('signed_contract', function ($row) {
-                return $row->signed_contract ? '<a href="' . $row->signed_contract->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internalnotes', function ($row) {
-                return $row->internalnotes ? $row->internalnotes : '';
-            });
-
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'is_active', 'client', 'boats', 'plan', 'signed_contract', 'financial_document']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.suscriptions.index');
+        return view('admin.suscriptions.index', compact('suscriptions'));
     }
 
     public function create()

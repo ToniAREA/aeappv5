@@ -22,6 +22,9 @@ class StoreToDoRequest extends FormRequest
                 'max:200',
                 'nullable',
             ],
+            'photos' => [
+                'array',
+            ],
             'for_roles.*' => [
                 'integer',
             ],

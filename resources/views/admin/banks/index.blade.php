@@ -19,69 +19,159 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Bank">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Bank">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.is_active') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.branch') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.account_number') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.account_name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.swift_code') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.address') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.join_date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.current_balance') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.internal_notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.link_a') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.link_a_description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.link_b') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.link_b_description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.bank.fields.files') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.is_active') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.branch') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.account_number') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.account_name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.swift_code') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.address') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.join_date') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.current_balance') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.internal_notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.link_a') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.link_a_description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.link_b') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.link_b_description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.bank.fields.files') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($banks as $key => $bank)
+                        <tr data-entry-id="{{ $bank->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $bank->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->name ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $bank->is_active ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $bank->is_active ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $bank->branch ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->account_number ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->account_name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->swift_code ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->address ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->join_date ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->current_balance ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->link_a ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->link_a_description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->link_b ?? '' }}
+                            </td>
+                            <td>
+                                {{ $bank->link_b_description ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($bank->files as $key => $media)
+                                    <a href="{{ $media->getUrl() }}" target="_blank">
+                                        {{ trans('global.view_file') }}
+                                    </a>
+                                @endforeach
+                            </td>
+                            <td>
+                                @can('bank_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.banks.show', $bank->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('bank_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.banks.edit', $bank->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('bank_delete')
+                                    <form action="{{ route('admin.banks.destroy', $bank->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -94,14 +184,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('bank_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.banks.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -123,45 +213,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.banks.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
-{ data: 'is_active', name: 'is_active' },
-{ data: 'branch', name: 'branch' },
-{ data: 'account_number', name: 'account_number' },
-{ data: 'account_name', name: 'account_name' },
-{ data: 'swift_code', name: 'swift_code' },
-{ data: 'address', name: 'address' },
-{ data: 'join_date', name: 'join_date' },
-{ data: 'current_balance', name: 'current_balance' },
-{ data: 'notes', name: 'notes' },
-{ data: 'internal_notes', name: 'internal_notes' },
-{ data: 'link_a', name: 'link_a' },
-{ data: 'link_a_description', name: 'link_a_description' },
-{ data: 'link_b', name: 'link_b' },
-{ data: 'link_b_description', name: 'link_b_description' },
-{ data: 'files', name: 'files', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Bank').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Bank:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

@@ -14,92 +14,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class MarinasController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('marina_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Marina::with(['contacts', 'contact_docs'])->select(sprintf('%s.*', (new Marina)->table));
-            $table = Datatables::of($query);
+        $marinas = Marina::with(['contacts', 'contact_docs', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'marina_show';
-                $editGate      = 'marina_edit';
-                $deleteGate    = 'marina_delete';
-                $crudRoutePart = 'marinas';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('marina_photo', function ($row) {
-                if ($photo = $row->marina_photo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-            $table->editColumn('coordinates', function ($row) {
-                return $row->coordinates ? $row->coordinates : '';
-            });
-            $table->editColumn('contacts', function ($row) {
-                $labels = [];
-                foreach ($row->contacts as $contact) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $contact->contact_first_name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('contact_docs_contact_first_name', function ($row) {
-                return $row->contact_docs ? $row->contact_docs->contact_first_name : '';
-            });
-
-            $table->editColumn('contact_docs.contact_email', function ($row) {
-                return $row->contact_docs ? (is_string($row->contact_docs) ? $row->contact_docs : $row->contact_docs->contact_email) : '';
-            });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'marina_photo', 'contacts', 'contact_docs']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.marinas.index');
+        return view('admin.marinas.index', compact('marinas'));
     }
 
     public function create()

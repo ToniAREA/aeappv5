@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyContactTagRequest;
 use App\Http\Requests\StoreContactTagRequest;
 use App\Http\Requests\UpdateContactTagRequest;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactTagController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('contact_tag_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDocumentationCategoryRequest;
 use App\Http\Requests\StoreDocumentationCategoryRequest;
 use App\Http\Requests\UpdateDocumentationCategoryRequest;
@@ -12,17 +13,18 @@ use App\Models\Role;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class DocumentationCategoriesController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('documentation_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $documentationCategories = DocumentationCategory::with(['authorized_roles', 'authorized_users'])->get();
+        $documentationCategories = DocumentationCategory::with(['authorized_roles', 'authorized_users', 'media'])->get();
 
         return view('frontend.documentationCategories.index', compact('documentationCategories'));
     }
@@ -43,6 +45,13 @@ class DocumentationCategoriesController extends Controller
         $documentationCategory = DocumentationCategory::create($request->all());
         $documentationCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $documentationCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            $documentationCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $documentationCategory->id]);
+        }
 
         return redirect()->route('frontend.documentation-categories.index');
     }
@@ -65,6 +74,16 @@ class DocumentationCategoriesController extends Controller
         $documentationCategory->update($request->all());
         $documentationCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $documentationCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            if (! $documentationCategory->photo || $request->input('photo') !== $documentationCategory->photo->file_name) {
+                if ($documentationCategory->photo) {
+                    $documentationCategory->photo->delete();
+                }
+                $documentationCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($documentationCategory->photo) {
+            $documentationCategory->photo->delete();
+        }
 
         return redirect()->route('frontend.documentation-categories.index');
     }
@@ -96,5 +115,17 @@ class DocumentationCategoriesController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('documentation_category_create') && Gate::denies('documentation_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new DocumentationCategory();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

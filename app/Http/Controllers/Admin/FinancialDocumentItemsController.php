@@ -13,80 +13,18 @@ use App\Models\Product;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class FinancialDocumentItemsController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('financial_document_item_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = FinancialDocumentItem::with(['financial_document', 'product'])->select(sprintf('%s.*', (new FinancialDocumentItem)->table));
-            $table = Datatables::of($query);
+        $financialDocumentItems = FinancialDocumentItem::with(['financial_document', 'product'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'financial_document_item_show';
-                $editGate      = 'financial_document_item_edit';
-                $deleteGate    = 'financial_document_item_delete';
-                $crudRoutePart = 'financial-document-items';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-            $table->addColumn('product_model', function ($row) {
-                return $row->product ? $row->product->model : '';
-            });
-
-            $table->editColumn('product.name', function ($row) {
-                return $row->product ? (is_string($row->product) ? $row->product : $row->product->name) : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : '';
-            });
-            $table->editColumn('unit_price', function ($row) {
-                return $row->unit_price ? $row->unit_price : '';
-            });
-            $table->editColumn('line_position', function ($row) {
-                return $row->line_position ? $row->line_position : '';
-            });
-            $table->editColumn('subtotal', function ($row) {
-                return $row->subtotal ? $row->subtotal : '';
-            });
-            $table->editColumn('total_amount', function ($row) {
-                return $row->total_amount ? $row->total_amount : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'financial_document', 'product']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.financialDocumentItems.index');
+        return view('admin.financialDocumentItems.index', compact('financialDocumentItems'));
     }
 
     public function create()

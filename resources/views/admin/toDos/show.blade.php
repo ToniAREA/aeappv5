@@ -41,6 +41,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.toDo.fields.photos') }}
+                        </th>
+                        <td>
+                            @foreach($toDo->photos as $key => $media)
+                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $media->getUrl('thumb') }}">
+                                </a>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.toDo.fields.for_role') }}
                         </th>
                         <td>

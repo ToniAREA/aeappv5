@@ -17,130 +17,26 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Asset::with(['category', 'status', 'location', 'actual_holder'])->select(sprintf('%s.*', (new Asset)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'asset_show';
-                $editGate      = 'asset_edit';
-                $deleteGate    = 'asset_delete';
-                $crudRoutePart = 'assets';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('category_name', function ($row) {
-                return $row->category ? $row->category->name : '';
-            });
-
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-            $table->addColumn('status_name', function ($row) {
-                return $row->status ? $row->status->name : '';
-            });
-
-            $table->editColumn('available', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->available ? 'checked' : null) . '>';
-            });
-            $table->addColumn('location_name', function ($row) {
-                return $row->location ? $row->location->name : '';
-            });
-
-            $table->addColumn('actual_holder_name', function ($row) {
-                return $row->actual_holder ? $row->actual_holder->name : '';
-            });
-
-            $table->editColumn('actual_holder.email', function ($row) {
-                return $row->actual_holder ? (is_string($row->actual_holder) ? $row->actual_holder : $row->actual_holder->email) : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->editColumn('data_1', function ($row) {
-                return $row->data_1 ? $row->data_1 : '';
-            });
-            $table->editColumn('data_1_description', function ($row) {
-                return $row->data_1_description ? $row->data_1_description : '';
-            });
-            $table->editColumn('data_2', function ($row) {
-                return $row->data_2 ? $row->data_2 : '';
-            });
-            $table->editColumn('data_2_description', function ($row) {
-                return $row->data_2_description ? $row->data_2_description : '';
-            });
-            $table->editColumn('files', function ($row) {
-                if (! $row->files) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->files as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-            $table->editColumn('link_a', function ($row) {
-                return $row->link_a ? $row->link_a : '';
-            });
-            $table->editColumn('link_a_description', function ($row) {
-                return $row->link_a_description ? $row->link_a_description : '';
-            });
-            $table->editColumn('link_b', function ($row) {
-                return $row->link_b ? $row->link_b : '';
-            });
-            $table->editColumn('link_b_description', function ($row) {
-                return $row->link_b_description ? $row->link_b_description : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'category', 'photos', 'status', 'available', 'location', 'actual_holder', 'files']);
-
-            return $table->make(true);
-        }
+        $assets = Asset::with(['category', 'status', 'location', 'actual_holder', 'media'])->get();
 
         $asset_categories = AssetCategory::get();
-        $asset_statuses   = AssetStatus::get();
-        $asset_locations  = AssetLocation::get();
-        $users            = User::get();
 
-        return view('admin.assets.index', compact('asset_categories', 'asset_statuses', 'asset_locations', 'users'));
+        $asset_statuses = AssetStatus::get();
+
+        $asset_locations = AssetLocation::get();
+
+        $users = User::get();
+
+        return view('admin.assets.index', compact('asset_categories', 'asset_locations', 'asset_statuses', 'assets', 'users'));
     }
 
     public function create()

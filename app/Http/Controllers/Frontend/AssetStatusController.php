@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyAssetStatusRequest;
 use App\Http\Requests\StoreAssetStatusRequest;
 use App\Http\Requests\UpdateAssetStatusRequest;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AssetStatusController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('asset_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

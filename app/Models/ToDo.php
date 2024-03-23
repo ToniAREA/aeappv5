@@ -18,6 +18,10 @@ class ToDo extends Model implements HasMedia
 
     public $table = 'to_dos';
 
+    protected $appends = [
+        'photos',
+    ];
+
     public static $searchable = [
         'internal_notes',
     ];
@@ -62,6 +66,18 @@ class ToDo extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function getPhotosAttribute()
+    {
+        $files = $this->getMedia('photos');
+        $files->each(function ($item) {
+            $item->url       = $item->getUrl();
+            $item->thumbnail = $item->getUrl('thumb');
+            $item->preview   = $item->getUrl('preview');
+        });
+
+        return $files;
     }
 
     public function for_roles()

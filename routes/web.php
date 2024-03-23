@@ -44,6 +44,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Content Tag
     Route::delete('content-tags/destroy', 'ContentTagController@massDestroy')->name('content-tags.massDestroy');
+    Route::post('content-tags/parse-csv-import', 'ContentTagController@parseCsvImport')->name('content-tags.parseCsvImport');
+    Route::post('content-tags/process-csv-import', 'ContentTagController@processCsvImport')->name('content-tags.processCsvImport');
     Route::resource('content-tags', 'ContentTagController');
 
     // Content Page
@@ -181,6 +183,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Asset Status
     Route::delete('asset-statuses/destroy', 'AssetStatusController@massDestroy')->name('asset-statuses.massDestroy');
+    Route::post('asset-statuses/parse-csv-import', 'AssetStatusController@parseCsvImport')->name('asset-statuses.parseCsvImport');
+    Route::post('asset-statuses/process-csv-import', 'AssetStatusController@processCsvImport')->name('asset-statuses.processCsvImport');
     Route::resource('asset-statuses', 'AssetStatusController');
 
     // Asset
@@ -215,10 +219,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Expense Category
     Route::delete('expense-categories/destroy', 'ExpenseCategoryController@massDestroy')->name('expense-categories.massDestroy');
+    Route::post('expense-categories/parse-csv-import', 'ExpenseCategoryController@parseCsvImport')->name('expense-categories.parseCsvImport');
+    Route::post('expense-categories/process-csv-import', 'ExpenseCategoryController@processCsvImport')->name('expense-categories.processCsvImport');
     Route::resource('expense-categories', 'ExpenseCategoryController');
 
     // Income Category
     Route::delete('income-categories/destroy', 'IncomeCategoryController@massDestroy')->name('income-categories.massDestroy');
+    Route::post('income-categories/parse-csv-import', 'IncomeCategoryController@parseCsvImport')->name('income-categories.parseCsvImport');
+    Route::post('income-categories/process-csv-import', 'IncomeCategoryController@processCsvImport')->name('income-categories.processCsvImport');
     Route::resource('income-categories', 'IncomeCategoryController');
 
     // Expense
@@ -241,6 +249,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Contact Tag
     Route::delete('contact-tags/destroy', 'ContactTagController@massDestroy')->name('contact-tags.massDestroy');
+    Route::post('contact-tags/parse-csv-import', 'ContactTagController@parseCsvImport')->name('contact-tags.parseCsvImport');
+    Route::post('contact-tags/process-csv-import', 'ContactTagController@processCsvImport')->name('contact-tags.processCsvImport');
     Route::resource('contact-tags', 'ContactTagController');
 
     // Comments
@@ -259,6 +269,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Wlist Statuses
     Route::delete('wlist-statuses/destroy', 'WlistStatusesController@massDestroy')->name('wlist-statuses.massDestroy');
+    Route::post('wlist-statuses/parse-csv-import', 'WlistStatusesController@parseCsvImport')->name('wlist-statuses.parseCsvImport');
+    Route::post('wlist-statuses/process-csv-import', 'WlistStatusesController@processCsvImport')->name('wlist-statuses.processCsvImport');
     Route::resource('wlist-statuses', 'WlistStatusesController');
 
     // Mlogs
@@ -287,6 +299,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Employee Attendances
     Route::delete('employee-attendances/destroy', 'EmployeeAttendancesController@massDestroy')->name('employee-attendances.massDestroy');
+    Route::post('employee-attendances/parse-csv-import', 'EmployeeAttendancesController@parseCsvImport')->name('employee-attendances.parseCsvImport');
+    Route::post('employee-attendances/process-csv-import', 'EmployeeAttendancesController@processCsvImport')->name('employee-attendances.processCsvImport');
     Route::resource('employee-attendances', 'EmployeeAttendancesController');
 
     // Technical Documentation
@@ -305,6 +319,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Skills Categories
     Route::delete('skills-categories/destroy', 'SkillsCategoriesController@massDestroy')->name('skills-categories.massDestroy');
+    Route::post('skills-categories/parse-csv-import', 'SkillsCategoriesController@parseCsvImport')->name('skills-categories.parseCsvImport');
+    Route::post('skills-categories/process-csv-import', 'SkillsCategoriesController@processCsvImport')->name('skills-categories.processCsvImport');
     Route::resource('skills-categories', 'SkillsCategoriesController');
 
     // Clients Reviews
@@ -357,6 +373,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('insurances/destroy', 'InsurancesController@massDestroy')->name('insurances.massDestroy');
     Route::post('insurances/media', 'InsurancesController@storeMedia')->name('insurances.storeMedia');
     Route::post('insurances/ckmedia', 'InsurancesController@storeCKEditorImages')->name('insurances.storeCKEditorImages');
+    Route::post('insurances/parse-csv-import', 'InsurancesController@parseCsvImport')->name('insurances.parseCsvImport');
+    Route::post('insurances/process-csv-import', 'InsurancesController@processCsvImport')->name('insurances.processCsvImport');
     Route::resource('insurances', 'InsurancesController');
 
     // Banks
@@ -462,9 +480,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('finalcial-documents', 'FinalcialDocumentsController');
 
     // Social Accounts
+    Route::delete('social-accounts/destroy', 'SocialAccountsController@massDestroy')->name('social-accounts.massDestroy');
     Route::post('social-accounts/parse-csv-import', 'SocialAccountsController@parseCsvImport')->name('social-accounts.parseCsvImport');
     Route::post('social-accounts/process-csv-import', 'SocialAccountsController@processCsvImport')->name('social-accounts.processCsvImport');
-    Route::resource('social-accounts', 'SocialAccountsController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::resource('social-accounts', 'SocialAccountsController');
 
     // Financial Document Items
     Route::delete('financial-document-items/destroy', 'FinancialDocumentItemsController@massDestroy')->name('financial-document-items.massDestroy');
@@ -849,7 +868,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::resource('finalcial-documents', 'FinalcialDocumentsController');
 
     // Social Accounts
-    Route::resource('social-accounts', 'SocialAccountsController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+    Route::delete('social-accounts/destroy', 'SocialAccountsController@massDestroy')->name('social-accounts.massDestroy');
+    Route::resource('social-accounts', 'SocialAccountsController');
 
     // Financial Document Items
     Route::delete('financial-document-items/destroy', 'FinancialDocumentItemsController@massDestroy')->name('financial-document-items.massDestroy');

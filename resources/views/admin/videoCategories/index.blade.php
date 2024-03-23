@@ -6,6 +6,10 @@
             <a class="btn btn-success" href="{{ route('admin.video-categories.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.videoCategory.title_singular') }}
             </a>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                {{ trans('global.app_csvImport') }}
+            </button>
+            @include('csvImport.modal', ['model' => 'VideoCategory', 'route' => 'admin.video-categories.parseCsvImport'])
         </div>
     </div>
 @endcan
@@ -32,6 +36,15 @@
                             {{ trans('cruds.videoCategory.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.videoCategory.fields.photo') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.videoCategory.fields.authorized_roles') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.videoCategory.fields.authorized_users') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -50,6 +63,23 @@
                             </td>
                             <td>
                                 {{ $videoCategory->description ?? '' }}
+                            </td>
+                            <td>
+                                @if($videoCategory->photo)
+                                    <a href="{{ $videoCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $videoCategory->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
+                            </td>
+                            <td>
+                                @foreach($videoCategory->authorized_roles as $key => $item)
+                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($videoCategory->authorized_users as $key => $item)
+                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 @can('video_category_show')

@@ -13,102 +13,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class BanksController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('bank_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Bank::query()->select(sprintf('%s.*', (new Bank)->table));
-            $table = Datatables::of($query);
+        $banks = Bank::with(['media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'bank_show';
-                $editGate      = 'bank_edit';
-                $deleteGate    = 'bank_delete';
-                $crudRoutePart = 'banks';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('is_active', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->is_active ? 'checked' : null) . '>';
-            });
-            $table->editColumn('branch', function ($row) {
-                return $row->branch ? $row->branch : '';
-            });
-            $table->editColumn('account_number', function ($row) {
-                return $row->account_number ? $row->account_number : '';
-            });
-            $table->editColumn('account_name', function ($row) {
-                return $row->account_name ? $row->account_name : '';
-            });
-            $table->editColumn('swift_code', function ($row) {
-                return $row->swift_code ? $row->swift_code : '';
-            });
-            $table->editColumn('address', function ($row) {
-                return $row->address ? $row->address : '';
-            });
-
-            $table->editColumn('current_balance', function ($row) {
-                return $row->current_balance ? $row->current_balance : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->editColumn('link_a', function ($row) {
-                return $row->link_a ? $row->link_a : '';
-            });
-            $table->editColumn('link_a_description', function ($row) {
-                return $row->link_a_description ? $row->link_a_description : '';
-            });
-            $table->editColumn('link_b', function ($row) {
-                return $row->link_b ? $row->link_b : '';
-            });
-            $table->editColumn('link_b_description', function ($row) {
-                return $row->link_b_description ? $row->link_b_description : '';
-            });
-            $table->editColumn('files', function ($row) {
-                if (! $row->files) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->files as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'is_active', 'files']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.banks.index');
+        return view('admin.banks.index', compact('banks'));
     }
 
     public function create()

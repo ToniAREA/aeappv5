@@ -15,90 +15,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ExpenseController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('expense_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Expense::with(['employee', 'expense_category'])->select(sprintf('%s.*', (new Expense)->table));
-            $table = Datatables::of($query);
+        $expenses = Expense::with(['employee', 'expense_category', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $employees = Employee::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'expense_show';
-                $editGate      = 'expense_edit';
-                $deleteGate    = 'expense_delete';
-                $crudRoutePart = 'expenses';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('employee_id_employee', function ($row) {
-                return $row->employee ? $row->employee->id_employee : '';
-            });
-
-            $table->editColumn('employee.namecomplete', function ($row) {
-                return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->namecomplete) : '';
-            });
-            $table->addColumn('expense_category_name', function ($row) {
-                return $row->expense_category ? $row->expense_category->name : '';
-            });
-
-            $table->editColumn('amount', function ($row) {
-                return $row->amount ? $row->amount : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('files', function ($row) {
-                if (! $row->files) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->files as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'employee', 'expense_category', 'files', 'photos']);
-
-            return $table->make(true);
-        }
-
-        $employees          = Employee::get();
         $expense_categories = ExpenseCategory::get();
 
-        return view('admin.expenses.index', compact('employees', 'expense_categories'));
+        return view('admin.expenses.index', compact('employees', 'expense_categories', 'expenses'));
     }
 
     public function create()
