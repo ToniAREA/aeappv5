@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,9 +13,14 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class FaqQuestion extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'faq_questions';
+
+    protected $appends = [
+        'photo',
+        'files',
+    ];
 
     public static $searchable = [
         'question',
@@ -52,5 +58,32 @@ class FaqQuestion extends Model implements HasMedia
     public function category()
     {
         return $this->belongsTo(FaqCategory::class, 'category_id');
+    }
+
+    public function getPhotoAttribute()
+    {
+        $file = $this->getMedia('photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
+    }
+
+    public function getFilesAttribute()
+    {
+        return $this->getMedia('files');
+    }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

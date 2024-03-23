@@ -129,7 +129,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $asset->load('category', 'status', 'location', 'actual_holder');
+        $asset->load('category', 'status', 'location', 'actual_holder', 'assetAssetsRentals');
 
         return view('frontend.assets.show', compact('asset'));
     }

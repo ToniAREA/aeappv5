@@ -18,115 +18,28 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class MlogsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('mlog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Mlog::with(['boat', 'wlist', 'employee', 'product', 'financial_document'])->select(sprintf('%s.*', (new Mlog)->table));
-            $table = Datatables::of($query);
+        $mlogs = Mlog::with(['boat', 'wlist', 'employee', 'product', 'financial_document', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $boats = Boat::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'mlog_show';
-                $editGate      = 'mlog_edit';
-                $deleteGate    = 'mlog_delete';
-                $crudRoutePart = 'mlogs';
+        $wlists = Wlist::get();
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        $users = User::get();
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('boat_name', function ($row) {
-                return $row->boat ? $row->boat->name : '';
-            });
+        $products = Product::get();
 
-            $table->editColumn('boat_namecomplete', function ($row) {
-                return $row->boat_namecomplete ? $row->boat_namecomplete : '';
-            });
-            $table->addColumn('wlist_description', function ($row) {
-                return $row->wlist ? $row->wlist->description : '';
-            });
-
-            $table->addColumn('employee_name', function ($row) {
-                return $row->employee ? $row->employee->name : '';
-            });
-
-            $table->editColumn('employee.email', function ($row) {
-                return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->email) : '';
-            });
-            $table->editColumn('item', function ($row) {
-                return $row->item ? $row->item : '';
-            });
-            $table->addColumn('product_name', function ($row) {
-                return $row->product ? $row->product->name : '';
-            });
-
-            $table->editColumn('product.description', function ($row) {
-                return $row->product ? (is_string($row->product) ? $row->product : $row->product->description) : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-            $table->editColumn('units', function ($row) {
-                return $row->units ? $row->units : '';
-            });
-            $table->editColumn('price_unit', function ($row) {
-                return $row->price_unit ? $row->price_unit : '';
-            });
-            $table->editColumn('invoiced_line', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->invoiced_line ? 'checked' : null) . '>';
-            });
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'boat', 'wlist', 'employee', 'product', 'photos', 'invoiced_line', 'financial_document']);
-
-            return $table->make(true);
-        }
-
-        $boats               = Boat::get();
-        $wlists              = Wlist::get();
-        $users               = User::get();
-        $products            = Product::get();
         $finalcial_documents = FinalcialDocument::get();
 
-        return view('admin.mlogs.index', compact('boats', 'wlists', 'users', 'products', 'finalcial_documents'));
+        return view('admin.mlogs.index', compact('boats', 'finalcial_documents', 'mlogs', 'products', 'users', 'wlists'));
     }
 
     public function create()

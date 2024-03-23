@@ -36,10 +36,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.userSetting.fields.name') }}
+                                        {{ trans('cruds.userSetting.fields.title') }}
                                     </th>
                                     <td>
-                                        {{ $userSetting->name }}
+                                        {{ $userSetting->title }}
                                     </td>
                                 </tr>
                                 <tr>

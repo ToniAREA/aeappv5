@@ -13,68 +13,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetLocationController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_location_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = AssetLocation::query()->select(sprintf('%s.*', (new AssetLocation)->table));
-            $table = Datatables::of($query);
+        $assetLocations = AssetLocation::with(['media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'asset_location_show';
-                $editGate      = 'asset_location_edit';
-                $deleteGate    = 'asset_location_delete';
-                $crudRoutePart = 'asset-locations';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('photo', function ($row) {
-                if ($photo = $row->photo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-            $table->editColumn('available', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->available ? 'checked' : null) . '>';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'photo', 'available']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.assetLocations.index');
+        return view('admin.assetLocations.index', compact('assetLocations'));
     }
 
     public function create()

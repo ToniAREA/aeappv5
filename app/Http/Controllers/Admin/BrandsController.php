@@ -14,87 +14,20 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class BrandsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('brand_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Brand::with(['providers'])->select(sprintf('%s.*', (new Brand)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'brand_show';
-                $editGate      = 'brand_edit';
-                $deleteGate    = 'brand_delete';
-                $crudRoutePart = 'brands';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('brand', function ($row) {
-                return $row->brand ? $row->brand : '';
-            });
-            $table->editColumn('brand_logo', function ($row) {
-                if ($photo = $row->brand_logo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-            $table->editColumn('brand_url', function ($row) {
-                return $row->brand_url ? $row->brand_url : '';
-            });
-            $table->editColumn('providers', function ($row) {
-                $labels = [];
-                foreach ($row->providers as $provider) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $provider->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'brand_logo', 'providers']);
-
-            return $table->make(true);
-        }
+        $brands = Brand::with(['providers', 'media'])->get();
 
         $providers = Provider::get();
 
-        return view('admin.brands.index', compact('providers'));
+        return view('admin.brands.index', compact('brands', 'providers'));
     }
 
     public function create()

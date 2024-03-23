@@ -15,6 +15,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('content-categories/media', 'ContentCategoryApiController@storeMedia')->name('content-categories.storeMedia');
     Route::apiResource('content-categories', 'ContentCategoryApiController');
 
+    // Content Tag
+    Route::apiResource('content-tags', 'ContentTagApiController');
+
     // Content Page
     Route::post('content-pages/media', 'ContentPageApiController@storeMedia')->name('content-pages.storeMedia');
     Route::apiResource('content-pages', 'ContentPageApiController');
@@ -38,6 +41,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('product-categories/media', 'ProductCategoryApiController@storeMedia')->name('product-categories.storeMedia');
     Route::apiResource('product-categories', 'ProductCategoryApiController');
 
+    // Product Tag
+    Route::apiResource('product-tags', 'ProductTagApiController');
+
     // Product
     Route::post('products/media', 'ProductApiController@storeMedia')->name('products.storeMedia');
     Route::apiResource('products', 'ProductApiController');
@@ -51,6 +57,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Contact Contacts
     Route::apiResource('contact-contacts', 'ContactContactsApiController');
+
+    // Employees
+    Route::post('employees/media', 'EmployeesApiController@storeMedia')->name('employees.storeMedia');
+    Route::apiResource('employees', 'EmployeesApiController');
 
     // Provider
     Route::post('providers/media', 'ProviderApiController@storeMedia')->name('providers.storeMedia');
@@ -73,6 +83,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('asset-locations/media', 'AssetLocationApiController@storeMedia')->name('asset-locations.storeMedia');
     Route::apiResource('asset-locations', 'AssetLocationApiController');
 
+    // Asset Status
+    Route::apiResource('asset-statuses', 'AssetStatusApiController');
+
     // Asset
     Route::post('assets/media', 'AssetApiController@storeMedia')->name('assets.storeMedia');
     Route::apiResource('assets', 'AssetApiController');
@@ -88,6 +101,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('faq-questions/media', 'FaqQuestionApiController@storeMedia')->name('faq-questions.storeMedia');
     Route::apiResource('faq-questions', 'FaqQuestionApiController');
 
+    // Expense Category
+    Route::apiResource('expense-categories', 'ExpenseCategoryApiController');
+
+    // Income Category
+    Route::apiResource('income-categories', 'IncomeCategoryApiController');
+
     // Expense
     Route::post('expenses/media', 'ExpenseApiController@storeMedia')->name('expenses.storeMedia');
     Route::apiResource('expenses', 'ExpenseApiController');
@@ -95,12 +114,18 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Income
     Route::apiResource('incomes', 'IncomeApiController');
 
+    // Contact Tag
+    Route::apiResource('contact-tags', 'ContactTagApiController');
+
     // Comments
     Route::post('comments/media', 'CommentsApiController@storeMedia')->name('comments.storeMedia');
     Route::apiResource('comments', 'CommentsApiController');
 
     // Booking List
     Route::apiResource('booking-lists', 'BookingListApiController');
+
+    // Wlist Statuses
+    Route::apiResource('wlist-statuses', 'WlistStatusesApiController');
 
     // Mlogs
     Route::post('mlogs/media', 'MlogsApiController@storeMedia')->name('mlogs.storeMedia');
@@ -204,7 +229,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('finalcial-documents', 'FinalcialDocumentsApiController');
 
     // Social Accounts
-    Route::apiResource('social-accounts', 'SocialAccountsApiController', ['except' => ['store', 'show', 'update', 'destroy']]);
+    Route::apiResource('social-accounts', 'SocialAccountsApiController');
 
     // Financial Document Items
     Route::apiResource('financial-document-items', 'FinancialDocumentItemsApiController');

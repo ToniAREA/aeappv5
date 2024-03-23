@@ -69,7 +69,7 @@ class FinancialDocumentItemsController extends Controller
     {
         abort_if(Gate::denies('financial_document_item_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $financialDocumentItem->load('financial_document', 'product');
+        $financialDocumentItem->load('financial_document', 'product', 'itemFinantialDocumentTaxes', 'itemFinantialDocumentDiscounts');
 
         return view('frontend.financialDocumentItems.show', compact('financialDocumentItem'));
     }

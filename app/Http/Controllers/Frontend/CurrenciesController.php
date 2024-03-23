@@ -57,6 +57,8 @@ class CurrenciesController extends Controller
     {
         abort_if(Gate::denies('currency_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $currency->load('currencyPayments', 'currencyFinalcialDocuments');
+
         return view('frontend.currencies.show', compact('currency'));
     }
 

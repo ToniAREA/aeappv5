@@ -19,33 +19,82 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-UserSetting">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-UserSetting">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.userSetting.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.userSetting.fields.user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.email') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.userSetting.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.userSetting.fields.value') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.userSetting.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.userSetting.fields.user') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.userSetting.fields.title') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.userSetting.fields.value') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($userSettings as $key => $userSetting)
+                        <tr data-entry-id="{{ $userSetting->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $userSetting->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $userSetting->user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $userSetting->user->email ?? '' }}
+                            </td>
+                            <td>
+                                {{ $userSetting->title ?? '' }}
+                            </td>
+                            <td>
+                                {{ $userSetting->value ?? '' }}
+                            </td>
+                            <td>
+                                @can('user_setting_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.user-settings.show', $userSetting->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('user_setting_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.user-settings.edit', $userSetting->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('user_setting_delete')
+                                    <form action="{{ route('admin.user-settings.destroy', $userSetting->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -58,14 +107,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('user_setting_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.user-settings.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -87,33 +136,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.user-settings.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'user_name', name: 'user.name' },
-{ data: 'user.email', name: 'user.email' },
-{ data: 'name', name: 'name' },
-{ data: 'value', name: 'value' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-UserSetting').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-UserSetting:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

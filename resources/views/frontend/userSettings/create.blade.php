@@ -28,18 +28,18 @@
                             <span class="help-block">{{ trans('cruds.userSetting.fields.user_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="name">{{ trans('cruds.userSetting.fields.name') }}</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}">
-                            @if($errors->has('name'))
+                            <label for="title">{{ trans('cruds.userSetting.fields.title') }}</label>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}">
+                            @if($errors->has('title'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('name') }}
+                                    {{ $errors->first('title') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.userSetting.fields.name_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.userSetting.fields.title_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="value">{{ trans('cruds.userSetting.fields.value') }}</label>
-                            <input class="form-control" type="text" name="value" id="value" value="{{ old('value', '') }}">
+                            <textarea class="form-control" name="value" id="value">{{ old('value') }}</textarea>
                             @if($errors->has('value'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('value') }}

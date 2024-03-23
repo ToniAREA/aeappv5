@@ -28,6 +28,19 @@
                         </div>
                         <div class="form-group">
                             <div>
+                                <input type="hidden" name="has_active_maintenance_plan" value="0">
+                                <input type="checkbox" name="has_active_maintenance_plan" id="has_active_maintenance_plan" value="1" {{ $client->has_active_maintenance_plan || old('has_active_maintenance_plan', 0) === 1 ? 'checked' : '' }}>
+                                <label for="has_active_maintenance_plan">{{ trans('cruds.client.fields.has_active_maintenance_plan') }}</label>
+                            </div>
+                            @if($errors->has('has_active_maintenance_plan'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('has_active_maintenance_plan') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.client.fields.has_active_maintenance_plan_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <div>
                                 <input type="hidden" name="defaulter" value="0">
                                 <input type="checkbox" name="defaulter" id="defaulter" value="1" {{ $client->defaulter || old('defaulter', 0) === 1 ? 'checked' : '' }}>
                                 <label for="defaulter">{{ trans('cruds.client.fields.defaulter') }}</label>

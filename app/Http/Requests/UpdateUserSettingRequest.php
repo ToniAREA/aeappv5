@@ -17,11 +17,7 @@ class UpdateUserSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => [
-                'string',
-                'nullable',
-            ],
-            'value' => [
+            'title' => [
                 'string',
                 'nullable',
             ],

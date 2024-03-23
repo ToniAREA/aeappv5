@@ -19,42 +19,107 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-EmployeeSkill">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-EmployeeSkill">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeSkill.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeSkill.fields.employee') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employee.fields.namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeSkill.fields.subject') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.skillsCategory.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeSkill.fields.level') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeSkill.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeSkill.fields.verified') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.employee') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employee.fields.namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.subject') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.skillsCategory.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.level') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.verified') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.internal_notes') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($employeeSkills as $key => $employeeSkill)
+                        <tr data-entry-id="{{ $employeeSkill->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $employeeSkill->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeSkill->employee->id_employee ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeSkill->employee->namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeSkill->subject->subject ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeSkill->subject->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeSkill->level ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeSkill->description ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $employeeSkill->verified ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $employeeSkill->verified ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $employeeSkill->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                @can('employee_skill_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.employee-skills.show', $employeeSkill->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('employee_skill_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.employee-skills.edit', $employeeSkill->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('employee_skill_delete')
+                                    <form action="{{ route('admin.employee-skills.destroy', $employeeSkill->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -67,14 +132,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('employee_skill_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.employee-skills.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -96,36 +161,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.employee-skills.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'employee_id_employee', name: 'employee.id_employee' },
-{ data: 'employee.namecomplete', name: 'employee.namecomplete' },
-{ data: 'subject_subject', name: 'subject.subject' },
-{ data: 'subject.description', name: 'subject.description' },
-{ data: 'level', name: 'level' },
-{ data: 'description', name: 'description' },
-{ data: 'verified', name: 'verified' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-EmployeeSkill').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-EmployeeSkill:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

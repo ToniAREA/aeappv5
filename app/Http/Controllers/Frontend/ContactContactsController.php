@@ -57,7 +57,7 @@ class ContactContactsController extends Controller
     {
         abort_if(Gate::denies('contact_contact_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contactContact->load('contactEmployees', 'contactsClients', 'contactsContactCompanies');
+        $contactContact->load('contactEmployees', 'contactDocsMarinas', 'contactsClients', 'contactsContactCompanies', 'contactsMarinas');
 
         return view('frontend.contactContacts.show', compact('contactContact'));
     }

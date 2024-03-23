@@ -13,70 +13,18 @@ use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class TechDocsTypesController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('tech_docs_type_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = TechDocsType::with(['authorized_roles', 'authorized_users'])->select(sprintf('%s.*', (new TechDocsType)->table));
-            $table = Datatables::of($query);
+        $techDocsTypes = TechDocsType::with(['authorized_roles', 'authorized_users'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'tech_docs_type_show';
-                $editGate      = 'tech_docs_type_edit';
-                $deleteGate    = 'tech_docs_type_delete';
-                $crudRoutePart = 'tech-docs-types';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('authorized_roles', function ($row) {
-                $labels = [];
-                foreach ($row->authorized_roles as $authorized_role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('authorized_users', function ($row) {
-                $labels = [];
-                foreach ($row->authorized_users as $authorized_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'authorized_roles', 'authorized_users']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.techDocsTypes.index');
+        return view('admin.techDocsTypes.index', compact('techDocsTypes'));
     }
 
     public function create()

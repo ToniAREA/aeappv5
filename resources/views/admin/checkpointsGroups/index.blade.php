@@ -19,27 +19,70 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-CheckpointsGroup">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-CheckpointsGroup">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.checkpointsGroup.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.checkpointsGroup.fields.group') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.checkpointsGroup.fields.description') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.checkpointsGroup.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.checkpointsGroup.fields.group') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.checkpointsGroup.fields.description') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($checkpointsGroups as $key => $checkpointsGroup)
+                        <tr data-entry-id="{{ $checkpointsGroup->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $checkpointsGroup->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $checkpointsGroup->group ?? '' }}
+                            </td>
+                            <td>
+                                {{ $checkpointsGroup->description ?? '' }}
+                            </td>
+                            <td>
+                                @can('checkpoints_group_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.checkpoints-groups.show', $checkpointsGroup->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('checkpoints_group_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.checkpoints-groups.edit', $checkpointsGroup->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('checkpoints_group_delete')
+                                    <form action="{{ route('admin.checkpoints-groups.destroy', $checkpointsGroup->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -52,14 +95,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('checkpoints_group_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.checkpoints-groups.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -81,31 +124,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.checkpoints-groups.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'group', name: 'group' },
-{ data: 'description', name: 'description' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-CheckpointsGroup').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-CheckpointsGroup:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

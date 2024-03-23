@@ -69,7 +69,7 @@ class FinalcialDocumentsController extends Controller
     {
         abort_if(Gate::denies('finalcial_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $finalcialDocument->load('client', 'currency');
+        $finalcialDocument->load('client', 'currency', 'financialDocumentFinancialDocumentItems', 'financialDocumentPayments', 'financialDocumentAssetsRentals', 'financialDocumentWlists', 'financialDocumentWlogs', 'financialDocumentMlogs', 'financialDocumentBookingLists', 'financialDocumentSuscriptions', 'financialDocumentMaintenanceSuscriptions', 'financialDocumentIotSuscriptions');
 
         return view('frontend.finalcialDocuments.show', compact('finalcialDocument'));
     }

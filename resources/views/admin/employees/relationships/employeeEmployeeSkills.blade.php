@@ -46,6 +46,9 @@
                                 {{ trans('cruds.employeeSkill.fields.verified') }}
                             </th>
                             <th>
+                                {{ trans('cruds.employeeSkill.fields.internal_notes') }}
+                            </th>
+                            <th>
                                 &nbsp;
                             </th>
                         </tr>
@@ -80,6 +83,9 @@
                                 <td>
                                     <span style="display:none">{{ $employeeSkill->verified ?? '' }}</span>
                                     <input type="checkbox" disabled="disabled" {{ $employeeSkill->verified ? 'checked' : '' }}>
+                                </td>
+                                <td>
+                                    {{ $employeeSkill->internal_notes ?? '' }}
                                 </td>
                                 <td>
                                     @can('employee_skill_show')

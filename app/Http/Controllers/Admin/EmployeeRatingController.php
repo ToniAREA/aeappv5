@@ -16,92 +16,18 @@ use App\Models\Wlog;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeRatingController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('employee_rating_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = EmployeeRating::with(['employee', 'from_user', 'from_client', 'for_wlist', 'for_wlog'])->select(sprintf('%s.*', (new EmployeeRating)->table));
-            $table = Datatables::of($query);
+        $employeeRatings = EmployeeRating::with(['employee', 'from_user', 'from_client', 'for_wlist', 'for_wlog'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'employee_rating_show';
-                $editGate      = 'employee_rating_edit';
-                $deleteGate    = 'employee_rating_delete';
-                $crudRoutePart = 'employee-ratings';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('employee_id_employee', function ($row) {
-                return $row->employee ? $row->employee->id_employee : '';
-            });
-
-            $table->editColumn('employee.namecomplete', function ($row) {
-                return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->namecomplete) : '';
-            });
-            $table->addColumn('from_user_name', function ($row) {
-                return $row->from_user ? $row->from_user->name : '';
-            });
-
-            $table->editColumn('from_user.email', function ($row) {
-                return $row->from_user ? (is_string($row->from_user) ? $row->from_user : $row->from_user->email) : '';
-            });
-            $table->addColumn('from_client_name', function ($row) {
-                return $row->from_client ? $row->from_client->name : '';
-            });
-
-            $table->editColumn('from_client.lastname', function ($row) {
-                return $row->from_client ? (is_string($row->from_client) ? $row->from_client : $row->from_client->lastname) : '';
-            });
-            $table->addColumn('for_wlist_boat_namecomplete', function ($row) {
-                return $row->for_wlist ? $row->for_wlist->boat_namecomplete : '';
-            });
-
-            $table->editColumn('for_wlist.description', function ($row) {
-                return $row->for_wlist ? (is_string($row->for_wlist) ? $row->for_wlist : $row->for_wlist->description) : '';
-            });
-            $table->addColumn('for_wlog_date', function ($row) {
-                return $row->for_wlog ? $row->for_wlog->date : '';
-            });
-
-            $table->editColumn('for_wlog.boat_namecomplete', function ($row) {
-                return $row->for_wlog ? (is_string($row->for_wlog) ? $row->for_wlog : $row->for_wlog->boat_namecomplete) : '';
-            });
-            $table->editColumn('rating', function ($row) {
-                return $row->rating ? $row->rating : '';
-            });
-            $table->editColumn('comment', function ($row) {
-                return $row->comment ? $row->comment : '';
-            });
-            $table->editColumn('show_online', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->show_online ? 'checked' : null) . '>';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'employee', 'from_user', 'from_client', 'for_wlist', 'for_wlog', 'show_online']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.employeeRatings.index');
+        return view('admin.employeeRatings.index', compact('employeeRatings'));
     }
 
     public function create()

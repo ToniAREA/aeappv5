@@ -93,7 +93,7 @@ class PlansController extends Controller
     {
         abort_if(Gate::denies('plan_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $plan->load('planSuscriptions');
+        $plan->load('planSuscriptions', 'planWaitingLists');
 
         return view('frontend.plans.show', compact('plan'));
     }

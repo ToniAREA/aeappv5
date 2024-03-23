@@ -68,7 +68,7 @@ class ContactCompanyController extends Controller
     {
         abort_if(Gate::denies('contact_company_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contactCompany->load('contacts', 'companyProviders');
+        $contactCompany->load('contacts', 'companyProviders', 'companyInsurances');
 
         return view('frontend.contactCompanies.show', compact('contactCompany'));
     }
