@@ -24,7 +24,7 @@ class ToDoController extends Controller
     {
         abort_if(Gate::denies('to_do_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $toDos = ToDo::with(['for_roles', 'for_employee'])->get();
+        $toDos = ToDo::with(['for_roles', 'for_employee', 'media'])->get();
 
         $roles = Role::get();
 
@@ -48,6 +48,10 @@ class ToDoController extends Controller
     {
         $toDo = ToDo::create($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
+        foreach ($request->input('photos', []) as $file) {
+            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $toDo->id]);
         }
@@ -72,6 +76,19 @@ class ToDoController extends Controller
     {
         $toDo->update($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
+        if (count($toDo->photos) > 0) {
+            foreach ($toDo->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $toDo->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
+        }
 
         return redirect()->route('frontend.to-dos.index');
     }

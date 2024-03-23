@@ -7,7 +7,6 @@ use App\Models\AuditLog;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AuditLogsController extends Controller
 {

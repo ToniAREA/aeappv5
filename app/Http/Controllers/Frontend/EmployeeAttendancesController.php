@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyEmployeeAttendanceRequest;
 use App\Http\Requests\StoreEmployeeAttendanceRequest;
 use App\Http\Requests\UpdateEmployeeAttendanceRequest;
@@ -14,6 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EmployeeAttendancesController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('employee_attendance_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

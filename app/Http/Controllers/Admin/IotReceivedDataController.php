@@ -12,76 +12,18 @@ use App\Models\IotReceivedData;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class IotReceivedDataController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('iot_received_data_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = IotReceivedData::with(['device'])->select(sprintf('%s.*', (new IotReceivedData)->table));
-            $table = Datatables::of($query);
+        $iotReceivedDatas = IotReceivedData::with(['device'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'iot_received_data_show';
-                $editGate      = 'iot_received_data_edit';
-                $deleteGate    = 'iot_received_data_delete';
-                $crudRoutePart = 'iot-received-datas';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('device_name', function ($row) {
-                return $row->device ? $row->device->name : '';
-            });
-
-            $table->editColumn('device.status', function ($row) {
-                return $row->device ? (is_string($row->device) ? $row->device : $row->device->status) : '';
-            });
-            $table->editColumn('security_token', function ($row) {
-                return $row->security_token ? $row->security_token : '';
-            });
-            $table->editColumn('received_data', function ($row) {
-                return $row->received_data ? $row->received_data : '';
-            });
-            $table->editColumn('service_voltage', function ($row) {
-                return $row->service_voltage ? $row->service_voltage : '';
-            });
-            $table->editColumn('engine_1_voltage', function ($row) {
-                return $row->engine_1_voltage ? $row->engine_1_voltage : '';
-            });
-            $table->editColumn('engine_2_voltage', function ($row) {
-                return $row->engine_2_voltage ? $row->engine_2_voltage : '';
-            });
-            $table->editColumn('bilge_alarm', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->bilge_alarm ? 'checked' : null) . '>';
-            });
-            $table->editColumn('shore_alarm', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->shore_alarm ? 'checked' : null) . '>';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'device', 'bilge_alarm', 'shore_alarm']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.iotReceivedDatas.index');
+        return view('admin.iotReceivedDatas.index', compact('iotReceivedDatas'));
     }
 
     public function create()

@@ -63,6 +63,14 @@
                             <input type="checkbox" disabled="disabled" {{ $employeeSkill->verified ? 'checked' : '' }}>
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.employeeSkill.fields.internal_notes') }}
+                        </th>
+                        <td>
+                            {{ $employeeSkill->internal_notes }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

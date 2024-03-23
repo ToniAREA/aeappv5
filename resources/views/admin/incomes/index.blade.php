@@ -19,79 +19,138 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Income">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Income">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.employee') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employee.fields.namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.income_category') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.entry_date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.amount') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.income.fields.is_accounted') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($employees as $key => $item)
-                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($income_categories as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.employee') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employee.fields.namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.income_category') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.entry_date') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.amount') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.income.fields.is_accounted') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($employees as $key => $item)
+                                    <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($income_categories as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($incomes as $key => $income)
+                        <tr data-entry-id="{{ $income->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $income->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $income->employee->id_employee ?? '' }}
+                            </td>
+                            <td>
+                                {{ $income->employee->namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $income->income_category->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $income->entry_date ?? '' }}
+                            </td>
+                            <td>
+                                {{ $income->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $income->amount ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $income->is_accounted ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                @can('income_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.incomes.show', $income->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('income_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.incomes.edit', $income->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('income_delete')
+                                    <form action="{{ route('admin.incomes.destroy', $income->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -104,14 +163,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('income_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.incomes.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -133,30 +192,12 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.incomes.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'employee_id_employee', name: 'employee.id_employee' },
-{ data: 'employee.namecomplete', name: 'employee.namecomplete' },
-{ data: 'income_category_name', name: 'income_category.name' },
-{ data: 'entry_date', name: 'entry_date' },
-{ data: 'description', name: 'description' },
-{ data: 'amount', name: 'amount' },
-{ data: 'is_accounted', name: 'is_accounted' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Income').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Income:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -183,7 +224,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
+})
 
 </script>
 @endsection

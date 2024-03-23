@@ -13,84 +13,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class IotPlansController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('iot_plan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = IotPlan::query()->select(sprintf('%s.*', (new IotPlan)->table));
-            $table = Datatables::of($query);
+        $iotPlans = IotPlan::with(['media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'iot_plan_show';
-                $editGate      = 'iot_plan_edit';
-                $deleteGate    = 'iot_plan_delete';
-                $crudRoutePart = 'iot-plans';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('plan_name', function ($row) {
-                return $row->plan_name ? $row->plan_name : '';
-            });
-            $table->editColumn('short_description', function ($row) {
-                return $row->short_description ? $row->short_description : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('show_online', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->show_online ? 'checked' : null) . '>';
-            });
-            $table->editColumn('period', function ($row) {
-                return $row->period ? IotPlan::PERIOD_RADIO[$row->period] : '';
-            });
-            $table->editColumn('period_price', function ($row) {
-                return $row->period_price ? $row->period_price : '';
-            });
-            $table->editColumn('seo_title', function ($row) {
-                return $row->seo_title ? $row->seo_title : '';
-            });
-            $table->editColumn('seo_meta_description', function ($row) {
-                return $row->seo_meta_description ? $row->seo_meta_description : '';
-            });
-            $table->editColumn('seo_slug', function ($row) {
-                return $row->seo_slug ? $row->seo_slug : '';
-            });
-            $table->editColumn('contract', function ($row) {
-                return $row->contract ? '<a href="' . $row->contract->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'show_online', 'contract']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.iotPlans.index');
+        return view('admin.iotPlans.index', compact('iotPlans'));
     }
 
     public function create()

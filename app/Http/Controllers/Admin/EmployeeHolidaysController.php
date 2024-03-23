@@ -12,71 +12,18 @@ use App\Models\EmployeeHoliday;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeHolidaysController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('employee_holiday_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = EmployeeHoliday::with(['employee'])->select(sprintf('%s.*', (new EmployeeHoliday)->table));
-            $table = Datatables::of($query);
+        $employeeHolidays = EmployeeHoliday::with(['employee'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'employee_holiday_show';
-                $editGate      = 'employee_holiday_edit';
-                $deleteGate    = 'employee_holiday_delete';
-                $crudRoutePart = 'employee-holidays';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('employee_id_employee', function ($row) {
-                return $row->employee ? $row->employee->id_employee : '';
-            });
-
-            $table->editColumn('employee.namecomplete', function ($row) {
-                return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->namecomplete) : '';
-            });
-
-            $table->editColumn('days_taken', function ($row) {
-                return $row->days_taken ? $row->days_taken : '';
-            });
-            $table->editColumn('is_completed', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->is_completed ? 'checked' : null) . '>';
-            });
-            $table->editColumn('type', function ($row) {
-                return $row->type ? $row->type : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internalnotes', function ($row) {
-                return $row->internalnotes ? $row->internalnotes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'employee', 'is_completed']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.employeeHolidays.index');
+        return view('admin.employeeHolidays.index', compact('employeeHolidays'));
     }
 
     public function create()

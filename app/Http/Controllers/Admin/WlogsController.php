@@ -17,120 +17,26 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class WlogsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('wlog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Wlog::with(['wlist', 'employee', 'marina', 'financial_document'])->select(sprintf('%s.*', (new Wlog)->table));
-            $table = Datatables::of($query);
+        $wlogs = Wlog::with(['wlist', 'employee', 'marina', 'financial_document', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $wlists = Wlist::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'wlog_show';
-                $editGate      = 'wlog_edit';
-                $deleteGate    = 'wlog_delete';
-                $crudRoutePart = 'wlogs';
+        $users = User::get();
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
+        $marinas = Marina::get();
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('wlist_description', function ($row) {
-                return $row->wlist ? $row->wlist->description : '';
-            });
-
-            $table->editColumn('boat_namecomplete', function ($row) {
-                return $row->boat_namecomplete ? $row->boat_namecomplete : '';
-            });
-
-            $table->addColumn('employee_name', function ($row) {
-                return $row->employee ? $row->employee->name : '';
-            });
-
-            $table->editColumn('employee.email', function ($row) {
-                return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->email) : '';
-            });
-            $table->addColumn('marina_name', function ($row) {
-                return $row->marina ? $row->marina->name : '';
-            });
-
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('hours', function ($row) {
-                return $row->hours ? $row->hours : '';
-            });
-            $table->editColumn('hourly_rate', function ($row) {
-                return $row->hourly_rate ? $row->hourly_rate : '';
-            });
-            $table->editColumn('travel_cost_included', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->travel_cost_included ? 'checked' : null) . '>';
-            });
-            $table->editColumn('total_travel_cost', function ($row) {
-                return $row->total_travel_cost ? $row->total_travel_cost : '';
-            });
-            $table->editColumn('total_access_cost', function ($row) {
-                return $row->total_access_cost ? $row->total_access_cost : '';
-            });
-            $table->editColumn('wlist_finished', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->wlist_finished ? 'checked' : null) . '>';
-            });
-            $table->editColumn('invoiced_line', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->invoiced_line ? 'checked' : null) . '>';
-            });
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'wlist', 'employee', 'marina', 'travel_cost_included', 'wlist_finished', 'invoiced_line', 'financial_document', 'photos']);
-
-            return $table->make(true);
-        }
-
-        $wlists              = Wlist::get();
-        $users               = User::get();
-        $marinas             = Marina::get();
         $finalcial_documents = FinalcialDocument::get();
 
-        return view('admin.wlogs.index', compact('wlists', 'users', 'marinas', 'finalcial_documents'));
+        return view('admin.wlogs.index', compact('finalcial_documents', 'marinas', 'users', 'wlists', 'wlogs'));
     }
 
     public function create()

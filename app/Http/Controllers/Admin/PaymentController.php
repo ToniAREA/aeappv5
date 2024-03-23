@@ -13,74 +13,18 @@ use App\Models\Payment;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class PaymentController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('payment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Payment::with(['financial_document', 'currency'])->select(sprintf('%s.*', (new Payment)->table));
-            $table = Datatables::of($query);
+        $payments = Payment::with(['financial_document', 'currency'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'payment_show';
-                $editGate      = 'payment_edit';
-                $deleteGate    = 'payment_delete';
-                $crudRoutePart = 'payments';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('payment_gateway', function ($row) {
-                return $row->payment_gateway ? $row->payment_gateway : '';
-            });
-            $table->editColumn('id_transaction', function ($row) {
-                return $row->id_transaction ? $row->id_transaction : '';
-            });
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-            $table->editColumn('total_amount', function ($row) {
-                return $row->total_amount ? $row->total_amount : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? $row->status : '';
-            });
-            $table->addColumn('currency_code', function ($row) {
-                return $row->currency ? $row->currency->code : '';
-            });
-
-            $table->editColumn('currency.name', function ($row) {
-                return $row->currency ? (is_string($row->currency) ? $row->currency : $row->currency->name) : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'financial_document', 'currency']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.payments.index');
+        return view('admin.payments.index', compact('payments'));
     }
 
     public function create()

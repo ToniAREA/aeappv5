@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyDocumentationCategoryRequest;
 use App\Http\Requests\StoreDocumentationCategoryRequest;
 use App\Http\Requests\UpdateDocumentationCategoryRequest;
@@ -12,71 +13,20 @@ use App\Models\Role;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class DocumentationCategoriesController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('documentation_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = DocumentationCategory::with(['authorized_roles', 'authorized_users'])->select(sprintf('%s.*', (new DocumentationCategory)->table));
-            $table = Datatables::of($query);
+        $documentationCategories = DocumentationCategory::with(['authorized_roles', 'authorized_users', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'documentation_category_show';
-                $editGate      = 'documentation_category_edit';
-                $deleteGate    = 'documentation_category_delete';
-                $crudRoutePart = 'documentation-categories';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : '';
-            });
-            $table->editColumn('authorized_roles', function ($row) {
-                $labels = [];
-                foreach ($row->authorized_roles as $authorized_role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('authorized_users', function ($row) {
-                $labels = [];
-                foreach ($row->authorized_users as $authorized_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $authorized_user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'authorized_roles', 'authorized_users']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.documentationCategories.index');
+        return view('admin.documentationCategories.index', compact('documentationCategories'));
     }
 
     public function create()
@@ -95,6 +45,13 @@ class DocumentationCategoriesController extends Controller
         $documentationCategory = DocumentationCategory::create($request->all());
         $documentationCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $documentationCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            $documentationCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $documentationCategory->id]);
+        }
 
         return redirect()->route('admin.documentation-categories.index');
     }
@@ -117,6 +74,16 @@ class DocumentationCategoriesController extends Controller
         $documentationCategory->update($request->all());
         $documentationCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $documentationCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            if (! $documentationCategory->photo || $request->input('photo') !== $documentationCategory->photo->file_name) {
+                if ($documentationCategory->photo) {
+                    $documentationCategory->photo->delete();
+                }
+                $documentationCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($documentationCategory->photo) {
+            $documentationCategory->photo->delete();
+        }
 
         return redirect()->route('admin.documentation-categories.index');
     }
@@ -148,5 +115,17 @@ class DocumentationCategoriesController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('documentation_category_create') && Gate::denies('documentation_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new DocumentationCategory();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

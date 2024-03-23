@@ -13,93 +13,18 @@ use App\Models\FinalcialDocument;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class FinalcialDocumentsController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('finalcial_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = FinalcialDocument::with(['client', 'currency'])->select(sprintf('%s.*', (new FinalcialDocument)->table));
-            $table = Datatables::of($query);
+        $finalcialDocuments = FinalcialDocument::with(['client', 'currency'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'finalcial_document_show';
-                $editGate      = 'finalcial_document_edit';
-                $deleteGate    = 'finalcial_document_delete';
-                $crudRoutePart = 'finalcial-documents';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('doc_type', function ($row) {
-                return $row->doc_type ? FinalcialDocument::DOC_TYPE_RADIO[$row->doc_type] : '';
-            });
-            $table->editColumn('reference_number', function ($row) {
-                return $row->reference_number ? $row->reference_number : '';
-            });
-            $table->editColumn('status', function ($row) {
-                return $row->status ? FinalcialDocument::STATUS_RADIO[$row->status] : '';
-            });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
-            });
-
-            $table->editColumn('client.lastname', function ($row) {
-                return $row->client ? (is_string($row->client) ? $row->client : $row->client->lastname) : '';
-            });
-
-            $table->addColumn('currency_code', function ($row) {
-                return $row->currency ? $row->currency->code : '';
-            });
-
-            $table->editColumn('currency.name', function ($row) {
-                return $row->currency ? (is_string($row->currency) ? $row->currency : $row->currency->name) : '';
-            });
-            $table->editColumn('subtotal', function ($row) {
-                return $row->subtotal ? $row->subtotal : '';
-            });
-            $table->editColumn('total_taxes', function ($row) {
-                return $row->total_taxes ? $row->total_taxes : '';
-            });
-            $table->editColumn('total_discounts', function ($row) {
-                return $row->total_discounts ? $row->total_discounts : '';
-            });
-            $table->editColumn('total_amount', function ($row) {
-                return $row->total_amount ? $row->total_amount : '';
-            });
-            $table->editColumn('payment_terms', function ($row) {
-                return $row->payment_terms ? $row->payment_terms : '';
-            });
-            $table->editColumn('security_code', function ($row) {
-                return $row->security_code ? $row->security_code : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'client', 'currency']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.finalcialDocuments.index');
+        return view('admin.finalcialDocuments.index', compact('finalcialDocuments'));
     }
 
     public function create()

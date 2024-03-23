@@ -13,6 +13,7 @@ class CreateEmployeeSkillsTable extends Migration
             $table->integer('level')->nullable();
             $table->string('description')->nullable();
             $table->boolean('verified')->default(0)->nullable();
+            $table->string('internal_notes')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -23,16 +23,16 @@
                 <span class="help-block">{{ trans('cruds.userSetting.fields.user_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="name">{{ trans('cruds.userSetting.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $userSetting->name) }}">
-                @if($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                <label for="title">{{ trans('cruds.userSetting.fields.title') }}</label>
+                <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', $userSetting->title) }}">
+                @if($errors->has('title'))
+                    <span class="text-danger">{{ $errors->first('title') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.userSetting.fields.name_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.userSetting.fields.title_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="value">{{ trans('cruds.userSetting.fields.value') }}</label>
-                <input class="form-control {{ $errors->has('value') ? 'is-invalid' : '' }}" type="text" name="value" id="value" value="{{ old('value', $userSetting->value) }}">
+                <textarea class="form-control {{ $errors->has('value') ? 'is-invalid' : '' }}" name="value" id="value">{{ old('value', $userSetting->value) }}</textarea>
                 @if($errors->has('value'))
                     <span class="text-danger">{{ $errors->first('value') }}</span>
                 @endif

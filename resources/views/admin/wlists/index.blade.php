@@ -19,219 +19,342 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Wlist">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Wlist">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.client') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.client.fields.lastname') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.order_type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.boat') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.boat.fields.boat_type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.from_user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.email') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.for_role') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.for_employee') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employee.fields.namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.boat_namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.estimated_hours') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.photos') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.deadline') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.status') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.priority') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.proforma_link') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.internal_notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.link') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.link_description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.last_use') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.completed_at') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.financial_document') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($clients as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search" strict="true">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $item)
-                                <option value="{{ $key }}">{{ $item }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($boats as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($users as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($roles as $key => $item)
-                                <option value="{{ $item->title }}">{{ $item->title }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($employees as $key => $item)
-                                <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($wlist_statuses as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($finalcial_documents as $key => $item)
-                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.client') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.client.fields.lastname') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.order_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.boat') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.boat.fields.boat_type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.from_user') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.for_role') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.for_employee') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employee.fields.namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.boat_namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.estimated_hours') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.photos') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.deadline') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.status') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.priority') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.proforma_link') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.internal_notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.link') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.link_description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.last_use') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.completed_at') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.financial_document') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finalcialDocument.fields.doc_type') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($clients as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search" strict="true">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach(App\Models\Wlist::ORDER_TYPE_RADIO as $key => $item)
+                                    <option value="{{ $item }}">{{ $item }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($boats as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($users as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($roles as $key => $item)
+                                    <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($employees as $key => $item)
+                                    <option value="{{ $item->id_employee }}">{{ $item->id_employee }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($wlist_statuses as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($finalcial_documents as $key => $item)
+                                    <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($wlists as $key => $wlist)
+                        <tr data-entry-id="{{ $wlist->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $wlist->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->client->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->client->lastname ?? '' }}
+                            </td>
+                            <td>
+                                {{ App\Models\Wlist::ORDER_TYPE_RADIO[$wlist->order_type] ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->boat->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->boat->boat_type ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->from_user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->from_user->email ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($wlist->for_roles as $key => $item)
+                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{ $wlist->for_employee->id_employee ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->for_employee->namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->boat_namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->estimated_hours ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($wlist->photos as $key => $media)
+                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $media->getUrl('thumb') }}">
+                                    </a>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{ $wlist->deadline ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->status->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->priority ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->proforma_link ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->link ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->link_description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->last_use ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->completed_at ?? '' }}
+                            </td>
+                            <td>
+                                {{ $wlist->financial_document->reference_number ?? '' }}
+                            </td>
+                            <td>
+                                @if($wlist->financial_document)
+                                    {{ $wlist->financial_document::DOC_TYPE_RADIO[$wlist->financial_document->doc_type] ?? '' }}
+                                @endif
+                            </td>
+                            <td>
+                                @can('wlist_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.wlists.show', $wlist->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('wlist_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.wlists.edit', $wlist->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('wlist_delete')
+                                    <form action="{{ route('admin.wlists.destroy', $wlist->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -244,14 +367,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('wlist_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.wlists.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -273,49 +396,12 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.wlists.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'client_name', name: 'client.name' },
-{ data: 'client.lastname', name: 'client.lastname' },
-{ data: 'order_type', name: 'order_type' },
-{ data: 'boat_name', name: 'boat.name' },
-{ data: 'boat.boat_type', name: 'boat.boat_type' },
-{ data: 'from_user_name', name: 'from_user.name' },
-{ data: 'from_user.email', name: 'from_user.email' },
-{ data: 'for_role', name: 'for_roles.title' },
-{ data: 'for_employee_id_employee', name: 'for_employee.id_employee' },
-{ data: 'for_employee.namecomplete', name: 'for_employee.namecomplete' },
-{ data: 'boat_namecomplete', name: 'boat_namecomplete' },
-{ data: 'description', name: 'description' },
-{ data: 'estimated_hours', name: 'estimated_hours' },
-{ data: 'photos', name: 'photos', sortable: false, searchable: false },
-{ data: 'deadline', name: 'deadline' },
-{ data: 'status_name', name: 'status.name' },
-{ data: 'priority', name: 'priority' },
-{ data: 'proforma_link', name: 'proforma_link' },
-{ data: 'notes', name: 'notes' },
-{ data: 'internal_notes', name: 'internal_notes' },
-{ data: 'link', name: 'link' },
-{ data: 'link_description', name: 'link_description' },
-{ data: 'last_use', name: 'last_use' },
-{ data: 'completed_at', name: 'completed_at' },
-{ data: 'financial_document_reference_number', name: 'financial_document.reference_number' },
-{ data: 'financial_document.doc_type', name: 'financial_document.doc_type' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Wlist').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Wlist:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -342,7 +428,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
+})
 
 </script>
 @endsection

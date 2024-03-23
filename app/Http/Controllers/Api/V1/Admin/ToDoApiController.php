@@ -27,6 +27,9 @@ class ToDoApiController extends Controller
     {
         $toDo = ToDo::create($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
+        foreach ($request->input('photos', []) as $file) {
+            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
 
         return (new ToDoResource($toDo))
             ->response()
@@ -44,6 +47,19 @@ class ToDoApiController extends Controller
     {
         $toDo->update($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
+        if (count($toDo->photos) > 0) {
+            foreach ($toDo->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $toDo->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
+        }
 
         return (new ToDoResource($toDo))
             ->response()

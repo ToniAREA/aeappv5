@@ -19,116 +19,18 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class IotSuscriptionsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('iot_suscription_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = IotSuscription::with(['user', 'financial_document', 'client', 'boats', 'plan', 'device'])->select(sprintf('%s.*', (new IotSuscription)->table));
-            $table = Datatables::of($query);
+        $iotSuscriptions = IotSuscription::with(['user', 'client', 'boats', 'plan', 'device', 'financial_document', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'iot_suscription_show';
-                $editGate      = 'iot_suscription_edit';
-                $deleteGate    = 'iot_suscription_delete';
-                $crudRoutePart = 'iot-suscriptions';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('user_name', function ($row) {
-                return $row->user ? $row->user->name : '';
-            });
-
-            $table->editColumn('user.email', function ($row) {
-                return $row->user ? (is_string($row->user) ? $row->user : $row->user->email) : '';
-            });
-            $table->addColumn('financial_document_reference_number', function ($row) {
-                return $row->financial_document ? $row->financial_document->reference_number : '';
-            });
-
-            $table->editColumn('financial_document.doc_type', function ($row) {
-                return $row->financial_document ? (is_string($row->financial_document) ? $row->financial_document : $row->financial_document->doc_type) : '';
-            });
-            $table->editColumn('is_active', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->is_active ? 'checked' : null) . '>';
-            });
-            $table->addColumn('client_name', function ($row) {
-                return $row->client ? $row->client->name : '';
-            });
-
-            $table->editColumn('client.lastname', function ($row) {
-                return $row->client ? (is_string($row->client) ? $row->client : $row->client->lastname) : '';
-            });
-            $table->editColumn('boats', function ($row) {
-                $labels = [];
-                foreach ($row->boats as $boat) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $boat->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('plan_plan_name', function ($row) {
-                return $row->plan ? $row->plan->plan_name : '';
-            });
-
-            $table->editColumn('plan.short_description', function ($row) {
-                return $row->plan ? (is_string($row->plan) ? $row->plan : $row->plan->short_description) : '';
-            });
-            $table->editColumn('signed_contract', function ($row) {
-                return $row->signed_contract ? '<a href="' . $row->signed_contract->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
-            });
-
-            $table->editColumn('hourly_rate_discount', function ($row) {
-                return $row->hourly_rate_discount ? $row->hourly_rate_discount : '';
-            });
-            $table->editColumn('material_discount', function ($row) {
-                return $row->material_discount ? $row->material_discount : '';
-            });
-            $table->addColumn('device_name', function ($row) {
-                return $row->device ? $row->device->name : '';
-            });
-
-            $table->editColumn('device.serial_number', function ($row) {
-                return $row->device ? (is_string($row->device) ? $row->device : $row->device->serial_number) : '';
-            });
-            $table->editColumn('link', function ($row) {
-                return $row->link ? $row->link : '';
-            });
-            $table->editColumn('link_description', function ($row) {
-                return $row->link_description ? $row->link_description : '';
-            });
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internalnotes', function ($row) {
-                return $row->internalnotes ? $row->internalnotes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'user', 'financial_document', 'is_active', 'client', 'boats', 'plan', 'signed_contract', 'device']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.iotSuscriptions.index');
+        return view('admin.iotSuscriptions.index', compact('iotSuscriptions'));
     }
 
     public function create()
@@ -137,8 +39,6 @@ class IotSuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
@@ -146,6 +46,8 @@ class IotSuscriptionsController extends Controller
         $plans = IotPlan::pluck('plan_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $devices = IotDevice::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.iotSuscriptions.create', compact('boats', 'clients', 'devices', 'financial_documents', 'plans', 'users'));
     }
@@ -171,8 +73,6 @@ class IotSuscriptionsController extends Controller
 
         $users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boats = Boat::pluck('name', 'id');
@@ -181,7 +81,9 @@ class IotSuscriptionsController extends Controller
 
         $devices = IotDevice::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $iotSuscription->load('user', 'financial_document', 'client', 'boats', 'plan', 'device');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $iotSuscription->load('user', 'client', 'boats', 'plan', 'device', 'financial_document');
 
         return view('admin.iotSuscriptions.edit', compact('boats', 'clients', 'devices', 'financial_documents', 'iotSuscription', 'plans', 'users'));
     }
@@ -208,7 +110,7 @@ class IotSuscriptionsController extends Controller
     {
         abort_if(Gate::denies('iot_suscription_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $iotSuscription->load('user', 'financial_document', 'client', 'boats', 'plan', 'device');
+        $iotSuscription->load('user', 'client', 'boats', 'plan', 'device', 'financial_document');
 
         return view('admin.iotSuscriptions.show', compact('iotSuscription'));
     }

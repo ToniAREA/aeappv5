@@ -10,8 +10,8 @@ class CreateUserSettingsTable extends Migration
     {
         Schema::create('user_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable();
-            $table->string('value')->nullable();
+            $table->string('title')->nullable();
+            $table->longText('value')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

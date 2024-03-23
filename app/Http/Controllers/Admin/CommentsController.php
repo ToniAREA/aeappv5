@@ -15,98 +15,22 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CommentsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('comment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Comment::with(['wlist', 'from_user', 'to_users'])->select(sprintf('%s.*', (new Comment)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'comment_show';
-                $editGate      = 'comment_edit';
-                $deleteGate    = 'comment_delete';
-                $crudRoutePart = 'comments';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('wlist_boat_namecomplete', function ($row) {
-                return $row->wlist ? $row->wlist->boat_namecomplete : '';
-            });
-
-            $table->editColumn('wlist.description', function ($row) {
-                return $row->wlist ? (is_string($row->wlist) ? $row->wlist : $row->wlist->description) : '';
-            });
-            $table->addColumn('from_user_name', function ($row) {
-                return $row->from_user ? $row->from_user->name : '';
-            });
-
-            $table->editColumn('from_user.email', function ($row) {
-                return $row->from_user ? (is_string($row->from_user) ? $row->from_user : $row->from_user->email) : '';
-            });
-            $table->editColumn('to_users', function ($row) {
-                $labels = [];
-                foreach ($row->to_users as $to_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $to_user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('private_comment', function ($row) {
-                return $row->private_comment ? $row->private_comment : '';
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-            $table->editColumn('files', function ($row) {
-                if (! $row->files) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->files as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'wlist', 'from_user', 'to_users', 'photos', 'files']);
-
-            return $table->make(true);
-        }
+        $comments = Comment::with(['wlist', 'from_user', 'to_users', 'media'])->get();
 
         $wlists = Wlist::get();
-        $users  = User::get();
 
-        return view('admin.comments.index', compact('wlists', 'users'));
+        $users = User::get();
+
+        return view('admin.comments.index', compact('comments', 'users', 'wlists'));
     }
 
     public function create()

@@ -11,52 +11,18 @@ use App\Models\Claim;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ClaimController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('claim_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Claim::query()->select(sprintf('%s.*', (new Claim)->table));
-            $table = Datatables::of($query);
+        $claims = Claim::all();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'claim_show';
-                $editGate      = 'claim_edit';
-                $deleteGate    = 'claim_delete';
-                $crudRoutePart = 'claims';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-
-            $table->editColumn('note', function ($row) {
-                return $row->note ? $row->note : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.claims.index');
+        return view('admin.claims.index', compact('claims'));
     }
 
     public function create()

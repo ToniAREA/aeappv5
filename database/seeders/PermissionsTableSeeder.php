@@ -1464,110 +1464,126 @@ class PermissionsTableSeeder extends Seeder
             ],
             [
                 'id'    => 364,
-                'title' => 'social_account_access',
+                'title' => 'social_account_create',
             ],
             [
                 'id'    => 365,
-                'title' => 'financial_document_item_create',
+                'title' => 'social_account_edit',
             ],
             [
                 'id'    => 366,
-                'title' => 'financial_document_item_edit',
+                'title' => 'social_account_show',
             ],
             [
                 'id'    => 367,
-                'title' => 'financial_document_item_show',
+                'title' => 'social_account_delete',
             ],
             [
                 'id'    => 368,
-                'title' => 'financial_document_item_delete',
+                'title' => 'social_account_access',
             ],
             [
                 'id'    => 369,
-                'title' => 'financial_document_item_access',
+                'title' => 'financial_document_item_create',
             ],
             [
                 'id'    => 370,
-                'title' => 'finantial_document_tax_create',
+                'title' => 'financial_document_item_edit',
             ],
             [
                 'id'    => 371,
-                'title' => 'finantial_document_tax_edit',
+                'title' => 'financial_document_item_show',
             ],
             [
                 'id'    => 372,
-                'title' => 'finantial_document_tax_show',
+                'title' => 'financial_document_item_delete',
             ],
             [
                 'id'    => 373,
-                'title' => 'finantial_document_tax_delete',
+                'title' => 'financial_document_item_access',
             ],
             [
                 'id'    => 374,
-                'title' => 'finantial_document_tax_access',
+                'title' => 'finantial_document_tax_create',
             ],
             [
                 'id'    => 375,
-                'title' => 'finantial_document_discount_create',
+                'title' => 'finantial_document_tax_edit',
             ],
             [
                 'id'    => 376,
-                'title' => 'finantial_document_discount_edit',
+                'title' => 'finantial_document_tax_show',
             ],
             [
                 'id'    => 377,
-                'title' => 'finantial_document_discount_show',
+                'title' => 'finantial_document_tax_delete',
             ],
             [
                 'id'    => 378,
-                'title' => 'finantial_document_discount_delete',
+                'title' => 'finantial_document_tax_access',
             ],
             [
                 'id'    => 379,
-                'title' => 'finantial_document_discount_access',
+                'title' => 'finantial_document_discount_create',
             ],
             [
                 'id'    => 380,
-                'title' => 'user_setting_create',
+                'title' => 'finantial_document_discount_edit',
             ],
             [
                 'id'    => 381,
-                'title' => 'user_setting_edit',
+                'title' => 'finantial_document_discount_show',
             ],
             [
                 'id'    => 382,
-                'title' => 'user_setting_show',
+                'title' => 'finantial_document_discount_delete',
             ],
             [
                 'id'    => 383,
-                'title' => 'user_setting_delete',
+                'title' => 'finantial_document_discount_access',
             ],
             [
                 'id'    => 384,
-                'title' => 'user_setting_access',
+                'title' => 'user_setting_create',
             ],
             [
                 'id'    => 385,
-                'title' => 'waiting_list_create',
+                'title' => 'user_setting_edit',
             ],
             [
                 'id'    => 386,
-                'title' => 'waiting_list_edit',
+                'title' => 'user_setting_show',
             ],
             [
                 'id'    => 387,
-                'title' => 'waiting_list_show',
+                'title' => 'user_setting_delete',
             ],
             [
                 'id'    => 388,
-                'title' => 'waiting_list_delete',
+                'title' => 'user_setting_access',
             ],
             [
                 'id'    => 389,
-                'title' => 'waiting_list_access',
+                'title' => 'waiting_list_create',
             ],
             [
                 'id'    => 390,
+                'title' => 'waiting_list_edit',
+            ],
+            [
+                'id'    => 391,
+                'title' => 'waiting_list_show',
+            ],
+            [
+                'id'    => 392,
+                'title' => 'waiting_list_delete',
+            ],
+            [
+                'id'    => 393,
+                'title' => 'waiting_list_access',
+            ],
+            [
+                'id'    => 394,
                 'title' => 'profile_password_edit',
             ],
         ];

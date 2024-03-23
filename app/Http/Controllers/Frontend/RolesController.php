@@ -63,7 +63,7 @@ class RolesController extends Controller
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $role->load('permissions', 'forRoleToDos', 'forRoleAppointments', 'forRoleWlists');
+        $role->load('permissions', 'forRoleToDos', 'forRoleAppointments', 'forRoleWlists', 'authorizedRolesProductCategories', 'authorizedRolesAssetCategories', 'authorizedRolesDocumentations', 'authorizedRolesContentCategories', 'authorizedRolesTechnicalDocumentations', 'authorizedRolesDocumentationCategories', 'authorizedRolesContentPages', 'authorizedRolesTechDocsTypes', 'authorizedRolesVideoTutorials', 'authorizedRolesFaqCategories', 'authorizedRolesFaqQuestions', 'authorizedRolesVideoCategories');
 
         return view('frontend.roles.show', compact('role'));
     }

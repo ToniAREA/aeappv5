@@ -36,6 +36,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $client->has_active_maintenance_plan ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.client.fields.defaulter') }}
                                     </th>
                                     <td>

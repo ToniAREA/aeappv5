@@ -19,60 +19,137 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-EmployeeRating">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-EmployeeRating">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.employee') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employee.fields.namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.from_user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.email') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.from_client') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.client.fields.lastname') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.for_wlist') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlist.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.for_wlog') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.wlog.fields.boat_namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.rating') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.comment') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.employeeRating.fields.show_online') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.employee') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employee.fields.namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.from_user') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.user.fields.email') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.from_client') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.client.fields.lastname') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.for_wlist') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlist.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.for_wlog') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.wlog.fields.boat_namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.rating') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.comment') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.employeeRating.fields.show_online') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($employeeRatings as $key => $employeeRating)
+                        <tr data-entry-id="{{ $employeeRating->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $employeeRating->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->employee->id_employee ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->employee->namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->from_user->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->from_user->email ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->from_client->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->from_client->lastname ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->for_wlist->boat_namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->for_wlist->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->for_wlog->date ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->for_wlog->boat_namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->rating ?? '' }}
+                            </td>
+                            <td>
+                                {{ $employeeRating->comment ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $employeeRating->show_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $employeeRating->show_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                @can('employee_rating_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.employee-ratings.show', $employeeRating->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('employee_rating_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.employee-ratings.edit', $employeeRating->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('employee_rating_delete')
+                                    <form action="{{ route('admin.employee-ratings.destroy', $employeeRating->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -85,14 +162,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('employee_rating_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.employee-ratings.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -114,42 +191,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.employee-ratings.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'employee_id_employee', name: 'employee.id_employee' },
-{ data: 'employee.namecomplete', name: 'employee.namecomplete' },
-{ data: 'from_user_name', name: 'from_user.name' },
-{ data: 'from_user.email', name: 'from_user.email' },
-{ data: 'from_client_name', name: 'from_client.name' },
-{ data: 'from_client.lastname', name: 'from_client.lastname' },
-{ data: 'for_wlist_boat_namecomplete', name: 'for_wlist.boat_namecomplete' },
-{ data: 'for_wlist.description', name: 'for_wlist.description' },
-{ data: 'for_wlog_date', name: 'for_wlog.date' },
-{ data: 'for_wlog.boat_namecomplete', name: 'for_wlog.boat_namecomplete' },
-{ data: 'rating', name: 'rating' },
-{ data: 'comment', name: 'comment' },
-{ data: 'show_online', name: 'show_online' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-EmployeeRating').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-EmployeeRating:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

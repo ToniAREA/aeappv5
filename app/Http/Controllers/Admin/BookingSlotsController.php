@@ -13,71 +13,22 @@ use App\Models\Employee;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class BookingSlotsController extends Controller
 {
     use CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('booking_slot_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = BookingSlot::with(['employee', 'status'])->select(sprintf('%s.*', (new BookingSlot)->table));
-            $table = Datatables::of($query);
+        $bookingSlots = BookingSlot::with(['employee', 'status'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $employees = Employee::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'booking_slot_show';
-                $editGate      = 'booking_slot_edit';
-                $deleteGate    = 'booking_slot_delete';
-                $crudRoutePart = 'booking-slots';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('employee_id_employee', function ($row) {
-                return $row->employee ? $row->employee->id_employee : '';
-            });
-
-            $table->editColumn('employee.category', function ($row) {
-                return $row->employee ? (is_string($row->employee) ? $row->employee : $row->employee->category) : '';
-            });
-
-            $table->editColumn('rate_multiplier', function ($row) {
-                return $row->rate_multiplier ? $row->rate_multiplier : '';
-            });
-            $table->editColumn('show_online', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->show_online ? 'checked' : null) . '>';
-            });
-            $table->editColumn('booked', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->booked ? 'checked' : null) . '>';
-            });
-            $table->addColumn('status_name', function ($row) {
-                return $row->status ? $row->status->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'employee', 'show_online', 'booked', 'status']);
-
-            return $table->make(true);
-        }
-
-        $employees        = Employee::get();
         $booking_statuses = BookingStatus::get();
 
-        return view('admin.bookingSlots.index', compact('employees', 'booking_statuses'));
+        return view('admin.bookingSlots.index', compact('bookingSlots', 'booking_statuses', 'employees'));
     }
 
     public function create()

@@ -89,7 +89,7 @@ class MarinasController extends Controller
     {
         abort_if(Gate::denies('marina_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $marina->load('contacts', 'contact_docs', 'marinaBoats', 'marinaWlogs');
+        $marina->load('contacts', 'contact_docs', 'marinaBoats', 'marinaWlogs', 'inMarinaAppointments');
 
         return view('frontend.marinas.show', compact('marina'));
     }

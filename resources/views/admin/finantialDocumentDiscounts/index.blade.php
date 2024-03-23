@@ -19,36 +19,88 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FinantialDocumentDiscount">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-FinantialDocumentDiscount">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.finantialDocumentDiscount.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finantialDocumentDiscount.fields.item') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.financialDocumentItem.fields.subtotal') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finantialDocumentDiscount.fields.type') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finantialDocumentDiscount.fields.discount_rate') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.finantialDocumentDiscount.fields.discount_amount') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.finantialDocumentDiscount.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finantialDocumentDiscount.fields.item') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.financialDocumentItem.fields.subtotal') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finantialDocumentDiscount.fields.type') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finantialDocumentDiscount.fields.discount_rate') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.finantialDocumentDiscount.fields.discount_amount') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($finantialDocumentDiscounts as $key => $finantialDocumentDiscount)
+                        <tr data-entry-id="{{ $finantialDocumentDiscount->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $finantialDocumentDiscount->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $finantialDocumentDiscount->item->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $finantialDocumentDiscount->item->subtotal ?? '' }}
+                            </td>
+                            <td>
+                                {{ $finantialDocumentDiscount->type ?? '' }}
+                            </td>
+                            <td>
+                                {{ $finantialDocumentDiscount->discount_rate ?? '' }}
+                            </td>
+                            <td>
+                                {{ $finantialDocumentDiscount->discount_amount ?? '' }}
+                            </td>
+                            <td>
+                                @can('finantial_document_discount_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.finantial-document-discounts.show', $finantialDocumentDiscount->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('finantial_document_discount_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.finantial-document-discounts.edit', $finantialDocumentDiscount->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('finantial_document_discount_delete')
+                                    <form action="{{ route('admin.finantial-document-discounts.destroy', $finantialDocumentDiscount->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -61,14 +113,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('finantial_document_discount_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.finantial-document-discounts.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -90,34 +142,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.finantial-document-discounts.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'item_description', name: 'item.description' },
-{ data: 'item.subtotal', name: 'item.subtotal' },
-{ data: 'type', name: 'type' },
-{ data: 'discount_rate', name: 'discount_rate' },
-{ data: 'discount_amount', name: 'discount_amount' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-FinantialDocumentDiscount').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-FinantialDocumentDiscount:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyContentTagRequest;
 use App\Http\Requests\StoreContentTagRequest;
 use App\Http\Requests\UpdateContentTagRequest;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContentTagController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('content_tag_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreDocumentationCategoryRequest;
 use App\Http\Requests\UpdateDocumentationCategoryRequest;
 use App\Http\Resources\Admin\DocumentationCategoryResource;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DocumentationCategoriesApiController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('documentation_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -25,6 +28,9 @@ class DocumentationCategoriesApiController extends Controller
         $documentationCategory = DocumentationCategory::create($request->all());
         $documentationCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $documentationCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            $documentationCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
 
         return (new DocumentationCategoryResource($documentationCategory))
             ->response()
@@ -43,6 +49,16 @@ class DocumentationCategoriesApiController extends Controller
         $documentationCategory->update($request->all());
         $documentationCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $documentationCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            if (! $documentationCategory->photo || $request->input('photo') !== $documentationCategory->photo->file_name) {
+                if ($documentationCategory->photo) {
+                    $documentationCategory->photo->delete();
+                }
+                $documentationCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($documentationCategory->photo) {
+            $documentationCategory->photo->delete();
+        }
 
         return (new DocumentationCategoryResource($documentationCategory))
             ->response()
