@@ -122,6 +122,16 @@
                 {{ trans('cruds.faqCategory.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_faq_questions" role="tab" data-toggle="tab">
+                {{ trans('cruds.faqQuestion.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#authorized_roles_video_categories" role="tab" data-toggle="tab">
+                {{ trans('cruds.videoCategory.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="for_role_to_dos">
@@ -162,6 +172,12 @@
         </div>
         <div class="tab-pane" role="tabpanel" id="authorized_roles_faq_categories">
             @includeIf('admin.roles.relationships.authorizedRolesFaqCategories', ['faqCategories' => $role->authorizedRolesFaqCategories])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_faq_questions">
+            @includeIf('admin.roles.relationships.authorizedRolesFaqQuestions', ['faqQuestions' => $role->authorizedRolesFaqQuestions])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="authorized_roles_video_categories">
+            @includeIf('admin.roles.relationships.authorizedRolesVideoCategories', ['videoCategories' => $role->authorizedRolesVideoCategories])
         </div>
     </div>
 </div>
