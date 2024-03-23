@@ -32,6 +32,9 @@
                         {{ trans('cruds.toDo.fields.task') }}
                     </th>
                     <th>
+                        {{ trans('cruds.toDo.fields.photos') }}
+                    </th>
+                    <th>
                         {{ trans('cruds.toDo.fields.for_role') }}
                     </th>
                     <th>
@@ -73,6 +76,8 @@
                     </td>
                     <td>
                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                    </td>
+                    <td>
                     </td>
                     <td>
                         <select class="search">
@@ -173,6 +178,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
 { data: 'task', name: 'task' },
+{ data: 'photos', name: 'photos', sortable: false, searchable: false },
 { data: 'for_role', name: 'for_roles.title' },
 { data: 'for_employee_id_employee', name: 'for_employee.id_employee' },
 { data: 'for_employee.namecomplete', name: 'for_employee.namecomplete' },

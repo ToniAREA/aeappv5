@@ -39,6 +39,38 @@
                             {{ $videoCategory->description }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.videoCategory.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($videoCategory->photo)
+                                <a href="{{ $videoCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $videoCategory->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.videoCategory.fields.authorized_roles') }}
+                        </th>
+                        <td>
+                            @foreach($videoCategory->authorized_roles as $key => $authorized_roles)
+                                <span class="label label-info">{{ $authorized_roles->title }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.videoCategory.fields.authorized_users') }}
+                        </th>
+                        <td>
+                            @foreach($videoCategory->authorized_users as $key => $authorized_users)
+                                <span class="label label-info">{{ $authorized_users->name }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">

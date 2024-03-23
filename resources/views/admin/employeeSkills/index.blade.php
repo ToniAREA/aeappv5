@@ -1,47 +1,53 @@
 @extends('layouts.admin')
 @section('content')
-@can('documentation_category_create')
+@can('employee_skill_create')
     <div style="margin-bottom: 10px;" class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route('admin.documentation-categories.create') }}">
-                {{ trans('global.add') }} {{ trans('cruds.documentationCategory.title_singular') }}
+            <a class="btn btn-success" href="{{ route('admin.employee-skills.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.employeeSkill.title_singular') }}
             </a>
             <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                 {{ trans('global.app_csvImport') }}
             </button>
-            @include('csvImport.modal', ['model' => 'DocumentationCategory', 'route' => 'admin.documentation-categories.parseCsvImport'])
+            @include('csvImport.modal', ['model' => 'EmployeeSkill', 'route' => 'admin.employee-skills.parseCsvImport'])
         </div>
     </div>
 @endcan
 <div class="card">
     <div class="card-header">
-        {{ trans('cruds.documentationCategory.title_singular') }} {{ trans('global.list') }}
+        {{ trans('cruds.employeeSkill.title_singular') }} {{ trans('global.list') }}
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-DocumentationCategory">
+        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-EmployeeSkill">
             <thead>
                 <tr>
                     <th width="10">
 
                     </th>
                     <th>
-                        {{ trans('cruds.documentationCategory.fields.id') }}
+                        {{ trans('cruds.employeeSkill.fields.id') }}
                     </th>
                     <th>
-                        {{ trans('cruds.documentationCategory.fields.name') }}
+                        {{ trans('cruds.employeeSkill.fields.employee') }}
                     </th>
                     <th>
-                        {{ trans('cruds.documentationCategory.fields.description') }}
+                        {{ trans('cruds.employee.fields.namecomplete') }}
                     </th>
                     <th>
-                        {{ trans('cruds.documentationCategory.fields.authorized_roles') }}
+                        {{ trans('cruds.employeeSkill.fields.subject') }}
                     </th>
                     <th>
-                        {{ trans('cruds.documentationCategory.fields.authorized_users') }}
+                        {{ trans('cruds.skillsCategory.fields.description') }}
                     </th>
                     <th>
-                        {{ trans('cruds.documentationCategory.fields.photo') }}
+                        {{ trans('cruds.employeeSkill.fields.level') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.employeeSkill.fields.description') }}
+                    </th>
+                    <th>
+                        {{ trans('cruds.employeeSkill.fields.verified') }}
                     </th>
                     <th>
                         &nbsp;
@@ -60,11 +66,11 @@
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('documentation_category_delete')
+@can('employee_skill_delete')
   let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
-    url: "{{ route('admin.documentation-categories.massDestroy') }}",
+    url: "{{ route('admin.employee-skills.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
       var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
@@ -96,22 +102,24 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.documentation-categories.index') }}",
+    ajax: "{{ route('admin.employee-skills.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id' },
-{ data: 'name', name: 'name' },
+{ data: 'employee_id_employee', name: 'employee.id_employee' },
+{ data: 'employee.namecomplete', name: 'employee.namecomplete' },
+{ data: 'subject_subject', name: 'subject.subject' },
+{ data: 'subject.description', name: 'subject.description' },
+{ data: 'level', name: 'level' },
 { data: 'description', name: 'description' },
-{ data: 'authorized_roles', name: 'authorized_roles.title' },
-{ data: 'authorized_users', name: 'authorized_users.name' },
-{ data: 'photo', name: 'photo', sortable: false, searchable: false },
+{ data: 'verified', name: 'verified' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
-  let table = $('.datatable-DocumentationCategory').DataTable(dtOverrideGlobals);
+  let table = $('.datatable-EmployeeSkill').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

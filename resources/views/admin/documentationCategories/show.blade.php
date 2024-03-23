@@ -59,6 +59,18 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.documentationCategory.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($documentationCategory->photo)
+                                <a href="{{ $documentationCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $documentationCategory->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
