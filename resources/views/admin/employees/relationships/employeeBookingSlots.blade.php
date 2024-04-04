@@ -25,6 +25,9 @@
                                 {{ trans('cruds.bookingSlot.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.bookingSlot.fields.is_online') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.bookingSlot.fields.employee') }}
                             </th>
                             <th>
@@ -38,9 +41,6 @@
                             </th>
                             <th>
                                 {{ trans('cruds.bookingSlot.fields.rate_multiplier') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.bookingSlot.fields.show_online') }}
                             </th>
                             <th>
                                 {{ trans('cruds.bookingSlot.fields.booked') }}
@@ -63,6 +63,10 @@
                                     {{ $bookingSlot->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $bookingSlot->is_online ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $bookingSlot->is_online ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $bookingSlot->employee->id_employee ?? '' }}
                                 </td>
                                 <td>
@@ -76,10 +80,6 @@
                                 </td>
                                 <td>
                                     {{ $bookingSlot->rate_multiplier ?? '' }}
-                                </td>
-                                <td>
-                                    <span style="display:none">{{ $bookingSlot->show_online ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $bookingSlot->show_online ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     <span style="display:none">{{ $bookingSlot->booked ?? '' }}</span>

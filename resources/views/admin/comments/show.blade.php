@@ -41,28 +41,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.comment.fields.to_users') }}
-                        </th>
-                        <td>
-                            @foreach($comment->to_users as $key => $to_users)
-                                <span class="label label-info">{{ $to_users->name }}</span>
-                            @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.comment.fields.comment') }}
                         </th>
                         <td>
                             {!! $comment->comment !!}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.comment.fields.private_comment') }}
-                        </th>
-                        <td>
-                            {{ $comment->private_comment }}
                         </td>
                     </tr>
                     <tr>

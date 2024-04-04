@@ -44,6 +44,10 @@ class InsurancesController extends Controller
     {
         $insurance = Insurance::create($request->all());
         $insurance->contacts()->sync($request->input('contacts', []));
+        if ($request->input('insurance_logo', false)) {
+            $insurance->addMedia(storage_path('tmp/uploads/' . basename($request->input('insurance_logo'))))->toMediaCollection('insurance_logo');
+        }
+
         foreach ($request->input('files', []) as $file) {
             $insurance->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
@@ -72,6 +76,17 @@ class InsurancesController extends Controller
     {
         $insurance->update($request->all());
         $insurance->contacts()->sync($request->input('contacts', []));
+        if ($request->input('insurance_logo', false)) {
+            if (! $insurance->insurance_logo || $request->input('insurance_logo') !== $insurance->insurance_logo->file_name) {
+                if ($insurance->insurance_logo) {
+                    $insurance->insurance_logo->delete();
+                }
+                $insurance->addMedia(storage_path('tmp/uploads/' . basename($request->input('insurance_logo'))))->toMediaCollection('insurance_logo');
+            }
+        } elseif ($insurance->insurance_logo) {
+            $insurance->insurance_logo->delete();
+        }
+
         if (count($insurance->files) > 0) {
             foreach ($insurance->files as $media) {
                 if (! in_array($media->file_name, $request->input('files', []))) {

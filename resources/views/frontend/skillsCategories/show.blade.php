@@ -42,6 +42,18 @@
                                         {{ $skillsCategory->description }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.skillsCategory.fields.photo') }}
+                                    </th>
+                                    <td>
+                                        @if($skillsCategory->photo)
+                                            <a href="{{ $skillsCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $skillsCategory->photo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

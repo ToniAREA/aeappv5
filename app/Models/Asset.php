@@ -36,11 +36,11 @@ class Asset extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_available',
         'category_id',
         'name',
         'description',
         'status_id',
-        'available',
         'location_id',
         'actual_holder_id',
         'notes',

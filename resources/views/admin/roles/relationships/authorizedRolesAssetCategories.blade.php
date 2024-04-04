@@ -25,6 +25,9 @@
                                 {{ trans('cruds.assetCategory.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.assetCategory.fields.is_online') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.assetCategory.fields.name') }}
                             </th>
                             <th>
@@ -35,6 +38,9 @@
                             </th>
                             <th>
                                 {{ trans('cruds.assetCategory.fields.authorized_users') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.assetCategory.fields.photo') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -51,6 +57,10 @@
                                     {{ $assetCategory->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $assetCategory->is_online ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $assetCategory->is_online ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $assetCategory->name ?? '' }}
                                 </td>
                                 <td>
@@ -65,6 +75,13 @@
                                     @foreach($assetCategory->authorized_users as $key => $item)
                                         <span class="badge badge-info">{{ $item->name }}</span>
                                     @endforeach
+                                </td>
+                                <td>
+                                    @if($assetCategory->photo)
+                                        <a href="{{ $assetCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                            <img src="{{ $assetCategory->photo->getUrl('thumb') }}">
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     @can('asset_category_show')

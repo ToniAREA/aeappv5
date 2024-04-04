@@ -10,23 +10,23 @@
         <form method="POST" action="{{ route("admin.content-pages.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.contentPage.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contentPage.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="title">{{ trans('cruds.contentPage.fields.title') }}</label>
                 <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
                 @if($errors->has('title'))
                     <span class="text-danger">{{ $errors->first('title') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.contentPage.fields.title_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('show_online') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="show_online" value="0">
-                    <input class="form-check-input" type="checkbox" name="show_online" id="show_online" value="1" {{ old('show_online', 0) == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="show_online">{{ trans('cruds.contentPage.fields.show_online') }}</label>
-                </div>
-                @if($errors->has('show_online'))
-                    <span class="text-danger">{{ $errors->first('show_online') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.contentPage.fields.show_online_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="slug">{{ trans('cruds.contentPage.fields.slug') }}</label>
@@ -302,14 +302,14 @@
     var uploadedFeaturedImageMap = {}
 Dropzone.options.featuredImageDropzone = {
     url: '{{ route('admin.content-pages.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },
@@ -363,13 +363,13 @@ Dropzone.options.featuredImageDropzone = {
     var uploadedFileMap = {}
 Dropzone.options.fileDropzone = {
     url: '{{ route('admin.content-pages.storeMedia') }}',
-    maxFilesize: 10, // MB
+    maxFilesize: 15, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 10
+      size: 15
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file[]" value="' + response.name + '">')

@@ -10,6 +10,17 @@
         <form method="POST" action="{{ route("admin.brands.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.brand.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.brand.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="brand">{{ trans('cruds.brand.fields.brand') }}</label>
                 <input class="form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" type="text" name="brand" id="brand" value="{{ old('brand', '') }}" required>
                 @if($errors->has('brand'))
@@ -107,7 +118,7 @@
 <script>
     Dropzone.options.brandLogoDropzone = {
     url: '{{ route('admin.brands.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -115,7 +126,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

@@ -35,18 +35,19 @@ class Product extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'brand_id',
         'ref_manu',
         'ref_provider',
         'model',
         'name',
-        'show_online',
         'short_desc',
         'description',
         'product_price',
         'purchase_discount',
         'purchase_price',
         'has_stock',
+        'stock',
         'local_stock',
         'product_location_id',
         'link_a',

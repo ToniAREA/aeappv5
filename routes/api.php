@@ -2,6 +2,7 @@
 
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:sanctum']], function () {
     // Users
+    Route::post('users/media', 'UsersApiController@storeMedia')->name('users.storeMedia');
     Route::apiResource('users', 'UsersApiController');
 
     // Clients
@@ -53,9 +54,11 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('marinas', 'MarinasApiController');
 
     // Contact Company
+    Route::post('contact-companies/media', 'ContactCompanyApiController@storeMedia')->name('contact-companies.storeMedia');
     Route::apiResource('contact-companies', 'ContactCompanyApiController');
 
     // Contact Contacts
+    Route::post('contact-contacts/media', 'ContactContactsApiController@storeMedia')->name('contact-contacts.storeMedia');
     Route::apiResource('contact-contacts', 'ContactContactsApiController');
 
     // Employees
@@ -77,6 +80,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('payments', 'PaymentApiController');
 
     // Asset Category
+    Route::post('asset-categories/media', 'AssetCategoryApiController@storeMedia')->name('asset-categories.storeMedia');
     Route::apiResource('asset-categories', 'AssetCategoryApiController');
 
     // Asset Location
@@ -145,9 +149,11 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('technical-documentations', 'TechnicalDocumentationApiController');
 
     // Tech Docs Types
+    Route::post('tech-docs-types/media', 'TechDocsTypesApiController@storeMedia')->name('tech-docs-types.storeMedia');
     Route::apiResource('tech-docs-types', 'TechDocsTypesApiController');
 
     // Skills Categories
+    Route::post('skills-categories/media', 'SkillsCategoriesApiController@storeMedia')->name('skills-categories.storeMedia');
     Route::apiResource('skills-categories', 'SkillsCategoriesApiController');
 
     // Clients Reviews
@@ -190,6 +196,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('checkpoints', 'CheckpointsApiController');
 
     // Care Plans
+    Route::post('care-plans/media', 'CarePlansApiController@storeMedia')->name('care-plans.storeMedia');
     Route::apiResource('care-plans', 'CarePlansApiController');
 
     // Maintenance Suscriptions
@@ -220,6 +227,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('iot-received-datas', 'IotReceivedDataApiController');
 
     // Checkpoints Groups
+    Route::post('checkpoints-groups/media', 'CheckpointsGroupsApiController@storeMedia')->name('checkpoints-groups.storeMedia');
     Route::apiResource('checkpoints-groups', 'CheckpointsGroupsApiController');
 
     // Currencies

@@ -176,7 +176,7 @@
 <script>
     Dropzone.options.boatPhotoDropzone = {
     url: '{{ route('admin.boats.storeMedia') }}',
-    maxFilesize: 3, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -184,7 +184,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 3,
+      size: 5,
       width: 4096,
       height: 4096
     },

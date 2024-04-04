@@ -42,24 +42,6 @@
                             <span class="help-block">{{ trans('cruds.comment.fields.from_user_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="to_users">{{ trans('cruds.comment.fields.to_users') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="to_users[]" id="to_users" multiple>
-                                @foreach($to_users as $id => $to_user)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('to_users', [])) || $comment->to_users->contains($id)) ? 'selected' : '' }}>{{ $to_user }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('to_users'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('to_users') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.comment.fields.to_users_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <label for="comment">{{ trans('cruds.comment.fields.comment') }}</label>
                             <textarea class="form-control ckeditor" name="comment" id="comment">{!! old('comment', $comment->comment) !!}</textarea>
                             @if($errors->has('comment'))
@@ -68,16 +50,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.comment.fields.comment_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="private_comment">{{ trans('cruds.comment.fields.private_comment') }}</label>
-                            <input class="form-control" type="text" name="private_comment" id="private_comment" value="{{ old('private_comment', $comment->private_comment) }}">
-                            @if($errors->has('private_comment'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('private_comment') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.comment.fields.private_comment_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="photos">{{ trans('cruds.comment.fields.photos') }}</label>
@@ -184,14 +156,14 @@
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('frontend.comments.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },
@@ -245,13 +217,13 @@ Dropzone.options.photosDropzone = {
     var uploadedFilesMap = {}
 Dropzone.options.filesDropzone = {
     url: '{{ route('frontend.comments.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 10, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2
+      size: 10
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="files[]" value="' + response.name + '">')

@@ -95,6 +95,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.iotSuscription.fields.hourly_rate') }}
+                        </th>
+                        <td>
+                            {{ $iotSuscription->hourly_rate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.iotSuscription.fields.hourly_rate_discount') }}
                         </th>
                         <td>

@@ -37,10 +37,10 @@ class Plan extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'plan_name',
         'short_description',
         'description',
-        'show_online',
         'period',
         'period_price',
         'hourly_rate',

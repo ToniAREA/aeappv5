@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $brand->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.brand.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.brand.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="brand">{{ trans('cruds.brand.fields.brand') }}</label>
                             <input class="form-control" type="text" name="brand" id="brand" value="{{ old('brand', $brand->brand) }}" required>
                             @if($errors->has('brand'))
@@ -130,7 +143,7 @@
 <script>
     Dropzone.options.brandLogoDropzone = {
     url: '{{ route('frontend.brands.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -138,7 +151,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

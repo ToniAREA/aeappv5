@@ -11,14 +11,6 @@
             @method('PUT')
             @csrf
             <div class="form-group">
-                <label class="required" for="name">{{ trans('cruds.bank.fields.name') }}</label>
-                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $bank->name) }}" required>
-                @if($errors->has('name'))
-                    <span class="text-danger">{{ $errors->first('name') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.bank.fields.name_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <div class="form-check {{ $errors->has('is_active') ? 'is-invalid' : '' }}">
                     <input type="hidden" name="is_active" value="0">
                     <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ $bank->is_active || old('is_active', 0) === 1 ? 'checked' : '' }}>
@@ -28,6 +20,14 @@
                     <span class="text-danger">{{ $errors->first('is_active') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.bank.fields.is_active_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label class="required" for="name">{{ trans('cruds.bank.fields.name') }}</label>
+                <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', $bank->name) }}" required>
+                @if($errors->has('name'))
+                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.bank.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="branch">{{ trans('cruds.bank.fields.branch') }}</label>
@@ -143,6 +143,15 @@
                 <span class="help-block">{{ trans('cruds.bank.fields.files_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="bank_logo">{{ trans('cruds.bank.fields.bank_logo') }}</label>
+                <div class="needsclick dropzone {{ $errors->has('bank_logo') ? 'is-invalid' : '' }}" id="bank_logo-dropzone">
+                </div>
+                @if($errors->has('bank_logo'))
+                    <span class="text-danger">{{ $errors->first('bank_logo') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.bank.fields.bank_logo_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -211,5 +220,60 @@ Dropzone.options.filesDropzone = {
          return _results
      }
 }
+</script>
+<script>
+    Dropzone.options.bankLogoDropzone = {
+    url: '{{ route('admin.banks.storeMedia') }}',
+    maxFilesize: 5, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="bank_logo"]').remove()
+      $('form').append('<input type="hidden" name="bank_logo" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="bank_logo"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($bank) && $bank->bank_logo)
+      var file = {!! json_encode($bank->bank_logo) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="bank_logo" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+
 </script>
 @endsection

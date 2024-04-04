@@ -30,6 +30,9 @@
                             {{ trans('cruds.assetsRental.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.assetsRental.fields.is_active') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.assetsRental.fields.asset') }}
                         </th>
                         <th>
@@ -61,9 +64,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.assetsRental.fields.rental_details') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.assetsRental.fields.active') }}
                         </th>
                         <th>
                             {{ trans('cruds.assetsRental.fields.invoiced') }}
@@ -104,6 +104,10 @@
                                 {{ $assetsRental->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $assetsRental->is_active ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $assetsRental->is_active ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 {{ $assetsRental->asset->name ?? '' }}
                             </td>
                             <td>
@@ -135,10 +139,6 @@
                             </td>
                             <td>
                                 {{ $assetsRental->rental_details ?? '' }}
-                            </td>
-                            <td>
-                                <span style="display:none">{{ $assetsRental->active ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $assetsRental->active ? 'checked' : '' }}>
                             </td>
                             <td>
                                 <span style="display:none">{{ $assetsRental->invoiced ?? '' }}</span>

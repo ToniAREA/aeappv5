@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $technicalDocumentation->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.technicalDocumentation.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.technicalDocumentation.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="title">{{ trans('cruds.technicalDocumentation.fields.title') }}</label>
                             <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $technicalDocumentation->title) }}" required>
                             @if($errors->has('title'))
@@ -22,19 +35,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.technicalDocumentation.fields.title_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="show_online" value="0">
-                                <input type="checkbox" name="show_online" id="show_online" value="1" {{ $technicalDocumentation->show_online || old('show_online', 0) === 1 ? 'checked' : '' }}>
-                                <label for="show_online">{{ trans('cruds.technicalDocumentation.fields.show_online') }}</label>
-                            </div>
-                            @if($errors->has('show_online'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('show_online') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.technicalDocumentation.fields.show_online_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ trans('cruds.technicalDocumentation.fields.description') }}</label>
@@ -244,7 +244,7 @@
 <script>
     Dropzone.options.imageDropzone = {
     url: '{{ route('frontend.technical-documentations.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -252,7 +252,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },

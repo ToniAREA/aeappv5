@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.product.fields.is_online') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $product->is_online ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.product.fields.category') }}
                                     </th>
                                     <td>
@@ -88,14 +96,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.product.fields.show_online') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $product->show_online ? 'checked' : '' }}>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.product.fields.short_desc') }}
                                     </th>
                                     <td>
@@ -152,6 +152,14 @@
                                     </th>
                                     <td>
                                         <input type="checkbox" disabled="disabled" {{ $product->has_stock ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.product.fields.stock') }}
+                                    </th>
+                                    <td>
+                                        {{ $product->stock }}
                                     </td>
                                 </tr>
                                 <tr>

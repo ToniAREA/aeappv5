@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAssetCategoryRequest;
 use App\Http\Requests\StoreAssetCategoryRequest;
 use App\Http\Requests\UpdateAssetCategoryRequest;
@@ -12,17 +13,18 @@ use App\Models\Role;
 use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class AssetCategoryController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('asset_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $assetCategories = AssetCategory::with(['authorized_roles', 'authorized_users'])->get();
+        $assetCategories = AssetCategory::with(['authorized_roles', 'authorized_users', 'media'])->get();
 
         $roles = Role::get();
 
@@ -47,6 +49,13 @@ class AssetCategoryController extends Controller
         $assetCategory = AssetCategory::create($request->all());
         $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            $assetCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $assetCategory->id]);
+        }
 
         return redirect()->route('admin.asset-categories.index');
     }
@@ -69,6 +78,16 @@ class AssetCategoryController extends Controller
         $assetCategory->update($request->all());
         $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            if (! $assetCategory->photo || $request->input('photo') !== $assetCategory->photo->file_name) {
+                if ($assetCategory->photo) {
+                    $assetCategory->photo->delete();
+                }
+                $assetCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($assetCategory->photo) {
+            $assetCategory->photo->delete();
+        }
 
         return redirect()->route('admin.asset-categories.index');
     }
@@ -100,5 +119,17 @@ class AssetCategoryController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('asset_category_create') && Gate::denies('asset_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new AssetCategory();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

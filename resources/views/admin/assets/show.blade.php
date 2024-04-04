@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.asset.fields.is_available') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $asset->is_available ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.asset.fields.category') }}
                         </th>
                         <td>
@@ -65,14 +73,6 @@
                         </th>
                         <td>
                             {{ $asset->status->name ?? '' }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.asset.fields.available') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $asset->available ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>

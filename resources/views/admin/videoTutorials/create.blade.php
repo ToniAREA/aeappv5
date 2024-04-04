@@ -10,23 +10,23 @@
         <form method="POST" action="{{ route("admin.video-tutorials.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.videoTutorial.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.videoTutorial.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="title">{{ trans('cruds.videoTutorial.fields.title') }}</label>
                 <input class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}" type="text" name="title" id="title" value="{{ old('title', '') }}">
                 @if($errors->has('title'))
                     <span class="text-danger">{{ $errors->first('title') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.videoTutorial.fields.title_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('show_online') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="show_online" value="0">
-                    <input class="form-check-input" type="checkbox" name="show_online" id="show_online" value="1" {{ old('show_online', 0) == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="show_online">{{ trans('cruds.videoTutorial.fields.show_online') }}</label>
-                </div>
-                @if($errors->has('show_online'))
-                    <span class="text-danger">{{ $errors->first('show_online') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.videoTutorial.fields.show_online_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="description">{{ trans('cruds.videoTutorial.fields.description') }}</label>
@@ -68,6 +68,14 @@
                     <span class="text-danger">{{ $errors->first('subjects') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.videoTutorial.fields.subjects_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="tags">{{ trans('cruds.videoTutorial.fields.tags') }}</label>
+                <input class="form-control {{ $errors->has('tags') ? 'is-invalid' : '' }}" type="text" name="tags" id="tags" value="{{ old('tags', '') }}">
+                @if($errors->has('tags'))
+                    <span class="text-danger">{{ $errors->first('tags') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.videoTutorial.fields.tags_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="seo_title">{{ trans('cruds.videoTutorial.fields.seo_title') }}</label>
@@ -142,7 +150,7 @@
 <script>
     Dropzone.options.imageDropzone = {
     url: '{{ route('admin.video-tutorials.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -150,7 +158,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

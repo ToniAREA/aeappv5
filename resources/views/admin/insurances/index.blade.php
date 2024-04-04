@@ -30,7 +30,13 @@
                             {{ trans('cruds.insurance.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.insurance.fields.is_active') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.insurance.fields.provider_name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.insurance.fields.insurance_logo') }}
                         </th>
                         <th>
                             {{ trans('cruds.insurance.fields.company') }}
@@ -46,9 +52,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.insurance.fields.period_cost') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.insurance.fields.is_active') }}
                         </th>
                         <th>
                             {{ trans('cruds.insurance.fields.coverage_type') }}
@@ -98,7 +101,18 @@
                                 {{ $insurance->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $insurance->is_active ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $insurance->is_active ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 {{ $insurance->provider_name ?? '' }}
+                            </td>
+                            <td>
+                                @if($insurance->insurance_logo)
+                                    <a href="{{ $insurance->insurance_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $insurance->insurance_logo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 {{ $insurance->company->company_name ?? '' }}
@@ -114,10 +128,6 @@
                             </td>
                             <td>
                                 {{ $insurance->period_cost ?? '' }}
-                            </td>
-                            <td>
-                                <span style="display:none">{{ $insurance->is_active ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $insurance->is_active ? 'checked' : '' }}>
                             </td>
                             <td>
                                 {{ $insurance->coverage_type ?? '' }}

@@ -38,6 +38,10 @@ class IotPlansController extends Controller
     {
         $iotPlan = IotPlan::create($request->all());
 
+        if ($request->input('photo', false)) {
+            $iotPlan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
+
         if ($request->input('contract', false)) {
             $iotPlan->addMedia(storage_path('tmp/uploads/' . basename($request->input('contract'))))->toMediaCollection('contract');
         }
@@ -59,6 +63,17 @@ class IotPlansController extends Controller
     public function update(UpdateIotPlanRequest $request, IotPlan $iotPlan)
     {
         $iotPlan->update($request->all());
+
+        if ($request->input('photo', false)) {
+            if (! $iotPlan->photo || $request->input('photo') !== $iotPlan->photo->file_name) {
+                if ($iotPlan->photo) {
+                    $iotPlan->photo->delete();
+                }
+                $iotPlan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($iotPlan->photo) {
+            $iotPlan->photo->delete();
+        }
 
         if ($request->input('contract', false)) {
             if (! $iotPlan->contract || $request->input('contract') !== $iotPlan->contract->file_name) {

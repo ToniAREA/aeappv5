@@ -30,10 +30,10 @@
                             {{ trans('cruds.bank.fields.id') }}
                         </th>
                         <th>
-                            {{ trans('cruds.bank.fields.name') }}
+                            {{ trans('cruds.bank.fields.is_active') }}
                         </th>
                         <th>
-                            {{ trans('cruds.bank.fields.is_active') }}
+                            {{ trans('cruds.bank.fields.name') }}
                         </th>
                         <th>
                             {{ trans('cruds.bank.fields.branch') }}
@@ -78,6 +78,9 @@
                             {{ trans('cruds.bank.fields.files') }}
                         </th>
                         <th>
+                            {{ trans('cruds.bank.fields.bank_logo') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -92,11 +95,11 @@
                                 {{ $bank->id ?? '' }}
                             </td>
                             <td>
-                                {{ $bank->name ?? '' }}
-                            </td>
-                            <td>
                                 <span style="display:none">{{ $bank->is_active ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $bank->is_active ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $bank->name ?? '' }}
                             </td>
                             <td>
                                 {{ $bank->branch ?? '' }}
@@ -143,6 +146,13 @@
                                         {{ trans('global.view_file') }}
                                     </a>
                                 @endforeach
+                            </td>
+                            <td>
+                                @if($bank->bank_logo)
+                                    <a href="{{ $bank->bank_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $bank->bank_logo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @can('bank_show')

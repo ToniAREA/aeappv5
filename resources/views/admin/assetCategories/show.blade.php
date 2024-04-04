@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.assetCategory.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $assetCategory->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.assetCategory.fields.name') }}
                         </th>
                         <td>
@@ -57,6 +65,18 @@
                             @foreach($assetCategory->authorized_users as $key => $authorized_users)
                                 <span class="label label-info">{{ $authorized_users->name }}</span>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.assetCategory.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($assetCategory->photo)
+                                <a href="{{ $assetCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $assetCategory->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

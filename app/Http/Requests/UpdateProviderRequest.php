@@ -42,6 +42,10 @@ class UpdateProviderRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'status' => [
+                'string',
+                'nullable',
+            ],
             'link' => [
                 'string',
                 'nullable',

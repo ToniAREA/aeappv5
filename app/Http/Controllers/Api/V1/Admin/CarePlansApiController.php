@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreCarePlanRequest;
 use App\Http\Requests\UpdateCarePlanRequest;
 use App\Http\Resources\Admin\CarePlanResource;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CarePlansApiController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('care_plan_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -24,6 +27,9 @@ class CarePlansApiController extends Controller
     {
         $carePlan = CarePlan::create($request->all());
         $carePlan->checkpoints()->sync($request->input('checkpoints', []));
+        if ($request->input('photo', false)) {
+            $carePlan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
 
         return (new CarePlanResource($carePlan))
             ->response()
@@ -41,6 +47,16 @@ class CarePlansApiController extends Controller
     {
         $carePlan->update($request->all());
         $carePlan->checkpoints()->sync($request->input('checkpoints', []));
+        if ($request->input('photo', false)) {
+            if (! $carePlan->photo || $request->input('photo') !== $carePlan->photo->file_name) {
+                if ($carePlan->photo) {
+                    $carePlan->photo->delete();
+                }
+                $carePlan->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($carePlan->photo) {
+            $carePlan->photo->delete();
+        }
 
         return (new CarePlanResource($carePlan))
             ->response()

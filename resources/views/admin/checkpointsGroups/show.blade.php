@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.checkpointsGroup.fields.is_available') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $checkpointsGroup->is_available ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.checkpointsGroup.fields.group') }}
                         </th>
                         <td>
@@ -37,6 +45,18 @@
                         </th>
                         <td>
                             {{ $checkpointsGroup->description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.checkpointsGroup.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($checkpointsGroup->photo)
+                                <a href="{{ $checkpointsGroup->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $checkpointsGroup->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

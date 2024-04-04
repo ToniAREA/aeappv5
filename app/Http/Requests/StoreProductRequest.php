@@ -51,6 +51,12 @@ class StoreProductRequest extends FormRequest
             'purchase_discount' => [
                 'numeric',
             ],
+            'stock' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
             'local_stock' => [
                 'nullable',
                 'integer',

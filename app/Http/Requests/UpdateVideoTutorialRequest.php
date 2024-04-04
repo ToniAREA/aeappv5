@@ -35,6 +35,10 @@ class UpdateVideoTutorialRequest extends FormRequest
             'subjects' => [
                 'array',
             ],
+            'tags' => [
+                'string',
+                'nullable',
+            ],
             'seo_title' => [
                 'string',
                 'nullable',

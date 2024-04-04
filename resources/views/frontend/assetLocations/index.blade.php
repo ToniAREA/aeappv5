@@ -30,6 +30,9 @@
                                         {{ trans('cruds.assetLocation.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetLocation.fields.is_available') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.assetLocation.fields.name') }}
                                     </th>
                                     <th>
@@ -37,9 +40,6 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.assetLocation.fields.photo') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.assetLocation.fields.available') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -52,12 +52,12 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                     </td>
@@ -72,6 +72,10 @@
                                             {{ $assetLocation->id ?? '' }}
                                         </td>
                                         <td>
+                                            <span style="display:none">{{ $assetLocation->is_available ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $assetLocation->is_available ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
                                             {{ $assetLocation->name ?? '' }}
                                         </td>
                                         <td>
@@ -83,10 +87,6 @@
                                                     <img src="{{ $assetLocation->photo->getUrl('thumb') }}">
                                                 </a>
                                             @endif
-                                        </td>
-                                        <td>
-                                            <span style="display:none">{{ $assetLocation->available ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $assetLocation->available ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             @can('asset_location_show')

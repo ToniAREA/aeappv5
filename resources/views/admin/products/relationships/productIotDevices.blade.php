@@ -25,13 +25,13 @@
                                 {{ trans('cruds.iotDevice.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.iotDevice.fields.is_active') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.iotDevice.fields.name') }}
                             </th>
                             <th>
                                 {{ trans('cruds.iotDevice.fields.device') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.iotDevice.fields.is_active') }}
                             </th>
                             <th>
                                 {{ trans('cruds.iotDevice.fields.product') }}
@@ -81,14 +81,14 @@
                                     {{ $iotDevice->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $iotDevice->is_active ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $iotDevice->is_active ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $iotDevice->name ?? '' }}
                                 </td>
                                 <td>
                                     {{ $iotDevice->device ?? '' }}
-                                </td>
-                                <td>
-                                    <span style="display:none">{{ $iotDevice->is_active ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $iotDevice->is_active ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     {{ $iotDevice->product->name ?? '' }}

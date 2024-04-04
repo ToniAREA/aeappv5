@@ -28,6 +28,7 @@ class DocumentationCategory extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'name',
         'description',
         'created_at',
@@ -51,16 +52,6 @@ class DocumentationCategory extends Model implements HasMedia
         return $this->hasMany(Documentation::class, 'category_id', 'id');
     }
 
-    public function authorized_roles()
-    {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function authorized_users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
     public function getPhotoAttribute()
     {
         $file = $this->getMedia('photo')->last();
@@ -71,5 +62,15 @@ class DocumentationCategory extends Model implements HasMedia
         }
 
         return $file;
+    }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

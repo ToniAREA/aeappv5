@@ -28,9 +28,9 @@ class AssetLocation extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_available',
         'name',
         'description',
-        'available',
         'created_at',
         'updated_at',
         'deleted_at',

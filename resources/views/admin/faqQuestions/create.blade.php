@@ -10,6 +10,17 @@
         <form method="POST" action="{{ route("admin.faq-questions.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.faqQuestion.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.faqQuestion.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="category_id">{{ trans('cruds.faqQuestion.fields.category') }}</label>
                 <select class="form-control select2 {{ $errors->has('category') ? 'is-invalid' : '' }}" name="category_id" id="category_id" required>
                     @foreach($categories as $id => $entry)
@@ -20,17 +31,6 @@
                     <span class="text-danger">{{ $errors->first('category') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.faqQuestion.fields.category_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('show_online') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="show_online" value="0">
-                    <input class="form-check-input" type="checkbox" name="show_online" id="show_online" value="1" {{ old('show_online', 0) == 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="show_online">{{ trans('cruds.faqQuestion.fields.show_online') }}</label>
-                </div>
-                @if($errors->has('show_online'))
-                    <span class="text-danger">{{ $errors->first('show_online') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.faqQuestion.fields.show_online_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="question">{{ trans('cruds.faqQuestion.fields.question') }}</label>

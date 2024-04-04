@@ -42,12 +42,6 @@
                                         {{ trans('cruds.user.fields.email') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.comment.fields.to_users') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.comment.fields.private_comment') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.comment.fields.photos') }}
                                     </th>
                                     <th>
@@ -84,17 +78,6 @@
                                     <td>
                                     </td>
                                     <td>
-                                        <select class="search">
-                                            <option value>{{ trans('global.all') }}</option>
-                                            @foreach($users as $key => $item)
-                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -119,14 +102,6 @@
                                         </td>
                                         <td>
                                             {{ $comment->from_user->email ?? '' }}
-                                        </td>
-                                        <td>
-                                            @foreach($comment->to_users as $key => $item)
-                                                <span>{{ $item->name }}</span>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            {{ $comment->private_comment ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($comment->photos as $key => $media)

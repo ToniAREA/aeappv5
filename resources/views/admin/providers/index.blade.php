@@ -30,6 +30,9 @@
                             {{ trans('cruds.provider.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.provider.fields.is_active') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.provider.fields.name') }}
                         </th>
                         <th>
@@ -54,6 +57,9 @@
                             {{ trans('cruds.provider.fields.internal_notes') }}
                         </th>
                         <th>
+                            {{ trans('cruds.provider.fields.status') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.provider.fields.link') }}
                         </th>
                         <th>
@@ -72,6 +78,10 @@
                             </td>
                             <td>
                                 {{ $provider->id ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $provider->is_active ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $provider->is_active ? 'checked' : '' }}>
                             </td>
                             <td>
                                 {{ $provider->name ?? '' }}
@@ -106,6 +116,9 @@
                             </td>
                             <td>
                                 {{ $provider->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $provider->status ?? '' }}
                             </td>
                             <td>
                                 {{ $provider->link ?? '' }}
