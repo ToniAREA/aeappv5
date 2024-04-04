@@ -25,10 +25,10 @@
                                 {{ trans('cruds.videoTutorial.fields.id') }}
                             </th>
                             <th>
-                                {{ trans('cruds.videoTutorial.fields.title') }}
+                                {{ trans('cruds.videoTutorial.fields.is_online') }}
                             </th>
                             <th>
-                                {{ trans('cruds.videoTutorial.fields.show_online') }}
+                                {{ trans('cruds.videoTutorial.fields.title') }}
                             </th>
                             <th>
                                 {{ trans('cruds.videoTutorial.fields.description') }}
@@ -41,6 +41,9 @@
                             </th>
                             <th>
                                 {{ trans('cruds.videoTutorial.fields.subjects') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.videoTutorial.fields.tags') }}
                             </th>
                             <th>
                                 {{ trans('cruds.videoTutorial.fields.seo_title') }}
@@ -72,11 +75,11 @@
                                     {{ $videoTutorial->id ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $videoTutorial->title ?? '' }}
+                                    <span style="display:none">{{ $videoTutorial->is_online ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $videoTutorial->is_online ? 'checked' : '' }}>
                                 </td>
                                 <td>
-                                    <span style="display:none">{{ $videoTutorial->show_online ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $videoTutorial->show_online ? 'checked' : '' }}>
+                                    {{ $videoTutorial->title ?? '' }}
                                 </td>
                                 <td>
                                     {{ $videoTutorial->description ?? '' }}
@@ -95,6 +98,9 @@
                                     @foreach($videoTutorial->subjects as $key => $item)
                                         <span class="badge badge-info">{{ $item->subject }}</span>
                                     @endforeach
+                                </td>
+                                <td>
+                                    {{ $videoTutorial->tags ?? '' }}
                                 </td>
                                 <td>
                                     {{ $videoTutorial->seo_title ?? '' }}

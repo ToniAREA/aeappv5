@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $techDocsType->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.techDocsType.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.techDocsType.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="name">{{ trans('cruds.techDocsType.fields.name') }}</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{ old('name', $techDocsType->name) }}">
                             @if($errors->has('name'))
@@ -22,6 +35,17 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.techDocsType.fields.name_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="photo">{{ trans('cruds.techDocsType.fields.photo') }}</label>
+                            <div class="needsclick dropzone" id="photo-dropzone">
+                            </div>
+                            @if($errors->has('photo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('photo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.techDocsType.fields.photo_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ trans('cruds.techDocsType.fields.description') }}</label>
@@ -81,4 +105,62 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    Dropzone.options.photoDropzone = {
+    url: '{{ route('frontend.tech-docs-types.storeMedia') }}',
+    maxFilesize: 5, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="photo"]').remove()
+      $('form').append('<input type="hidden" name="photo" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="photo"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($techDocsType) && $techDocsType->photo)
+      var file = {!! json_encode($techDocsType->photo) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="photo" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+
+</script>
 @endsection

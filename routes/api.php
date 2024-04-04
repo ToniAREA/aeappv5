@@ -149,6 +149,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('technical-documentations', 'TechnicalDocumentationApiController');
 
     // Tech Docs Types
+    Route::post('tech-docs-types/media', 'TechDocsTypesApiController@storeMedia')->name('tech-docs-types.storeMedia');
     Route::apiResource('tech-docs-types', 'TechDocsTypesApiController');
 
     // Skills Categories

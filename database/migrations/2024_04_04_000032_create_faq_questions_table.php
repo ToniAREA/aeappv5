@@ -10,7 +10,7 @@ class CreateFaqQuestionsTable extends Migration
     {
         Schema::create('faq_questions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->boolean('show_online')->default(0)->nullable();
+            $table->boolean('is_online')->default(0)->nullable();
             $table->longText('question')->nullable();
             $table->longText('answer')->nullable();
             $table->integer('view_count')->nullable();

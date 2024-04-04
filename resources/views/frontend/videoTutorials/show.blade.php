@@ -28,18 +28,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.videoTutorial.fields.title') }}
+                                        {{ trans('cruds.videoTutorial.fields.is_online') }}
                                     </th>
                                     <td>
-                                        {{ $videoTutorial->title }}
+                                        <input type="checkbox" disabled="disabled" {{ $videoTutorial->is_online ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.videoTutorial.fields.show_online') }}
+                                        {{ trans('cruds.videoTutorial.fields.title') }}
                                     </th>
                                     <td>
-                                        <input type="checkbox" disabled="disabled" {{ $videoTutorial->show_online ? 'checked' : '' }}>
+                                        {{ $videoTutorial->title }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -78,6 +78,14 @@
                                         @foreach($videoTutorial->subjects as $key => $subjects)
                                             <span class="label label-info">{{ $subjects->subject }}</span>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.videoTutorial.fields.tags') }}
+                                    </th>
+                                    <td>
+                                        {{ $videoTutorial->tags }}
                                     </td>
                                 </tr>
                                 <tr>

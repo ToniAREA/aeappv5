@@ -319,6 +319,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Tech Docs Types
     Route::delete('tech-docs-types/destroy', 'TechDocsTypesController@massDestroy')->name('tech-docs-types.massDestroy');
+    Route::post('tech-docs-types/media', 'TechDocsTypesController@storeMedia')->name('tech-docs-types.storeMedia');
+    Route::post('tech-docs-types/ckmedia', 'TechDocsTypesController@storeCKEditorImages')->name('tech-docs-types.storeCKEditorImages');
     Route::post('tech-docs-types/parse-csv-import', 'TechDocsTypesController@parseCsvImport')->name('tech-docs-types.parseCsvImport');
     Route::post('tech-docs-types/process-csv-import', 'TechDocsTypesController@processCsvImport')->name('tech-docs-types.processCsvImport');
     Route::resource('tech-docs-types', 'TechDocsTypesController');
@@ -769,6 +771,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Tech Docs Types
     Route::delete('tech-docs-types/destroy', 'TechDocsTypesController@massDestroy')->name('tech-docs-types.massDestroy');
+    Route::post('tech-docs-types/media', 'TechDocsTypesController@storeMedia')->name('tech-docs-types.storeMedia');
+    Route::post('tech-docs-types/ckmedia', 'TechDocsTypesController@storeCKEditorImages')->name('tech-docs-types.storeCKEditorImages');
     Route::resource('tech-docs-types', 'TechDocsTypesController');
 
     // Skills Categories

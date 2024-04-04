@@ -10,6 +10,7 @@ class CreateDocumentationCategoriesTable extends Migration
     {
         Schema::create('documentation_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();

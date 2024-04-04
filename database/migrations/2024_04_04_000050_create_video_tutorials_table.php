@@ -10,10 +10,11 @@ class CreateVideoTutorialsTable extends Migration
     {
         Schema::create('video_tutorials', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('title')->nullable();
-            $table->boolean('show_online')->default(0)->nullable();
             $table->string('description')->nullable();
             $table->string('video_url')->nullable();
+            $table->string('tags')->nullable();
             $table->string('seo_title')->nullable();
             $table->string('seo_meta_description')->nullable();
             $table->string('seo_slug')->nullable();

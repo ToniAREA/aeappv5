@@ -10,8 +10,8 @@ class CreateTechnicalDocumentationsTable extends Migration
     {
         Schema::create('technical_documentations', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('title');
-            $table->boolean('show_online')->default(0)->nullable();
             $table->string('description')->nullable();
             $table->string('seo_title')->nullable();
             $table->string('seo_meta_description')->nullable();

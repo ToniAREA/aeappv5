@@ -28,6 +28,7 @@ class VideoCategory extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'subject',
         'description',
         'created_at',

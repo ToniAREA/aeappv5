@@ -10,6 +10,7 @@ class CreateTechDocsTypesTable extends Migration
     {
         Schema::create('tech_docs_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

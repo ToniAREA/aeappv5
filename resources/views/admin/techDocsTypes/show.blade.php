@@ -25,10 +25,30 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.techDocsType.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $techDocsType->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.techDocsType.fields.name') }}
                         </th>
                         <td>
                             {{ $techDocsType->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.techDocsType.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($techDocsType->photo)
+                                <a href="{{ $techDocsType->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $techDocsType->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>

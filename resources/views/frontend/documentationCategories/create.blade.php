@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.documentationCategory.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.documentationCategory.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="name">{{ trans('cruds.documentationCategory.fields.name') }}</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                             @if($errors->has('name'))
@@ -22,6 +35,17 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.documentationCategory.fields.name_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="photo">{{ trans('cruds.documentationCategory.fields.photo') }}</label>
+                            <div class="needsclick dropzone" id="photo-dropzone">
+                            </div>
+                            @if($errors->has('photo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('photo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.documentationCategory.fields.photo_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="description">{{ trans('cruds.documentationCategory.fields.description') }}</label>
@@ -70,17 +94,6 @@
                             <span class="help-block">{{ trans('cruds.documentationCategory.fields.authorized_users_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="photo">{{ trans('cruds.documentationCategory.fields.photo') }}</label>
-                            <div class="needsclick dropzone" id="photo-dropzone">
-                            </div>
-                            @if($errors->has('photo'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('photo') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.documentationCategory.fields.photo_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -98,7 +111,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('frontend.documentation-categories.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -106,7 +119,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },

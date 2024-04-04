@@ -10,6 +10,7 @@ class CreateVideoCategoriesTable extends Migration
     {
         Schema::create('video_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('subject')->nullable();
             $table->string('description')->nullable();
             $table->timestamps();

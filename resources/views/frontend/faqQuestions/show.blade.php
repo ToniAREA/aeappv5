@@ -28,18 +28,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.faqQuestion.fields.category') }}
+                                        {{ trans('cruds.faqQuestion.fields.is_online') }}
                                     </th>
                                     <td>
-                                        {{ $faqQuestion->category->category ?? '' }}
+                                        <input type="checkbox" disabled="disabled" {{ $faqQuestion->is_online ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.faqQuestion.fields.show_online') }}
+                                        {{ trans('cruds.faqQuestion.fields.category') }}
                                     </th>
                                     <td>
-                                        <input type="checkbox" disabled="disabled" {{ $faqQuestion->show_online ? 'checked' : '' }}>
+                                        {{ $faqQuestion->category->category ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
