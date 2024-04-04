@@ -16,12 +16,17 @@ if [ "$answer" == "y" ]; then
     echo "make sure we're in CUSTOM branch and it's up to date..."
     # Your command goes here
     git checkout custom
-    git pull origin custom
+    git add .
+    git commit -m "Committing all changes before merging MASTER into CUSTOM branch"
+    git push origin custom
+
     git checkout master
-    git pull
+    git pull origin master
+
     git checkout custom
     git merge master -m "Merged MASTER into CUSTOM branch done by BASH script"
     git push origin custom
+    
 else
     echo "Command skipped."
 fi
