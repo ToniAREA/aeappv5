@@ -17,6 +17,9 @@ if [ "$answer" == "y" ]; then
     # Your command goes here
     git checkout custom
     git pull origin custom
+    git checkout master
+    git pull
+    git checkout custom
     git merge master -m "Merged MASTER into CUSTOM branch done by BASH script"
     git push origin custom
 else
