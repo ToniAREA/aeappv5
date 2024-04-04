@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.iotPlan.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $iotPlan->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.iotPlan.fields.plan_name') }}
                         </th>
                         <td>
@@ -49,10 +57,14 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.iotPlan.fields.show_online') }}
+                            {{ trans('cruds.iotPlan.fields.photo') }}
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $iotPlan->show_online ? 'checked' : '' }}>
+                            @if($iotPlan->photo)
+                                <a href="{{ $iotPlan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $iotPlan->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>

@@ -10,11 +10,11 @@ class CreateInsurancesTable extends Migration
     {
         Schema::create('insurances', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_active')->default(0)->nullable();
             $table->string('provider_name');
             $table->string('policy_number')->nullable();
             $table->string('period')->nullable();
             $table->decimal('period_cost', 15, 2)->nullable();
-            $table->boolean('is_active')->default(0)->nullable();
             $table->string('coverage_type')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();

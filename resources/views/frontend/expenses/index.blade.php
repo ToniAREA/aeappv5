@@ -30,6 +30,9 @@
                                         {{ trans('cruds.expense.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.expense.fields.is_accounted') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.expense.fields.employee') }}
                                     </th>
                                     <th>
@@ -54,6 +57,9 @@
                                         {{ trans('cruds.expense.fields.photos') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.expense.fields.notes') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -62,6 +68,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <select class="search">
@@ -94,6 +102,9 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -102,6 +113,10 @@
                                     <tr data-entry-id="{{ $expense->id }}">
                                         <td>
                                             {{ $expense->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $expense->is_accounted ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $expense->is_accounted ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $expense->employee->id_employee ?? '' }}
@@ -134,6 +149,9 @@
                                                     <img src="{{ $media->getUrl('thumb') }}">
                                                 </a>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $expense->notes ?? '' }}
                                         </td>
                                         <td>
                                             @can('expense_show')

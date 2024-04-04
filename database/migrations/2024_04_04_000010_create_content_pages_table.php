@@ -10,8 +10,8 @@ class CreateContentPagesTable extends Migration
     {
         Schema::create('content_pages', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('title')->nullable();
-            $table->boolean('show_online')->default(0)->nullable();
             $table->string('slug')->nullable();
             $table->longText('page_text')->nullable();
             $table->longText('excerpt')->nullable();

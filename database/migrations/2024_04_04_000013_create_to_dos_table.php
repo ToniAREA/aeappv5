@@ -20,7 +20,6 @@ class CreateToDosTable extends Migration
             $table->string('internal_notes')->nullable();
             $table->datetime('completed_at')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 }

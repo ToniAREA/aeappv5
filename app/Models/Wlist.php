@@ -55,7 +55,6 @@ class Wlist extends Model implements HasMedia
         'deadline',
         'status_id',
         'priority',
-        'financial_document_id',
         'proforma_link',
         'notes',
         'internal_notes',
@@ -63,6 +62,7 @@ class Wlist extends Model implements HasMedia
         'link_description',
         'last_use',
         'completed_at',
+        'financial_document_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -156,11 +156,6 @@ class Wlist extends Model implements HasMedia
         return $this->belongsTo(WlistStatus::class, 'status_id');
     }
 
-    public function financial_document()
-    {
-        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
-    }
-
     public function getLastUseAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
@@ -179,5 +174,10 @@ class Wlist extends Model implements HasMedia
     public function setCompletedAtAttribute($value)
     {
         $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

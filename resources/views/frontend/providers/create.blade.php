@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_active">{{ trans('cruds.provider.fields.is_active') }}</label>
+                            </div>
+                            @if($errors->has('is_active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.provider.fields.is_active_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="name">{{ trans('cruds.provider.fields.name') }}</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                             @if($errors->has('name'))
@@ -106,6 +119,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.provider.fields.internal_notes_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="status">{{ trans('cruds.provider.fields.status') }}</label>
+                            <input class="form-control" type="text" name="status" id="status" value="{{ old('status', '') }}">
+                            @if($errors->has('status'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('status') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.provider.fields.status_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="link">{{ trans('cruds.provider.fields.link') }}</label>

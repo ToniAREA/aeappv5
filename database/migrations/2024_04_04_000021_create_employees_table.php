@@ -10,6 +10,7 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_active')->default(0)->nullable();
             $table->string('id_employee')->nullable();
             $table->string('namecomplete')->nullable();
             $table->string('status')->nullable();
@@ -20,7 +21,6 @@ class CreateEmployeesTable extends Migration
             $table->string('internalnotes')->nullable();
             $table->string('link')->nullable();
             $table->string('link_description')->nullable();
-            $table->boolean('active')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

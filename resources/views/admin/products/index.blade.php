@@ -30,6 +30,9 @@
                             {{ trans('cruds.product.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.product.fields.is_online') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.product.fields.category') }}
                         </th>
                         <th>
@@ -51,9 +54,6 @@
                             {{ trans('cruds.product.fields.name') }}
                         </th>
                         <th>
-                            {{ trans('cruds.product.fields.show_online') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.product.fields.photos') }}
                         </th>
                         <th>
@@ -67,6 +67,9 @@
                         </th>
                         <th>
                             {{ trans('cruds.product.fields.has_stock') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.product.fields.stock') }}
                         </th>
                         <th>
                             {{ trans('cruds.product.fields.local_stock') }}
@@ -112,6 +115,8 @@
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
+                        </td>
+                        <td>
                             <select class="search">
                                 <option value>{{ trans('global.all') }}</option>
                                 @foreach($product_categories as $key => $item)
@@ -150,8 +155,6 @@
                         <td>
                         </td>
                         <td>
-                        </td>
-                        <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
@@ -161,6 +164,9 @@
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                         </td>
                         <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -218,6 +224,10 @@
                                 {{ $product->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $product->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $product->is_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 @foreach($product->categories as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
@@ -243,10 +253,6 @@
                                 {{ $product->name ?? '' }}
                             </td>
                             <td>
-                                <span style="display:none">{{ $product->show_online ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $product->show_online ? 'checked' : '' }}>
-                            </td>
-                            <td>
                                 @foreach($product->photos as $key => $media)
                                     <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
                                         <img src="{{ $media->getUrl('thumb') }}">
@@ -265,6 +271,9 @@
                             <td>
                                 <span style="display:none">{{ $product->has_stock ?? '' }}</span>
                                 <input type="checkbox" disabled="disabled" {{ $product->has_stock ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $product->stock ?? '' }}
                             </td>
                             <td>
                                 {{ $product->local_stock ?? '' }}

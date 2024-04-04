@@ -118,6 +118,16 @@
                             <span class="help-block">{{ trans('cruds.maintenanceSuscription.fields.end_date_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="hourly_rate">{{ trans('cruds.maintenanceSuscription.fields.hourly_rate') }}</label>
+                            <input class="form-control" type="number" name="hourly_rate" id="hourly_rate" value="{{ old('hourly_rate', $maintenanceSuscription->hourly_rate) }}" step="0.01">
+                            @if($errors->has('hourly_rate'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('hourly_rate') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.maintenanceSuscription.fields.hourly_rate_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="hourly_rate_discount">{{ trans('cruds.maintenanceSuscription.fields.hourly_rate_discount') }}</label>
                             <input class="form-control" type="number" name="hourly_rate_discount" id="hourly_rate_discount" value="{{ old('hourly_rate_discount', $maintenanceSuscription->hourly_rate_discount) }}" step="0.01">
                             @if($errors->has('hourly_rate_discount'))

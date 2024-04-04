@@ -20,6 +20,7 @@ class Bank extends Model implements HasMedia
 
     protected $appends = [
         'files',
+        'bank_logo',
     ];
 
     protected $dates = [
@@ -30,8 +31,8 @@ class Bank extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'name',
         'is_active',
+        'name',
         'branch',
         'account_number',
         'account_name',
@@ -74,5 +75,17 @@ class Bank extends Model implements HasMedia
     public function getFilesAttribute()
     {
         return $this->getMedia('files');
+    }
+
+    public function getBankLogoAttribute()
+    {
+        $file = $this->getMedia('bank_logo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 }

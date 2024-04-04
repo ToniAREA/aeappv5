@@ -57,9 +57,6 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'active' => [
-                'required',
-            ],
         ];
     }
 }

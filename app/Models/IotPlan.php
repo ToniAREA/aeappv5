@@ -18,6 +18,7 @@ class IotPlan extends Model implements HasMedia
     public $table = 'iot_plans';
 
     protected $appends = [
+        'photo',
         'contract',
     ];
 
@@ -36,10 +37,10 @@ class IotPlan extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'plan_name',
         'short_description',
         'description',
-        'show_online',
         'period',
         'period_price',
         'seo_title',
@@ -66,6 +67,18 @@ class IotPlan extends Model implements HasMedia
     public function planIotSuscriptions()
     {
         return $this->hasMany(IotSuscription::class, 'plan_id', 'id');
+    }
+
+    public function getPhotoAttribute()
+    {
+        $file = $this->getMedia('photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function getContractAttribute()

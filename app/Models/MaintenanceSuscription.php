@@ -33,12 +33,12 @@ class MaintenanceSuscription extends Model implements HasMedia
 
     protected $fillable = [
         'user_id',
-        'financial_document_id',
         'is_active',
         'client_id',
         'care_plan_id',
         'start_date',
         'end_date',
+        'hourly_rate',
         'hourly_rate_discount',
         'material_discount',
         'link',
@@ -46,6 +46,7 @@ class MaintenanceSuscription extends Model implements HasMedia
         'notes',
         'internalnotes',
         'completed_at',
+        'financial_document_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -65,11 +66,6 @@ class MaintenanceSuscription extends Model implements HasMedia
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
-    }
-
-    public function financial_document()
-    {
-        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 
     public function client()
@@ -120,5 +116,10 @@ class MaintenanceSuscription extends Model implements HasMedia
     public function setCompletedAtAttribute($value)
     {
         $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

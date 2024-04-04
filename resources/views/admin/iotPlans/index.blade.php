@@ -30,6 +30,9 @@
                             {{ trans('cruds.iotPlan.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.iotPlan.fields.is_online') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.iotPlan.fields.plan_name') }}
                         </th>
                         <th>
@@ -39,7 +42,7 @@
                             {{ trans('cruds.iotPlan.fields.description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.iotPlan.fields.show_online') }}
+                            {{ trans('cruds.iotPlan.fields.photo') }}
                         </th>
                         <th>
                             {{ trans('cruds.iotPlan.fields.period') }}
@@ -80,6 +83,10 @@
                                 {{ $iotPlan->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $iotPlan->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $iotPlan->is_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 {{ $iotPlan->plan_name ?? '' }}
                             </td>
                             <td>
@@ -89,8 +96,11 @@
                                 {{ $iotPlan->description ?? '' }}
                             </td>
                             <td>
-                                <span style="display:none">{{ $iotPlan->show_online ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $iotPlan->show_online ? 'checked' : '' }}>
+                                @if($iotPlan->photo)
+                                    <a href="{{ $iotPlan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $iotPlan->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 {{ App\Models\IotPlan::PERIOD_RADIO[$iotPlan->period] ?? '' }}

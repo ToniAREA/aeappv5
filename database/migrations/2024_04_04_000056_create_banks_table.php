@@ -10,8 +10,8 @@ class CreateBanksTable extends Migration
     {
         Schema::create('banks', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
             $table->boolean('is_active')->default(0)->nullable();
+            $table->string('name');
             $table->string('branch')->nullable();
             $table->string('account_number');
             $table->string('account_name')->nullable();

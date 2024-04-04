@@ -24,11 +24,11 @@ class BookingSlot extends Model
     ];
 
     protected $fillable = [
+        'is_online',
         'employee_id',
         'star_time',
         'end_time',
         'rate_multiplier',
-        'show_online',
         'booked',
         'status_id',
         'created_at',

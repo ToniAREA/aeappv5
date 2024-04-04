@@ -30,6 +30,9 @@
                             {{ trans('cruds.productCategory.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.productCategory.fields.is_online') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.productCategory.fields.name') }}
                         </th>
                         <th>
@@ -53,6 +56,8 @@
                         </td>
                         <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
                         </td>
                         <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -90,6 +95,10 @@
                             </td>
                             <td>
                                 {{ $productCategory->id ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $productCategory->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $productCategory->is_online ? 'checked' : '' }}>
                             </td>
                             <td>
                                 {{ $productCategory->name ?? '' }}

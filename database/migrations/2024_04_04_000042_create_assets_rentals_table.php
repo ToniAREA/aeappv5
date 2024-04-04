@@ -10,10 +10,10 @@ class CreateAssetsRentalsTable extends Migration
     {
         Schema::create('assets_rentals', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_active')->default(0)->nullable();
             $table->date('start_date');
             $table->string('end_date');
             $table->string('rental_details')->nullable();
-            $table->boolean('active')->default(0)->nullable();
             $table->boolean('invoiced')->default(0)->nullable();
             $table->string('link')->nullable();
             $table->string('link_description')->nullable();

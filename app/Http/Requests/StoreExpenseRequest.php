@@ -21,18 +21,22 @@ class StoreExpenseRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'amount' => [
-                'required',
-            ],
             'description' => [
                 'string',
                 'nullable',
+            ],
+            'amount' => [
+                'required',
             ],
             'files' => [
                 'array',
             ],
             'photos' => [
                 'array',
+            ],
+            'notes' => [
+                'string',
+                'nullable',
             ],
         ];
     }

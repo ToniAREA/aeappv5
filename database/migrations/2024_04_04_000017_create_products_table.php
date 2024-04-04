@@ -10,17 +10,18 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('ref_manu')->nullable();
             $table->string('ref_provider')->nullable();
             $table->string('model')->nullable();
             $table->string('name')->nullable();
-            $table->boolean('show_online')->default(0)->nullable();
             $table->longText('short_desc')->nullable();
             $table->longText('description')->nullable();
             $table->decimal('product_price', 15, 2)->nullable();
             $table->float('purchase_discount', 5, 2)->nullable();
             $table->decimal('purchase_price', 15, 2)->nullable();
             $table->boolean('has_stock')->default(0)->nullable();
+            $table->integer('stock')->nullable();
             $table->integer('local_stock')->nullable();
             $table->string('link_a')->nullable();
             $table->string('link_a_description')->nullable();

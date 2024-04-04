@@ -25,6 +25,9 @@
                                 {{ trans('cruds.asset.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.asset.fields.is_available') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.asset.fields.category') }}
                             </th>
                             <th>
@@ -35,9 +38,6 @@
                             </th>
                             <th>
                                 {{ trans('cruds.asset.fields.status') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.asset.fields.available') }}
                             </th>
                             <th>
                                 {{ trans('cruds.asset.fields.location') }}
@@ -99,6 +99,10 @@
                                     {{ $asset->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $asset->is_available ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $asset->is_available ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $asset->category->name ?? '' }}
                                 </td>
                                 <td>
@@ -113,10 +117,6 @@
                                 </td>
                                 <td>
                                     {{ $asset->status->name ?? '' }}
-                                </td>
-                                <td>
-                                    <span style="display:none">{{ $asset->available ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $asset->available ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     {{ $asset->location->name ?? '' }}

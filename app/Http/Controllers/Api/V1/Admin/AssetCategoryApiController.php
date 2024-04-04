@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreAssetCategoryRequest;
 use App\Http\Requests\UpdateAssetCategoryRequest;
 use App\Http\Resources\Admin\AssetCategoryResource;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AssetCategoryApiController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('asset_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -25,6 +28,9 @@ class AssetCategoryApiController extends Controller
         $assetCategory = AssetCategory::create($request->all());
         $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            $assetCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
 
         return (new AssetCategoryResource($assetCategory))
             ->response()
@@ -43,6 +49,16 @@ class AssetCategoryApiController extends Controller
         $assetCategory->update($request->all());
         $assetCategory->authorized_roles()->sync($request->input('authorized_roles', []));
         $assetCategory->authorized_users()->sync($request->input('authorized_users', []));
+        if ($request->input('photo', false)) {
+            if (! $assetCategory->photo || $request->input('photo') !== $assetCategory->photo->file_name) {
+                if ($assetCategory->photo) {
+                    $assetCategory->photo->delete();
+                }
+                $assetCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($assetCategory->photo) {
+            $assetCategory->photo->delete();
+        }
 
         return (new AssetCategoryResource($assetCategory))
             ->response()

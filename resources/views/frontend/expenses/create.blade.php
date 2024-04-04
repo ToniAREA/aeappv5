@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_accounted" value="0">
+                                <input type="checkbox" name="is_accounted" id="is_accounted" value="1" {{ old('is_accounted', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_accounted">{{ trans('cruds.expense.fields.is_accounted') }}</label>
+                            </div>
+                            @if($errors->has('is_accounted'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_accounted') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.expense.fields.is_accounted_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="employee_id">{{ trans('cruds.expense.fields.employee') }}</label>
                             <select class="form-control select2" name="employee_id" id="employee_id">
                                 @foreach($employees as $id => $entry)
@@ -94,6 +107,16 @@
                             <span class="help-block">{{ trans('cruds.expense.fields.photos_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="notes">{{ trans('cruds.expense.fields.notes') }}</label>
+                            <input class="form-control" type="text" name="notes" id="notes" value="{{ old('notes', '') }}">
+                            @if($errors->has('notes'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('notes') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.expense.fields.notes_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -168,14 +191,14 @@ Dropzone.options.filesDropzone = {
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('frontend.expenses.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },

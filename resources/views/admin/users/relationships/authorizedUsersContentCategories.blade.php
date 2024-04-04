@@ -25,6 +25,9 @@
                                 {{ trans('cruds.contentCategory.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.contentCategory.fields.is_online') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.contentCategory.fields.name') }}
                             </th>
                             <th>
@@ -52,6 +55,10 @@
                                 </td>
                                 <td>
                                     {{ $contentCategory->id ?? '' }}
+                                </td>
+                                <td>
+                                    <span style="display:none">{{ $contentCategory->is_online ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $contentCategory->is_online ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     {{ $contentCategory->name ?? '' }}

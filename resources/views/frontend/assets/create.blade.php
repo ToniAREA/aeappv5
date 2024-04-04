@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_available" value="0">
+                                <input type="checkbox" name="is_available" id="is_available" value="1" {{ old('is_available', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_available">{{ trans('cruds.asset.fields.is_available') }}</label>
+                            </div>
+                            @if($errors->has('is_available'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_available') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.is_available_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="category_id">{{ trans('cruds.asset.fields.category') }}</label>
                             <select class="form-control select2" name="category_id" id="category_id" required>
                                 @foreach($categories as $id => $entry)
@@ -71,19 +84,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.asset.fields.status_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="available" value="0">
-                                <input type="checkbox" name="available" id="available" value="1" {{ old('available', 0) == 1 ? 'checked' : '' }}>
-                                <label for="available">{{ trans('cruds.asset.fields.available') }}</label>
-                            </div>
-                            @if($errors->has('available'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('available') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.asset.fields.available_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label class="required" for="location_id">{{ trans('cruds.asset.fields.location') }}</label>
@@ -317,13 +317,13 @@
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('frontend.assets.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="photos[]" value="' + response.name + '">')

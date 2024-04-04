@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.employee.fields.is_active') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $employee->is_active ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.employee.fields.id_employee') }}
                         </th>
                         <td>
@@ -129,14 +137,6 @@
                         </th>
                         <td>
                             {{ $employee->link_description }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.employee.fields.active') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $employee->active ? 'checked' : '' }}>
                         </td>
                     </tr>
                 </tbody>

@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_active">{{ trans('cruds.assetsRental.fields.is_active') }}</label>
+                            </div>
+                            @if($errors->has('is_active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.assetsRental.fields.is_active_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="asset_id">{{ trans('cruds.assetsRental.fields.asset') }}</label>
                             <select class="form-control select2" name="asset_id" id="asset_id">
                                 @foreach($assets as $id => $entry)
@@ -98,19 +111,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.assetsRental.fields.rental_details_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="active" value="0">
-                                <input type="checkbox" name="active" id="active" value="1" {{ old('active', 0) == 1 ? 'checked' : '' }}>
-                                <label for="active">{{ trans('cruds.assetsRental.fields.active') }}</label>
-                            </div>
-                            @if($errors->has('active'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('active') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.assetsRental.fields.active_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <div>

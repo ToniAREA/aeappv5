@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.bookingSlot.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $bookingSlot->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.bookingSlot.fields.employee') }}
                         </th>
                         <td>
@@ -53,14 +61,6 @@
                         </th>
                         <td>
                             {{ $bookingSlot->rate_multiplier }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.bookingSlot.fields.show_online') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $bookingSlot->show_online ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>

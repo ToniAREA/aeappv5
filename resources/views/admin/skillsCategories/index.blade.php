@@ -36,6 +36,9 @@
                             {{ trans('cruds.skillsCategory.fields.description') }}
                         </th>
                         <th>
+                            {{ trans('cruds.skillsCategory.fields.photo') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -54,6 +57,13 @@
                             </td>
                             <td>
                                 {{ $skillsCategory->description ?? '' }}
+                            </td>
+                            <td>
+                                @if($skillsCategory->photo)
+                                    <a href="{{ $skillsCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $skillsCategory->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @can('skills_category_show')
