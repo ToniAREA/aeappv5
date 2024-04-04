@@ -42,6 +42,10 @@ class StoreProviderRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'status' => [
+                'string',
+                'nullable',
+            ],
             'link' => [
                 'string',
                 'nullable',

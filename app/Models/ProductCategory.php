@@ -32,6 +32,7 @@ class ProductCategory extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'name',
         'category_slug',
         'description',

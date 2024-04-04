@@ -95,6 +95,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.maintenanceSuscription.fields.hourly_rate') }}
+                        </th>
+                        <td>
+                            {{ $maintenanceSuscription->hourly_rate }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.maintenanceSuscription.fields.hourly_rate_discount') }}
                         </th>
                         <td>

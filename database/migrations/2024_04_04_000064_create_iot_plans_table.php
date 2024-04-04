@@ -10,10 +10,10 @@ class CreateIotPlansTable extends Migration
     {
         Schema::create('iot_plans', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('plan_name')->nullable();
             $table->string('short_description');
             $table->longText('description')->nullable();
-            $table->boolean('show_online')->default(0)->nullable();
             $table->string('period')->nullable();
             $table->decimal('period_price', 15, 2);
             $table->string('seo_title')->nullable();

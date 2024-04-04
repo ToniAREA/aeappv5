@@ -10,6 +10,7 @@ class CreateProductCategoriesTable extends Migration
     {
         Schema::create('product_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_online')->default(0)->nullable();
             $table->string('name')->nullable();
             $table->string('category_slug')->nullable();
             $table->longText('description')->nullable();

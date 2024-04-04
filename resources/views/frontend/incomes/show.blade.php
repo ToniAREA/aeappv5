@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.income.fields.is_accounted') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.income.fields.employee') }}
                                     </th>
                                     <td>
@@ -64,14 +72,6 @@
                                     </th>
                                     <td>
                                         {{ $income->amount }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.income.fields.is_accounted') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                             </tbody>

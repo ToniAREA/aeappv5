@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_active">{{ trans('cruds.employee.fields.is_active') }}</label>
+                            </div>
+                            @if($errors->has('is_active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.is_active_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="id_employee">{{ trans('cruds.employee.fields.id_employee') }}</label>
                             <input class="form-control" type="text" name="id_employee" id="id_employee" value="{{ old('id_employee', '') }}">
                             @if($errors->has('id_employee'))
@@ -153,18 +166,6 @@
                             <span class="help-block">{{ trans('cruds.employee.fields.link_description_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <div>
-                                <input type="checkbox" name="active" id="active" value="1" required {{ old('active', 0) == 1 ? 'checked' : '' }}>
-                                <label class="required" for="active">{{ trans('cruds.employee.fields.active') }}</label>
-                            </div>
-                            @if($errors->has('active'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('active') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.employee.fields.active_helper') }}</span>
-                        </div>
-                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -182,7 +183,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('frontend.employees.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -190,7 +191,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

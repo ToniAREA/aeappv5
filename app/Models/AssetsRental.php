@@ -32,21 +32,21 @@ class AssetsRental extends Model
     ];
 
     protected $fillable = [
+        'is_active',
         'asset_id',
         'user_id',
         'client_id',
-        'financial_document_id',
         'boat_id',
         'start_date',
         'end_date',
         'rental_details',
-        'active',
         'invoiced',
         'link',
         'link_description',
         'completed_at',
         'rental_unit',
         'rental_quantity',
+        'financial_document_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -72,11 +72,6 @@ class AssetsRental extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function financial_document()
-    {
-        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
-    }
-
     public function boat()
     {
         return $this->belongsTo(Boat::class, 'boat_id');
@@ -100,5 +95,10 @@ class AssetsRental extends Model
     public function setCompletedAtAttribute($value)
     {
         $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

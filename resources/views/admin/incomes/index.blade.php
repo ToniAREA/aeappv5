@@ -30,6 +30,9 @@
                             {{ trans('cruds.income.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.income.fields.is_accounted') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.income.fields.employee') }}
                         </th>
                         <th>
@@ -48,9 +51,6 @@
                             {{ trans('cruds.income.fields.amount') }}
                         </th>
                         <th>
-                            {{ trans('cruds.income.fields.is_accounted') }}
-                        </th>
-                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -59,6 +59,8 @@
                         </td>
                         <td>
                             <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
                         </td>
                         <td>
                             <select class="search">
@@ -88,8 +90,6 @@
                         </td>
                         <td>
                         </td>
-                        <td>
-                        </td>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,6 +100,10 @@
                             </td>
                             <td>
                                 {{ $income->id ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $income->is_accounted ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
                             </td>
                             <td>
                                 {{ $income->employee->id_employee ?? '' }}
@@ -118,10 +122,6 @@
                             </td>
                             <td>
                                 {{ $income->amount ?? '' }}
-                            </td>
-                            <td>
-                                <span style="display:none">{{ $income->is_accounted ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
                             </td>
                             <td>
                                 @can('income_show')

@@ -44,6 +44,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.contactContact.fields.photo') }}
+                                    </th>
+                                    <td>
+                                        @if($contactContact->photo)
+                                            <a href="{{ $contactContact->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $contactContact->photo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.contactContact.fields.contact_nif') }}
                                     </th>
                                     <td>

@@ -25,18 +25,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.bank.fields.name') }}
-                        </th>
-                        <td>
-                            {{ $bank->name }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.bank.fields.is_active') }}
                         </th>
                         <td>
                             <input type="checkbox" disabled="disabled" {{ $bank->is_active ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.bank.fields.name') }}
+                        </th>
+                        <td>
+                            {{ $bank->name }}
                         </td>
                     </tr>
                     <tr>
@@ -153,6 +153,18 @@
                                     {{ trans('global.view_file') }}
                                 </a>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.bank.fields.bank_logo') }}
+                        </th>
+                        <td>
+                            @if($bank->bank_logo)
+                                <a href="{{ $bank->bank_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $bank->bank_logo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                 </tbody>

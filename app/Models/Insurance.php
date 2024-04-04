@@ -19,6 +19,7 @@ class Insurance extends Model implements HasMedia
     public $table = 'insurances';
 
     protected $appends = [
+        'insurance_logo',
         'files',
     ];
 
@@ -44,12 +45,12 @@ class Insurance extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_active',
         'provider_name',
         'company_id',
         'policy_number',
         'period',
         'period_cost',
-        'is_active',
         'coverage_type',
         'start_date',
         'end_date',
@@ -73,6 +74,18 @@ class Insurance extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function getInsuranceLogoAttribute()
+    {
+        $file = $this->getMedia('insurance_logo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function company()

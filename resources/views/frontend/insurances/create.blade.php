@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_active">{{ trans('cruds.insurance.fields.is_active') }}</label>
+                            </div>
+                            @if($errors->has('is_active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.insurance.fields.is_active_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="provider_name">{{ trans('cruds.insurance.fields.provider_name') }}</label>
                             <input class="form-control" type="text" name="provider_name" id="provider_name" value="{{ old('provider_name', '') }}" required>
                             @if($errors->has('provider_name'))
@@ -22,6 +35,17 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.insurance.fields.provider_name_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="insurance_logo">{{ trans('cruds.insurance.fields.insurance_logo') }}</label>
+                            <div class="needsclick dropzone" id="insurance_logo-dropzone">
+                            </div>
+                            @if($errors->has('insurance_logo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('insurance_logo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.insurance.fields.insurance_logo_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="company_id">{{ trans('cruds.insurance.fields.company') }}</label>
@@ -71,19 +95,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.insurance.fields.period_cost_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="is_active" value="0">
-                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
-                                <label for="is_active">{{ trans('cruds.insurance.fields.is_active') }}</label>
-                            </div>
-                            @if($errors->has('is_active'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('is_active') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.insurance.fields.is_active_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="coverage_type">{{ trans('cruds.insurance.fields.coverage_type') }}</label>
@@ -219,6 +230,61 @@
 @endsection
 
 @section('scripts')
+<script>
+    Dropzone.options.insuranceLogoDropzone = {
+    url: '{{ route('frontend.insurances.storeMedia') }}',
+    maxFilesize: 5, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="insurance_logo"]').remove()
+      $('form').append('<input type="hidden" name="insurance_logo" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="insurance_logo"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($insurance) && $insurance->insurance_logo)
+      var file = {!! json_encode($insurance->insurance_logo) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="insurance_logo" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+
+</script>
 <script>
     var uploadedFilesMap = {}
 Dropzone.options.filesDropzone = {

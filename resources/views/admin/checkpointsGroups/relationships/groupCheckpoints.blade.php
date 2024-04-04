@@ -25,6 +25,9 @@
                                 {{ trans('cruds.checkpoint.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.checkpoint.fields.is_available') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.checkpoint.fields.name') }}
                             </th>
                             <th>
@@ -32,9 +35,6 @@
                             </th>
                             <th>
                                 {{ trans('cruds.checkpoint.fields.group') }}
-                            </th>
-                            <th>
-                                {{ trans('cruds.checkpoint.fields.is_available') }}
                             </th>
                             <th>
                                 {{ trans('cruds.checkpoint.fields.file') }}
@@ -60,6 +60,10 @@
                                     {{ $checkpoint->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $checkpoint->is_available ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $checkpoint->is_available ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $checkpoint->name ?? '' }}
                                 </td>
                                 <td>
@@ -69,10 +73,6 @@
                                     @foreach($checkpoint->groups as $key => $item)
                                         <span class="badge badge-info">{{ $item->group }}</span>
                                     @endforeach
-                                </td>
-                                <td>
-                                    <span style="display:none">{{ $checkpoint->is_available ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $checkpoint->is_available ? 'checked' : '' }}>
                                 </td>
                                 <td>
                                     @if($checkpoint->file)

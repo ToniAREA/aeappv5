@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.user.fields.approved') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.user.fields.name') }}
                                     </th>
                                     <td>
@@ -40,6 +48,18 @@
                                     </th>
                                     <td>
                                         {{ $user->email }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.user.fields.photo') }}
+                                    </th>
+                                    <td>
+                                        @if($user->photo)
+                                            <a href="{{ $user->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $user->photo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -64,14 +84,6 @@
                                     </th>
                                     <td>
                                         <input type="checkbox" disabled="disabled" {{ $user->verified ? 'checked' : '' }}>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.user.fields.approved') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>

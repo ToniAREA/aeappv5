@@ -41,6 +41,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.contactCompany.fields.company_logo') }}
+                        </th>
+                        <td>
+                            @if($contactCompany->company_logo)
+                                <a href="{{ $contactCompany->company_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $contactCompany->company_logo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.contactCompany.fields.company_vat') }}
                         </th>
                         <td>

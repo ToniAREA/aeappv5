@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.assetsRental.fields.is_active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $assetsRental->is_active ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.assetsRental.fields.asset') }}
                                     </th>
                                     <td>
@@ -80,14 +88,6 @@
                                     </th>
                                     <td>
                                         {{ $assetsRental->rental_details }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.assetsRental.fields.active') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $assetsRental->active ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>

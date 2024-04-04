@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $bookingSlot->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.bookingSlot.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.bookingSlot.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="employee_id">{{ trans('cruds.bookingSlot.fields.employee') }}</label>
                             <select class="form-control select2" name="employee_id" id="employee_id" required>
                                 @foreach($employees as $id => $entry)
@@ -56,19 +69,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.bookingSlot.fields.rate_multiplier_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="show_online" value="0">
-                                <input type="checkbox" name="show_online" id="show_online" value="1" {{ $bookingSlot->show_online || old('show_online', 0) === 1 ? 'checked' : '' }}>
-                                <label for="show_online">{{ trans('cruds.bookingSlot.fields.show_online') }}</label>
-                            </div>
-                            @if($errors->has('show_online'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('show_online') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.bookingSlot.fields.show_online_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <div>

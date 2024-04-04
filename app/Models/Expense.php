@@ -31,11 +31,13 @@ class Expense extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_accounted',
         'employee_id',
         'expense_category_id',
         'entry_date',
-        'amount',
         'description',
+        'amount',
+        'notes',
         'created_at',
         'updated_at',
         'deleted_at',

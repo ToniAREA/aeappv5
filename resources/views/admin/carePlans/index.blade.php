@@ -30,13 +30,16 @@
                             {{ trans('cruds.carePlan.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.carePlan.fields.is_online') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.carePlan.fields.name') }}
                         </th>
                         <th>
                             {{ trans('cruds.carePlan.fields.short_description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.carePlan.fields.description') }}
+                            {{ trans('cruds.carePlan.fields.photo') }}
                         </th>
                         <th>
                             {{ trans('cruds.carePlan.fields.checkpoints') }}
@@ -71,13 +74,21 @@
                                 {{ $carePlan->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $carePlan->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $carePlan->is_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 {{ $carePlan->name ?? '' }}
                             </td>
                             <td>
                                 {{ $carePlan->short_description ?? '' }}
                             </td>
                             <td>
-                                {{ $carePlan->description ?? '' }}
+                                @if($carePlan->photo)
+                                    <a href="{{ $carePlan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $carePlan->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 @foreach($carePlan->checkpoints as $key => $item)

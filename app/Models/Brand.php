@@ -32,6 +32,7 @@ class Brand extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'brand',
         'brand_url',
         'description',

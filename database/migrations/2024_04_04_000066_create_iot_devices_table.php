@@ -10,9 +10,9 @@ class CreateIotDevicesTable extends Migration
     {
         Schema::create('iot_devices', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('is_active')->default(0)->nullable();
             $table->string('name');
             $table->string('device')->nullable();
-            $table->boolean('is_active')->default(0)->nullable();
             $table->string('security_token')->nullable();
             $table->string('serial_number')->nullable();
             $table->string('status')->nullable();

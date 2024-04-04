@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.checkpoint.fields.is_available') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $checkpoint->is_available ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.checkpoint.fields.name') }}
                         </th>
                         <td>
@@ -47,14 +55,6 @@
                             @foreach($checkpoint->groups as $key => $group)
                                 <span class="label label-info">{{ $group->group }}</span>
                             @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.checkpoint.fields.is_available') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $checkpoint->is_available ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>

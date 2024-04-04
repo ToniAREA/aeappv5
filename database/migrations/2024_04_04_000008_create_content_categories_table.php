@@ -4,14 +4,15 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCheckpointsGroupsTable extends Migration
+class CreateContentCategoriesTable extends Migration
 {
     public function up()
     {
-        Schema::create('checkpoints_groups', function (Blueprint $table) {
+        Schema::create('content_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('group')->unique();
-            $table->string('description')->nullable();
+            $table->boolean('is_online')->default(0)->nullable();
+            $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

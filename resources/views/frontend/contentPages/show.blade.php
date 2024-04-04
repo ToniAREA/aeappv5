@@ -28,18 +28,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.contentPage.fields.title') }}
+                                        {{ trans('cruds.contentPage.fields.is_online') }}
                                     </th>
                                     <td>
-                                        {{ $contentPage->title }}
+                                        <input type="checkbox" disabled="disabled" {{ $contentPage->is_online ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.contentPage.fields.show_online') }}
+                                        {{ trans('cruds.contentPage.fields.title') }}
                                     </th>
                                     <td>
-                                        <input type="checkbox" disabled="disabled" {{ $contentPage->show_online ? 'checked' : '' }}>
+                                        {{ $contentPage->title }}
                                     </td>
                                 </tr>
                                 <tr>

@@ -30,10 +30,16 @@
                                         {{ trans('cruds.checkpointsGroup.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.checkpointsGroup.fields.is_available') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.checkpointsGroup.fields.group') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.checkpointsGroup.fields.description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.checkpointsGroup.fields.photo') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -47,10 +53,21 @@
                                             {{ $checkpointsGroup->id ?? '' }}
                                         </td>
                                         <td>
+                                            <span style="display:none">{{ $checkpointsGroup->is_available ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $checkpointsGroup->is_available ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
                                             {{ $checkpointsGroup->group ?? '' }}
                                         </td>
                                         <td>
                                             {{ $checkpointsGroup->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($checkpointsGroup->photo)
+                                                <a href="{{ $checkpointsGroup->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $checkpointsGroup->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('checkpoints_group_show')

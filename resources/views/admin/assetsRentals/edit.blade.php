@@ -11,6 +11,17 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_active') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_active" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ $assetsRental->is_active || old('is_active', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_active">{{ trans('cruds.assetsRental.fields.is_active') }}</label>
+                </div>
+                @if($errors->has('is_active'))
+                    <span class="text-danger">{{ $errors->first('is_active') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.assetsRental.fields.is_active_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="asset_id">{{ trans('cruds.assetsRental.fields.asset') }}</label>
                 <select class="form-control select2 {{ $errors->has('asset') ? 'is-invalid' : '' }}" name="asset_id" id="asset_id">
                     @foreach($assets as $id => $entry)
@@ -81,17 +92,6 @@
                     <span class="text-danger">{{ $errors->first('rental_details') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.assetsRental.fields.rental_details_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <div class="form-check {{ $errors->has('active') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="active" value="0">
-                    <input class="form-check-input" type="checkbox" name="active" id="active" value="1" {{ $assetsRental->active || old('active', 0) === 1 ? 'checked' : '' }}>
-                    <label class="form-check-label" for="active">{{ trans('cruds.assetsRental.fields.active') }}</label>
-                </div>
-                @if($errors->has('active'))
-                    <span class="text-danger">{{ $errors->first('active') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.assetsRental.fields.active_helper') }}</span>
             </div>
             <div class="form-group">
                 <div class="form-check {{ $errors->has('invoiced') ? 'is-invalid' : '' }}">

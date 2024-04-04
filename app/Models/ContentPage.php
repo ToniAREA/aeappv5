@@ -34,8 +34,8 @@ class ContentPage extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'title',
-        'show_online',
         'slug',
         'page_text',
         'excerpt',

@@ -33,11 +33,13 @@ class Provider extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_active',
         'name',
         'company_id',
         'provider_url',
         'notes',
         'internal_notes',
+        'status',
         'link',
         'link_description',
         'created_at',
