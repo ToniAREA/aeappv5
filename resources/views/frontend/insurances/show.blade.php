@@ -28,10 +28,30 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.insurance.fields.is_active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $insurance->is_active ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.insurance.fields.provider_name') }}
                                     </th>
                                     <td>
                                         {{ $insurance->provider_name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.insurance.fields.insurance_logo') }}
+                                    </th>
+                                    <td>
+                                        @if($insurance->insurance_logo)
+                                            <a href="{{ $insurance->insurance_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $insurance->insurance_logo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
                                     </td>
                                 </tr>
                                 <tr>
@@ -64,14 +84,6 @@
                                     </th>
                                     <td>
                                         {{ $insurance->period_cost }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.insurance.fields.is_active') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $insurance->is_active ? 'checked' : '' }}>
                                     </td>
                                 </tr>
                                 <tr>

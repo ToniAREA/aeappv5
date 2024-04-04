@@ -25,18 +25,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.technicalDocumentation.fields.title') }}
+                            {{ trans('cruds.technicalDocumentation.fields.is_online') }}
                         </th>
                         <td>
-                            {{ $technicalDocumentation->title }}
+                            <input type="checkbox" disabled="disabled" {{ $technicalDocumentation->is_online ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.technicalDocumentation.fields.show_online') }}
+                            {{ trans('cruds.technicalDocumentation.fields.title') }}
                         </th>
                         <td>
-                            <input type="checkbox" disabled="disabled" {{ $technicalDocumentation->show_online ? 'checked' : '' }}>
+                            {{ $technicalDocumentation->title }}
                         </td>
                     </tr>
                     <tr>

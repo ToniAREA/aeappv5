@@ -58,6 +58,9 @@
                                 {{ trans('cruds.maintenanceSuscription.fields.end_date') }}
                             </th>
                             <th>
+                                {{ trans('cruds.maintenanceSuscription.fields.hourly_rate') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.maintenanceSuscription.fields.hourly_rate_discount') }}
                             </th>
                             <th>
@@ -139,6 +142,9 @@
                                 </td>
                                 <td>
                                     {{ $maintenanceSuscription->end_date ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $maintenanceSuscription->hourly_rate ?? '' }}
                                 </td>
                                 <td>
                                     {{ $maintenanceSuscription->hourly_rate_discount ?? '' }}

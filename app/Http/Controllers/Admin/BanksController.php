@@ -42,6 +42,10 @@ class BanksController extends Controller
             $bank->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
 
+        if ($request->input('bank_logo', false)) {
+            $bank->addMedia(storage_path('tmp/uploads/' . basename($request->input('bank_logo'))))->toMediaCollection('bank_logo');
+        }
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $bank->id]);
         }
@@ -72,6 +76,17 @@ class BanksController extends Controller
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $bank->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
             }
+        }
+
+        if ($request->input('bank_logo', false)) {
+            if (! $bank->bank_logo || $request->input('bank_logo') !== $bank->bank_logo->file_name) {
+                if ($bank->bank_logo) {
+                    $bank->bank_logo->delete();
+                }
+                $bank->addMedia(storage_path('tmp/uploads/' . basename($request->input('bank_logo'))))->toMediaCollection('bank_logo');
+            }
+        } elseif ($bank->bank_logo) {
+            $bank->bank_logo->delete();
         }
 
         return redirect()->route('admin.banks.index');

@@ -42,6 +42,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
+    Route::post('users/ckmedia', 'UsersController@storeCKEditorImages')->name('users.storeCKEditorImages');
     Route::post('users/parse-csv-import', 'UsersController@parseCsvImport')->name('users.parseCsvImport');
     Route::post('users/process-csv-import', 'UsersController@processCsvImport')->name('users.processCsvImport');
     Route::resource('users', 'UsersController');
@@ -102,8 +104,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('to-dos/destroy', 'ToDoController@massDestroy')->name('to-dos.massDestroy');
     Route::post('to-dos/media', 'ToDoController@storeMedia')->name('to-dos.storeMedia');
     Route::post('to-dos/ckmedia', 'ToDoController@storeCKEditorImages')->name('to-dos.storeCKEditorImages');
-    Route::post('to-dos/parse-csv-import', 'ToDoController@parseCsvImport')->name('to-dos.parseCsvImport');
-    Route::post('to-dos/process-csv-import', 'ToDoController@processCsvImport')->name('to-dos.processCsvImport');
     Route::resource('to-dos', 'ToDoController');
 
     // Appointments
@@ -147,12 +147,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Contact Company
     Route::delete('contact-companies/destroy', 'ContactCompanyController@massDestroy')->name('contact-companies.massDestroy');
+    Route::post('contact-companies/media', 'ContactCompanyController@storeMedia')->name('contact-companies.storeMedia');
+    Route::post('contact-companies/ckmedia', 'ContactCompanyController@storeCKEditorImages')->name('contact-companies.storeCKEditorImages');
     Route::post('contact-companies/parse-csv-import', 'ContactCompanyController@parseCsvImport')->name('contact-companies.parseCsvImport');
     Route::post('contact-companies/process-csv-import', 'ContactCompanyController@processCsvImport')->name('contact-companies.processCsvImport');
     Route::resource('contact-companies', 'ContactCompanyController');
 
     // Contact Contacts
     Route::delete('contact-contacts/destroy', 'ContactContactsController@massDestroy')->name('contact-contacts.massDestroy');
+    Route::post('contact-contacts/media', 'ContactContactsController@storeMedia')->name('contact-contacts.storeMedia');
+    Route::post('contact-contacts/ckmedia', 'ContactContactsController@storeCKEditorImages')->name('contact-contacts.storeCKEditorImages');
     Route::post('contact-contacts/parse-csv-import', 'ContactContactsController@parseCsvImport')->name('contact-contacts.parseCsvImport');
     Route::post('contact-contacts/process-csv-import', 'ContactContactsController@processCsvImport')->name('contact-contacts.processCsvImport');
     Route::resource('contact-contacts', 'ContactContactsController');
@@ -195,6 +199,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Asset Category
     Route::delete('asset-categories/destroy', 'AssetCategoryController@massDestroy')->name('asset-categories.massDestroy');
+    Route::post('asset-categories/media', 'AssetCategoryController@storeMedia')->name('asset-categories.storeMedia');
+    Route::post('asset-categories/ckmedia', 'AssetCategoryController@storeCKEditorImages')->name('asset-categories.storeCKEditorImages');
     Route::post('asset-categories/parse-csv-import', 'AssetCategoryController@parseCsvImport')->name('asset-categories.parseCsvImport');
     Route::post('asset-categories/process-csv-import', 'AssetCategoryController@processCsvImport')->name('asset-categories.processCsvImport');
     Route::resource('asset-categories', 'AssetCategoryController');
@@ -339,12 +345,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Tech Docs Types
     Route::delete('tech-docs-types/destroy', 'TechDocsTypesController@massDestroy')->name('tech-docs-types.massDestroy');
+    Route::post('tech-docs-types/media', 'TechDocsTypesController@storeMedia')->name('tech-docs-types.storeMedia');
+    Route::post('tech-docs-types/ckmedia', 'TechDocsTypesController@storeCKEditorImages')->name('tech-docs-types.storeCKEditorImages');
     Route::post('tech-docs-types/parse-csv-import', 'TechDocsTypesController@parseCsvImport')->name('tech-docs-types.parseCsvImport');
     Route::post('tech-docs-types/process-csv-import', 'TechDocsTypesController@processCsvImport')->name('tech-docs-types.processCsvImport');
     Route::resource('tech-docs-types', 'TechDocsTypesController');
 
     // Skills Categories
     Route::delete('skills-categories/destroy', 'SkillsCategoriesController@massDestroy')->name('skills-categories.massDestroy');
+    Route::post('skills-categories/media', 'SkillsCategoriesController@storeMedia')->name('skills-categories.storeMedia');
+    Route::post('skills-categories/ckmedia', 'SkillsCategoriesController@storeCKEditorImages')->name('skills-categories.storeCKEditorImages');
     Route::post('skills-categories/parse-csv-import', 'SkillsCategoriesController@parseCsvImport')->name('skills-categories.parseCsvImport');
     Route::post('skills-categories/process-csv-import', 'SkillsCategoriesController@processCsvImport')->name('skills-categories.processCsvImport');
     Route::resource('skills-categories', 'SkillsCategoriesController');
@@ -429,6 +439,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Care Plans
     Route::delete('care-plans/destroy', 'CarePlansController@massDestroy')->name('care-plans.massDestroy');
+    Route::post('care-plans/media', 'CarePlansController@storeMedia')->name('care-plans.storeMedia');
+    Route::post('care-plans/ckmedia', 'CarePlansController@storeCKEditorImages')->name('care-plans.storeCKEditorImages');
     Route::post('care-plans/parse-csv-import', 'CarePlansController@parseCsvImport')->name('care-plans.parseCsvImport');
     Route::post('care-plans/process-csv-import', 'CarePlansController@processCsvImport')->name('care-plans.processCsvImport');
     Route::resource('care-plans', 'CarePlansController');
@@ -489,6 +501,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Checkpoints Groups
     Route::delete('checkpoints-groups/destroy', 'CheckpointsGroupsController@massDestroy')->name('checkpoints-groups.massDestroy');
+    Route::post('checkpoints-groups/media', 'CheckpointsGroupsController@storeMedia')->name('checkpoints-groups.storeMedia');
+    Route::post('checkpoints-groups/ckmedia', 'CheckpointsGroupsController@storeCKEditorImages')->name('checkpoints-groups.storeCKEditorImages');
     Route::post('checkpoints-groups/parse-csv-import', 'CheckpointsGroupsController@parseCsvImport')->name('checkpoints-groups.parseCsvImport');
     Route::post('checkpoints-groups/process-csv-import', 'CheckpointsGroupsController@processCsvImport')->name('checkpoints-groups.processCsvImport');
     Route::resource('checkpoints-groups', 'CheckpointsGroupsController');
@@ -567,6 +581,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Users
     Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+    Route::post('users/media', 'UsersController@storeMedia')->name('users.storeMedia');
+    Route::post('users/ckmedia', 'UsersController@storeCKEditorImages')->name('users.storeCKEditorImages');
     Route::resource('users', 'UsersController');
 
     // Clients
@@ -641,10 +657,14 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Contact Company
     Route::delete('contact-companies/destroy', 'ContactCompanyController@massDestroy')->name('contact-companies.massDestroy');
+    Route::post('contact-companies/media', 'ContactCompanyController@storeMedia')->name('contact-companies.storeMedia');
+    Route::post('contact-companies/ckmedia', 'ContactCompanyController@storeCKEditorImages')->name('contact-companies.storeCKEditorImages');
     Route::resource('contact-companies', 'ContactCompanyController');
 
     // Contact Contacts
     Route::delete('contact-contacts/destroy', 'ContactContactsController@massDestroy')->name('contact-contacts.massDestroy');
+    Route::post('contact-contacts/media', 'ContactContactsController@storeMedia')->name('contact-contacts.storeMedia');
+    Route::post('contact-contacts/ckmedia', 'ContactContactsController@storeCKEditorImages')->name('contact-contacts.storeCKEditorImages');
     Route::resource('contact-contacts', 'ContactContactsController');
 
     // Employees
@@ -675,6 +695,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Asset Category
     Route::delete('asset-categories/destroy', 'AssetCategoryController@massDestroy')->name('asset-categories.massDestroy');
+    Route::post('asset-categories/media', 'AssetCategoryController@storeMedia')->name('asset-categories.storeMedia');
+    Route::post('asset-categories/ckmedia', 'AssetCategoryController@storeCKEditorImages')->name('asset-categories.storeCKEditorImages');
     Route::resource('asset-categories', 'AssetCategoryController');
 
     // Asset Location
@@ -775,10 +797,14 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Tech Docs Types
     Route::delete('tech-docs-types/destroy', 'TechDocsTypesController@massDestroy')->name('tech-docs-types.massDestroy');
+    Route::post('tech-docs-types/media', 'TechDocsTypesController@storeMedia')->name('tech-docs-types.storeMedia');
+    Route::post('tech-docs-types/ckmedia', 'TechDocsTypesController@storeCKEditorImages')->name('tech-docs-types.storeCKEditorImages');
     Route::resource('tech-docs-types', 'TechDocsTypesController');
 
     // Skills Categories
     Route::delete('skills-categories/destroy', 'SkillsCategoriesController@massDestroy')->name('skills-categories.massDestroy');
+    Route::post('skills-categories/media', 'SkillsCategoriesController@storeMedia')->name('skills-categories.storeMedia');
+    Route::post('skills-categories/ckmedia', 'SkillsCategoriesController@storeCKEditorImages')->name('skills-categories.storeCKEditorImages');
     Route::resource('skills-categories', 'SkillsCategoriesController');
 
     // Clients Reviews
@@ -841,6 +867,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Care Plans
     Route::delete('care-plans/destroy', 'CarePlansController@massDestroy')->name('care-plans.massDestroy');
+    Route::post('care-plans/media', 'CarePlansController@storeMedia')->name('care-plans.storeMedia');
+    Route::post('care-plans/ckmedia', 'CarePlansController@storeCKEditorImages')->name('care-plans.storeCKEditorImages');
     Route::resource('care-plans', 'CarePlansController');
 
     // Maintenance Suscriptions
@@ -883,6 +911,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
 
     // Checkpoints Groups
     Route::delete('checkpoints-groups/destroy', 'CheckpointsGroupsController@massDestroy')->name('checkpoints-groups.massDestroy');
+    Route::post('checkpoints-groups/media', 'CheckpointsGroupsController@storeMedia')->name('checkpoints-groups.storeMedia');
+    Route::post('checkpoints-groups/ckmedia', 'CheckpointsGroupsController@storeCKEditorImages')->name('checkpoints-groups.storeCKEditorImages');
     Route::resource('checkpoints-groups', 'CheckpointsGroupsController');
 
     // Currencies

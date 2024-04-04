@@ -17,14 +17,13 @@ class Comment extends Model implements HasMedia
 
     public $table = 'comments';
 
+    public static $searchable = [
+        'comment',
+    ];
+
     protected $appends = [
         'photos',
         'files',
-    ];
-
-    public static $searchable = [
-        'comment',
-        'private_comment',
     ];
 
     protected $dates = [
@@ -37,7 +36,6 @@ class Comment extends Model implements HasMedia
         'wlist_id',
         'from_user_id',
         'comment',
-        'private_comment',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -62,11 +60,6 @@ class Comment extends Model implements HasMedia
     public function from_user()
     {
         return $this->belongsTo(User::class, 'from_user_id');
-    }
-
-    public function to_users()
-    {
-        return $this->belongsToMany(User::class);
     }
 
     public function getPhotosAttribute()

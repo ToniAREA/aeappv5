@@ -30,6 +30,9 @@
                                         {{ trans('cruds.videoCategory.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.videoCategory.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.videoCategory.fields.subject') }}
                                     </th>
                                     <th>
@@ -54,6 +57,10 @@
                                     <tr data-entry-id="{{ $videoCategory->id }}">
                                         <td>
                                             {{ $videoCategory->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $videoCategory->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $videoCategory->is_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $videoCategory->subject ?? '' }}

@@ -25,10 +25,10 @@
                                 {{ trans('cruds.technicalDocumentation.fields.id') }}
                             </th>
                             <th>
-                                {{ trans('cruds.technicalDocumentation.fields.title') }}
+                                {{ trans('cruds.technicalDocumentation.fields.is_online') }}
                             </th>
                             <th>
-                                {{ trans('cruds.technicalDocumentation.fields.show_online') }}
+                                {{ trans('cruds.technicalDocumentation.fields.title') }}
                             </th>
                             <th>
                                 {{ trans('cruds.technicalDocumentation.fields.description') }}
@@ -81,11 +81,11 @@
                                     {{ $technicalDocumentation->id ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $technicalDocumentation->title ?? '' }}
+                                    <span style="display:none">{{ $technicalDocumentation->is_online ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $technicalDocumentation->is_online ? 'checked' : '' }}>
                                 </td>
                                 <td>
-                                    <span style="display:none">{{ $technicalDocumentation->show_online ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $technicalDocumentation->show_online ? 'checked' : '' }}>
+                                    {{ $technicalDocumentation->title ?? '' }}
                                 </td>
                                 <td>
                                     {{ $technicalDocumentation->description ?? '' }}

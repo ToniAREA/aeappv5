@@ -10,6 +10,17 @@
         <form method="POST" action="{{ route("admin.providers.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_active') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_active" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_active">{{ trans('cruds.provider.fields.is_active') }}</label>
+                </div>
+                @if($errors->has('is_active'))
+                    <span class="text-danger">{{ $errors->first('is_active') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.provider.fields.is_active_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.provider.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                 @if($errors->has('name'))
@@ -86,6 +97,14 @@
                     <span class="text-danger">{{ $errors->first('internal_notes') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.provider.fields.internal_notes_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="status">{{ trans('cruds.provider.fields.status') }}</label>
+                <input class="form-control {{ $errors->has('status') ? 'is-invalid' : '' }}" type="text" name="status" id="status" value="{{ old('status', '') }}">
+                @if($errors->has('status'))
+                    <span class="text-danger">{{ $errors->first('status') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.provider.fields.status_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="link">{{ trans('cruds.provider.fields.link') }}</label>

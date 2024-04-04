@@ -32,10 +32,11 @@ class VideoTutorial extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'title',
-        'show_online',
         'description',
         'video_url',
+        'tags',
         'seo_title',
         'seo_meta_description',
         'seo_slug',

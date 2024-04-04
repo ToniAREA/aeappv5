@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreContactContactRequest;
 use App\Http\Requests\UpdateContactContactRequest;
 use App\Http\Resources\Admin\ContactContactResource;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ContactContactsApiController extends Controller
 {
+    use MediaUploadingTrait;
+
     public function index()
     {
         abort_if(Gate::denies('contact_contact_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -23,6 +26,10 @@ class ContactContactsApiController extends Controller
     public function store(StoreContactContactRequest $request)
     {
         $contactContact = ContactContact::create($request->all());
+
+        if ($request->input('photo', false)) {
+            $contactContact->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+        }
 
         return (new ContactContactResource($contactContact))
             ->response()
@@ -39,6 +46,17 @@ class ContactContactsApiController extends Controller
     public function update(UpdateContactContactRequest $request, ContactContact $contactContact)
     {
         $contactContact->update($request->all());
+
+        if ($request->input('photo', false)) {
+            if (! $contactContact->photo || $request->input('photo') !== $contactContact->photo->file_name) {
+                if ($contactContact->photo) {
+                    $contactContact->photo->delete();
+                }
+                $contactContact->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
+            }
+        } elseif ($contactContact->photo) {
+            $contactContact->photo->delete();
+        }
 
         return (new ContactContactResource($contactContact))
             ->response()

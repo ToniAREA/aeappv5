@@ -30,7 +30,13 @@
                             {{ trans('cruds.documentationCategory.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.documentationCategory.fields.is_online') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.documentationCategory.fields.name') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.documentationCategory.fields.photo') }}
                         </th>
                         <th>
                             {{ trans('cruds.documentationCategory.fields.description') }}
@@ -40,9 +46,6 @@
                         </th>
                         <th>
                             {{ trans('cruds.documentationCategory.fields.authorized_users') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.documentationCategory.fields.photo') }}
                         </th>
                         <th>
                             &nbsp;
@@ -59,7 +62,18 @@
                                 {{ $documentationCategory->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $documentationCategory->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $documentationCategory->is_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 {{ $documentationCategory->name ?? '' }}
+                            </td>
+                            <td>
+                                @if($documentationCategory->photo)
+                                    <a href="{{ $documentationCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $documentationCategory->photo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
                             </td>
                             <td>
                                 {{ $documentationCategory->description ?? '' }}
@@ -73,13 +87,6 @@
                                 @foreach($documentationCategory->authorized_users as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
-                            </td>
-                            <td>
-                                @if($documentationCategory->photo)
-                                    <a href="{{ $documentationCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                        <img src="{{ $documentationCategory->photo->getUrl('thumb') }}">
-                                    </a>
-                                @endif
                             </td>
                             <td>
                                 @can('documentation_category_show')

@@ -30,6 +30,9 @@
                                         {{ trans('cruds.assetCategory.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetCategory.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.assetCategory.fields.name') }}
                                     </th>
                                     <th>
@@ -42,6 +45,9 @@
                                         {{ trans('cruds.assetCategory.fields.authorized_users') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetCategory.fields.photo') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -50,6 +56,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -75,6 +83,8 @@
                                     </td>
                                     <td>
                                     </td>
+                                    <td>
+                                    </td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -82,6 +92,10 @@
                                     <tr data-entry-id="{{ $assetCategory->id }}">
                                         <td>
                                             {{ $assetCategory->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $assetCategory->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $assetCategory->is_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $assetCategory->name ?? '' }}
@@ -98,6 +112,13 @@
                                             @foreach($assetCategory->authorized_users as $key => $item)
                                                 <span>{{ $item->name }}</span>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            @if($assetCategory->photo)
+                                                <a href="{{ $assetCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $assetCategory->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('asset_category_show')

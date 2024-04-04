@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.plan.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $plan->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.plan.fields.plan_name') }}
                         </th>
                         <td>
@@ -44,7 +52,7 @@
                             {{ trans('cruds.plan.fields.description') }}
                         </th>
                         <td>
-                            {{ $plan->description }}
+                            {!! $plan->description !!}
                         </td>
                     </tr>
                     <tr>
@@ -57,14 +65,6 @@
                                     <img src="{{ $plan->photo->getUrl('thumb') }}">
                                 </a>
                             @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.plan.fields.show_online') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>

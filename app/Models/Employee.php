@@ -37,6 +37,7 @@ class Employee extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_active',
         'id_employee',
         'namecomplete',
         'user_id',
@@ -49,7 +50,6 @@ class Employee extends Model implements HasMedia
         'internalnotes',
         'link',
         'link_description',
-        'active',
         'created_at',
         'updated_at',
         'deleted_at',

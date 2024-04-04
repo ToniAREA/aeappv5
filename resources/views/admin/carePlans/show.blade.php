@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.carePlan.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $carePlan->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.carePlan.fields.name') }}
                         </th>
                         <td>
@@ -44,7 +52,19 @@
                             {{ trans('cruds.carePlan.fields.description') }}
                         </th>
                         <td>
-                            {{ $carePlan->description }}
+                            {!! $carePlan->description !!}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.carePlan.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($carePlan->photo)
+                                <a href="{{ $carePlan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $carePlan->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>

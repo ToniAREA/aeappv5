@@ -25,10 +25,30 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.documentationCategory.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $documentationCategory->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.documentationCategory.fields.name') }}
                         </th>
                         <td>
                             {{ $documentationCategory->name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.documentationCategory.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($documentationCategory->photo)
+                                <a href="{{ $documentationCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $documentationCategory->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
                         </td>
                     </tr>
                     <tr>
@@ -57,18 +77,6 @@
                             @foreach($documentationCategory->authorized_users as $key => $authorized_users)
                                 <span class="label label-info">{{ $authorized_users->name }}</span>
                             @endforeach
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.documentationCategory.fields.photo') }}
-                        </th>
-                        <td>
-                            @if($documentationCategory->photo)
-                                <a href="{{ $documentationCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                    <img src="{{ $documentationCategory->photo->getUrl('thumb') }}">
-                                </a>
-                            @endif
                         </td>
                     </tr>
                 </tbody>

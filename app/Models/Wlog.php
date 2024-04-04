@@ -49,9 +49,9 @@ class Wlog extends Model implements HasMedia
         'total_access_cost',
         'wlist_finished',
         'invoiced_line',
-        'financial_document_id',
         'notes',
         'internal_notes',
+        'financial_document_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -104,11 +104,6 @@ class Wlog extends Model implements HasMedia
         return $this->belongsTo(Marina::class, 'marina_id');
     }
 
-    public function financial_document()
-    {
-        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
-    }
-
     public function getPhotosAttribute()
     {
         $files = $this->getMedia('photos');
@@ -119,5 +114,10 @@ class Wlog extends Model implements HasMedia
         });
 
         return $files;
+    }
+
+    public function financial_document()
+    {
+        return $this->belongsTo(FinalcialDocument::class, 'financial_document_id');
     }
 }

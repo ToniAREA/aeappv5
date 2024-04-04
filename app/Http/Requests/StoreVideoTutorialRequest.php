@@ -35,6 +35,10 @@ class StoreVideoTutorialRequest extends FormRequest
             'subjects' => [
                 'array',
             ],
+            'tags' => [
+                'string',
+                'nullable',
+            ],
             'seo_title' => [
                 'string',
                 'nullable',

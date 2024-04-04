@@ -10,6 +10,17 @@
         <form method="POST" action="{{ route("admin.products.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.product.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="categories">{{ trans('cruds.product.fields.category') }}</label>
                 <div style="padding-bottom: 4px">
                     <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -86,17 +97,6 @@
                 <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
             </div>
             <div class="form-group">
-                <div class="form-check {{ $errors->has('show_online') ? 'is-invalid' : '' }}">
-                    <input type="hidden" name="show_online" value="0">
-                    <input class="form-check-input" type="checkbox" name="show_online" id="show_online" value="1" {{ old('show_online', 0) == 1 || old('show_online') === null ? 'checked' : '' }}>
-                    <label class="form-check-label" for="show_online">{{ trans('cruds.product.fields.show_online') }}</label>
-                </div>
-                @if($errors->has('show_online'))
-                    <span class="text-danger">{{ $errors->first('show_online') }}</span>
-                @endif
-                <span class="help-block">{{ trans('cruds.product.fields.show_online_helper') }}</span>
-            </div>
-            <div class="form-group">
                 <label for="short_desc">{{ trans('cruds.product.fields.short_desc') }}</label>
                 <textarea class="form-control ckeditor {{ $errors->has('short_desc') ? 'is-invalid' : '' }}" name="short_desc" id="short_desc">{!! old('short_desc') !!}</textarea>
                 @if($errors->has('short_desc'))
@@ -155,6 +155,14 @@
                     <span class="text-danger">{{ $errors->first('has_stock') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.product.fields.has_stock_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="stock">{{ trans('cruds.product.fields.stock') }}</label>
+                <input class="form-control {{ $errors->has('stock') ? 'is-invalid' : '' }}" type="number" name="stock" id="stock" value="{{ old('stock', '') }}" step="1">
+                @if($errors->has('stock'))
+                    <span class="text-danger">{{ $errors->first('stock') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.product.fields.stock_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="local_stock">{{ trans('cruds.product.fields.local_stock') }}</label>
@@ -330,14 +338,14 @@
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('admin.products.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },

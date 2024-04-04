@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.expense.fields.is_accounted') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $expense->is_accounted ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.expense.fields.employee') }}
                                     </th>
                                     <td>
@@ -88,6 +96,14 @@
                                                 <img src="{{ $media->getUrl('thumb') }}">
                                             </a>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.expense.fields.notes') }}
+                                    </th>
+                                    <td>
+                                        {{ $expense->notes }}
                                     </td>
                                 </tr>
                             </tbody>

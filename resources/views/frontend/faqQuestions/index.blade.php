@@ -30,10 +30,10 @@
                                         {{ trans('cruds.faqQuestion.fields.id') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.faqQuestion.fields.category') }}
+                                        {{ trans('cruds.faqQuestion.fields.is_online') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.faqQuestion.fields.show_online') }}
+                                        {{ trans('cruds.faqQuestion.fields.category') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.faqQuestion.fields.photo') }}
@@ -61,14 +61,14 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($faq_categories as $key => $item)
                                                 <option value="{{ $item->category }}">{{ $item->category }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -104,11 +104,11 @@
                                             {{ $faqQuestion->id ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $faqQuestion->category->category ?? '' }}
+                                            <span style="display:none">{{ $faqQuestion->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $faqQuestion->is_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
-                                            <span style="display:none">{{ $faqQuestion->show_online ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $faqQuestion->show_online ? 'checked' : '' }}>
+                                            {{ $faqQuestion->category->category ?? '' }}
                                         </td>
                                         <td>
                                             @if($faqQuestion->photo)

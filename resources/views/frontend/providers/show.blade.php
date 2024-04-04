@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.provider.fields.is_active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $provider->is_active ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.provider.fields.name') }}
                                     </th>
                                     <td>
@@ -98,6 +106,14 @@
                                     </th>
                                     <td>
                                         {{ $provider->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.status') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->status }}
                                     </td>
                                 </tr>
                                 <tr>

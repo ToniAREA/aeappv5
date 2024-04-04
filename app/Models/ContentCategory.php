@@ -28,6 +28,7 @@ class ContentCategory extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'name',
         'slug',
         'created_at',

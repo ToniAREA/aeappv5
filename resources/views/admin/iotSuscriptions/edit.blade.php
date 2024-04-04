@@ -99,6 +99,14 @@
                 <span class="help-block">{{ trans('cruds.iotSuscription.fields.end_date_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="hourly_rate">{{ trans('cruds.iotSuscription.fields.hourly_rate') }}</label>
+                <input class="form-control {{ $errors->has('hourly_rate') ? 'is-invalid' : '' }}" type="number" name="hourly_rate" id="hourly_rate" value="{{ old('hourly_rate', $iotSuscription->hourly_rate) }}" step="0.01">
+                @if($errors->has('hourly_rate'))
+                    <span class="text-danger">{{ $errors->first('hourly_rate') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.iotSuscription.fields.hourly_rate_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="hourly_rate_discount">{{ trans('cruds.iotSuscription.fields.hourly_rate_discount') }}</label>
                 <input class="form-control {{ $errors->has('hourly_rate_discount') ? 'is-invalid' : '' }}" type="number" name="hourly_rate_discount" id="hourly_rate_discount" value="{{ old('hourly_rate_discount', $iotSuscription->hourly_rate_discount) }}" step="0.01">
                 @if($errors->has('hourly_rate_discount'))

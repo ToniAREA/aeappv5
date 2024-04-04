@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.iotDevice.fields.is_active') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $iotDevice->is_active ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.iotDevice.fields.name') }}
                         </th>
                         <td>
@@ -37,14 +45,6 @@
                         </th>
                         <td>
                             {{ $iotDevice->device }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.iotDevice.fields.is_active') }}
-                        </th>
-                        <td>
-                            <input type="checkbox" disabled="disabled" {{ $iotDevice->is_active ? 'checked' : '' }}>
                         </td>
                     </tr>
                     <tr>

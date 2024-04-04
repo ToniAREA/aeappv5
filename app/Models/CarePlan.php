@@ -7,12 +7,19 @@ use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class CarePlan extends Model
+class CarePlan extends Model implements HasMedia
 {
-    use SoftDeletes, Auditable, HasFactory;
+    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'care_plans';
+
+    protected $appends = [
+        'photo',
+    ];
 
     protected $dates = [
         'created_at',
@@ -32,6 +39,7 @@ class CarePlan extends Model
     protected $fillable = [
         'name',
         'short_description',
+        'is_online',
         'description',
         'period',
         'period_price',
@@ -48,9 +56,27 @@ class CarePlan extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
     public function carePlanMaintenanceSuscriptions()
     {
         return $this->hasMany(MaintenanceSuscription::class, 'care_plan_id', 'id');
+    }
+
+    public function getPhotoAttribute()
+    {
+        $file = $this->getMedia('photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function checkpoints()

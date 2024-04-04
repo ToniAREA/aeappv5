@@ -34,8 +34,8 @@ class TechnicalDocumentation extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'title',
-        'show_online',
         'description',
         'doc_type_id',
         'brand_id',

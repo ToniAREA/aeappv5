@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $faqQuestion->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.faqQuestion.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.faqQuestion.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="category_id">{{ trans('cruds.faqQuestion.fields.category') }}</label>
                             <select class="form-control select2" name="category_id" id="category_id" required>
                                 @foreach($categories as $id => $entry)
@@ -26,19 +39,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.faqQuestion.fields.category_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <div>
-                                <input type="hidden" name="show_online" value="0">
-                                <input type="checkbox" name="show_online" id="show_online" value="1" {{ $faqQuestion->show_online || old('show_online', 0) === 1 ? 'checked' : '' }}>
-                                <label for="show_online">{{ trans('cruds.faqQuestion.fields.show_online') }}</label>
-                            </div>
-                            @if($errors->has('show_online'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('show_online') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.faqQuestion.fields.show_online_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="question">{{ trans('cruds.faqQuestion.fields.question') }}</label>

@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.videoCategory.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.videoCategory.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="subject">{{ trans('cruds.videoCategory.fields.subject') }}</label>
                             <input class="form-control" type="text" name="subject" id="subject" value="{{ old('subject', '') }}">
                             @if($errors->has('subject'))
@@ -98,7 +111,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('frontend.video-categories.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -106,7 +119,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },

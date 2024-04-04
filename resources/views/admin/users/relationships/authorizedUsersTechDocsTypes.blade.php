@@ -25,7 +25,13 @@
                                 {{ trans('cruds.techDocsType.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.techDocsType.fields.is_online') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.techDocsType.fields.name') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.techDocsType.fields.photo') }}
                             </th>
                             <th>
                                 {{ trans('cruds.techDocsType.fields.description') }}
@@ -51,7 +57,18 @@
                                     {{ $techDocsType->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $techDocsType->is_online ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $techDocsType->is_online ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $techDocsType->name ?? '' }}
+                                </td>
+                                <td>
+                                    @if($techDocsType->photo)
+                                        <a href="{{ $techDocsType->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                            <img src="{{ $techDocsType->photo->getUrl('thumb') }}">
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     {{ $techDocsType->description ?? '' }}

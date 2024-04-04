@@ -11,6 +11,17 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_accounted') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_accounted" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_accounted" id="is_accounted" value="1" {{ $expense->is_accounted || old('is_accounted', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_accounted">{{ trans('cruds.expense.fields.is_accounted') }}</label>
+                </div>
+                @if($errors->has('is_accounted'))
+                    <span class="text-danger">{{ $errors->first('is_accounted') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.expense.fields.is_accounted_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="employee_id">{{ trans('cruds.expense.fields.employee') }}</label>
                 <select class="form-control select2 {{ $errors->has('employee') ? 'is-invalid' : '' }}" name="employee_id" id="employee_id">
                     @foreach($employees as $id => $entry)
@@ -75,6 +86,14 @@
                     <span class="text-danger">{{ $errors->first('photos') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.expense.fields.photos_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="notes">{{ trans('cruds.expense.fields.notes') }}</label>
+                <input class="form-control {{ $errors->has('notes') ? 'is-invalid' : '' }}" type="text" name="notes" id="notes" value="{{ old('notes', $expense->notes) }}">
+                @if($errors->has('notes'))
+                    <span class="text-danger">{{ $errors->first('notes') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.expense.fields.notes_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -150,14 +169,14 @@ Dropzone.options.filesDropzone = {
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('admin.expenses.storeMedia') }}',
-    maxFilesize: 4, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 4,
+      size: 5,
       width: 4096,
       height: 4096
     },

@@ -14,12 +14,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use SoftDeletes, Notifiable, Auditable, HasFactory;
+    use SoftDeletes, Notifiable, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'users';
+
+    protected $appends = [
+        'photo',
+    ];
 
     protected $hidden = [
         'remember_token', 'two_factor_code',
@@ -36,15 +43,15 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
+        'approved',
         'name',
         'email',
         'email_verified_at',
-        'two_factor',
         'password',
+        'two_factor',
         'verified',
         'verified_at',
         'verification_token',
-        'approved',
         'two_factor_code',
         'remember_token',
         'created_at',
@@ -113,6 +120,12 @@ class User extends Authenticatable
     {
         parent::boot();
         self::observe(new \App\Observers\UserActionObserver);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function userEmployees()
@@ -240,9 +253,16 @@ class User extends Authenticatable
         return $this->belongsToMany(VideoCategory::class);
     }
 
-    public function toUsersComments()
+    public function getPhotoAttribute()
     {
-        return $this->belongsToMany(Comment::class);
+        $file = $this->getMedia('photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function getEmailVerifiedAtAttribute($value)

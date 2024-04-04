@@ -30,19 +30,16 @@
                             {{ trans('cruds.plan.fields.id') }}
                         </th>
                         <th>
+                            {{ trans('cruds.plan.fields.is_online') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.plan.fields.plan_name') }}
                         </th>
                         <th>
                             {{ trans('cruds.plan.fields.short_description') }}
                         </th>
                         <th>
-                            {{ trans('cruds.plan.fields.description') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.plan.fields.photo') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.plan.fields.show_online') }}
                         </th>
                         <th>
                             {{ trans('cruds.plan.fields.period') }}
@@ -92,13 +89,14 @@
                                 {{ $plan->id ?? '' }}
                             </td>
                             <td>
+                                <span style="display:none">{{ $plan->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $plan->is_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
                                 {{ $plan->plan_name ?? '' }}
                             </td>
                             <td>
                                 {{ $plan->short_description ?? '' }}
-                            </td>
-                            <td>
-                                {{ $plan->description ?? '' }}
                             </td>
                             <td>
                                 @if($plan->photo)
@@ -106,10 +104,6 @@
                                         <img src="{{ $plan->photo->getUrl('thumb') }}">
                                     </a>
                                 @endif
-                            </td>
-                            <td>
-                                <span style="display:none">{{ $plan->show_online ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $plan->show_online ? 'checked' : '' }}>
                             </td>
                             <td>
                                 {{ App\Models\Plan::PERIOD_RADIO[$plan->period] ?? '' }}

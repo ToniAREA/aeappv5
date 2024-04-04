@@ -57,9 +57,6 @@ class UpdateEmployeeRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'active' => [
-                'required',
-            ],
         ];
     }
 }

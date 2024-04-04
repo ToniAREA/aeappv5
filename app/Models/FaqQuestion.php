@@ -34,8 +34,8 @@ class FaqQuestion extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'category_id',
-        'show_online',
         'question',
         'answer',
         'view_count',
