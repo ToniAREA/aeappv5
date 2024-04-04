@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'site_title' => 'AEAPP',
+    'site_title' => 'AREA ELECTRONICA',
 
 ];

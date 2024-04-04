@@ -9,10 +9,6 @@
             <div>
                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
 
-                    @component('livewire.counter')
-                        
-                    @endcomponent
-
                     <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
