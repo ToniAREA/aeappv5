@@ -30,6 +30,7 @@ class ClientsSeeder extends Seeder
             if ($client == null) {
                 $client = (object) [
                     'has_active_vip_plan' => false,
+                    'has_active_maintenance_plan' = > false,
                     'defaulter' => false,
                     'ref' => '',
                     'name' => '------',
@@ -46,12 +47,14 @@ class ClientsSeeder extends Seeder
                     'link_a' => '',
                     'link_a_description' => '',
                     'link_b' => '',
-                    'link_b_description' => ''
+                    'link_b_description' => '',
+                    'last_use' => '',
                 ];
 
                 
                 DB::table('clients')->insert([
                     'has_active_vip_plan' => false,
+                    'has_active_maintenance_plan' = > false,
                     'defaulter' => $client->defaulter,
                     'ref' => '',
                     'name' => $client->name,
@@ -68,7 +71,8 @@ class ClientsSeeder extends Seeder
                     'link_a' => $client->link_fd ?? '',
                     'link_a_description' => 'FacturaDirecta',
                     'link_b' => '',
-                    'link_b_description' => ''
+                    'link_b_description' => '',
+                    'last_use' => '',
                 ]);
             } else {
                 //check that $i is the same as $client->id
@@ -79,6 +83,7 @@ class ClientsSeeder extends Seeder
                     print_r($client);
                     DB::table('clients')->insert([
                     'has_active_vip_plan' => false,
+                    'has_active_maintenance_plan' = > false,
                     'defaulter' => $client->defaulter,
                     'ref' => '',
                     'name' => $client->name,
@@ -95,7 +100,8 @@ class ClientsSeeder extends Seeder
                     'link_a' => $client->link_fd ?? '',
                     'link_a_description' => 'FacturaDirecta',
                     'link_b' => '',
-                    'link_b_description' => ''
+                    'link_b_description' => '',
+                    'last_use' => '',
                 ]);
                 }
             }

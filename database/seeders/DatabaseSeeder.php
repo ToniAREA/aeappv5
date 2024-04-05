@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             AssetStatusTableSeeder::class,
             MarinasSeeder::class,
             BoatsSeeder::class,
+            ClientsSeeder::class,
         ]);
     }
 }
