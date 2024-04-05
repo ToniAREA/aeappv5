@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ClientsSeeder extends Seeder
 {
@@ -48,7 +49,7 @@ class ClientsSeeder extends Seeder
                     'link_a_description' => '',
                     'link_b' => '',
                     'link_b_description' => '',
-                    'last_use' => '',
+                    'last_use' => Carbon::now(),
                 ];
 
                 
@@ -72,7 +73,7 @@ class ClientsSeeder extends Seeder
                     'link_a_description' => 'FacturaDirecta',
                     'link_b' => '',
                     'link_b_description' => '',
-                    'last_use' => '',
+                    'last_use' => Carbon::now(),
                 ]);
             } else {
                 //check that $i is the same as $client->id
@@ -101,7 +102,7 @@ class ClientsSeeder extends Seeder
                     'link_a_description' => 'FacturaDirecta',
                     'link_b' => '',
                     'link_b_description' => '',
-                    'last_use' => '',
+                    'last_use' => Carbon::now(),
                 ]);
                 }
             }
