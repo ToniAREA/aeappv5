@@ -68,7 +68,7 @@ class WlistSeeder extends Seeder
                         $forUser = 1;
                     }
 
-                    if ($wlist->status == 'estimate') {
+                    /* if ($wlist->status == 'estimate') {
                         $wlist->status = 'pending';
                     } elseif ($wlist->status == 'pending') {
                         $wlist->status = 'pending';
@@ -78,7 +78,7 @@ class WlistSeeder extends Seeder
                         $wlist->status = 'completed';
                     } else {
                         $wlist->status = 'verifying';
-                    }
+                    } */
 
 
                     //insert record in new db
@@ -86,7 +86,7 @@ class WlistSeeder extends Seeder
                         'order_type' => $wlist->type,
                         'boat_namecomplete' => $wlist->boat_namecomplete,
                         'description' => $wlist->description,
-                        'status' => $wlist->status,
+                        /* 'status' => $wlist->status, */
                         'url_invoice' => $wlist->link_dn,
                         'notes' => $wlist->assigned,
                         'created_at' => $wlist->created_at,
@@ -120,7 +120,7 @@ class WlistSeeder extends Seeder
                     'order_type' => 'work',
                     'boat_namecomplete' => '------',
                     'description' => '------',
-                    'status' => 'done',
+                    /* 'status' => 'done', */
                     'url_invoice' => '',
                     'notes' => '',
                     'created_at' => now(),
