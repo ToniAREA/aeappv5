@@ -94,7 +94,7 @@ class WlistSeeder extends Seeder
                         'client_id' => $wlist->client_id,
                         'deadline' => $wlist->deadline,
                         'boat_id' => $wlist->boat_id,
-                        'priority_id' => 4,
+                        'priority' => 4,
                     ]);
 
                     //insert in db role_wlist
@@ -128,7 +128,7 @@ class WlistSeeder extends Seeder
                     'deleted_at' => now(),
                     'client_id' => 1,
                     'boat_id' => 1,
-                    'priority_id' => 4,
+                    'priority' => 4,
                 ]);
                 $this->command->line("<info>BLANK {$i} is inserted in new database</info>");
             }
