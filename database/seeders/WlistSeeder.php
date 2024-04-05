@@ -87,7 +87,7 @@ class WlistSeeder extends Seeder
                         'boat_namecomplete' => $wlist->boat_namecomplete,
                         'description' => $wlist->description,
                         /* 'status' => $wlist->status, */
-                        'url_invoice' => $wlist->link_dn,
+                        'proforma_link' => $wlist->link_dn,
                         'notes' => $wlist->assigned,
                         'created_at' => $wlist->created_at,
                         'updated_at' => $wlist->created_at,
@@ -121,7 +121,7 @@ class WlistSeeder extends Seeder
                     'boat_namecomplete' => '------',
                     'description' => '------',
                     /* 'status' => 'done', */
-                    'url_invoice' => '',
+                    'proforma_link' => '',
                     'notes' => '',
                     'created_at' => now(),
                     'updated_at' => now(),
