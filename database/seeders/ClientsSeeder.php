@@ -30,7 +30,7 @@ class ClientsSeeder extends Seeder
             if ($client == null) {
                 $client = (object) [
                     'has_active_vip_plan' => false,
-                    'has_active_maintenance_plan' = > false,
+                    'has_active_maintenance_plan' => false,
                     'defaulter' => false,
                     'ref' => '',
                     'name' => '------',
@@ -54,7 +54,7 @@ class ClientsSeeder extends Seeder
                 
                 DB::table('clients')->insert([
                     'has_active_vip_plan' => false,
-                    'has_active_maintenance_plan' = > false,
+                    'has_active_maintenance_plan' => false,
                     'defaulter' => $client->defaulter,
                     'ref' => '',
                     'name' => $client->name,
@@ -83,7 +83,7 @@ class ClientsSeeder extends Seeder
                     print_r($client);
                     DB::table('clients')->insert([
                     'has_active_vip_plan' => false,
-                    'has_active_maintenance_plan' = > false,
+                    'has_active_maintenance_plan' => false,
                     'defaulter' => $client->defaulter,
                     'ref' => '',
                     'name' => $client->name,
