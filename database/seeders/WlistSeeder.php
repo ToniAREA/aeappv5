@@ -46,13 +46,13 @@ class WlistSeeder extends Seeder
                     $this->command->line("<info>{$i} is same ID</info>");
 
                     if ($wlist->assigned == 'root') {
-                        $forRole = 1;
+                        $forRole = 10;
                         $forUser = 1;
                     } elseif ($wlist->assigned == 'admin') {
                         $forRole = 1;
                         $forUser = 5;
                     } elseif ($wlist->assigned == 'toni') {
-                        $forRole = 1;
+                        $forRole = 10;
                         $forUser = 1;
                     } elseif ($wlist->assigned == 'tech') {
                         $forRole = 3;

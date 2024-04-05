@@ -12,9 +12,9 @@ class UsersTableSeeder extends Seeder
         $users = [
             [
                 'id'                 => 1,
-                'name'               => 'Admin',
-                'email'              => 'admin@admin.com',
-                'password'           => bcrypt('password'),
+                'name'               => $_ENV['SUPERADMIN_NAME'],
+                'email'              => $_ENV['SUPERADMIN_EMAIL'],
+                'password'           => bcrypt($_ENV['SUPERADMIN_PASSWORD']),
                 'remember_token'     => null,
                 'approved'           => 1,
                 'verified'           => 1,
@@ -24,9 +24,9 @@ class UsersTableSeeder extends Seeder
              ],
              [
                  'id'                 => 2,
-                 'name'               => 'AreaElectronica',
-                 'email'              => 'AreaElectronica@admin.com',
-                 'password'           => bcrypt('password'),
+                 'name'               => $_ENV['ADMIN_NAME'],
+                 'email'              => $_ENV['ADMIN_EMAIL'],
+                 'password'           => bcrypt($_ENV['ADMIN_PASSWORD']),
                  'remember_token'     => null,
                  'approved'           => 1,
                  'verified'           => 1,
@@ -60,9 +60,9 @@ class UsersTableSeeder extends Seeder
              ],
              [
                  'id'                 => 5,
-                 'name'               => 'Carmen',
-                 'email'              => 'Carmen@admin.com',
-                 'password'           => bcrypt('password'),
+                 'name'               => $_ENV['CARMEN_NAME'],
+                 'email'              => $_ENV['CARMEN_EMAIL'],
+                 'password'           => bcrypt($_ENV['CARMEN_PASSWORD']),
                  'remember_token'     => null,
                  'approved'           => 0,
                  'verified'           => 1,
