@@ -15,9 +15,13 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             RoleUserTableSeeder::class,
             AssetStatusTableSeeder::class,
+            EmployeesSeeder::class,
             MarinasSeeder::class,
             BoatsSeeder::class,
             ClientsSeeder::class,
+            BoatClientPivotSeeder::class,
+            WlistSeeder::class,
+            WlogSeeder::class,
         ]);
     }
 }
