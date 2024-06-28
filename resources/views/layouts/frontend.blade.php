@@ -14,6 +14,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
+
+
     <!-- Styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
@@ -23,10 +26,13 @@
     <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    <link
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css"
+        rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css"
+        rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
@@ -34,11 +40,13 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+            <div class="container-fluid">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -62,20 +70,23 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>
-                            @if(Route::has('register'))
+                            @if (Route::has('register'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
                             <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} ({{ Auth::user()->roles->first()->title ?? 'no role' }}) <span class="caret"></span>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }} ({{ Auth::user()->roles->first()->title ?? 'no role' }})
+                                    <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                                    <a class="dropdown-item" href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('frontend.profile.index') }}">{{ __('My profile') }}</a>
 
                                     @can('to_do_access')
                                         <a class="dropdown-item" href="{{ route('frontend.to-dos.index') }}">
@@ -168,7 +179,8 @@
                                         </a>
                                     @endcan
                                     @can('maintenance_suscription_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.maintenance-suscriptions.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.maintenance-suscriptions.index') }}">
                                             {{ trans('cruds.maintenanceSuscription.title') }}
                                         </a>
                                     @endcan
@@ -183,7 +195,8 @@
                                         </a>
                                     @endcan
                                     @can('checkpoints_group_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.checkpoints-groups.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.checkpoints-groups.index') }}">
                                             {{ trans('cruds.checkpointsGroup.title') }}
                                         </a>
                                     @endcan
@@ -198,7 +211,8 @@
                                         </a>
                                     @endcan
                                     @can('iot_received_data_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.iot-received-datas.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.iot-received-datas.index') }}">
                                             {{ trans('cruds.iotReceivedData.title') }}
                                         </a>
                                     @endcan
@@ -218,22 +232,26 @@
                                         </a>
                                     @endcan
                                     @can('finalcial_document_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finalcial-documents.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.finalcial-documents.index') }}">
                                             {{ trans('cruds.finalcialDocument.title') }}
                                         </a>
                                     @endcan
                                     @can('financial_document_item_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.financial-document-items.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.financial-document-items.index') }}">
                                             {{ trans('cruds.financialDocumentItem.title') }}
                                         </a>
                                     @endcan
                                     @can('finantial_document_tax_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finantial-document-taxes.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.finantial-document-taxes.index') }}">
                                             {{ trans('cruds.finantialDocumentTax.title') }}
                                         </a>
                                     @endcan
                                     @can('finantial_document_discount_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.finantial-document-discounts.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.finantial-document-discounts.index') }}">
                                             {{ trans('cruds.finantialDocumentDiscount.title') }}
                                         </a>
                                     @endcan
@@ -278,7 +296,8 @@
                                         </a>
                                     @endcan
                                     @can('product_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.product-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.product-categories.index') }}">
                                             {{ trans('cruds.productCategory.title') }}
                                         </a>
                                     @endcan
@@ -348,12 +367,14 @@
                                         </a>
                                     @endcan
                                     @can('employee_attendance_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employee-attendances.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.employee-attendances.index') }}">
                                             {{ trans('cruds.employeeAttendance.title') }}
                                         </a>
                                     @endcan
                                     @can('employee_holiday_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.employee-holidays.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.employee-holidays.index') }}">
                                             {{ trans('cruds.employeeHoliday.title') }}
                                         </a>
                                     @endcan
@@ -363,7 +384,8 @@
                                         </a>
                                     @endcan
                                     @can('skills_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.skills-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.skills-categories.index') }}">
                                             {{ trans('cruds.skillsCategory.title') }}
                                         </a>
                                     @endcan
@@ -413,7 +435,8 @@
                                         </a>
                                     @endcan
                                     @can('contact_company_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.contact-companies.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.contact-companies.index') }}">
                                             {{ trans('cruds.contactCompany.title') }}
                                         </a>
                                     @endcan
@@ -428,7 +451,8 @@
                                         </a>
                                     @endcan
                                     @can('content_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.content-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.content-categories.index') }}">
                                             {{ trans('cruds.contentCategory.title') }}
                                         </a>
                                     @endcan
@@ -438,7 +462,8 @@
                                         </a>
                                     @endcan
                                     @can('technical_documentation_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.technical-documentations.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.technical-documentations.index') }}">
                                             {{ trans('cruds.technicalDocumentation.title') }}
                                         </a>
                                     @endcan
@@ -473,7 +498,8 @@
                                         </a>
                                     @endcan
                                     @can('documentation_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.documentation-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.documentation-categories.index') }}">
                                             {{ trans('cruds.documentationCategory.title') }}
                                         </a>
                                     @endcan
@@ -508,12 +534,14 @@
                                         </a>
                                     @endcan
                                     @can('expense_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.expense-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.expense-categories.index') }}">
                                             {{ trans('cruds.expenseCategory.title') }}
                                         </a>
                                     @endcan
                                     @can('income_category_access')
-                                        <a class="dropdown-item ml-3" href="{{ route('frontend.income-categories.index') }}">
+                                        <a class="dropdown-item ml-3"
+                                            href="{{ route('frontend.income-categories.index') }}">
                                             {{ trans('cruds.incomeCategory.title') }}
                                         </a>
                                     @endcan
@@ -528,12 +556,14 @@
                                         </a>
                                     @endcan
 
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                        style="display: none;">
                                         @csrf
                                     </form>
                                 </div>
@@ -545,7 +575,7 @@
         </nav>
 
         <main class="py-4">
-            @if(session('message'))
+            @if (session('message'))
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
@@ -554,13 +584,13 @@
                     </div>
                 </div>
             @endif
-            @if($errors->count() > 0)
+            @if ($errors->count() > 0)
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger">
                                 <ul class="list-unstyled mb-0">
-                                    @foreach($errors->all() as $error)
+                                    @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
                                 </ul>
@@ -590,7 +620,9 @@
 <script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/16.0.0/classic/ckeditor.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js">
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
 <script src="{{ asset('js/main.js') }}"></script>

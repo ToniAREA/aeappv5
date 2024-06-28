@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             @can('comment_create')
@@ -9,11 +9,7 @@
                         <a class="btn btn-success" href="{{ route('frontend.comments.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.comment.title_singular') }}
                         </a>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                            {{ trans('global.app_csvImport') }}
-                        </button>
-                        @include('csvImport.modal', ['model' => 'Comment', 'route' => 'admin.comments.parseCsvImport'])
-                    </div>
+                        </div>
                 </div>
             @endcan
             <div class="card">

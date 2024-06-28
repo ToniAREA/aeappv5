@@ -1,3 +1,144 @@
+
+
+.dashcard {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 450px;
+}
+
+.dashcard-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.dashcard-number {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.dashcard-info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+}
+
+.dashcard-info p {
+    margin: 5px 0 0;
+    color: #777;
+}
+
+.dashcard-progress {
+    margin-left: auto;
+    text-align: right;
+}
+
+.dashcard-progress span {
+    display: block;
+    color: #777;
+}
+
+.clientcard {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 100%;
+}
+
+.clientcard h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.clientcard-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.clientcard-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.clientcard-field {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.clientcard-field:last-child {
+    margin-right: 0;
+}
+
+.clientcard-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.clientcard-field input,
+.clientcard-field textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    resize: none;
+}
+
+.clientcard-field textarea {
+    height: 80px;
+}
+
+.boat-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.boat-badge:hover {
+    background-color: #0056b3;
+}
+
+.link-facturadirecta {
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+}
+
 .ck-editor__editable,
 textarea {
     min-height: 150px;
