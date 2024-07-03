@@ -4,6 +4,8 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
 
+                @include('partials.smallmenu')
+
                 <div class="card">
                     <div class="card-header"
                         style="font-weight: bold; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding-top: 5px; padding-bottom: 5px;">
@@ -23,10 +25,6 @@
                                     'route' => 'admin.boats.parseCsvImport',
                                 ])
 
-                                <a class="btn btn-secondary btn-sm" href="{{ route('frontend.marinas.index') }}">
-                                    >>
-                                </a>
-                                
                             </span>
                         @endcan
                     </div>
@@ -38,7 +36,7 @@
                                     <tr>
                                         <th>{{ trans('cruds.boat.fields.id') }}</th>
                                         {{-- <th>{{ trans('cruds.boat.fields.ref') }}</th> 
-                                        <th>{{ trans('cruds.boat.fields.boat_type') }}</th>--}}
+                                        <th>{{ trans('cruds.boat.fields.boat_type') }}</th> --}}
                                         <th>{{ trans('cruds.boat.fields.name') }}</th>
                                         {{-- <th>{{ trans('cruds.boat.fields.boat_photo') }}</th>
                                         <th>{{ trans('cruds.boat.fields.imo') }}</th>
@@ -62,9 +60,9 @@
                                             style="cursor: pointer;">
                                             <td style="text-align: center">{{ $boat->id }}</td>
                                             {{-- <td>{{ $boat->ref ?? '' }}</td> --}}
-                                           {{--  <td>{{ $boat->boat_type ?? '' }}</td> --}}
+                                            {{--  <td>{{ $boat->boat_type ?? '' }}</td> --}}
                                             <td>{{ $boat->boat_type ?? '' }} {{ $boat->name ?? '' }}</td>
-                                           {{--  <td>
+                                            {{--  <td>
                                                 @if ($boat->boat_photo)
                                                     <a href="{{ $boat->boat_photo->getUrl() }}" target="_blank"
                                                         style="display: inline-block">

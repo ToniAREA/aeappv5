@@ -78,6 +78,9 @@ class ClientsController extends Controller
         abort_if(Gate::denies('client_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $client->load('contacts', 'boats', 'clientWlists', 'clientAppointments', 'clientBookingLists', 'clientAssetsRentals', 'clientClientsReviews', 'clientSuscriptions', 'clientMaintenanceSuscriptions', 'fromClientEmployeeRatings', 'clientIotSuscriptions', 'clientFinalcialDocuments', 'clientWaitingLists', 'clientsBoats');
+        
+        // Ordenar los barcos por 'last_use'
+        $client->boats = $client->boats->sortByDesc('last_use');
 
         return view('frontend.clients.show', compact('client'));
     }

@@ -1,4 +1,39 @@
+@media (min-width: 768px) {
+    .owncard-field {
+        flex: 1 1 48%;
+    }
+}
 
+@media (min-width: 992px) {
+    .owncard-field {
+        flex: 1 1 32%;
+    }
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 767px) {
+    .owncard-row {
+        flex-direction: column;
+    }
+
+    .owncard-field {
+        flex: 1 1 100%;
+    }
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+.owncontainer {
+    justify-content: center;
+    margin-left: 0x;
+    margin-right: 0x;
+    display: flex;
+}
 
 .dashcard {
     display: flex;
@@ -6,14 +41,38 @@
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 450px;
+    padding: 3px;
+    margin: 3px;
 }
 
 .dashcard-content {
     display: flex;
     align-items: center;
     width: 100%;
+}
+
+.dashcard-button {
+    flex: 1;
+    display: block;
+    
+    background-color: #6b6b6b;
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 2px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    a {
+        text-decoration: none;
+        color: whitesmoke;
+        
+    }
+}
+
+.dashcard-button:hover {
+    background-color: #6db495;
 }
 
 .dashcard-number {
@@ -33,6 +92,12 @@
     color: #444;
 }
 
+.dashcard-info h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #AAA;
+}
+
 .dashcard-info p {
     margin: 5px 0 0;
     color: #777;
@@ -46,17 +111,22 @@
 .dashcard-progress span {
     display: block;
     color: #777;
+    font-size: 16px;
+    color: #AAA;
 }
 
-.clientcard {
-    background-color: white;
+.owncard {
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 15px;
     width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    margin: 15px;
+    background-color: white;
 }
 
-.clientcard h1 {
+.owncard h1 {
     margin: 0;
     font-size: 24px;
     color: #007bff;
@@ -66,52 +136,115 @@
     background-color: #007bff;
     color: white;
     border: none;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.clientcard-details {
+.owncard-details {
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
-.clientcard-row {
+.owncard-row {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 15px;
+    gap: 3px;
 }
 
-.clientcard-field {
-    flex: 1;
-    margin-right: 10px;
+.owncard-field {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    
 }
 
-.clientcard-field:last-child {
-    margin-right: 0;
-}
-
-.clientcard-field label {
+.owncard-field label {
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 1px;
 }
 
-.clientcard-field input,
-.clientcard-field textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
+.owncard-field input,
+.owncard-field textarea,
+.owncard-field span {
+    /*     width: 100%;*/
+    flex: 1;
+    padding: 2px;
+    border: 1px solid #999;
     border-radius: 5px;
     background-color: #f7f7f7;
     resize: none;
+    box-sizing: border-box;
+    padding-left: 5px;
 }
 
-.clientcard-field textarea {
+.owncard-field textarea {
     height: 80px;
+}
+
+.owncard-field .badge {
+    display: block;
+    border-radius: 5px;
+    line-height: 1.5;
+}
+
+.badge-green {
+    background-color: #28a745 !important;
+    color: white;
+}
+
+.badge-red {
+    background-color: #dc3545 !important;
+    color: white;
+}
+
+.badge-gray {
+    background-color: #c0c0c0 !important;
+    color: rgb(224, 224, 224);
+}
+
+.contact-badge,
+.boat-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.contact-badge:hover,
+.boat-badge:hover {
+    background-color: #0056b3;
+}
+
+.link-facturadirecta {
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+}
+
+
+.contact-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #6a7a8b;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
 }
 
 .boat-badge {
@@ -125,6 +258,10 @@
     font-size: 14px;
 }
 
+.contact-badge:hover {
+    background-color: #1c1d1f;
+}
+
 .boat-badge:hover {
     background-color: #0056b3;
 }
@@ -132,7 +269,10 @@
 .link-facturadirecta {
     color: #007bff;
     text-decoration: none;
+    margin-top: 5px;
     margin-bottom: 10px;
+    display: block;
+    /* Ensures it takes up the full width of its container */
 }
 
 input[readonly] {
@@ -190,7 +330,7 @@ table.dataTable thead .sorting_desc {
     background-image: none;
 }
 
-.btn-group-xs > .btn,
+.btn-group-xs>.btn,
 .btn-xs {
     padding: 1px 5px;
     font-size: 12px;
@@ -201,19 +341,24 @@ table.dataTable thead .sorting_desc {
 .searchable-title {
     font-weight: bold;
 }
+
 .select2-container--open {
     z-index: 9999;
 }
+
 .searchable-fields {
-    padding-left:5px;
+    padding-left: 5px;
 }
+
 .searchable-link {
-    padding:0 5px 0 5px;
+    padding: 0 5px 0 5px;
 }
-.searchable-link:hover   {
+
+.searchable-link:hover {
     cursor: pointer;
     background: #eaeaea;
 }
+
 .select2-results__option {
     padding-left: 0px;
     padding-right: 0px;
@@ -224,12 +369,12 @@ table.dataTable thead .sorting_desc {
     color: red;
 }
 
-.form-check.is-invalid ~ .invalid-feedback {
+.form-check.is-invalid~.invalid-feedback {
     display: block;
 }
 
 .dataTables_length label select {
-    width: 65px!important;
+    width: 65px !important;
 }
 
 div.dt-button-collection {

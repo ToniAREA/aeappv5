@@ -4,6 +4,8 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
 
+                @include('partials.smallmenu')
+
                 <div class="card">
                     <div class="card-header"
                         style="font-weight: bold; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding-top: 5px; padding-bottom: 5px;">
@@ -18,22 +20,18 @@
                                 <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#csvImportModal">
                                     {{ trans('global.app_csvImport') }}
                                 </button>
-            
+
                                 @include('csvImport.modal', [
                                     'model' => 'Client',
                                     'route' => 'admin.clients.parseCsvImport',
                                 ])
 
-                                <a class="btn btn-secondary btn-sm" href="{{ route('frontend.boats.index') }}">
-                                    >>
-                                </a>
-                                
                             </span>
                         @endcan
                     </div>
                 </div>
 
-                
+
 
                 <div class="card">
                     <div class="card-body">
@@ -47,7 +45,7 @@
                                         <th>{{ trans('cruds.client.fields.defaulter') }}</th>
                                         <th>{{ trans('cruds.client.fields.ref') }}</th> --}}
                                         <th>{{ trans('cruds.client.fields.name') }}</th>
-                                       {{--  <th>{{ trans('cruds.client.fields.lastname') }}</th>
+                                        {{--  <th>{{ trans('cruds.client.fields.lastname') }}</th>
                                         <th>{{ trans('cruds.client.fields.vat') }}</th>
                                         <th>{{ trans('cruds.client.fields.address') }}</th>
                                         <th>{{ trans('cruds.client.fields.country') }}</th>
@@ -66,13 +64,13 @@
                                         <th>{{ trans('cruds.client.fields.last_use') }}</th> --}}
                                     </tr>
                                 </thead>
-                                
+
                                 <tbody>
                                     @foreach ($clients as $client)
                                         <tr onclick="window.location.href='{{ route('frontend.clients.show', $client->id) }}'"
                                             style="cursor: pointer;">
                                             <td style="text-align: center">{{ $client->id }}</td>
-                                           {{--  <td>
+                                            {{--  <td>
                                                 <span style="display:none">{{ $client->has_active_vip_plan ?? '' }}</span>
                                                 <input type="checkbox" disabled="disabled"
                                                     {{ $client->has_active_vip_plan ? 'checked' : '' }}>
@@ -97,7 +95,7 @@
                                             <td>{{ $client->telephone ?? '' }}</td>
                                             <td>{{ $client->mobile ?? '' }}</td>
                                             <td>{{ $client->email ?? '' }}</td> --}}
-                                           {{--  <td>
+                                            {{--  <td>
                                                 @foreach ($client->contacts as $item)
                                                     <span>{{ $item->contact_first_name }}</span>
                                                 @endforeach

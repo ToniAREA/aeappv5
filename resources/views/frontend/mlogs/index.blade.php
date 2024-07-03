@@ -4,6 +4,8 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
 
+                @include('partials.smallmenu')
+
                 <div class="card">
                     <div class="card-header"
                         style="font-weight: bold; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding-top: 5px; padding-bottom: 5px;">
@@ -23,10 +25,6 @@
                                     'route' => 'admin.mlogs.parseCsvImport',
                                 ])
 
-                                <a class="btn btn-secondary btn-sm" href="{{ route('frontend.products.index') }}">
-                                    >>
-                                </a>
-                                
                             </span>
                         @endcan
                     </div>

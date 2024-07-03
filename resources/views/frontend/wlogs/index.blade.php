@@ -4,6 +4,8 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
 
+                @include('partials.smallmenu')
+
                 <div class="card">
                     <div class="card-header"
                         style="font-weight: bold; text-transform: uppercase; display: flex; justify-content: space-between; align-items: center; padding-top: 5px; padding-bottom: 5px;">
@@ -23,10 +25,6 @@
                                     'route' => 'admin.wlogs.parseCsvImport',
                                 ])
 
-                                <a class="btn btn-secondary btn-sm" href="{{ route('frontend.mlogs.index') }}">
-                                    >>
-                                </a>
-                                
                             </span>
                         @endcan
                     </div>
@@ -59,8 +57,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($wlogs as $key => $wlog)
-                                        <tr data-entry-id="{{ $wlog->id }}"  onclick="window.location.href='{{ route('frontend.wlogs.show', $wlog->id) }}'"
+                                    @foreach ($wlogs as $key => $wlog)
+                                        <tr data-entry-id="{{ $wlog->id }}"
+                                            onclick="window.location.href='{{ route('frontend.wlogs.show', $wlog->id) }}'"
                                             style="cursor: pointer;">
                                             <td style="text-align: center">{{ $wlog->id ?? '' }}</td>
                                             <td>{{ $wlog->wlist->description ?? '' }}</td>
@@ -74,30 +73,34 @@
                                             <td>{{ $wlog->hourly_rate ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $wlog->travel_cost_included ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $wlog->travel_cost_included ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $wlog->travel_cost_included ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $wlog->total_travel_cost ?? '' }}</td>
                                             <td>{{ $wlog->total_access_cost ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $wlog->wlist_finished ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $wlog->wlist_finished ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $wlog->wlist_finished ? 'checked' : '' }}>
                                             </td>
                                             <td>
                                                 <span style="display:none">{{ $wlog->invoiced_line ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $wlog->invoiced_line ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $wlog->invoiced_line ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $wlog->notes ?? '' }}</td>
                                             <td>{{ $wlog->internal_notes ?? '' }}</td>
                                             <td>
-                                                @foreach($wlog->photos as $key => $media)
-                                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                @foreach ($wlog->photos as $key => $media)
+                                                    <a href="{{ $media->getUrl() }}" target="_blank"
+                                                        style="display: inline-block">
                                                         <img src="{{ $media->getUrl('thumb') }}">
                                                     </a>
                                                 @endforeach
                                             </td>
                                             <td>{{ $wlog->financial_document->reference_number ?? '' }}</td>
                                             <td>
-                                                @if($wlog->financial_document)
+                                                @if ($wlog->financial_document)
                                                     {{ $wlog->financial_document::DOC_TYPE_RADIO[$wlog->financial_document->doc_type] ?? '' }}
                                                 @endif
                                             </td>
@@ -118,15 +121,19 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
-          
+
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-Wlog:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-Wlog:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

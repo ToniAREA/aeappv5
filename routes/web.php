@@ -594,6 +594,8 @@ Route::group(['as' => 'frontend.', 'namespace' => 'Frontend', 'middleware' => ['
     Route::post('boats/media', 'BoatsController@storeMedia')->name('boats.storeMedia');
     Route::post('boats/ckmedia', 'BoatsController@storeCKEditorImages')->name('boats.storeCKEditorImages');
     Route::resource('boats', 'BoatsController');
+    Route::get('boats/search', 'BoatsController@search')->name('boats.search');
+
 
     // Content Category
     Route::delete('content-categories/destroy', 'ContentCategoryController@massDestroy')->name('content-categories.massDestroy');

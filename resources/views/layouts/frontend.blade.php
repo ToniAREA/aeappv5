@@ -574,7 +574,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @if (session('message'))
                 <div class="container">
                     <div class="row">
