@@ -45,6 +45,8 @@ class LoginController extends Controller
 
             return redirect()->route('two-factor');
         }
+
+        return null; // Asegúrate de que retorne null si no hay redirección específica
     }
 
     public function login(Request $request)
@@ -71,6 +73,6 @@ class LoginController extends Controller
         Log::info('Redirecting after login', ['url' => $this->redirectPath()]);
 
         return $this->authenticated($request, $this->guard()->user())
-            ?: redirect()->intended($this->redirectPath());
+            ?: redirect()->to($this->redirectPath());
     }
 }

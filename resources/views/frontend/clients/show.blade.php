@@ -3,31 +3,39 @@
     <div class="owncontainer">
 
         <div class="owncard">
-            <a href="{{ route('frontend.clients.index') }}">
-                Back to clients list </a>
-            <a href="{{ route('frontend.clients.edit', $client->id) }}">
-                <h1>{{ $client->id }}#@if ($client->ref)
-                        ({{ $client->ref }})
-                    @endif {{ $client->name }}</h1>
-            </a>
+            <a href="{{ route('frontend.clients.index') }}">Back to clients list</a>
 
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h1>
+                    <a href="{{ route('frontend.clients.edit', $client->id) }}">
+                        {{ $client->id }}#
+                        @if ($client->ref)
+                            ({{ $client->ref }})
+                        @endif
+                        {{ $client->name }}
+                    </a>
+                </h1>
+                <span>
+                    <a href="{{ route('frontend.clients.edit', $client->id) }}" style="text-align: right;"> <i class="fas fa-edit"></i> </a> 
+                </span>
+            </div>
             <div class="owncard-details">
 
-                <div class="owncard-row">
-                    <div class="owncard-field">
+                <div class="row">
+                    <div class="col-12 col-md-4 owncard-field m-1">
                         <span class="badge {{ $client->has_active_vip_plan ? 'badge-green' : 'badge-gray' }}">
                             {{-- <input type="checkbox" disabled="disabled" {{ $client->has_active_vip_plan ? 'checked' : '' }}> --}}
                             {{ trans('cruds.client.fields.has_active_vip_plan') }}
                         </span>
                     </div>
-                    <div class="owncard-field">
+                    <div class="col-12 col-md-4 owncard-field m-1">
                         <span class="badge {{ $client->has_active_maintenance_plan ? 'badge-green' : 'badge-gray' }}">
                             {{-- <input type="checkbox" disabled="disabled"
                                 {{ $client->has_active_maintenance_plan ? 'checked' : '' }}> --}}
                             {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
                         </span>
                     </div>
-                    <div class="owncard-field">
+                    <div class="col-12 col-md-4 owncard-field m-1">
                         <span class="badge {{ $client->defaulter ? 'badge-red' : 'badge-gray' }}">
                             {{-- <input type="checkbox" disabled="disabled" {{ $client->defaulter ? 'checked' : '' }}> --}}
                             {{ trans('cruds.client.fields.defaulter') }}
