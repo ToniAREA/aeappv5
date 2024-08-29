@@ -21,10 +21,20 @@ class UpdateExpenseRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
+            'description' => [
+                'string',
+                'nullable',
+            ],
             'amount' => [
                 'required',
             ],
-            'description' => [
+            'files' => [
+                'array',
+            ],
+            'photos' => [
+                'array',
+            ],
+            'notes' => [
                 'string',
                 'nullable',
             ],

@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.brand.fields.is_online') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $brand->is_online ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.brand.fields.brand') }}
                                     </th>
                                     <td>
@@ -86,6 +94,22 @@
                                     </th>
                                     <td>
                                         {{ $brand->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.brand.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $brand->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.brand.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $brand->link_description }}
                                     </td>
                                 </tr>
                             </tbody>

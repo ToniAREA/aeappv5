@@ -90,7 +90,7 @@ class EmployeesController extends Controller
     {
         abort_if(Gate::denies('employee_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $employee->load('user', 'contact');
+        $employee->load('user', 'contact', 'employeeBookingLists', 'forEmployeeToDos', 'employeeExpenses', 'employeeIncomes', 'employeeBookingSlots', 'employeeEmployeeAttendances', 'employeeEmployeeHolidays', 'employeeEmployeeSkills', 'employeeEmployeeRatings', 'forEmployeesAppointments');
 
         return view('frontend.employees.show', compact('employee'));
     }

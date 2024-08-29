@@ -28,14 +28,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.claim.fields.proforma_number') }}
-                                    </th>
-                                    <td>
-                                        {{ $claim->proforma_number->proforma_number ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.claim.fields.claim_date') }}
                                     </th>
                                     <td>

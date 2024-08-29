@@ -17,32 +17,42 @@ class StoreToDoRequest extends FormRequest
     public function rules()
     {
         return [
+            'task' => [
+                'string',
+                'max:200',
+                'nullable',
+            ],
+            'photos' => [
+                'array',
+            ],
             'for_roles.*' => [
                 'integer',
             ],
             'for_roles' => [
                 'array',
             ],
-            'for_users.*' => [
-                'integer',
-            ],
-            'for_users' => [
-                'array',
-            ],
-            'task' => [
-                'string',
-                'max:200',
-                'nullable',
-            ],
-            'photo' => [
-                'array',
-            ],
             'deadline' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'priority' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'repeat_interval_value' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
             'internal_notes' => [
                 'string',
+                'nullable',
+            ],
+            'completed_at' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
         ];

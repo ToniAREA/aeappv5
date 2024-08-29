@@ -30,6 +30,9 @@
                                         {{ trans('cruds.productCategory.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.productCategory.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.productCategory.fields.name') }}
                                     </th>
                                     <th>
@@ -37,6 +40,12 @@
                                     </th>
                                     <th>
                                         {{ trans('cruds.productCategory.fields.photo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.productCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.productCategory.fields.authorized_users') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -49,12 +58,30 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </td>
                                     <td>
                                     </td>
@@ -65,6 +92,10 @@
                                     <tr data-entry-id="{{ $productCategory->id }}">
                                         <td>
                                             {{ $productCategory->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $productCategory->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $productCategory->is_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $productCategory->name ?? '' }}
@@ -78,6 +109,16 @@
                                                     <img src="{{ $productCategory->photo->getUrl('thumb') }}">
                                                 </a>
                                             @endif
+                                        </td>
+                                        <td>
+                                            @foreach($productCategory->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($productCategory->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('product_category_show')

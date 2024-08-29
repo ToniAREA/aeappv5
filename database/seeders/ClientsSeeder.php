@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class ClientsSeeder extends Seeder
 {
@@ -29,32 +30,50 @@ class ClientsSeeder extends Seeder
             // if $client is null, make a dummy client with id $i and name 'empty client' 
             if ($client == null) {
                 $client = (object) [
+                    'has_active_vip_plan' => false,
+                    'has_active_maintenance_plan' => false,
+                    'defaulter' => false,
+                    'ref' => '',
                     'name' => '------',
                     'lastname' => '',
                     'vat' => '',
                     'address' => '',
                     'country' => '',
-                    'phone' => '',
+                    'telephone' => '',
                     'mobile' => '',
                     'email' => '',
                     'notes' => '',
                     'internal_notes' => '',
-                    'link_fd' => '',
                     'coordinates' => '',
+                    'link_a' => '',
+                    'link_a_description' => '',
+                    'link_b' => '',
+                    'link_b_description' => '',
+                    'last_use' => Carbon::now(),
                 ];
+
+                
                 DB::table('clients')->insert([
+                    'has_active_vip_plan' => false,
+                    'has_active_maintenance_plan' => false,
+                    'defaulter' => $client->defaulter,
+                    'ref' => '',
                     'name' => $client->name,
                     'lastname' => $client->lastname,
                     'vat' => $client->vat,
                     'address' => $client->address,
                     'country' => $client->country,
-                    'telephone' => $client->phone,
+                    'telephone' => $client->phone ?? '',
                     'mobile' => $client->mobile,
                     'email' => $client->email,
                     'notes' => $client->notes,
-                    'internal_notes' => $client->internal_notes,
-                    'link' => $client->link_fd,
-                    'coordinates' => $client->coordinates,
+                    'internal_notes' => $client->internalnotes ?? '',
+                    'coordinates' => $client->coordinates ?? '',
+                    'link_a' => $client->link_fd ?? '',
+                    'link_a_description' => 'FacturaDirecta',
+                    'link_b' => '',
+                    'link_b_description' => '',
+                    'last_use' => Carbon::now(),
                 ]);
             } else {
                 //check that $i is the same as $client->id
@@ -62,20 +81,29 @@ class ClientsSeeder extends Seeder
                     $this->command->line("Error: {$i} is not the same as {$client->id}");
                 } else {
                     $this->command->line("{$i} is the same as {$client->id}");
+                    print_r($client);
                     DB::table('clients')->insert([
-                        'name' => $client->name,
-                        'lastname' => $client->lastname,
-                        'vat' => $client->vat,
-                        'address' => $client->address,
-                        'country' => $client->country,
-                        'telephone' => $client->phone,
-                        'mobile' => $client->mobile,
-                        'email' => $client->email,
-                        'notes' => $client->notes,
-                        'internal_notes' => $client->internalnotes,
-                        'link' => $client->link_fd,
-                        'coordinates' => $client->coordinates,
-                    ]);
+                    'has_active_vip_plan' => false,
+                    'has_active_maintenance_plan' => false,
+                    'defaulter' => $client->defaulter,
+                    'ref' => '',
+                    'name' => $client->name,
+                    'lastname' => $client->lastname,
+                    'vat' => $client->vat,
+                    'address' => $client->address,
+                    'country' => $client->country,
+                    'telephone' => $client->phone ?? '',
+                    'mobile' => $client->mobile,
+                    'email' => $client->email,
+                    'notes' => $client->notes,
+                    'internal_notes' => $client->internalnotes ?? '',
+                    'coordinates' => $client->coordinates,
+                    'link_a' => $client->link_fd ?? '',
+                    'link_a_description' => 'FacturaDirecta',
+                    'link_b' => '',
+                    'link_b_description' => '',
+                    'last_use' => Carbon::now(),
+                ]);
                 }
             }
         }

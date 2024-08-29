@@ -11,99 +11,32 @@ use App\Http\Requests\UpdateContentPageRequest;
 use App\Models\ContentCategory;
 use App\Models\ContentPage;
 use App\Models\ContentTag;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ContentPageController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('content_page_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ContentPage::with(['categories', 'tags'])->select(sprintf('%s.*', (new ContentPage)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'content_page_show';
-                $editGate      = 'content_page_edit';
-                $deleteGate    = 'content_page_delete';
-                $crudRoutePart = 'content-pages';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : '';
-            });
-            $table->editColumn('slug', function ($row) {
-                return $row->slug ? $row->slug : '';
-            });
-            $table->editColumn('category', function ($row) {
-                $labels = [];
-                foreach ($row->categories as $category) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $category->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('tag', function ($row) {
-                $labels = [];
-                foreach ($row->tags as $tag) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('featured_image', function ($row) {
-                if (! $row->featured_image) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->featured_image as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-            $table->editColumn('file', function ($row) {
-                if (! $row->file) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->file as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'category', 'tag', 'featured_image', 'file']);
-
-            return $table->make(true);
-        }
+        $contentPages = ContentPage::with(['categories', 'tags', 'authorized_roles', 'authorized_users', 'media'])->get();
 
         $content_categories = ContentCategory::get();
-        $content_tags       = ContentTag::get();
 
-        return view('admin.contentPages.index', compact('content_categories', 'content_tags'));
+        $content_tags = ContentTag::get();
+
+        $roles = Role::get();
+
+        $users = User::get();
+
+        return view('admin.contentPages.index', compact('contentPages', 'content_categories', 'content_tags', 'roles', 'users'));
     }
 
     public function create()
@@ -114,7 +47,11 @@ class ContentPageController extends Controller
 
         $tags = ContentTag::pluck('name', 'id');
 
-        return view('admin.contentPages.create', compact('categories', 'tags'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('admin.contentPages.create', compact('authorized_roles', 'authorized_users', 'categories', 'tags'));
     }
 
     public function store(StoreContentPageRequest $request)
@@ -122,6 +59,8 @@ class ContentPageController extends Controller
         $contentPage = ContentPage::create($request->all());
         $contentPage->categories()->sync($request->input('categories', []));
         $contentPage->tags()->sync($request->input('tags', []));
+        $contentPage->authorized_roles()->sync($request->input('authorized_roles', []));
+        $contentPage->authorized_users()->sync($request->input('authorized_users', []));
         foreach ($request->input('featured_image', []) as $file) {
             $contentPage->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('featured_image');
         }
@@ -145,9 +84,13 @@ class ContentPageController extends Controller
 
         $tags = ContentTag::pluck('name', 'id');
 
-        $contentPage->load('categories', 'tags');
+        $authorized_roles = Role::pluck('title', 'id');
 
-        return view('admin.contentPages.edit', compact('categories', 'contentPage', 'tags'));
+        $authorized_users = User::pluck('name', 'id');
+
+        $contentPage->load('categories', 'tags', 'authorized_roles', 'authorized_users');
+
+        return view('admin.contentPages.edit', compact('authorized_roles', 'authorized_users', 'categories', 'contentPage', 'tags'));
     }
 
     public function update(UpdateContentPageRequest $request, ContentPage $contentPage)
@@ -155,6 +98,8 @@ class ContentPageController extends Controller
         $contentPage->update($request->all());
         $contentPage->categories()->sync($request->input('categories', []));
         $contentPage->tags()->sync($request->input('tags', []));
+        $contentPage->authorized_roles()->sync($request->input('authorized_roles', []));
+        $contentPage->authorized_users()->sync($request->input('authorized_users', []));
         if (count($contentPage->featured_image) > 0) {
             foreach ($contentPage->featured_image as $media) {
                 if (! in_array($media->file_name, $request->input('featured_image', []))) {
@@ -190,7 +135,7 @@ class ContentPageController extends Controller
     {
         abort_if(Gate::denies('content_page_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $contentPage->load('categories', 'tags');
+        $contentPage->load('categories', 'tags', 'authorized_roles', 'authorized_users');
 
         return view('admin.contentPages.show', compact('contentPage'));
     }

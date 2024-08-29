@@ -44,6 +44,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.contactCompany.fields.company_logo') }}
+                                    </th>
+                                    <td>
+                                        @if($contactCompany->company_logo)
+                                            <a href="{{ $contactCompany->company_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $contactCompany->company_logo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.contactCompany.fields.company_vat') }}
                                     </th>
                                     <td>
@@ -106,6 +118,30 @@
                                         @foreach($contactCompany->contacts as $key => $contacts)
                                             <span class="label label-info">{{ $contacts->contact_first_name }}</span>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contactCompany.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $contactCompany->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contactCompany.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $contactCompany->link_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contactCompany.fields.last_use') }}
+                                    </th>
+                                    <td>
+                                        {{ $contactCompany->last_use }}
                                     </td>
                                 </tr>
                             </tbody>

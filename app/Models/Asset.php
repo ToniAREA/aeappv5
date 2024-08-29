@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\Auditable;
+use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -19,6 +20,7 @@ class Asset extends Model implements HasMedia
 
     protected $appends = [
         'photos',
+        'files',
     ];
 
     public static $searchable = [
@@ -27,21 +29,31 @@ class Asset extends Model implements HasMedia
     ];
 
     protected $dates = [
+        'last_use',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
     protected $fillable = [
+        'is_available',
         'category_id',
         'name',
         'description',
-        'serial_number',
         'status_id',
         'location_id',
+        'actual_holder_id',
         'notes',
         'internal_notes',
-        'assigned_to_id',
+        'data_1',
+        'data_1_description',
+        'data_2',
+        'data_2_description',
+        'link_a',
+        'link_a_description',
+        'link_b',
+        'link_b_description',
+        'last_use',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -64,6 +76,11 @@ class Asset extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function assetAssetsRentals()
+    {
+        return $this->hasMany(AssetsRental::class, 'asset_id', 'id');
+    }
+
     public function category()
     {
         return $this->belongsTo(AssetCategory::class, 'category_id');
@@ -84,8 +101,23 @@ class Asset extends Model implements HasMedia
         return $this->belongsTo(AssetLocation::class, 'location_id');
     }
 
-    public function assigned_to()
+    public function actual_holder()
     {
-        return $this->belongsTo(User::class, 'assigned_to_id');
+        return $this->belongsTo(User::class, 'actual_holder_id');
+    }
+
+    public function getFilesAttribute()
+    {
+        return $this->getMedia('files');
+    }
+
+    public function getLastUseAttribute($value)
+    {
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setLastUseAttribute($value)
+    {
+        $this->attributes['last_use'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 }

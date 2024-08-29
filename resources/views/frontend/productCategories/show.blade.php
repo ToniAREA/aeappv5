@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.productCategory.fields.is_online') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $productCategory->is_online ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.productCategory.fields.name') }}
                                     </th>
                                     <td>
@@ -60,6 +68,26 @@
                                                 <img src="{{ $productCategory->photo->getUrl('thumb') }}">
                                             </a>
                                         @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.productCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <td>
+                                        @foreach($productCategory->authorized_roles as $key => $authorized_roles)
+                                            <span class="label label-info">{{ $authorized_roles->title }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.productCategory.fields.authorized_users') }}
+                                    </th>
+                                    <td>
+                                        @foreach($productCategory->authorized_users as $key => $authorized_users)
+                                            <span class="label label-info">{{ $authorized_users->name }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

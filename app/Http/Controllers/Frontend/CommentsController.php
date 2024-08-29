@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyCommentRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
@@ -12,17 +13,18 @@ use App\Models\User;
 use App\Models\Wlist;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 
 class CommentsController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index()
     {
         abort_if(Gate::denies('comment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $comments = Comment::with(['wlist', 'from_user'])->get();
+        $comments = Comment::with(['wlist', 'from_user', 'media'])->get();
 
         $wlists = Wlist::get();
 
@@ -46,6 +48,18 @@ class CommentsController extends Controller
     {
         $comment = Comment::create($request->all());
 
+        foreach ($request->input('photos', []) as $file) {
+            $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        foreach ($request->input('files', []) as $file) {
+            $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $comment->id]);
+        }
+
         return redirect()->route('frontend.comments.index');
     }
 
@@ -65,6 +79,34 @@ class CommentsController extends Controller
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
         $comment->update($request->all());
+
+        if (count($comment->photos) > 0) {
+            foreach ($comment->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $comment->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
+        }
+
+        if (count($comment->files) > 0) {
+            foreach ($comment->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $comment->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+            }
+        }
 
         return redirect()->route('frontend.comments.index');
     }
@@ -96,5 +138,17 @@ class CommentsController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('comment_create') && Gate::denies('comment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Comment();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

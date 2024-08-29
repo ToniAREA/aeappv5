@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $product->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.product.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="categories">{{ trans('cruds.product.fields.category') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
@@ -56,6 +69,24 @@
                             <span class="help-block">{{ trans('cruds.product.fields.ref_manu_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="providers">{{ trans('cruds.product.fields.providers') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="providers[]" id="providers" multiple>
+                                @foreach($providers as $id => $provider)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('providers', [])) || $product->providers->contains($id)) ? 'selected' : '' }}>{{ $provider }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('providers'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('providers') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.providers_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="ref_provider">{{ trans('cruds.product.fields.ref_provider') }}</label>
                             <input class="form-control" type="text" name="ref_provider" id="ref_provider" value="{{ old('ref_provider', $product->ref_provider) }}">
                             @if($errors->has('ref_provider'))
@@ -84,16 +115,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.product.fields.name_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="product_slug">{{ trans('cruds.product.fields.product_slug') }}</label>
-                            <input class="form-control" type="text" name="product_slug" id="product_slug" value="{{ old('product_slug', $product->product_slug) }}">
-                            @if($errors->has('product_slug'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('product_slug') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.product.fields.product_slug_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="short_desc">{{ trans('cruds.product.fields.short_desc') }}</label>
@@ -127,28 +148,51 @@
                             <span class="help-block">{{ trans('cruds.product.fields.photos_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label class="required" for="price">{{ trans('cruds.product.fields.price') }}</label>
-                            <input class="form-control" type="number" name="price" id="price" value="{{ old('price', $product->price) }}" step="0.01" required>
-                            @if($errors->has('price'))
+                            <label for="product_price">{{ trans('cruds.product.fields.product_price') }}</label>
+                            <input class="form-control" type="number" name="product_price" id="product_price" value="{{ old('product_price', $product->product_price) }}" step="0.01">
+                            @if($errors->has('product_price'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('price') }}
+                                    {{ $errors->first('product_price') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.product.fields.price_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.product.fields.product_price_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="pro_discount">{{ trans('cruds.product.fields.pro_discount') }}</label>
-                            <input class="form-control" type="number" name="pro_discount" id="pro_discount" value="{{ old('pro_discount', $product->pro_discount) }}" step="0.01" max="100">
-                            @if($errors->has('pro_discount'))
+                            <label for="purchase_discount">{{ trans('cruds.product.fields.purchase_discount') }}</label>
+                            <input class="form-control" type="number" name="purchase_discount" id="purchase_discount" value="{{ old('purchase_discount', $product->purchase_discount) }}" step="0.01">
+                            @if($errors->has('purchase_discount'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('pro_discount') }}
+                                    {{ $errors->first('purchase_discount') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.product.fields.pro_discount_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.product.fields.purchase_discount_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="purchase_price">{{ trans('cruds.product.fields.purchase_price') }}</label>
+                            <input class="form-control" type="number" name="purchase_price" id="purchase_price" value="{{ old('purchase_price', $product->purchase_price) }}" step="0.01">
+                            @if($errors->has('purchase_price'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('purchase_price') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.purchase_price_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <div>
+                                <input type="hidden" name="has_stock" value="0">
+                                <input type="checkbox" name="has_stock" id="has_stock" value="1" {{ $product->has_stock || old('has_stock', 0) === 1 ? 'checked' : '' }}>
+                                <label for="has_stock">{{ trans('cruds.product.fields.has_stock') }}</label>
+                            </div>
+                            @if($errors->has('has_stock'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('has_stock') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.has_stock_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="stock">{{ trans('cruds.product.fields.stock') }}</label>
-                            <input class="form-control" type="text" name="stock" id="stock" value="{{ old('stock', $product->stock) }}">
+                            <input class="form-control" type="number" name="stock" id="stock" value="{{ old('stock', $product->stock) }}" step="1">
                             @if($errors->has('stock'))
                                 <div class="invalid-feedback">
                                     {{ $errors->first('stock') }}
@@ -199,15 +243,74 @@
                             <span class="help-block">{{ trans('cruds.product.fields.tag_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="file">{{ trans('cruds.product.fields.file') }}</label>
-                            <div class="needsclick dropzone" id="file-dropzone">
-                            </div>
-                            @if($errors->has('file'))
+                            <label for="link_a">{{ trans('cruds.product.fields.link_a') }}</label>
+                            <input class="form-control" type="text" name="link_a" id="link_a" value="{{ old('link_a', $product->link_a) }}">
+                            @if($errors->has('link_a'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('file') }}
+                                    {{ $errors->first('link_a') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.product.fields.file_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.product.fields.link_a_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_a_description">{{ trans('cruds.product.fields.link_a_description') }}</label>
+                            <input class="form-control" type="text" name="link_a_description" id="link_a_description" value="{{ old('link_a_description', $product->link_a_description) }}">
+                            @if($errors->has('link_a_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_a_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.link_a_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_b">{{ trans('cruds.product.fields.link_b') }}</label>
+                            <input class="form-control" type="text" name="link_b" id="link_b" value="{{ old('link_b', $product->link_b) }}">
+                            @if($errors->has('link_b'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_b') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.link_b_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_b_description">{{ trans('cruds.product.fields.link_b_description') }}</label>
+                            <input class="form-control" type="text" name="link_b_description" id="link_b_description" value="{{ old('link_b_description', $product->link_b_description) }}">
+                            @if($errors->has('link_b_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_b_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.link_b_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_title">{{ trans('cruds.product.fields.seo_title') }}</label>
+                            <input class="form-control" type="text" name="seo_title" id="seo_title" value="{{ old('seo_title', $product->seo_title) }}">
+                            @if($errors->has('seo_title'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('seo_title') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.seo_title_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_meta_description">{{ trans('cruds.product.fields.seo_meta_description') }}</label>
+                            <input class="form-control" type="text" name="seo_meta_description" id="seo_meta_description" value="{{ old('seo_meta_description', $product->seo_meta_description) }}">
+                            @if($errors->has('seo_meta_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('seo_meta_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.seo_meta_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="seo_slug">{{ trans('cruds.product.fields.seo_slug') }}</label>
+                            <input class="form-control" type="text" name="seo_slug" id="seo_slug" value="{{ old('seo_slug', $product->seo_slug) }}">
+                            @if($errors->has('seo_slug'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('seo_slug') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.product.fields.seo_slug_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -292,14 +395,14 @@
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('frontend.products.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },
@@ -348,61 +451,5 @@ Dropzone.options.photosDropzone = {
      }
 }
 
-</script>
-<script>
-    var uploadedFileMap = {}
-Dropzone.options.fileDropzone = {
-    url: '{{ route('frontend.products.storeMedia') }}',
-    maxFilesize: 5, // MB
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 5
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="file[]" value="' + response.name + '">')
-      uploadedFileMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedFileMap[file.name]
-      }
-      $('form').find('input[name="file[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($product) && $product->file)
-          var files =
-            {!! json_encode($product->file) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="file[]" value="' + file.file_name + '">')
-            }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
-
-         return _results
-     }
-}
 </script>
 @endsection

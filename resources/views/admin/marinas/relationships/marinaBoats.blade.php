@@ -34,6 +34,9 @@
                                 {{ trans('cruds.boat.fields.name') }}
                             </th>
                             <th>
+                                {{ trans('cruds.boat.fields.boat_photo') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.boat.fields.imo') }}
                             </th>
                             <th>
@@ -41,6 +44,9 @@
                             </th>
                             <th>
                                 {{ trans('cruds.boat.fields.marina') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.boat.fields.sat_phone') }}
                             </th>
                             <th>
                                 {{ trans('cruds.boat.fields.notes') }}
@@ -52,13 +58,22 @@
                                 {{ trans('cruds.boat.fields.clients') }}
                             </th>
                             <th>
-                                {{ trans('cruds.boat.fields.coordinates') }}
-                            </th>
-                            <th>
                                 {{ trans('cruds.boat.fields.link') }}
                             </th>
                             <th>
+                                {{ trans('cruds.boat.fields.link_description') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.boat.fields.last_use') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.boat.fields.settings_data') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.boat.fields.public_ip') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.boat.fields.coordinates') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -84,6 +99,13 @@
                                     {{ $boat->name ?? '' }}
                                 </td>
                                 <td>
+                                    @if($boat->boat_photo)
+                                        <a href="{{ $boat->boat_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                            <img src="{{ $boat->boat_photo->getUrl('thumb') }}">
+                                        </a>
+                                    @endif
+                                </td>
+                                <td>
                                     {{ $boat->imo ?? '' }}
                                 </td>
                                 <td>
@@ -91,6 +113,9 @@
                                 </td>
                                 <td>
                                     {{ $boat->marina->name ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $boat->sat_phone ?? '' }}
                                 </td>
                                 <td>
                                     {{ $boat->notes ?? '' }}
@@ -104,13 +129,22 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    {{ $boat->coordinates ?? '' }}
-                                </td>
-                                <td>
                                     {{ $boat->link ?? '' }}
                                 </td>
                                 <td>
+                                    {{ $boat->link_description ?? '' }}
+                                </td>
+                                <td>
                                     {{ $boat->last_use ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $boat->settings_data ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $boat->public_ip ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $boat->coordinates ?? '' }}
                                 </td>
                                 <td>
                                     @can('boat_show')

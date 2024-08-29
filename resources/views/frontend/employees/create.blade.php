@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_active" value="0">
+                                <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_active">{{ trans('cruds.employee.fields.is_active') }}</label>
+                            </div>
+                            @if($errors->has('is_active'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_active') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.is_active_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="id_employee">{{ trans('cruds.employee.fields.id_employee') }}</label>
                             <input class="form-control" type="text" name="id_employee" id="id_employee" value="{{ old('id_employee', '') }}">
                             @if($errors->has('id_employee'))
@@ -22,6 +35,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.employee.fields.id_employee_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="namecomplete">{{ trans('cruds.employee.fields.namecomplete') }}</label>
+                            <input class="form-control" type="text" name="namecomplete" id="namecomplete" value="{{ old('namecomplete', '') }}">
+                            @if($errors->has('namecomplete'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('namecomplete') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.employee.fields.namecomplete_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="user_id">{{ trans('cruds.employee.fields.user') }}</label>
@@ -133,16 +156,14 @@
                             <span class="help-block">{{ trans('cruds.employee.fields.link_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <div>
-                                <input type="checkbox" name="active" id="active" value="1" required {{ old('active', 0) == 1 ? 'checked' : '' }}>
-                                <label class="required" for="active">{{ trans('cruds.employee.fields.active') }}</label>
-                            </div>
-                            @if($errors->has('active'))
+                            <label for="link_description">{{ trans('cruds.employee.fields.link_description') }}</label>
+                            <input class="form-control" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                            @if($errors->has('link_description'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('active') }}
+                                    {{ $errors->first('link_description') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.employee.fields.active_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.employee.fields.link_description_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -162,7 +183,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('frontend.employees.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -170,7 +191,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

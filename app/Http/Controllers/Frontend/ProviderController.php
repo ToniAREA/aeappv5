@@ -108,7 +108,7 @@ class ProviderController extends Controller
     {
         abort_if(Gate::denies('provider_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $provider->load('company', 'brands', 'providersBrands');
+        $provider->load('company', 'brands', 'providersBrands', 'providersProducts');
 
         return view('frontend.providers.show', compact('provider'));
     }

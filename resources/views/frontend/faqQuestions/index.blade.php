@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.faq-questions.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.faqQuestion.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'FaqQuestion', 'route' => 'admin.faq-questions.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -26,7 +30,25 @@
                                         {{ trans('cruds.faqQuestion.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.faqQuestion.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.faqQuestion.fields.category') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.photo') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.files') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.view_count') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.faqQuestion.fields.authorized_users') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -39,10 +61,35 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($faq_categories as $key => $item)
                                                 <option value="{{ $item->category }}">{{ $item->category }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
                                     </td>
@@ -57,7 +104,38 @@
                                             {{ $faqQuestion->id ?? '' }}
                                         </td>
                                         <td>
+                                            <span style="display:none">{{ $faqQuestion->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $faqQuestion->is_online ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
                                             {{ $faqQuestion->category->category ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($faqQuestion->photo)
+                                                <a href="{{ $faqQuestion->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $faqQuestion->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @foreach($faqQuestion->files as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $faqQuestion->view_count ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($faqQuestion->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($faqQuestion->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('faq_question_show')

@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.contentCategory.fields.is_online') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $contentCategory->is_online ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.contentCategory.fields.name') }}
                                     </th>
                                     <td>
@@ -52,6 +60,26 @@
                                                 <img src="{{ $contentCategory->photo->getUrl('thumb') }}">
                                             </a>
                                         @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contentCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <td>
+                                        @foreach($contentCategory->authorized_roles as $key => $authorized_roles)
+                                            <span class="label label-info">{{ $authorized_roles->title }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contentCategory.fields.authorized_users') }}
+                                    </th>
+                                    <td>
+                                        @foreach($contentCategory->authorized_users as $key => $authorized_users)
+                                            <span class="label label-info">{{ $authorized_users->name }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>

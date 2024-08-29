@@ -19,7 +19,6 @@ class Product extends Model implements HasMedia
 
     protected $appends = [
         'photos',
-        'file',
     ];
 
     protected $dates = [
@@ -33,23 +32,31 @@ class Product extends Model implements HasMedia
         'model',
         'short_desc',
         'description',
-        'file',
     ];
 
     protected $fillable = [
+        'is_online',
         'brand_id',
         'ref_manu',
         'ref_provider',
         'model',
         'name',
-        'product_slug',
         'short_desc',
         'description',
-        'price',
-        'pro_discount',
+        'product_price',
+        'purchase_discount',
+        'purchase_price',
+        'has_stock',
         'stock',
         'local_stock',
         'product_location_id',
+        'link_a',
+        'link_a_description',
+        'link_b',
+        'link_b_description',
+        'seo_title',
+        'seo_meta_description',
+        'seo_slug',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -66,9 +73,24 @@ class Product extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function productMatLogs()
+    public function productMlogs()
     {
-        return $this->hasMany(MatLog::class, 'product_id', 'id');
+        return $this->hasMany(Mlog::class, 'product_id', 'id');
+    }
+
+    public function productTechnicalDocumentations()
+    {
+        return $this->hasMany(TechnicalDocumentation::class, 'product_id', 'id');
+    }
+
+    public function productIotDevices()
+    {
+        return $this->hasMany(IotDevice::class, 'product_id', 'id');
+    }
+
+    public function productFinancialDocumentItems()
+    {
+        return $this->hasMany(FinancialDocumentItem::class, 'product_id', 'id');
     }
 
     public function categories()
@@ -79,6 +101,11 @@ class Product extends Model implements HasMedia
     public function brand()
     {
         return $this->belongsTo(Brand::class, 'brand_id');
+    }
+
+    public function providers()
+    {
+        return $this->belongsToMany(Provider::class);
     }
 
     public function getPhotosAttribute()
@@ -101,10 +128,5 @@ class Product extends Model implements HasMedia
     public function tags()
     {
         return $this->belongsToMany(ProductTag::class);
-    }
-
-    public function getFileAttribute()
-    {
-        return $this->getMedia('file');
     }
 }

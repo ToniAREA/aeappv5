@@ -23,9 +23,8 @@ class Claim extends Model
     ];
 
     protected $fillable = [
-        'proforma_number_id',
-        'note',
         'claim_date',
+        'note',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -34,11 +33,6 @@ class Claim extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
-    }
-
-    public function proforma_number()
-    {
-        return $this->belongsTo(Proforma::class, 'proforma_number_id');
     }
 
     public function getClaimDateAttribute($value)

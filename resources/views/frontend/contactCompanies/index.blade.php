@@ -36,6 +36,9 @@
                                         {{ trans('cruds.contactCompany.fields.company_name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contactCompany.fields.company_logo') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.contactCompany.fields.company_vat') }}
                                     </th>
                                     <th>
@@ -60,6 +63,15 @@
                                         {{ trans('cruds.contactCompany.fields.contacts') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contactCompany.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactCompany.fields.link_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactCompany.fields.last_use') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -73,6 +85,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -104,6 +118,15 @@
                                         </select>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -119,6 +142,13 @@
                                         </td>
                                         <td>
                                             {{ $contactCompany->company_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($contactCompany->company_logo)
+                                                <a href="{{ $contactCompany->company_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $contactCompany->company_logo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $contactCompany->company_vat ?? '' }}
@@ -145,6 +175,15 @@
                                             @foreach($contactCompany->contacts as $key => $item)
                                                 <span>{{ $item->contact_first_name }}</span>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $contactCompany->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactCompany->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactCompany->last_use ?? '' }}
                                         </td>
                                         <td>
                                             @can('contact_company_show')

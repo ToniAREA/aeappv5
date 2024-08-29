@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-md-12">
             @can('comment_create')
@@ -9,11 +9,7 @@
                         <a class="btn btn-success" href="{{ route('frontend.comments.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.comment.title_singular') }}
                         </a>
-                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                            {{ trans('global.app_csvImport') }}
-                        </button>
-                        @include('csvImport.modal', ['model' => 'Comment', 'route' => 'admin.comments.parseCsvImport'])
-                    </div>
+                        </div>
                 </div>
             @endcan
             <div class="card">
@@ -42,10 +38,10 @@
                                         {{ trans('cruds.user.fields.email') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.comment.fields.comment') }}
+                                        {{ trans('cruds.comment.fields.photos') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.comment.fields.private_comment') }}
+                                        {{ trans('cruds.comment.fields.files') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -78,10 +74,8 @@
                                     <td>
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                     </td>
@@ -106,10 +100,18 @@
                                             {{ $comment->from_user->email ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $comment->comment ?? '' }}
+                                            @foreach($comment->photos as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $media->getUrl('thumb') }}">
+                                                </a>
+                                            @endforeach
                                         </td>
                                         <td>
-                                            {{ $comment->private_comment ?? '' }}
+                                            @foreach($comment->files as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endforeach
                                         </td>
                                         <td>
                                             @can('comment_show')

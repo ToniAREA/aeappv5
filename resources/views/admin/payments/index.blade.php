@@ -6,6 +6,10 @@
             <a class="btn btn-success" href="{{ route('admin.payments.create') }}">
                 {{ trans('global.add') }} {{ trans('cruds.payment.title_singular') }}
             </a>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                {{ trans('global.app_csvImport') }}
+            </button>
+            @include('csvImport.modal', ['model' => 'Payment', 'route' => 'admin.payments.parseCsvImport'])
         </div>
     </div>
 @endcan
@@ -32,19 +36,22 @@
                             {{ trans('cruds.payment.fields.id_transaction') }}
                         </th>
                         <th>
-                            {{ trans('cruds.payment.fields.proforma_number') }}
+                            {{ trans('cruds.payment.fields.financial_document') }}
                         </th>
                         <th>
-                            {{ trans('cruds.proforma.fields.description') }}
+                            {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                         </th>
                         <th>
                             {{ trans('cruds.payment.fields.total_amount') }}
                         </th>
                         <th>
+                            {{ trans('cruds.payment.fields.status') }}
+                        </th>
+                        <th>
                             {{ trans('cruds.payment.fields.currency') }}
                         </th>
                         <th>
-                            {{ trans('cruds.payment.fields.status') }}
+                            {{ trans('cruds.currency.fields.name') }}
                         </th>
                         <th>
                             &nbsp;
@@ -67,19 +74,24 @@
                                 {{ $payment->id_transaction ?? '' }}
                             </td>
                             <td>
-                                {{ $payment->proforma_number->proforma_number ?? '' }}
+                                {{ $payment->financial_document->reference_number ?? '' }}
                             </td>
                             <td>
-                                {{ $payment->proforma_number->description ?? '' }}
+                                @if($payment->financial_document)
+                                    {{ $payment->financial_document::DOC_TYPE_RADIO[$payment->financial_document->doc_type] ?? '' }}
+                                @endif
                             </td>
                             <td>
                                 {{ $payment->total_amount ?? '' }}
                             </td>
                             <td>
-                                {{ $payment->currency ?? '' }}
+                                {{ $payment->status ?? '' }}
                             </td>
                             <td>
-                                {{ $payment->status ?? '' }}
+                                {{ $payment->currency->code ?? '' }}
+                            </td>
+                            <td>
+                                {{ $payment->currency->name ?? '' }}
                             </td>
                             <td>
                                 @can('payment_show')

@@ -30,19 +30,16 @@ class UpdateWlistRequest extends FormRequest
             'for_roles' => [
                 'array',
             ],
-            'for_users.*' => [
-                'integer',
-            ],
-            'for_users' => [
-                'array',
-            ],
             'boat_namecomplete' => [
                 'string',
                 'nullable',
             ],
             'description' => [
                 'string',
-                'nullable',
+                'required',
+            ],
+            'estimated_hours' => [
+                'numeric',
             ],
             'photos' => [
                 'array',
@@ -51,7 +48,13 @@ class UpdateWlistRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'url_invoice' => [
+            'priority' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'proforma_link' => [
                 'string',
                 'nullable',
             ],
@@ -61,6 +64,22 @@ class UpdateWlistRequest extends FormRequest
             ],
             'internal_notes' => [
                 'string',
+                'nullable',
+            ],
+            'link' => [
+                'string',
+                'nullable',
+            ],
+            'link_description' => [
+                'string',
+                'nullable',
+            ],
+            'last_use' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable',
+            ],
+            'completed_at' => [
+                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
                 'nullable',
             ],
         ];

@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.asset.fields.is_available') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $asset->is_available ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.asset.fields.category') }}
                                     </th>
                                     <td>
@@ -48,14 +56,6 @@
                                     </th>
                                     <td>
                                         {!! $asset->description !!}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.asset.fields.serial_number') }}
-                                    </th>
-                                    <td>
-                                        {{ $asset->serial_number }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -88,6 +88,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.asset.fields.actual_holder') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->actual_holder->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.asset.fields.notes') }}
                                     </th>
                                     <td>
@@ -104,10 +112,86 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.asset.fields.assigned_to') }}
+                                        {{ trans('cruds.asset.fields.data_1') }}
                                     </th>
                                     <td>
-                                        {{ $asset->assigned_to->name ?? '' }}
+                                        {{ $asset->data_1 }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.data_1_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->data_1_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.data_2') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->data_2 }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.data_2_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->data_2_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.files') }}
+                                    </th>
+                                    <td>
+                                        @foreach($asset->files as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_a') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->link_a }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_a_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->link_a_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_b') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->link_b }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_b_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->link_b_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.last_use') }}
+                                    </th>
+                                    <td>
+                                        {{ $asset->last_use }}
                                     </td>
                                 </tr>
                             </tbody>

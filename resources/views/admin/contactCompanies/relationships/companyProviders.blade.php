@@ -25,6 +25,9 @@
                                 {{ trans('cruds.provider.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.provider.fields.is_active') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.provider.fields.name') }}
                             </th>
                             <th>
@@ -32,6 +35,9 @@
                             </th>
                             <th>
                                 {{ trans('cruds.provider.fields.provider_logo') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.provider.fields.provider_url') }}
                             </th>
                             <th>
                                 {{ trans('cruds.provider.fields.brands') }}
@@ -44,6 +50,15 @@
                             </th>
                             <th>
                                 {{ trans('cruds.provider.fields.internal_notes') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.provider.fields.status') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.provider.fields.link') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.provider.fields.link_description') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -60,6 +75,10 @@
                                     {{ $provider->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $provider->is_active ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $provider->is_active ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $provider->name ?? '' }}
                                 </td>
                                 <td>
@@ -71,6 +90,9 @@
                                             <img src="{{ $provider->provider_logo->getUrl('thumb') }}">
                                         </a>
                                     @endif
+                                </td>
+                                <td>
+                                    {{ $provider->provider_url ?? '' }}
                                 </td>
                                 <td>
                                     @foreach($provider->brands as $key => $item)
@@ -89,6 +111,15 @@
                                 </td>
                                 <td>
                                     {{ $provider->internal_notes ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $provider->status ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $provider->link ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $provider->link_description ?? '' }}
                                 </td>
                                 <td>
                                     @can('provider_show')

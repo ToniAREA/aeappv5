@@ -30,6 +30,9 @@
                                         {{ trans('cruds.brand.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.brand.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.brand.fields.brand') }}
                                     </th>
                                     <th>
@@ -48,6 +51,12 @@
                                         {{ trans('cruds.brand.fields.internal_notes') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.brand.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.brand.fields.link_description') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -56,6 +65,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -80,6 +91,12 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -88,6 +105,10 @@
                                     <tr data-entry-id="{{ $brand->id }}">
                                         <td>
                                             {{ $brand->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $brand->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $brand->is_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $brand->brand ?? '' }}
@@ -112,6 +133,12 @@
                                         </td>
                                         <td>
                                             {{ $brand->internal_notes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $brand->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $brand->link_description ?? '' }}
                                         </td>
                                         <td>
                                             @can('brand_show')

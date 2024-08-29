@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\Auditable;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class AssetsHistory extends Model
 {
-    use HasFactory;
+    use SoftDeletes, Auditable, HasFactory;
 
     public $table = 'assets_histories';
 
@@ -22,6 +24,7 @@ class AssetsHistory extends Model
         'status_id',
         'location_id',
         'assigned_user_id',
+        'notes',
         'created_at',
         'updated_at',
     ];

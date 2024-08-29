@@ -9,82 +9,46 @@ use App\Http\Requests\MassDestroyProductCategoryRequest;
 use App\Http\Requests\StoreProductCategoryRequest;
 use App\Http\Requests\UpdateProductCategoryRequest;
 use App\Models\ProductCategory;
+use App\Models\Role;
+use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductCategoryController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('product_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ProductCategory::query()->select(sprintf('%s.*', (new ProductCategory)->table));
-            $table = Datatables::of($query);
+        $productCategories = ProductCategory::with(['authorized_roles', 'authorized_users', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $roles = Role::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'product_category_show';
-                $editGate      = 'product_category_edit';
-                $deleteGate    = 'product_category_delete';
-                $crudRoutePart = 'product-categories';
+        $users = User::get();
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('category_slug', function ($row) {
-                return $row->category_slug ? $row->category_slug : '';
-            });
-            $table->editColumn('photo', function ($row) {
-                if ($photo = $row->photo) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'photo']);
-
-            return $table->make(true);
-        }
-
-        return view('admin.productCategories.index');
+        return view('admin.productCategories.index', compact('productCategories', 'roles', 'users'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('product_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.productCategories.create');
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        return view('admin.productCategories.create', compact('authorized_roles', 'authorized_users'));
     }
 
     public function store(StoreProductCategoryRequest $request)
     {
         $productCategory = ProductCategory::create($request->all());
-
+        $productCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $productCategory->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('photo', false)) {
             $productCategory->addMedia(storage_path('tmp/uploads/' . basename($request->input('photo'))))->toMediaCollection('photo');
         }
@@ -100,13 +64,20 @@ class ProductCategoryController extends Controller
     {
         abort_if(Gate::denies('product_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.productCategories.edit', compact('productCategory'));
+        $authorized_roles = Role::pluck('title', 'id');
+
+        $authorized_users = User::pluck('name', 'id');
+
+        $productCategory->load('authorized_roles', 'authorized_users');
+
+        return view('admin.productCategories.edit', compact('authorized_roles', 'authorized_users', 'productCategory'));
     }
 
     public function update(UpdateProductCategoryRequest $request, ProductCategory $productCategory)
     {
         $productCategory->update($request->all());
-
+        $productCategory->authorized_roles()->sync($request->input('authorized_roles', []));
+        $productCategory->authorized_users()->sync($request->input('authorized_users', []));
         if ($request->input('photo', false)) {
             if (! $productCategory->photo || $request->input('photo') !== $productCategory->photo->file_name) {
                 if ($productCategory->photo) {
@@ -124,6 +95,8 @@ class ProductCategoryController extends Controller
     public function show(ProductCategory $productCategory)
     {
         abort_if(Gate::denies('product_category_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $productCategory->load('authorized_roles', 'authorized_users');
 
         return view('admin.productCategories.show', compact('productCategory'));
     }

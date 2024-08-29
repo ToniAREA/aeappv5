@@ -1,205 +1,281 @@
-/* Estilos Personalizados */
-body,
-html {
-    max-width: 100% !important;
-    overflow-x: hidden !important;
-    background-color: #33383D;
+@media (min-width: 768px) {
+    .owncard-field {
+        width: 48%;
+        display: inline-block;
+        vertical-align: top;
+    }
 }
 
-
-
-.custom-badge {
-    background-color: #6c757d;
-    /* You can change this color */
-    color: #ffffff;
-    border-radius: 5px;
-    padding: 2px 8px;
-    box-shadow: 1px 1px 3px #888888;
-    width: 15%;
-    /* Set width */
-    text-align: center;
-    /* Center the text */
+@media (min-width: 992px) {
+    .owncard-field {
+        width: 32%;
+        display: inline-block;
+        vertical-align: top;
+    }
 }
 
-.text-container {
-    padding: 0 15px;
-    width: 65%;
-    /* Set width */
+/* Adjustments for mobile view */
+@media (max-width: 767px) {
+    .owncard-row {
+        display: block;
+    }
+
+    .owncard-field {
+        width: 100%;
+        display: block;
+    }
 }
 
-.custom-link,
-.custom-description-link {
-    color: #6c757d;
-    /* Matching color for text and links */
-    text-decoration: none;
-}
-
-.custom-link:hover,
-.custom-description-link:hover {
-    text-decoration: underline;
-    /* Underline on hover */
-}
-
-.custom-title {
-    font-weight: bold;
-    text-shadow: 1px 1px 2px #888888;
-}
-
-.custom-description {
-    font-style: italic;
-    /* Italic style for description */
-}
-
-.custom-elapsed-time {
-    font-size: 12px;
-    color: #a0a0a0;
-    /* Light grey color for elapsed time */
-    width: 20%;
-    /* Set width */
-    text-align: center;
-    /* Center the text */
-}
-
-.pagination-wrapper {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    /* Asegúrate de que el contenedor ocupe todo el ancho disponible */
-}
-
-.pagination-wrapper nav {
-    flex-grow: 0;
-    /* Evita que el nav crezca y ocupe más espacio del necesario */
-}
-
-.pagination-wrapper svg {
-    width: 1em;
-    /* O el tamaño que prefieras */
-    height: 1em;
-}
-
-.pagination-wrapper .page-link {
-    width: equal;
-}
-
-/* Definición de variables CSS en :root para que sean accesibles globalmente */
-:root {
-    --main-color: #fbfbfa;
-    /* Color principal */
-}
-
-.login-page,
-.register-page {
-    background: #33383D;
-}
-
-.login-box,
-.register-box {
-    width: 360px;
-    margin: 7% auto;
-    margin-top: 100px;
-    background-color: #495057;
-    /* A slightly lighter background for the form itself */
-    border-radius: 15px;
-    /* Rounded borders */
-    padding: 20px;
-    /* Some padding so the content doesn't touch the edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* A subtle shadow */
-
-}
-
-.login-box-msg,
-.register-box-msg {
+body {
     margin: 0;
-    padding: 0.5rem 1rem;
-    text-align: center;
-    color: #251f0e;
-    text-transform: uppercase;
-    font-weight: bold;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
 }
 
-.login-logo,
-.register-logo {
-    font-size: 2rem;
-    text-align: center;
-    margin-bottom: 25px;
-    color: var(--main-color);
+.dashcard {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 3px;
+    margin: 3px;
 }
 
-.login-logo a,
-.register-logo a {
-    color: var(--main-color);
-    text-decoration: none;
-    text-shadow: 2px 2px 4px #000000;
+.dashcard-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
-.login-logo h4,
-.register-logo h4 {
-    color: var(--main-color);
-    font-size: 1rem;
-    text-align: center;
-    text-decoration: none;
-    text-shadow: 2px 2px 4px #000000;
-}
-
-/* Again, for hover state */
-.login-logo a:hover,
-.register-logo a:hover {
-    color: #ffffff;
-    text-decoration: none;
-    text-shadow: 2px 2px 4px #000000;
-}
-
-.login-card-body,
-.register-card-body {
-    padding: 0.5rem;
-    border-radius: 1rem;
-    /* Cantos redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
-    transition: 0.3s;
-}
-
-.card-body {
-    border-radius: 0.5rem;
-    /* Cantos redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
-    transition: 0.5s;
-}
-
-.custom-card {
-    border-radius: 0.5rem;
-    /* Cantos redondeados */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    /* Sombra suave */
-    transition: 0.3s;
-}
-
-.custom-card .card-header,
-.custom-card .card-footer {
-    padding: 5px;
-    border-radius: 0;
-    /* Quitar redondeo del header y footer para que se integren con el cuerpo de la tarjeta */
-}
-
-.custom-card .card-body {
-    padding: 5px;
-    /* Espaciado más compacto */
-}
-
-.btn-whatsapp {
-    background-color: #25D366;
+.dashcard-button {
+    flex: 1;
+    display: block;
+    
+    background-color: #6b6b6b;
     color: white;
-    padding: 10px 20px;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 2px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+    a {
+        text-decoration: none;
+        color: whitesmoke;
+        
+    }
+}
+
+.dashcard-button:hover {
+    background-color: #6db495;
+}
+
+.dashcard-number {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.dashcard-info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+}
+
+.dashcard-info h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #AAA;
+}
+
+.dashcard-info p {
+    margin: 5px 0 0;
+    color: #777;
+}
+
+.dashcard-progress {
+    margin-left: auto;
+    text-align: right;
+}
+
+.dashcard-progress span {
+    display: block;
+    color: #777;
+    font-size: 14px;
+    color: #AAA;
+    margin-right: 5px;
+}
+
+.owncard {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 100%;
+    max-width: 800px;
+    box-sizing: border-box;
+    margin: 15px;
+    background-color: white;
+}
+
+.owncard h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.owncard-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.owncard-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3px;
+}
+
+.owncard-field {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.owncard-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+
+.owncard-field input,
+.owncard-field textarea,
+.owncard-field span {
+    /*     width: 100%;*/
+    flex: 1;
+    padding: 2px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    resize: none;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.owncard-field textarea {
+    height: 80px;
+}
+
+.owncard-field .badge {
+    display: block;
+    border-radius: 5px;
+    line-height: 1.5;
+}
+
+.badge-green {
+    background-color: #28a745 !important;
+    color: white;
+}
+
+.badge-red {
+    background-color: #dc3545 !important;
+    color: white;
+}
+
+.badge-gray {
+    background-color: #c0c0c0 !important;
+    color: rgb(224, 224, 224);
+}
+
+.contact-badge,
+.boat-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #007bff;
+    color: white;
     border-radius: 5px;
     text-decoration: none;
-    font-size: 16px;
+    font-size: 14px;
 }
 
-.btn-whatsapp:hover {
-    background-color: #128C7E;
+.contact-badge:hover,
+.boat-badge:hover {
+    background-color: #0056b3;
+}
+
+.link-facturadirecta {
+    color: #007bff;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+}
+
+
+.contact-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #6a7a8b;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.boat-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.contact-badge:hover {
+    background-color: #1c1d1f;
+}
+
+.boat-badge:hover {
+    background-color: #0056b3;
+}
+
+.link-facturadirecta {
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: block;
+    /* Ensures it takes up the full width of its container */
+}
+
+input[readonly] {
+    background-color: #e9ecef;
 }
 
 .ck-editor__editable,
@@ -290,77 +366,6 @@ table.dataTable thead .sorting_desc {
 .form-group .required::after {
     content: " *";
     color: red;
-}
-
-.form-group-dropdowns {
-    display: flex;
-    justify-content: flex-start;
-    /* Asegura que los elementos se alineen al inicio */
-    gap: 20px;
-    /* Aumenta el espacio entre los elementos para mejor legibilidad */
-    flex-wrap: wrap;
-    /* Permite que los elementos se ajusten en múltiples líneas si no hay espacio suficiente */
-    align-items: center;
-    /* Alinea los elementos verticalmente en el centro */
-    padding: 2px;
-    /* Añade un poco de padding al contenedor para espacio interno */
-    margin-bottom: 10px;
-    /* Espacio debajo del contenedor para separarlo de otros elementos */
-    border-radius: 5px;
-    /* Opcional: Añade bordes redondeados al contenedor */
-    background-color: #f8f9fa;
-    /* Opcional: Añade un color de fondo suave */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Opcional: Añade una sombra suave para darle profundidad */
-}
-
-.btn-group-sm.d-flex {
-    justify-content: flex-start;
-    /* Alineación de los botones al inicio */
-    flex-wrap: wrap;
-    /* Permite que los botones se ajusten en filas según el ancho disponible */
-    gap: 8px;
-    /* Espacio entre botones para mejor separación y accesibilidad */
-    margin: 1rem 0;
-    /* Espacio alrededor del grupo de botones para no estar demasiado pegado a otros elementos */
-}
-
-.btn-check:checked+.btn-outline-secondary {
-    background-color: #007bff;
-    /* Color de fondo para el botón activo (elige un color que combine con tu tema) */
-    color: white;
-    /* Color del texto para el botón activo */
-    border-color: #007bff;
-    /* Color del borde para el botón activo */
-}
-
-.btn-outline-secondary {
-    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-    /* Suaviza la transición de colores */
-}
-
-/* Estilo para feedback de validación */
-.invalid-feedback {
-    display: block;
-    /* Asegura que el mensaje de error sea visible */
-    margin-top: 0.25rem;
-    /* Espacio entre el mensaje de error y los botones */
-    color: #dc3545;
-    /* Color del mensaje de error para mejor visibilidad */
-}
-
-.help-block {
-    font-size: 0.875em;
-    /* Tamaño del texto para la ayuda */
-    color: #6c757d;
-    /* Color del texto para la ayuda, para que sea sutil pero legible */
-    margin-top: 0.25rem;
-    /* Espacio entre la ayuda y los botones */
-}
-
-.form-select-sm {
-    flex: 1;
-    /* Permite que los elementos select se expandan para ocupar el espacio disponible */
 }
 
 .form-check.is-invalid~.invalid-feedback {

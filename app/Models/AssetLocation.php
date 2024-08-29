@@ -28,6 +28,7 @@ class AssetLocation extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_available',
         'name',
         'description',
         'created_at',
@@ -44,6 +45,11 @@ class AssetLocation extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function locationAssets()
+    {
+        return $this->hasMany(Asset::class, 'location_id', 'id');
     }
 
     public function productLocationProducts()

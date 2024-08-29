@@ -14,6 +14,19 @@
                         @method('POST')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_available" value="0">
+                                <input type="checkbox" name="is_available" id="is_available" value="1" {{ old('is_available', 0) == 1 ? 'checked' : '' }}>
+                                <label for="is_available">{{ trans('cruds.assetLocation.fields.is_available') }}</label>
+                            </div>
+                            @if($errors->has('is_available'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_available') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.assetLocation.fields.is_available_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="name">{{ trans('cruds.assetLocation.fields.name') }}</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                             @if($errors->has('name'))
@@ -62,7 +75,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('frontend.asset-locations.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -70,7 +83,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

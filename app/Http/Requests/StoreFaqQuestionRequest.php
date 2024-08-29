@@ -27,6 +27,27 @@ class StoreFaqQuestionRequest extends FormRequest
             'answer' => [
                 'required',
             ],
+            'files' => [
+                'array',
+            ],
+            'view_count' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'authorized_roles.*' => [
+                'integer',
+            ],
+            'authorized_roles' => [
+                'array',
+            ],
+            'authorized_users.*' => [
+                'integer',
+            ],
+            'authorized_users' => [
+                'array',
+            ],
         ];
     }
 }

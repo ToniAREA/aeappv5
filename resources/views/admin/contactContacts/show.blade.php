@@ -41,6 +41,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.contactContact.fields.photo') }}
+                        </th>
+                        <td>
+                            @if($contactContact->photo)
+                                <a href="{{ $contactContact->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $contactContact->photo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.contactContact.fields.contact_nif') }}
                         </th>
                         <td>
@@ -127,6 +139,30 @@
                             {{ $contactContact->contact_internalnotes }}
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactContact.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $contactContact->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactContact.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $contactContact->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactContact.fields.last_use') }}
+                        </th>
+                        <td>
+                            {{ $contactContact->last_use }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -149,6 +185,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link" href="#contact_docs_marinas" role="tab" data-toggle="tab">
+                {{ trans('cruds.marina.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="#contacts_clients" role="tab" data-toggle="tab">
                 {{ trans('cruds.client.title') }}
             </a>
@@ -158,16 +199,27 @@
                 {{ trans('cruds.contactCompany.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#contacts_marinas" role="tab" data-toggle="tab">
+                {{ trans('cruds.marina.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="contact_employees">
             @includeIf('admin.contactContacts.relationships.contactEmployees', ['employees' => $contactContact->contactEmployees])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="contact_docs_marinas">
+            @includeIf('admin.contactContacts.relationships.contactDocsMarinas', ['marinas' => $contactContact->contactDocsMarinas])
         </div>
         <div class="tab-pane" role="tabpanel" id="contacts_clients">
             @includeIf('admin.contactContacts.relationships.contactsClients', ['clients' => $contactContact->contactsClients])
         </div>
         <div class="tab-pane" role="tabpanel" id="contacts_contact_companies">
             @includeIf('admin.contactContacts.relationships.contactsContactCompanies', ['contactCompanies' => $contactContact->contactsContactCompanies])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="contacts_marinas">
+            @includeIf('admin.contactContacts.relationships.contactsMarinas', ['marinas' => $contactContact->contactsMarinas])
         </div>
     </div>
 </div>

@@ -44,6 +44,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.contactContact.fields.photo') }}
+                                    </th>
+                                    <td>
+                                        @if($contactContact->photo)
+                                            <a href="{{ $contactContact->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $contactContact->photo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.contactContact.fields.contact_nif') }}
                                     </th>
                                     <td>
@@ -128,6 +140,30 @@
                                     </th>
                                     <td>
                                         {{ $contactContact->contact_internalnotes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $contactContact->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $contactContact->link_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.last_use') }}
+                                    </th>
+                                    <td>
+                                        {{ $contactContact->last_use }}
                                     </td>
                                 </tr>
                             </tbody>

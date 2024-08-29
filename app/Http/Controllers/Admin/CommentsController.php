@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyCommentRequest;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
@@ -12,72 +13,24 @@ use App\Models\User;
 use App\Models\Wlist;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class CommentsController extends Controller
 {
-    use CsvImportTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('comment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Comment::with(['wlist', 'from_user'])->select(sprintf('%s.*', (new Comment)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'comment_show';
-                $editGate      = 'comment_edit';
-                $deleteGate    = 'comment_delete';
-                $crudRoutePart = 'comments';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('wlist_boat_namecomplete', function ($row) {
-                return $row->wlist ? $row->wlist->boat_namecomplete : '';
-            });
-
-            $table->editColumn('wlist.description', function ($row) {
-                return $row->wlist ? (is_string($row->wlist) ? $row->wlist : $row->wlist->description) : '';
-            });
-            $table->addColumn('from_user_name', function ($row) {
-                return $row->from_user ? $row->from_user->name : '';
-            });
-
-            $table->editColumn('from_user.email', function ($row) {
-                return $row->from_user ? (is_string($row->from_user) ? $row->from_user : $row->from_user->email) : '';
-            });
-            $table->editColumn('comment', function ($row) {
-                return $row->comment ? $row->comment : '';
-            });
-            $table->editColumn('private_comment', function ($row) {
-                return $row->private_comment ? $row->private_comment : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'wlist', 'from_user']);
-
-            return $table->make(true);
-        }
+        $comments = Comment::with(['wlist', 'from_user', 'media'])->get();
 
         $wlists = Wlist::get();
-        $users  = User::get();
 
-        return view('admin.comments.index', compact('wlists', 'users'));
+        $users = User::get();
+
+        return view('admin.comments.index', compact('comments', 'users', 'wlists'));
     }
 
     public function create()
@@ -94,6 +47,18 @@ class CommentsController extends Controller
     public function store(StoreCommentRequest $request)
     {
         $comment = Comment::create($request->all());
+
+        foreach ($request->input('photos', []) as $file) {
+            $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        foreach ($request->input('files', []) as $file) {
+            $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $comment->id]);
+        }
 
         return redirect()->route('admin.comments.index');
     }
@@ -114,6 +79,34 @@ class CommentsController extends Controller
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
         $comment->update($request->all());
+
+        if (count($comment->photos) > 0) {
+            foreach ($comment->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $comment->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+            }
+        }
+
+        if (count($comment->files) > 0) {
+            foreach ($comment->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $comment->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $comment->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+            }
+        }
 
         return redirect()->route('admin.comments.index');
     }
@@ -145,5 +138,17 @@ class CommentsController extends Controller
         }
 
         return response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('comment_create') && Gate::denies('comment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Comment();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 }

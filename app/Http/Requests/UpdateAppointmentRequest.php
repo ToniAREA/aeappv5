@@ -29,10 +29,10 @@ class UpdateAppointmentRequest extends FormRequest
             'for_roles' => [
                 'array',
             ],
-            'for_users.*' => [
+            'for_employees.*' => [
                 'integer',
             ],
-            'for_users' => [
+            'for_employees' => [
                 'array',
             ],
             'boat_namecomplete' => [
@@ -54,6 +54,12 @@ class UpdateAppointmentRequest extends FormRequest
             'when_ends' => [
                 'required',
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+            ],
+            'priority' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
             ],
             'status' => [
                 'string',

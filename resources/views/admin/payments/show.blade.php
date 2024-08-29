@@ -41,10 +41,10 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.payment.fields.proforma_number') }}
+                            {{ trans('cruds.payment.fields.financial_document') }}
                         </th>
                         <td>
-                            {{ $payment->proforma_number->proforma_number ?? '' }}
+                            {{ $payment->financial_document->reference_number ?? '' }}
                         </td>
                     </tr>
                     <tr>
@@ -57,18 +57,18 @@
                     </tr>
                     <tr>
                         <th>
-                            {{ trans('cruds.payment.fields.currency') }}
-                        </th>
-                        <td>
-                            {{ $payment->currency }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.payment.fields.status') }}
                         </th>
                         <td>
                             {{ $payment->status }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.payment.fields.currency') }}
+                        </th>
+                        <td>
+                            {{ $payment->currency->code ?? '' }}
                         </td>
                     </tr>
                 </tbody>

@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_online" value="0">
+                                <input type="checkbox" name="is_online" id="is_online" value="1" {{ $brand->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_online">{{ trans('cruds.brand.fields.is_online') }}</label>
+                            </div>
+                            @if($errors->has('is_online'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_online') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.brand.fields.is_online_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="brand">{{ trans('cruds.brand.fields.brand') }}</label>
                             <input class="form-control" type="text" name="brand" id="brand" value="{{ old('brand', $brand->brand) }}" required>
                             @if($errors->has('brand'))
@@ -93,6 +106,26 @@
                             <span class="help-block">{{ trans('cruds.brand.fields.internal_notes_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="link">{{ trans('cruds.brand.fields.link') }}</label>
+                            <input class="form-control" type="text" name="link" id="link" value="{{ old('link', $brand->link) }}">
+                            @if($errors->has('link'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.brand.fields.link_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_description">{{ trans('cruds.brand.fields.link_description') }}</label>
+                            <input class="form-control" type="text" name="link_description" id="link_description" value="{{ old('link_description', $brand->link_description) }}">
+                            @if($errors->has('link_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.brand.fields.link_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
@@ -110,7 +143,7 @@
 <script>
     Dropzone.options.brandLogoDropzone = {
     url: '{{ route('frontend.brands.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -118,7 +151,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

@@ -37,7 +37,9 @@ class Employee extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_active',
         'id_employee',
+        'namecomplete',
         'user_id',
         'contact_id',
         'status',
@@ -47,7 +49,7 @@ class Employee extends Model implements HasMedia
         'notes',
         'internalnotes',
         'link',
-        'active',
+        'link_description',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -69,9 +71,49 @@ class Employee extends Model implements HasMedia
         return $this->hasMany(BookingList::class, 'employee_id', 'id');
     }
 
-    public function employeeAvailabilities()
+    public function forEmployeeToDos()
     {
-        return $this->hasMany(Availability::class, 'employee_id', 'id');
+        return $this->hasMany(ToDo::class, 'for_employee_id', 'id');
+    }
+
+    public function employeeExpenses()
+    {
+        return $this->hasMany(Expense::class, 'employee_id', 'id');
+    }
+
+    public function employeeIncomes()
+    {
+        return $this->hasMany(Income::class, 'employee_id', 'id');
+    }
+
+    public function employeeBookingSlots()
+    {
+        return $this->hasMany(BookingSlot::class, 'employee_id', 'id');
+    }
+
+    public function employeeEmployeeAttendances()
+    {
+        return $this->hasMany(EmployeeAttendance::class, 'employee_id', 'id');
+    }
+
+    public function employeeEmployeeHolidays()
+    {
+        return $this->hasMany(EmployeeHoliday::class, 'employee_id', 'id');
+    }
+
+    public function employeeEmployeeSkills()
+    {
+        return $this->hasMany(EmployeeSkill::class, 'employee_id', 'id');
+    }
+
+    public function employeeEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'employee_id', 'id');
+    }
+
+    public function forEmployeesAppointments()
+    {
+        return $this->belongsToMany(Appointment::class);
     }
 
     public function user()

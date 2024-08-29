@@ -13,133 +13,33 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductTag;
+use App\Models\Provider;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('product_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Product::with(['categories', 'brand', 'product_location', 'tags'])->select(sprintf('%s.*', (new Product)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'product_show';
-                $editGate      = 'product_edit';
-                $deleteGate    = 'product_delete';
-                $crudRoutePart = 'products';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('category', function ($row) {
-                $labels = [];
-                foreach ($row->categories as $category) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $category->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('brand_brand', function ($row) {
-                return $row->brand ? $row->brand->brand : '';
-            });
-
-            $table->editColumn('ref_manu', function ($row) {
-                return $row->ref_manu ? $row->ref_manu : '';
-            });
-            $table->editColumn('ref_provider', function ($row) {
-                return $row->ref_provider ? $row->ref_provider : '';
-            });
-            $table->editColumn('model', function ($row) {
-                return $row->model ? $row->model : '';
-            });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('product_slug', function ($row) {
-                return $row->product_slug ? $row->product_slug : '';
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-            $table->editColumn('price', function ($row) {
-                return $row->price ? $row->price : '';
-            });
-            $table->editColumn('pro_discount', function ($row) {
-                return $row->pro_discount ? $row->pro_discount : '';
-            });
-            $table->editColumn('stock', function ($row) {
-                return $row->stock ? $row->stock : '';
-            });
-            $table->editColumn('local_stock', function ($row) {
-                return $row->local_stock ? $row->local_stock : '';
-            });
-            $table->addColumn('product_location_name', function ($row) {
-                return $row->product_location ? $row->product_location->name : '';
-            });
-
-            $table->editColumn('product_location.description', function ($row) {
-                return $row->product_location ? (is_string($row->product_location) ? $row->product_location : $row->product_location->description) : '';
-            });
-            $table->editColumn('tag', function ($row) {
-                $labels = [];
-                foreach ($row->tags as $tag) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('file', function ($row) {
-                if (! $row->file) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->file as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'category', 'brand', 'photos', 'product_location', 'tag', 'file']);
-
-            return $table->make(true);
-        }
+        $products = Product::with(['categories', 'brand', 'providers', 'product_location', 'tags', 'media'])->get();
 
         $product_categories = ProductCategory::get();
-        $brands             = Brand::get();
-        $asset_locations    = AssetLocation::get();
-        $product_tags       = ProductTag::get();
 
-        return view('admin.products.index', compact('product_categories', 'brands', 'asset_locations', 'product_tags'));
+        $brands = Brand::get();
+
+        $providers = Provider::get();
+
+        $asset_locations = AssetLocation::get();
+
+        $product_tags = ProductTag::get();
+
+        return view('admin.products.index', compact('asset_locations', 'brands', 'product_categories', 'product_tags', 'products', 'providers'));
     }
 
     public function create()
@@ -150,24 +50,23 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $providers = Provider::pluck('name', 'id');
+
         $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tags = ProductTag::pluck('name', 'id');
 
-        return view('admin.products.create', compact('brands', 'categories', 'product_locations', 'tags'));
+        return view('admin.products.create', compact('brands', 'categories', 'product_locations', 'providers', 'tags'));
     }
 
     public function store(StoreProductRequest $request)
     {
         $product = Product::create($request->all());
         $product->categories()->sync($request->input('categories', []));
+        $product->providers()->sync($request->input('providers', []));
         $product->tags()->sync($request->input('tags', []));
         foreach ($request->input('photos', []) as $file) {
             $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
-        }
-
-        foreach ($request->input('file', []) as $file) {
-            $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -185,19 +84,22 @@ class ProductController extends Controller
 
         $brands = Brand::pluck('brand', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $providers = Provider::pluck('name', 'id');
+
         $product_locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tags = ProductTag::pluck('name', 'id');
 
-        $product->load('categories', 'brand', 'product_location', 'tags');
+        $product->load('categories', 'brand', 'providers', 'product_location', 'tags');
 
-        return view('admin.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'tags'));
+        return view('admin.products.edit', compact('brands', 'categories', 'product', 'product_locations', 'providers', 'tags'));
     }
 
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->all());
         $product->categories()->sync($request->input('categories', []));
+        $product->providers()->sync($request->input('providers', []));
         $product->tags()->sync($request->input('tags', []));
         if (count($product->photos) > 0) {
             foreach ($product->photos as $media) {
@@ -213,20 +115,6 @@ class ProductController extends Controller
             }
         }
 
-        if (count($product->file) > 0) {
-            foreach ($product->file as $media) {
-                if (! in_array($media->file_name, $request->input('file', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $product->file->pluck('file_name')->toArray();
-        foreach ($request->input('file', []) as $file) {
-            if (count($media) === 0 || ! in_array($file, $media)) {
-                $product->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file');
-            }
-        }
-
         return redirect()->route('admin.products.index');
     }
 
@@ -234,7 +122,7 @@ class ProductController extends Controller
     {
         abort_if(Gate::denies('product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $product->load('categories', 'brand', 'product_location', 'tags', 'productMatLogs');
+        $product->load('categories', 'brand', 'providers', 'product_location', 'tags', 'productMlogs', 'productTechnicalDocumentations', 'productIotDevices', 'productFinancialDocumentItems');
 
         return view('admin.products.show', compact('product'));
     }

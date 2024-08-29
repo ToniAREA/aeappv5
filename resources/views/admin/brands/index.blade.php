@@ -19,70 +19,158 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Brand">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Brand">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.brand') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.brand_logo') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.brand_url') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.providers') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.brand.fields.internal_notes') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-                <tr>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <select class="search">
-                            <option value>{{ trans('global.all') }}</option>
-                            @foreach($providers as $key => $item)
-                                <option value="{{ $item->name }}">{{ $item->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                    </td>
-                    <td>
-                    </td>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.is_online') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.brand') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.brand_logo') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.brand_url') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.providers') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.internal_notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.link') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.brand.fields.link_description') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <select class="search">
+                                <option value>{{ trans('global.all') }}</option>
+                                @foreach($providers as $key => $item)
+                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                            <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($brands as $key => $brand)
+                        <tr data-entry-id="{{ $brand->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $brand->id ?? '' }}
+                            </td>
+                            <td>
+                                <span style="display:none">{{ $brand->is_online ?? '' }}</span>
+                                <input type="checkbox" disabled="disabled" {{ $brand->is_online ? 'checked' : '' }}>
+                            </td>
+                            <td>
+                                {{ $brand->brand ?? '' }}
+                            </td>
+                            <td>
+                                @if($brand->brand_logo)
+                                    <a href="{{ $brand->brand_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                        <img src="{{ $brand->brand_logo->getUrl('thumb') }}">
+                                    </a>
+                                @endif
+                            </td>
+                            <td>
+                                {{ $brand->brand_url ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($brand->providers as $key => $item)
+                                    <span class="badge badge-info">{{ $item->name }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{ $brand->notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $brand->internal_notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $brand->link ?? '' }}
+                            </td>
+                            <td>
+                                {{ $brand->link_description ?? '' }}
+                            </td>
+                            <td>
+                                @can('brand_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.brands.show', $brand->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('brand_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.brands.edit', $brand->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('brand_delete')
+                                    <form action="{{ route('admin.brands.destroy', $brand->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -95,14 +183,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('brand_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.brands.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -124,29 +212,12 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.brands.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'brand', name: 'brand' },
-{ data: 'brand_logo', name: 'brand_logo', sortable: false, searchable: false },
-{ data: 'brand_url', name: 'brand_url' },
-{ data: 'providers', name: 'providers.name' },
-{ data: 'notes', name: 'notes' },
-{ data: 'internal_notes', name: 'internal_notes' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Brand').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Brand:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
@@ -173,7 +244,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
+})
 
 </script>
 @endsection

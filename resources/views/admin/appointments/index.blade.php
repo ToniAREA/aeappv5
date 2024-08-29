@@ -19,69 +19,166 @@
     </div>
 
     <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Appointment">
-            <thead>
-                <tr>
-                    <th width="10">
+        <div class="table-responsive">
+            <table class=" table table-bordered table-striped table-hover datatable datatable-Appointment">
+                <thead>
+                    <tr>
+                        <th width="10">
 
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.id') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.client') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.client.fields.lastname') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.boat') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.wlists') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.for_role') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.for_user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.boat_namecomplete') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.private_comment') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.when_starts') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.when_ends') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.priority') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.priority.fields.weight') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.status') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.notes') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.appointment.fields.coordinates') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.id') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.client') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.client.fields.lastname') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.boat') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.wlists') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.for_role') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.for_employees') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.boat_namecomplete') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.in_marina') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.marina.fields.notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.description') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.private_comment') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.when_starts') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.when_ends') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.priority') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.status') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.notes') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.appointment.fields.coordinates') }}
+                        </th>
+                        <th>
+                            &nbsp;
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($appointments as $key => $appointment)
+                        <tr data-entry-id="{{ $appointment->id }}">
+                            <td>
+
+                            </td>
+                            <td>
+                                {{ $appointment->id ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->client->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->client->lastname ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->boat->name ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($appointment->wlists as $key => $item)
+                                    <span class="badge badge-info">{{ $item->description }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($appointment->for_roles as $key => $item)
+                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($appointment->for_employees as $key => $item)
+                                    <span class="badge badge-info">{{ $item->id_employee }}</span>
+                                @endforeach
+                            </td>
+                            <td>
+                                {{ $appointment->boat_namecomplete ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->in_marina->name ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->in_marina->notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->description ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->private_comment ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->when_starts ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->when_ends ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->priority ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->status ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->notes ?? '' }}
+                            </td>
+                            <td>
+                                {{ $appointment->coordinates ?? '' }}
+                            </td>
+                            <td>
+                                @can('appointment_show')
+                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.appointments.show', $appointment->id) }}">
+                                        {{ trans('global.view') }}
+                                    </a>
+                                @endcan
+
+                                @can('appointment_edit')
+                                    <a class="btn btn-xs btn-info" href="{{ route('admin.appointments.edit', $appointment->id) }}">
+                                        {{ trans('global.edit') }}
+                                    </a>
+                                @endcan
+
+                                @can('appointment_delete')
+                                    <form action="{{ route('admin.appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                    </form>
+                                @endcan
+
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 
@@ -94,14 +191,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('appointment_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.appointments.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
+      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+          return $(entry).data('entry-id')
       });
 
       if (ids.length === 0) {
@@ -123,45 +220,18 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.appointments.index') }}",
-    columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'client_name', name: 'client.name' },
-{ data: 'client.lastname', name: 'client.lastname' },
-{ data: 'boat_name', name: 'boat.name' },
-{ data: 'wlists', name: 'wlists.description' },
-{ data: 'for_role', name: 'for_roles.title' },
-{ data: 'for_user', name: 'for_users.name' },
-{ data: 'boat_namecomplete', name: 'boat_namecomplete' },
-{ data: 'description', name: 'description' },
-{ data: 'private_comment', name: 'private_comment' },
-{ data: 'when_starts', name: 'when_starts' },
-{ data: 'when_ends', name: 'when_ends' },
-{ data: 'priority_name', name: 'priority.name' },
-{ data: 'priority.weight', name: 'priority.weight' },
-{ data: 'status', name: 'status' },
-{ data: 'notes', name: 'notes' },
-{ data: 'coordinates', name: 'coordinates' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
+  $.extend(true, $.fn.dataTable.defaults, {
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
-  };
-  let table = $('.datatable-Appointment').DataTable(dtOverrideGlobals);
+  });
+  let table = $('.datatable-Appointment:not(.ajaxTable)').DataTable({ buttons: dtButtons })
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
   
-});
+})
 
 </script>
 @endsection

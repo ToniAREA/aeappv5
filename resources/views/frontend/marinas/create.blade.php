@@ -24,6 +24,17 @@
                             <span class="help-block">{{ trans('cruds.marina.fields.name_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="marina_photo">{{ trans('cruds.marina.fields.marina_photo') }}</label>
+                            <div class="needsclick dropzone" id="marina_photo-dropzone">
+                            </div>
+                            @if($errors->has('marina_photo'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('marina_photo') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.marina.fields.marina_photo_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="coordinates">{{ trans('cruds.marina.fields.coordinates') }}</label>
                             <input class="form-control" type="text" name="coordinates" id="coordinates" value="{{ old('coordinates', '') }}">
                             @if($errors->has('coordinates'))
@@ -34,6 +45,38 @@
                             <span class="help-block">{{ trans('cruds.marina.fields.coordinates_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="contacts">{{ trans('cruds.marina.fields.contacts') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="contacts[]" id="contacts" multiple>
+                                @foreach($contacts as $id => $contact)
+                                    <option value="{{ $id }}" {{ in_array($id, old('contacts', [])) ? 'selected' : '' }}>{{ $contact }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('contacts'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('contacts') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.marina.fields.contacts_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact_docs_id">{{ trans('cruds.marina.fields.contact_docs') }}</label>
+                            <select class="form-control select2" name="contact_docs_id" id="contact_docs_id">
+                                @foreach($contact_docs as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('contact_docs_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('contact_docs'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('contact_docs') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.marina.fields.contact_docs_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="link">{{ trans('cruds.marina.fields.link') }}</label>
                             <input class="form-control" type="text" name="link" id="link" value="{{ old('link', '') }}">
                             @if($errors->has('link'))
@@ -42,6 +85,16 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.marina.fields.link_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_description">{{ trans('cruds.marina.fields.link_description') }}</label>
+                            <input class="form-control" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                            @if($errors->has('link_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.marina.fields.link_description_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="notes">{{ trans('cruds.marina.fields.notes') }}</label>
@@ -85,4 +138,62 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    Dropzone.options.marinaPhotoDropzone = {
+    url: '{{ route('frontend.marinas.storeMedia') }}',
+    maxFilesize: 5, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="marina_photo"]').remove()
+      $('form').append('<input type="hidden" name="marina_photo" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="marina_photo"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($marina) && $marina->marina_photo)
+      var file = {!! json_encode($marina->marina_photo) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, file.preview ?? file.preview_url)
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="marina_photo" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+
+</script>
 @endsection

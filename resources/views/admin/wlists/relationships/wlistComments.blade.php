@@ -37,10 +37,10 @@
                                 {{ trans('cruds.user.fields.email') }}
                             </th>
                             <th>
-                                {{ trans('cruds.comment.fields.comment') }}
+                                {{ trans('cruds.comment.fields.photos') }}
                             </th>
                             <th>
-                                {{ trans('cruds.comment.fields.private_comment') }}
+                                {{ trans('cruds.comment.fields.files') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -69,10 +69,18 @@
                                     {{ $comment->from_user->email ?? '' }}
                                 </td>
                                 <td>
-                                    {{ $comment->comment ?? '' }}
+                                    @foreach($comment->photos as $key => $media)
+                                        <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                            <img src="{{ $media->getUrl('thumb') }}">
+                                        </a>
+                                    @endforeach
                                 </td>
                                 <td>
-                                    {{ $comment->private_comment ?? '' }}
+                                    @foreach($comment->files as $key => $media)
+                                        <a href="{{ $media->getUrl() }}" target="_blank">
+                                            {{ trans('global.view_file') }}
+                                        </a>
+                                    @endforeach
                                 </td>
                                 <td>
                                     @can('comment_show')

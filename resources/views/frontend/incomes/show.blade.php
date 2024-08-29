@@ -28,6 +28,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.income.fields.is_accounted') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $income->is_accounted ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.income.fields.employee') }}
+                                    </th>
+                                    <td>
+                                        {{ $income->employee->id_employee ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.income.fields.income_category') }}
                                     </th>
                                     <td>
@@ -44,18 +60,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.income.fields.amount') }}
-                                    </th>
-                                    <td>
-                                        {{ $income->amount }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.income.fields.description') }}
                                     </th>
                                     <td>
                                         {{ $income->description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.income.fields.amount') }}
+                                    </th>
+                                    <td>
+                                        {{ $income->amount }}
                                     </td>
                                 </tr>
                             </tbody>

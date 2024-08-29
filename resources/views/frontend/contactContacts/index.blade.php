@@ -36,6 +36,9 @@
                                         {{ trans('cruds.contactContact.fields.contact_last_name') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contactContact.fields.photo') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.contactContact.fields.contact_nif') }}
                                     </th>
                                     <th>
@@ -69,6 +72,15 @@
                                         {{ trans('cruds.contactContact.fields.contact_internalnotes') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contactContact.fields.link') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.link_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contactContact.fields.last_use') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -84,6 +96,13 @@
                                         </td>
                                         <td>
                                             {{ $contactContact->contact_last_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($contactContact->photo)
+                                                <a href="{{ $contactContact->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $contactContact->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             {{ $contactContact->contact_nif ?? '' }}
@@ -117,6 +136,15 @@
                                         </td>
                                         <td>
                                             {{ $contactContact->contact_internalnotes ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactContact->link ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactContact->link_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contactContact->last_use ?? '' }}
                                         </td>
                                         <td>
                                             @can('contact_contact_show')

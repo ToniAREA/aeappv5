@@ -10,6 +10,17 @@
         <form method="POST" action="{{ route("admin.content-categories.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ old('is_online', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.contentCategory.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contentCategory.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="name">{{ trans('cruds.contentCategory.fields.name') }}</label>
                 <input class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
                 @if($errors->has('name'))
@@ -35,6 +46,38 @@
                 <span class="help-block">{{ trans('cruds.contentCategory.fields.photo_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="authorized_roles">{{ trans('cruds.contentCategory.fields.authorized_roles') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('authorized_roles') ? 'is-invalid' : '' }}" name="authorized_roles[]" id="authorized_roles" multiple>
+                    @foreach($authorized_roles as $id => $authorized_role)
+                        <option value="{{ $id }}" {{ in_array($id, old('authorized_roles', [])) ? 'selected' : '' }}>{{ $authorized_role }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('authorized_roles'))
+                    <span class="text-danger">{{ $errors->first('authorized_roles') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contentCategory.fields.authorized_roles_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="authorized_users">{{ trans('cruds.contentCategory.fields.authorized_users') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('authorized_users') ? 'is-invalid' : '' }}" name="authorized_users[]" id="authorized_users" multiple>
+                    @foreach($authorized_users as $id => $authorized_user)
+                        <option value="{{ $id }}" {{ in_array($id, old('authorized_users', [])) ? 'selected' : '' }}>{{ $authorized_user }}</option>
+                    @endforeach
+                </select>
+                @if($errors->has('authorized_users'))
+                    <span class="text-danger">{{ $errors->first('authorized_users') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.contentCategory.fields.authorized_users_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -51,7 +94,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('admin.content-categories.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -59,7 +102,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

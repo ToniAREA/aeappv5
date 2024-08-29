@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-<div class="container-fluid">
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
 
@@ -8,8 +8,7 @@
                 <div class="card-header">
                     {{ trans('global.show') }} {{ trans('cruds.wlist.title') }}
                 </div>
-WLOGS: {{ $wlist->wlistWlogs->count() }}
-MLOGS: {{ $wlist->wlistMatLogs->count() }}
+
                 <div class="card-body">
                     <div class="form-group">
                         <div class="form-group">
@@ -71,12 +70,10 @@ MLOGS: {{ $wlist->wlistMatLogs->count() }}
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.for_user') }}
+                                        {{ trans('cruds.wlist.fields.for_employee') }}
                                     </th>
                                     <td>
-                                        @foreach($wlist->for_users as $key => $for_user)
-                                            <span class="label label-info">{{ $for_user->name }}</span>
-                                        @endforeach
+                                        {{ $wlist->for_employee->id_employee ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -93,6 +90,14 @@ MLOGS: {{ $wlist->wlistMatLogs->count() }}
                                     </th>
                                     <td>
                                         {{ $wlist->description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.estimated_hours') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->estimated_hours }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -117,26 +122,26 @@ MLOGS: {{ $wlist->wlistMatLogs->count() }}
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.priority') }}
-                                    </th>
-                                    <td>
-                                        {{ $wlist->priority->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.wlist.fields.status') }}
                                     </th>
                                     <td>
-                                        {{ App\Models\Wlist::STATUS_RADIO[$wlist->status] ?? '' }}
+                                        {{ $wlist->status->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wlist.fields.url_invoice') }}
+                                        {{ trans('cruds.wlist.fields.priority') }}
                                     </th>
                                     <td>
-                                        {{ $wlist->url_invoice }}
+                                        {{ $wlist->priority }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.proforma_link') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->proforma_link }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -153,6 +158,46 @@ MLOGS: {{ $wlist->wlistMatLogs->count() }}
                                     </th>
                                     <td>
                                         {{ $wlist->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->link_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.last_use') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->last_use }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.completed_at') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->completed_at }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wlist.fields.financial_document') }}
+                                    </th>
+                                    <td>
+                                        {{ $wlist->financial_document->reference_number ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

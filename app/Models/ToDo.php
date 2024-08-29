@@ -2,24 +2,22 @@
 
 namespace App\Models;
 
-use App\Traits\Auditable;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ToDo extends Model implements HasMedia
 {
-    use SoftDeletes, InteractsWithMedia, Auditable, HasFactory;
+    use InteractsWithMedia, HasFactory;
 
     public $table = 'to_dos';
 
     protected $appends = [
-        'photo',
+        'photos',
     ];
 
     public static $searchable = [
@@ -28,17 +26,30 @@ class ToDo extends Model implements HasMedia
 
     protected $dates = [
         'deadline',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
     ];
 
+    public const REPEAT_INTERVAL_UNIT_SELECT = [
+        'day'   => 'Day',
+        'week'  => 'Week',
+        'month' => 'Month',
+        'year'  => 'Year',
+    ];
+
     protected $fillable = [
         'task',
-        'deadline',
-        'priority_id',
         'notes',
+        'for_employee_id',
+        'deadline',
+        'priority',
+        'is_repetitive',
+        'repeat_interval_value',
+        'repeat_interval_unit',
         'internal_notes',
+        'completed_at',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -55,19 +66,9 @@ class ToDo extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function for_roles()
+    public function getPhotosAttribute()
     {
-        return $this->belongsToMany(Role::class);
-    }
-
-    public function for_users()
-    {
-        return $this->belongsToMany(User::class);
-    }
-
-    public function getPhotoAttribute()
-    {
-        $files = $this->getMedia('photo');
+        $files = $this->getMedia('photos');
         $files->each(function ($item) {
             $item->url       = $item->getUrl();
             $item->thumbnail = $item->getUrl('thumb');
@@ -75,6 +76,16 @@ class ToDo extends Model implements HasMedia
         });
 
         return $files;
+    }
+
+    public function for_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function for_employee()
+    {
+        return $this->belongsTo(Employee::class, 'for_employee_id');
     }
 
     public function getDeadlineAttribute($value)
@@ -87,8 +98,13 @@ class ToDo extends Model implements HasMedia
         $this->attributes['deadline'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function priority()
+    public function getCompletedAtAttribute($value)
     {
-        return $this->belongsTo(Priority::class, 'priority_id');
+        return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+    }
+
+    public function setCompletedAtAttribute($value)
+    {
+        $this->attributes['completed_at'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
     }
 }

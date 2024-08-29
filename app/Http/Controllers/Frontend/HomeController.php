@@ -1,21 +1,24 @@
 <?php
 
 namespace App\Http\Controllers\Frontend;
+use App\Http\Controllers\Controller;
+use App\Models\Wlist;
+use App\Models\Client;
+use App\Models\Boat;
 
-use App\Models\Wlist; // Asegúrate de usar el modelo correcto para tu tabla 'wlist'
+use Gate;
 
 class HomeController
 {
     public function index()
     {
-        $progressing = Wlist::where('status', '=', 'progressing')
-            ->orderBy('created_at', 'asc') // Order the records by the 'created_at' column in descending order
-            ->get(); // Retrieve all records from the 'wlist' table
+        /* abort_if(Gate::denies('home_access'), Response::HTTP_FORBIDDEN, '403 Forbidden'); */
 
-        $pending = Wlist::where('status', '=', 'pending')
-            ->orderBy('created_at', 'asc') // Order the records by the 'created_at' column in descending order
-            ->get(); // Retrieve all records from the 'wlist' table
+        $wlistsNotDone = Wlist::all();
+        $clientsCount = Client::count();
+        $boatsCount = Boat::count();
+        $wlistsCount = Wlist::count();
 
-        return view('frontend.home', compact('progressing', 'pending')); // Pass the records to the view
+        return view('frontend.home', compact('wlistsNotDone', 'clientsCount', 'boatsCount', 'wlistsCount'));
     }
 }

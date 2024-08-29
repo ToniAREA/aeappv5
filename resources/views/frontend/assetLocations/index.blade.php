@@ -30,6 +30,9 @@
                                         {{ trans('cruds.assetLocation.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetLocation.fields.is_available') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.assetLocation.fields.name') }}
                                     </th>
                                     <th>
@@ -49,6 +52,8 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
@@ -65,6 +70,10 @@
                                     <tr data-entry-id="{{ $assetLocation->id }}">
                                         <td>
                                             {{ $assetLocation->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $assetLocation->is_available ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $assetLocation->is_available ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $assetLocation->name ?? '' }}

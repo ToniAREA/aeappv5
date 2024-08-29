@@ -30,10 +30,22 @@
                                         {{ trans('cruds.assetCategory.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.assetCategory.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.assetCategory.fields.name') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.assetCategory.fields.description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.assetCategory.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.assetCategory.fields.authorized_users') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.assetCategory.fields.photo') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -46,10 +58,30 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -62,10 +94,31 @@
                                             {{ $assetCategory->id ?? '' }}
                                         </td>
                                         <td>
+                                            <span style="display:none">{{ $assetCategory->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $assetCategory->is_online ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
                                             {{ $assetCategory->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $assetCategory->description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($assetCategory->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($assetCategory->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @if($assetCategory->photo)
+                                                <a href="{{ $assetCategory->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                    <img src="{{ $assetCategory->photo->getUrl('thumb') }}">
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             @can('asset_category_show')

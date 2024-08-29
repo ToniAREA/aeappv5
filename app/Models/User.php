@@ -14,12 +14,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasMedia
 {
-    use SoftDeletes, Notifiable, Auditable, HasFactory;
+    use SoftDeletes, Notifiable, InteractsWithMedia, Auditable, HasFactory;
 
     public $table = 'users';
+
+    protected $appends = [
+        'photo',
+    ];
 
     protected $hidden = [
         'remember_token', 'two_factor_code',
@@ -36,15 +43,15 @@ class User extends Authenticatable
     ];
 
     protected $fillable = [
+        'approved',
         'name',
         'email',
         'email_verified_at',
-        'two_factor',
         'password',
+        'two_factor',
         'verified',
         'verified_at',
         'verification_token',
-        'approved',
         'two_factor_code',
         'remember_token',
         'created_at',
@@ -109,6 +116,18 @@ class User extends Authenticatable
         });
     }
 
+    public static function boot()
+    {
+        parent::boot();
+        self::observe(new \App\Observers\UserActionObserver);
+    }
+
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
     public function userEmployees()
     {
         return $this->hasMany(Employee::class, 'user_id', 'id');
@@ -117,11 +136,6 @@ class User extends Authenticatable
     public function employeeWlogs()
     {
         return $this->hasMany(Wlog::class, 'employee_id', 'id');
-    }
-
-    public function employeeMatLogs()
-    {
-        return $this->hasMany(MatLog::class, 'employee_id', 'id');
     }
 
     public function fromUserWlists()
@@ -139,19 +153,116 @@ class User extends Authenticatable
         return $this->hasMany(BookingList::class, 'user_id', 'id');
     }
 
-    public function forUserToDos()
+    public function actualHolderAssets()
     {
-        return $this->belongsToMany(ToDo::class);
+        return $this->hasMany(Asset::class, 'actual_holder_id', 'id');
     }
 
-    public function forUserAppointments()
+    public function employeeMlogs()
     {
-        return $this->belongsToMany(Appointment::class);
+        return $this->hasMany(Mlog::class, 'employee_id', 'id');
     }
 
-    public function forUserWlists()
+    public function userAssetsRentals()
     {
-        return $this->belongsToMany(Wlist::class);
+        return $this->hasMany(AssetsRental::class, 'user_id', 'id');
+    }
+
+    public function userSuscriptions()
+    {
+        return $this->hasMany(Suscription::class, 'user_id', 'id');
+    }
+
+    public function userMaintenanceSuscriptions()
+    {
+        return $this->hasMany(MaintenanceSuscription::class, 'user_id', 'id');
+    }
+
+    public function fromUserEmployeeRatings()
+    {
+        return $this->hasMany(EmployeeRating::class, 'from_user_id', 'id');
+    }
+
+    public function userIotSuscriptions()
+    {
+        return $this->hasMany(IotSuscription::class, 'user_id', 'id');
+    }
+
+    public function userUserSettings()
+    {
+        return $this->hasMany(UserSetting::class, 'user_id', 'id');
+    }
+
+    public function userWaitingLists()
+    {
+        return $this->hasMany(WaitingList::class, 'user_id', 'id');
+    }
+
+    public function authorizedUsersProductCategories()
+    {
+        return $this->belongsToMany(ProductCategory::class);
+    }
+
+    public function authorizedUsersAssetCategories()
+    {
+        return $this->belongsToMany(AssetCategory::class);
+    }
+
+    public function authorizedUsersContentCategories()
+    {
+        return $this->belongsToMany(ContentCategory::class);
+    }
+
+    public function authorizedUsersTechnicalDocumentations()
+    {
+        return $this->belongsToMany(TechnicalDocumentation::class);
+    }
+
+    public function authorizedUsersDocumentationCategories()
+    {
+        return $this->belongsToMany(DocumentationCategory::class);
+    }
+
+    public function authorizedUsersContentPages()
+    {
+        return $this->belongsToMany(ContentPage::class);
+    }
+
+    public function authorizedUsersTechDocsTypes()
+    {
+        return $this->belongsToMany(TechDocsType::class);
+    }
+
+    public function authorizedUsersVideoTutorials()
+    {
+        return $this->belongsToMany(VideoTutorial::class);
+    }
+
+    public function authorizedUsersFaqCategories()
+    {
+        return $this->belongsToMany(FaqCategory::class);
+    }
+
+    public function authorizedUsersFaqQuestions()
+    {
+        return $this->belongsToMany(FaqQuestion::class);
+    }
+
+    public function authorizedUsersVideoCategories()
+    {
+        return $this->belongsToMany(VideoCategory::class);
+    }
+
+    public function getPhotoAttribute()
+    {
+        $file = $this->getMedia('photo')->last();
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+            $file->preview   = $file->getUrl('preview');
+        }
+
+        return $file;
     }
 
     public function getEmailVerifiedAtAttribute($value)

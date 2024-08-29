@@ -41,6 +41,18 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.contactCompany.fields.company_logo') }}
+                        </th>
+                        <td>
+                            @if($contactCompany->company_logo)
+                                <a href="{{ $contactCompany->company_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                    <img src="{{ $contactCompany->company_logo->getUrl('thumb') }}">
+                                </a>
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.contactCompany.fields.company_vat') }}
                         </th>
                         <td>
@@ -105,6 +117,30 @@
                             @endforeach
                         </td>
                     </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactCompany.fields.link') }}
+                        </th>
+                        <td>
+                            {{ $contactCompany->link }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactCompany.fields.link_description') }}
+                        </th>
+                        <td>
+                            {{ $contactCompany->link_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contactCompany.fields.last_use') }}
+                        </th>
+                        <td>
+                            {{ $contactCompany->last_use }}
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <div class="form-group">
@@ -126,10 +162,18 @@
                 {{ trans('cruds.provider.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#company_insurances" role="tab" data-toggle="tab">
+                {{ trans('cruds.insurance.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="company_providers">
             @includeIf('admin.contactCompanies.relationships.companyProviders', ['providers' => $contactCompany->companyProviders])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="company_insurances">
+            @includeIf('admin.contactCompanies.relationships.companyInsurances', ['insurances' => $contactCompany->companyInsurances])
         </div>
     </div>
 </div>

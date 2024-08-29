@@ -28,6 +28,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.provider.fields.is_active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $provider->is_active ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.provider.fields.name') }}
                                     </th>
                                     <td>
@@ -52,6 +60,14 @@
                                                 <img src="{{ $provider->provider_logo->getUrl('thumb') }}">
                                             </a>
                                         @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.provider_url') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->provider_url }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -90,6 +106,30 @@
                                     </th>
                                     <td>
                                         {{ $provider->internal_notes }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.status') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->status }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.link') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.provider.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $provider->link_description }}
                                     </td>
                                 </tr>
                             </tbody>

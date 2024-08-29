@@ -3,106 +3,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyToDoRequest;
 use App\Http\Requests\StoreToDoRequest;
 use App\Http\Requests\UpdateToDoRequest;
-use App\Models\Priority;
+use App\Models\Employee;
 use App\Models\Role;
 use App\Models\ToDo;
-use App\Models\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class ToDoController extends Controller
 {
-    use MediaUploadingTrait, CsvImportTrait;
+    use MediaUploadingTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('to_do_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = ToDo::with(['for_roles', 'for_users', 'priority'])->select(sprintf('%s.*', (new ToDo)->table));
-            $table = Datatables::of($query);
+        $toDos = ToDo::with(['for_roles', 'for_employee', 'media'])->get();
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+        $roles = Role::get();
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'to_do_show';
-                $editGate      = 'to_do_edit';
-                $deleteGate    = 'to_do_delete';
-                $crudRoutePart = 'to-dos';
+        $employees = Employee::get();
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->editColumn('for_role', function ($row) {
-                $labels = [];
-                foreach ($row->for_roles as $for_role) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $for_role->title);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('for_user', function ($row) {
-                $labels = [];
-                foreach ($row->for_users as $for_user) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $for_user->name);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->editColumn('task', function ($row) {
-                return $row->task ? $row->task : '';
-            });
-            $table->editColumn('photo', function ($row) {
-                if (! $row->photo) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photo as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
-                }
-
-                return implode(' ', $links);
-            });
-
-            $table->addColumn('priority_name', function ($row) {
-                return $row->priority ? $row->priority->name : '';
-            });
-
-            $table->editColumn('priority.weight', function ($row) {
-                return $row->priority ? (is_string($row->priority) ? $row->priority : $row->priority->weight) : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'for_role', 'for_user', 'photo', 'priority']);
-
-            return $table->make(true);
-        }
-
-        $roles      = Role::get();
-        $users      = User::get();
-        $priorities = Priority::get();
-
-        return view('admin.toDos.index', compact('roles', 'users', 'priorities'));
+        return view('admin.toDos.index', compact('employees', 'roles', 'toDos'));
     }
 
     public function create()
@@ -111,20 +38,17 @@ class ToDoController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.toDos.create', compact('for_roles', 'for_users', 'priorities'));
+        return view('admin.toDos.create', compact('for_employees', 'for_roles'));
     }
 
     public function store(StoreToDoRequest $request)
     {
         $toDo = ToDo::create($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        foreach ($request->input('photo', []) as $file) {
-            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
+        foreach ($request->input('photos', []) as $file) {
+            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -140,31 +64,28 @@ class ToDoController extends Controller
 
         $for_roles = Role::pluck('title', 'id');
 
-        $for_users = User::pluck('name', 'id');
+        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $priorities = Priority::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $toDo->load('for_roles', 'for_employee');
 
-        $toDo->load('for_roles', 'for_users', 'priority');
-
-        return view('admin.toDos.edit', compact('for_roles', 'for_users', 'priorities', 'toDo'));
+        return view('admin.toDos.edit', compact('for_employees', 'for_roles', 'toDo'));
     }
 
     public function update(UpdateToDoRequest $request, ToDo $toDo)
     {
         $toDo->update($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        if (count($toDo->photo) > 0) {
-            foreach ($toDo->photo as $media) {
-                if (! in_array($media->file_name, $request->input('photo', []))) {
+        if (count($toDo->photos) > 0) {
+            foreach ($toDo->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
                     $media->delete();
                 }
             }
         }
-        $media = $toDo->photo->pluck('file_name')->toArray();
-        foreach ($request->input('photo', []) as $file) {
+        $media = $toDo->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
-                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
+                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
             }
         }
 
@@ -175,7 +96,7 @@ class ToDoController extends Controller
     {
         abort_if(Gate::denies('to_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $toDo->load('for_roles', 'for_users', 'priority');
+        $toDo->load('for_roles', 'for_employee');
 
         return view('admin.toDos.show', compact('toDo'));
     }

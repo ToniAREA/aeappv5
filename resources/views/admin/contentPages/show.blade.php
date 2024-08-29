@@ -25,6 +25,14 @@
                     </tr>
                     <tr>
                         <th>
+                            {{ trans('cruds.contentPage.fields.is_online') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $contentPage->is_online ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
                             {{ trans('cruds.contentPage.fields.title') }}
                         </th>
                         <td>
@@ -96,6 +104,106 @@
                                 <a href="{{ $media->getUrl() }}" target="_blank">
                                     {{ trans('global.view_file') }}
                                 </a>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.seo_title') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->seo_title }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.seo_meta_description') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->seo_meta_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.seo_slug') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->seo_slug }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_a') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_a }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_a_description') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_a_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.show_online_link_a') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_a ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_b') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_b }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.link_b_description') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->link_b_description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.show_online_link_b') }}
+                        </th>
+                        <td>
+                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_b ? 'checked' : '' }}>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.view_count') }}
+                        </th>
+                        <td>
+                            {{ $contentPage->view_count }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.authorized_roles') }}
+                        </th>
+                        <td>
+                            @foreach($contentPage->authorized_roles as $key => $authorized_roles)
+                                <span class="label label-info">{{ $authorized_roles->title }}</span>
+                            @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.contentPage.fields.authorized_users') }}
+                        </th>
+                        <td>
+                            @foreach($contentPage->authorized_users as $key => $authorized_users)
+                                <span class="label label-info">{{ $authorized_users->name }}</span>
                             @endforeach
                         </td>
                     </tr>

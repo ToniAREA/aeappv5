@@ -30,6 +30,9 @@
                                         {{ trans('cruds.contentPage.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contentPage.fields.is_online') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.contentPage.fields.title') }}
                                     </th>
                                     <th>
@@ -48,6 +51,42 @@
                                         {{ trans('cruds.contentPage.fields.file') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.contentPage.fields.seo_title') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.seo_meta_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.seo_slug') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_a_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.show_online_link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.link_b_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.show_online_link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.view_count') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.authorized_roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.contentPage.fields.authorized_users') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -56,6 +95,8 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -84,6 +125,50 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($roles as $key => $item)
+                                                <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($users as $key => $item)
+                                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
                                     </td>
                                 </tr>
                             </thead>
@@ -92,6 +177,10 @@
                                     <tr data-entry-id="{{ $contentPage->id }}">
                                         <td>
                                             {{ $contentPage->id ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $contentPage->is_online ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $contentPage->is_online ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $contentPage->title ?? '' }}
@@ -121,6 +210,48 @@
                                                 <a href="{{ $media->getUrl() }}" target="_blank">
                                                     {{ trans('global.view_file') }}
                                                 </a>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->seo_title ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->seo_meta_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->seo_slug ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_a ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_a_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $contentPage->show_online_link_a ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_a ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_b ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->link_b_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $contentPage->show_online_link_b ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $contentPage->show_online_link_b ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $contentPage->view_count ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($contentPage->authorized_roles as $key => $item)
+                                                <span>{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($contentPage->authorized_users as $key => $item)
+                                                <span>{{ $item->name }}</span>
                                             @endforeach
                                         </td>
                                         <td>

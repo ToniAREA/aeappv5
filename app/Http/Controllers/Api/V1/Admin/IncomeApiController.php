@@ -17,7 +17,7 @@ class IncomeApiController extends Controller
     {
         abort_if(Gate::denies('income_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new IncomeResource(Income::with(['income_category'])->get());
+        return new IncomeResource(Income::with(['employee', 'income_category'])->get());
     }
 
     public function store(StoreIncomeRequest $request)
@@ -33,7 +33,7 @@ class IncomeApiController extends Controller
     {
         abort_if(Gate::denies('income_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new IncomeResource($income->load(['income_category']));
+        return new IncomeResource($income->load(['employee', 'income_category']));
     }
 
     public function update(UpdateIncomeRequest $request, Income $income)

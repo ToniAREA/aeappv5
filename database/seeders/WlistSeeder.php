@@ -46,13 +46,13 @@ class WlistSeeder extends Seeder
                     $this->command->line("<info>{$i} is same ID</info>");
 
                     if ($wlist->assigned == 'root') {
-                        $forRole = 1;
+                        $forRole = 10;
                         $forUser = 1;
                     } elseif ($wlist->assigned == 'admin') {
                         $forRole = 1;
                         $forUser = 5;
                     } elseif ($wlist->assigned == 'toni') {
-                        $forRole = 1;
+                        $forRole = 10;
                         $forUser = 1;
                     } elseif ($wlist->assigned == 'tech') {
                         $forRole = 3;
@@ -68,7 +68,7 @@ class WlistSeeder extends Seeder
                         $forUser = 1;
                     }
 
-                    if ($wlist->status == 'estimate') {
+                    /* if ($wlist->status == 'estimate') {
                         $wlist->status = 'pending';
                     } elseif ($wlist->status == 'pending') {
                         $wlist->status = 'pending';
@@ -78,7 +78,7 @@ class WlistSeeder extends Seeder
                         $wlist->status = 'completed';
                     } else {
                         $wlist->status = 'verifying';
-                    }
+                    } */
 
 
                     //insert record in new db
@@ -86,15 +86,15 @@ class WlistSeeder extends Seeder
                         'order_type' => $wlist->type,
                         'boat_namecomplete' => $wlist->boat_namecomplete,
                         'description' => $wlist->description,
-                        'status' => $wlist->status,
-                        'url_invoice' => $wlist->link_dn,
+                        /* 'status' => $wlist->status, */
+                        'proforma_link' => $wlist->link_dn,
                         'notes' => $wlist->assigned,
                         'created_at' => $wlist->created_at,
                         'updated_at' => $wlist->created_at,
                         'client_id' => $wlist->client_id,
                         'deadline' => $wlist->deadline,
                         'boat_id' => $wlist->boat_id,
-                        'priority_id' => 4,
+                        'priority' => 4,
                     ]);
 
                     //insert in db role_wlist
@@ -120,15 +120,15 @@ class WlistSeeder extends Seeder
                     'order_type' => 'work',
                     'boat_namecomplete' => '------',
                     'description' => '------',
-                    'status' => 'done',
-                    'url_invoice' => '',
+                    /* 'status' => 'done', */
+                    'proforma_link' => '',
                     'notes' => '',
                     'created_at' => now(),
                     'updated_at' => now(),
                     'deleted_at' => now(),
                     'client_id' => 1,
                     'boat_id' => 1,
-                    'priority_id' => 4,
+                    'priority' => 4,
                 ]);
                 $this->command->line("<info>BLANK {$i} is inserted in new database</info>");
             }

@@ -28,10 +28,26 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.employee.fields.is_active') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $employee->is_active ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.employee.fields.id_employee') }}
                                     </th>
                                     <td>
                                         {{ $employee->id_employee }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.employee.fields.namecomplete') }}
+                                    </th>
+                                    <td>
+                                        {{ $employee->namecomplete }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -120,10 +136,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.employee.fields.active') }}
+                                        {{ trans('cruds.employee.fields.link_description') }}
                                     </th>
                                     <td>
-                                        <input type="checkbox" disabled="disabled" {{ $employee->active ? 'checked' : '' }}>
+                                        {{ $employee->link_description }}
                                     </td>
                                 </tr>
                             </tbody>

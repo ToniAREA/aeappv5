@@ -20,16 +20,15 @@ class ToDoApiController extends Controller
     {
         abort_if(Gate::denies('to_do_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ToDoResource(ToDo::with(['for_roles', 'for_users', 'priority'])->get());
+        return new ToDoResource(ToDo::with(['for_roles', 'for_employee'])->get());
     }
 
     public function store(StoreToDoRequest $request)
     {
         $toDo = ToDo::create($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        foreach ($request->input('photo', []) as $file) {
-            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
+        foreach ($request->input('photos', []) as $file) {
+            $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
         }
 
         return (new ToDoResource($toDo))
@@ -41,25 +40,24 @@ class ToDoApiController extends Controller
     {
         abort_if(Gate::denies('to_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ToDoResource($toDo->load(['for_roles', 'for_users', 'priority']));
+        return new ToDoResource($toDo->load(['for_roles', 'for_employee']));
     }
 
     public function update(UpdateToDoRequest $request, ToDo $toDo)
     {
         $toDo->update($request->all());
         $toDo->for_roles()->sync($request->input('for_roles', []));
-        $toDo->for_users()->sync($request->input('for_users', []));
-        if (count($toDo->photo) > 0) {
-            foreach ($toDo->photo as $media) {
-                if (! in_array($media->file_name, $request->input('photo', []))) {
+        if (count($toDo->photos) > 0) {
+            foreach ($toDo->photos as $media) {
+                if (! in_array($media->file_name, $request->input('photos', []))) {
                     $media->delete();
                 }
             }
         }
-        $media = $toDo->photo->pluck('file_name')->toArray();
-        foreach ($request->input('photo', []) as $file) {
+        $media = $toDo->photos->pluck('file_name')->toArray();
+        foreach ($request->input('photos', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
-                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photo');
+                $toDo->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
             }
         }
 

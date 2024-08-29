@@ -21,6 +21,10 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'namecomplete' => [
+                'string',
+                'nullable',
+            ],
             'status' => [
                 'string',
                 'nullable',
@@ -49,8 +53,9 @@ class StoreEmployeeRequest extends FormRequest
                 'string',
                 'nullable',
             ],
-            'active' => [
-                'required',
+            'link_description' => [
+                'string',
+                'nullable',
             ],
         ];
     }

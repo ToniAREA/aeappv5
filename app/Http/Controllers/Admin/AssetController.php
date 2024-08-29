@@ -17,91 +17,26 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
 
 class AssetController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
-    public function index(Request $request)
+    public function index()
     {
         abort_if(Gate::denies('asset_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if ($request->ajax()) {
-            $query = Asset::with(['category', 'status', 'location', 'assigned_to'])->select(sprintf('%s.*', (new Asset)->table));
-            $table = Datatables::of($query);
-
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
-
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'asset_show';
-                $editGate      = 'asset_edit';
-                $deleteGate    = 'asset_delete';
-                $crudRoutePart = 'assets';
-
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('category_name', function ($row) {
-                return $row->category ? $row->category->name : '';
-            });
-
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : '';
-            });
-            $table->editColumn('serial_number', function ($row) {
-                return $row->serial_number ? $row->serial_number : '';
-            });
-            $table->editColumn('photos', function ($row) {
-                if (! $row->photos) {
-                    return '';
-                }
-                $links = [];
-                foreach ($row->photos as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-            $table->addColumn('status_name', function ($row) {
-                return $row->status ? $row->status->name : '';
-            });
-
-            $table->addColumn('location_name', function ($row) {
-                return $row->location ? $row->location->name : '';
-            });
-
-            $table->editColumn('notes', function ($row) {
-                return $row->notes ? $row->notes : '';
-            });
-            $table->editColumn('internal_notes', function ($row) {
-                return $row->internal_notes ? $row->internal_notes : '';
-            });
-            $table->addColumn('assigned_to_name', function ($row) {
-                return $row->assigned_to ? $row->assigned_to->name : '';
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'category', 'photos', 'status', 'location', 'assigned_to']);
-
-            return $table->make(true);
-        }
+        $assets = Asset::with(['category', 'status', 'location', 'actual_holder', 'media'])->get();
 
         $asset_categories = AssetCategory::get();
-        $asset_statuses   = AssetStatus::get();
-        $asset_locations  = AssetLocation::get();
-        $users            = User::get();
 
-        return view('admin.assets.index', compact('asset_categories', 'asset_statuses', 'asset_locations', 'users'));
+        $asset_statuses = AssetStatus::get();
+
+        $asset_locations = AssetLocation::get();
+
+        $users = User::get();
+
+        return view('admin.assets.index', compact('asset_categories', 'asset_locations', 'asset_statuses', 'assets', 'users'));
     }
 
     public function create()
@@ -114,9 +49,9 @@ class AssetController extends Controller
 
         $locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actual_holders = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.assets.create', compact('assigned_tos', 'categories', 'locations', 'statuses'));
+        return view('admin.assets.create', compact('actual_holders', 'categories', 'locations', 'statuses'));
     }
 
     public function store(StoreAssetRequest $request)
@@ -125,6 +60,10 @@ class AssetController extends Controller
 
         foreach ($request->input('photos', []) as $file) {
             $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('photos');
+        }
+
+        foreach ($request->input('files', []) as $file) {
+            $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -144,11 +83,11 @@ class AssetController extends Controller
 
         $locations = AssetLocation::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigned_tos = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $actual_holders = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'actual_holder');
 
-        return view('admin.assets.edit', compact('asset', 'assigned_tos', 'categories', 'locations', 'statuses'));
+        return view('admin.assets.edit', compact('actual_holders', 'asset', 'categories', 'locations', 'statuses'));
     }
 
     public function update(UpdateAssetRequest $request, Asset $asset)
@@ -169,6 +108,20 @@ class AssetController extends Controller
             }
         }
 
+        if (count($asset->files) > 0) {
+            foreach ($asset->files as $media) {
+                if (! in_array($media->file_name, $request->input('files', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $asset->files->pluck('file_name')->toArray();
+        foreach ($request->input('files', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $asset->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('files');
+            }
+        }
+
         return redirect()->route('admin.assets.index');
     }
 
@@ -176,7 +129,7 @@ class AssetController extends Controller
     {
         abort_if(Gate::denies('asset_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $asset->load('category', 'status', 'location', 'assigned_to');
+        $asset->load('category', 'status', 'location', 'actual_holder', 'assetAssetsRentals');
 
         return view('admin.assets.show', compact('asset'));
     }

@@ -10,12 +10,31 @@
         <form method="POST" action="{{ route("admin.employees.store") }}" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_active') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_active" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', 0) == 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_active">{{ trans('cruds.employee.fields.is_active') }}</label>
+                </div>
+                @if($errors->has('is_active'))
+                    <span class="text-danger">{{ $errors->first('is_active') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.employee.fields.is_active_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label for="id_employee">{{ trans('cruds.employee.fields.id_employee') }}</label>
                 <input class="form-control {{ $errors->has('id_employee') ? 'is-invalid' : '' }}" type="text" name="id_employee" id="id_employee" value="{{ old('id_employee', '') }}">
                 @if($errors->has('id_employee'))
                     <span class="text-danger">{{ $errors->first('id_employee') }}</span>
                 @endif
                 <span class="help-block">{{ trans('cruds.employee.fields.id_employee_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="namecomplete">{{ trans('cruds.employee.fields.namecomplete') }}</label>
+                <input class="form-control {{ $errors->has('namecomplete') ? 'is-invalid' : '' }}" type="text" name="namecomplete" id="namecomplete" value="{{ old('namecomplete', '') }}">
+                @if($errors->has('namecomplete'))
+                    <span class="text-danger">{{ $errors->first('namecomplete') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.employee.fields.namecomplete_helper') }}</span>
             </div>
             <div class="form-group">
                 <label for="user_id">{{ trans('cruds.employee.fields.user') }}</label>
@@ -107,14 +126,12 @@
                 <span class="help-block">{{ trans('cruds.employee.fields.link_helper') }}</span>
             </div>
             <div class="form-group">
-                <div class="form-check {{ $errors->has('active') ? 'is-invalid' : '' }}">
-                    <input class="form-check-input" type="checkbox" name="active" id="active" value="1" required {{ old('active', 0) == 1 ? 'checked' : '' }}>
-                    <label class="required form-check-label" for="active">{{ trans('cruds.employee.fields.active') }}</label>
-                </div>
-                @if($errors->has('active'))
-                    <span class="text-danger">{{ $errors->first('active') }}</span>
+                <label for="link_description">{{ trans('cruds.employee.fields.link_description') }}</label>
+                <input class="form-control {{ $errors->has('link_description') ? 'is-invalid' : '' }}" type="text" name="link_description" id="link_description" value="{{ old('link_description', '') }}">
+                @if($errors->has('link_description'))
+                    <span class="text-danger">{{ $errors->first('link_description') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.employee.fields.active_helper') }}</span>
+                <span class="help-block">{{ trans('cruds.employee.fields.link_description_helper') }}</span>
             </div>
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
@@ -133,7 +150,7 @@
 <script>
     Dropzone.options.photoDropzone = {
     url: '{{ route('admin.employees.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -141,7 +158,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

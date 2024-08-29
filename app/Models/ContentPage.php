@@ -34,10 +34,21 @@ class ContentPage extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'is_online',
         'title',
         'slug',
         'page_text',
         'excerpt',
+        'seo_title',
+        'seo_meta_description',
+        'seo_slug',
+        'link_a',
+        'link_a_description',
+        'show_online_link_a',
+        'link_b',
+        'link_b_description',
+        'show_online_link_b',
+        'view_count',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -79,5 +90,15 @@ class ContentPage extends Model implements HasMedia
     public function getFileAttribute()
     {
         return $this->getMedia('file');
+    }
+
+    public function authorized_roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function authorized_users()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

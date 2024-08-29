@@ -3,22 +3,26 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyPaymentRequest;
 use App\Http\Requests\StorePaymentRequest;
 use App\Http\Requests\UpdatePaymentRequest;
+use App\Models\Currency;
+use App\Models\FinalcialDocument;
 use App\Models\Payment;
-use App\Models\Proforma;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class PaymentController extends Controller
 {
+    use CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('payment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $payments = Payment::with(['proforma_number'])->get();
+        $payments = Payment::with(['financial_document', 'currency'])->get();
 
         return view('admin.payments.index', compact('payments'));
     }
@@ -27,9 +31,11 @@ class PaymentController extends Controller
     {
         abort_if(Gate::denies('payment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $proforma_numbers = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.payments.create', compact('proforma_numbers'));
+        $currencies = Currency::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.payments.create', compact('currencies', 'financial_documents'));
     }
 
     public function store(StorePaymentRequest $request)
@@ -43,11 +49,13 @@ class PaymentController extends Controller
     {
         abort_if(Gate::denies('payment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $proforma_numbers = Proforma::pluck('proforma_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $payment->load('proforma_number');
+        $currencies = Currency::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.payments.edit', compact('payment', 'proforma_numbers'));
+        $payment->load('financial_document', 'currency');
+
+        return view('admin.payments.edit', compact('currencies', 'financial_documents', 'payment'));
     }
 
     public function update(UpdatePaymentRequest $request, Payment $payment)
@@ -61,7 +69,7 @@ class PaymentController extends Controller
     {
         abort_if(Gate::denies('payment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $payment->load('proforma_number');
+        $payment->load('financial_document', 'currency');
 
         return view('admin.payments.show', compact('payment'));
     }

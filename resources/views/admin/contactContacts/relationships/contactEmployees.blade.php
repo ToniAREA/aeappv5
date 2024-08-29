@@ -25,7 +25,13 @@
                                 {{ trans('cruds.employee.fields.id') }}
                             </th>
                             <th>
+                                {{ trans('cruds.employee.fields.is_active') }}
+                            </th>
+                            <th>
                                 {{ trans('cruds.employee.fields.id_employee') }}
+                            </th>
+                            <th>
+                                {{ trans('cruds.employee.fields.namecomplete') }}
                             </th>
                             <th>
                                 {{ trans('cruds.employee.fields.user') }}
@@ -61,7 +67,7 @@
                                 {{ trans('cruds.employee.fields.link') }}
                             </th>
                             <th>
-                                {{ trans('cruds.employee.fields.active') }}
+                                {{ trans('cruds.employee.fields.link_description') }}
                             </th>
                             <th>
                                 &nbsp;
@@ -78,7 +84,14 @@
                                     {{ $employee->id ?? '' }}
                                 </td>
                                 <td>
+                                    <span style="display:none">{{ $employee->is_active ?? '' }}</span>
+                                    <input type="checkbox" disabled="disabled" {{ $employee->is_active ? 'checked' : '' }}>
+                                </td>
+                                <td>
                                     {{ $employee->id_employee ?? '' }}
+                                </td>
+                                <td>
+                                    {{ $employee->namecomplete ?? '' }}
                                 </td>
                                 <td>
                                     {{ $employee->user->name ?? '' }}
@@ -118,8 +131,7 @@
                                     {{ $employee->link ?? '' }}
                                 </td>
                                 <td>
-                                    <span style="display:none">{{ $employee->active ?? '' }}</span>
-                                    <input type="checkbox" disabled="disabled" {{ $employee->active ? 'checked' : '' }}>
+                                    {{ $employee->link_description ?? '' }}
                                 </td>
                                 <td>
                                     @can('employee_show')

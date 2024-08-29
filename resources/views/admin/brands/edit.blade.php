@@ -11,6 +11,17 @@
             @method('PUT')
             @csrf
             <div class="form-group">
+                <div class="form-check {{ $errors->has('is_online') ? 'is-invalid' : '' }}">
+                    <input type="hidden" name="is_online" value="0">
+                    <input class="form-check-input" type="checkbox" name="is_online" id="is_online" value="1" {{ $brand->is_online || old('is_online', 0) === 1 ? 'checked' : '' }}>
+                    <label class="form-check-label" for="is_online">{{ trans('cruds.brand.fields.is_online') }}</label>
+                </div>
+                @if($errors->has('is_online'))
+                    <span class="text-danger">{{ $errors->first('is_online') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.brand.fields.is_online_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <label class="required" for="brand">{{ trans('cruds.brand.fields.brand') }}</label>
                 <input class="form-control {{ $errors->has('brand') ? 'is-invalid' : '' }}" type="text" name="brand" id="brand" value="{{ old('brand', $brand->brand) }}" required>
                 @if($errors->has('brand'))
@@ -76,6 +87,22 @@
                 <span class="help-block">{{ trans('cruds.brand.fields.internal_notes_helper') }}</span>
             </div>
             <div class="form-group">
+                <label for="link">{{ trans('cruds.brand.fields.link') }}</label>
+                <input class="form-control {{ $errors->has('link') ? 'is-invalid' : '' }}" type="text" name="link" id="link" value="{{ old('link', $brand->link) }}">
+                @if($errors->has('link'))
+                    <span class="text-danger">{{ $errors->first('link') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.brand.fields.link_helper') }}</span>
+            </div>
+            <div class="form-group">
+                <label for="link_description">{{ trans('cruds.brand.fields.link_description') }}</label>
+                <input class="form-control {{ $errors->has('link_description') ? 'is-invalid' : '' }}" type="text" name="link_description" id="link_description" value="{{ old('link_description', $brand->link_description) }}">
+                @if($errors->has('link_description'))
+                    <span class="text-danger">{{ $errors->first('link_description') }}</span>
+                @endif
+                <span class="help-block">{{ trans('cruds.brand.fields.link_description_helper') }}</span>
+            </div>
+            <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}
                 </button>
@@ -92,7 +119,7 @@
 <script>
     Dropzone.options.brandLogoDropzone = {
     url: '{{ route('admin.brands.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
     maxFiles: 1,
     addRemoveLinks: true,
@@ -100,7 +127,7 @@
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2,
+      size: 5,
       width: 4096,
       height: 4096
     },

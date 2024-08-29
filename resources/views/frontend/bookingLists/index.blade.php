@@ -54,6 +54,12 @@
                                         {{ trans('cruds.employee.fields.category') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.bookingList.fields.booking_slot') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.bookingSlot.fields.end_time') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.bookingList.fields.date') }}
                                     </th>
                                     <th>
@@ -66,10 +72,19 @@
                                         {{ trans('cruds.bookingList.fields.end_time') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.hour_rate') }}
+                                        {{ trans('cruds.bookingList.fields.hourly_rate') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.total_price') }}
+                                        {{ trans('cruds.bookingList.fields.total_amount') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.bookingList.fields.confirmed') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.bookingList.fields.status') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.bookingList.fields.is_invoiced') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.bookingList.fields.notes') }}
@@ -78,10 +93,13 @@
                                         {{ trans('cruds.bookingList.fields.internal_notes') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.confirmed') }}
+                                        {{ trans('cruds.bookingList.fields.completed_at') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.bookingList.fields.status') }}
+                                        {{ trans('cruds.bookingList.fields.financial_document') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.finalcialDocument.fields.doc_type') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -134,6 +152,16 @@
                                     <td>
                                     </td>
                                     <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($booking_slots as $key => $item)
+                                                <option value="{{ $item->star_time }}">{{ $item->star_time }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -149,7 +177,6 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -158,6 +185,22 @@
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <select class="search">
+                                            <option value>{{ trans('global.all') }}</option>
+                                            @foreach($finalcial_documents as $key => $item)
+                                                <option value="{{ $item->reference_number }}">{{ $item->reference_number }}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
                                     </td>
                                     <td>
                                     </td>
@@ -194,6 +237,12 @@
                                             {{ $bookingList->employee->category ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $bookingList->booking_slot->star_time ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $bookingList->booking_slot->end_time ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $bookingList->date ?? '' }}
                                         </td>
                                         <td>
@@ -206,10 +255,21 @@
                                             {{ $bookingList->end_time ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $bookingList->hour_rate ?? '' }}
+                                            {{ $bookingList->hourly_rate ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $bookingList->total_price ?? '' }}
+                                            {{ $bookingList->total_amount ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $bookingList->confirmed ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $bookingList->confirmed ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            {{ $bookingList->status ?? '' }}
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $bookingList->is_invoiced ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $bookingList->is_invoiced ? 'checked' : '' }}>
                                         </td>
                                         <td>
                                             {{ $bookingList->notes ?? '' }}
@@ -218,11 +278,15 @@
                                             {{ $bookingList->internal_notes ?? '' }}
                                         </td>
                                         <td>
-                                            <span style="display:none">{{ $bookingList->confirmed ?? '' }}</span>
-                                            <input type="checkbox" disabled="disabled" {{ $bookingList->confirmed ? 'checked' : '' }}>
+                                            {{ $bookingList->completed_at ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $bookingList->status ?? '' }}
+                                            {{ $bookingList->financial_document->reference_number ?? '' }}
+                                        </td>
+                                        <td>
+                                            @if($bookingList->financial_document)
+                                                {{ $bookingList->financial_document::DOC_TYPE_RADIO[$bookingList->financial_document->doc_type] ?? '' }}
+                                            @endif
                                         </td>
                                         <td>
                                             @can('booking_list_show')

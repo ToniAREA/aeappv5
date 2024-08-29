@@ -14,6 +14,19 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group">
+                            <div>
+                                <input type="hidden" name="is_available" value="0">
+                                <input type="checkbox" name="is_available" id="is_available" value="1" {{ $asset->is_available || old('is_available', 0) === 1 ? 'checked' : '' }}>
+                                <label for="is_available">{{ trans('cruds.asset.fields.is_available') }}</label>
+                            </div>
+                            @if($errors->has('is_available'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('is_available') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.is_available_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label class="required" for="category_id">{{ trans('cruds.asset.fields.category') }}</label>
                             <select class="form-control select2" name="category_id" id="category_id" required>
                                 @foreach($categories as $id => $entry)
@@ -46,16 +59,6 @@
                                 </div>
                             @endif
                             <span class="help-block">{{ trans('cruds.asset.fields.description_helper') }}</span>
-                        </div>
-                        <div class="form-group">
-                            <label for="serial_number">{{ trans('cruds.asset.fields.serial_number') }}</label>
-                            <input class="form-control" type="text" name="serial_number" id="serial_number" value="{{ old('serial_number', $asset->serial_number) }}">
-                            @if($errors->has('serial_number'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('serial_number') }}
-                                </div>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.asset.fields.serial_number_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <label for="photos">{{ trans('cruds.asset.fields.photos') }}</label>
@@ -97,6 +100,20 @@
                             <span class="help-block">{{ trans('cruds.asset.fields.location_helper') }}</span>
                         </div>
                         <div class="form-group">
+                            <label for="actual_holder_id">{{ trans('cruds.asset.fields.actual_holder') }}</label>
+                            <select class="form-control select2" name="actual_holder_id" id="actual_holder_id">
+                                @foreach($actual_holders as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('actual_holder_id') ? old('actual_holder_id') : $asset->actual_holder->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('actual_holder'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('actual_holder') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.actual_holder_helper') }}</span>
+                        </div>
+                        <div class="form-group">
                             <label for="notes">{{ trans('cruds.asset.fields.notes') }}</label>
                             <textarea class="form-control" name="notes" id="notes">{{ old('notes', $asset->notes) }}</textarea>
                             @if($errors->has('notes'))
@@ -117,18 +134,105 @@
                             <span class="help-block">{{ trans('cruds.asset.fields.internal_notes_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <label for="assigned_to_id">{{ trans('cruds.asset.fields.assigned_to') }}</label>
-                            <select class="form-control select2" name="assigned_to_id" id="assigned_to_id">
-                                @foreach($assigned_tos as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('assigned_to_id') ? old('assigned_to_id') : $asset->assigned_to->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('assigned_to'))
+                            <label for="data_1">{{ trans('cruds.asset.fields.data_1') }}</label>
+                            <input class="form-control" type="text" name="data_1" id="data_1" value="{{ old('data_1', $asset->data_1) }}">
+                            @if($errors->has('data_1'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('assigned_to') }}
+                                    {{ $errors->first('data_1') }}
                                 </div>
                             @endif
-                            <span class="help-block">{{ trans('cruds.asset.fields.assigned_to_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.asset.fields.data_1_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_1_description">{{ trans('cruds.asset.fields.data_1_description') }}</label>
+                            <input class="form-control" type="text" name="data_1_description" id="data_1_description" value="{{ old('data_1_description', $asset->data_1_description) }}">
+                            @if($errors->has('data_1_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('data_1_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.data_1_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_2">{{ trans('cruds.asset.fields.data_2') }}</label>
+                            <input class="form-control" type="text" name="data_2" id="data_2" value="{{ old('data_2', $asset->data_2) }}">
+                            @if($errors->has('data_2'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('data_2') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.data_2_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="data_2_description">{{ trans('cruds.asset.fields.data_2_description') }}</label>
+                            <input class="form-control" type="text" name="data_2_description" id="data_2_description" value="{{ old('data_2_description', $asset->data_2_description) }}">
+                            @if($errors->has('data_2_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('data_2_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.data_2_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="files">{{ trans('cruds.asset.fields.files') }}</label>
+                            <div class="needsclick dropzone" id="files-dropzone">
+                            </div>
+                            @if($errors->has('files'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('files') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.files_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_a">{{ trans('cruds.asset.fields.link_a') }}</label>
+                            <input class="form-control" type="text" name="link_a" id="link_a" value="{{ old('link_a', $asset->link_a) }}">
+                            @if($errors->has('link_a'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_a') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.link_a_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_a_description">{{ trans('cruds.asset.fields.link_a_description') }}</label>
+                            <input class="form-control" type="text" name="link_a_description" id="link_a_description" value="{{ old('link_a_description', $asset->link_a_description) }}">
+                            @if($errors->has('link_a_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_a_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.link_a_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_b">{{ trans('cruds.asset.fields.link_b') }}</label>
+                            <input class="form-control" type="text" name="link_b" id="link_b" value="{{ old('link_b', $asset->link_b) }}">
+                            @if($errors->has('link_b'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_b') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.link_b_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="link_b_description">{{ trans('cruds.asset.fields.link_b_description') }}</label>
+                            <input class="form-control" type="text" name="link_b_description" id="link_b_description" value="{{ old('link_b_description', $asset->link_b_description) }}">
+                            @if($errors->has('link_b_description'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('link_b_description') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.link_b_description_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <label for="last_use">{{ trans('cruds.asset.fields.last_use') }}</label>
+                            <input class="form-control datetime" type="text" name="last_use" id="last_use" value="{{ old('last_use', $asset->last_use) }}">
+                            @if($errors->has('last_use'))
+                                <div class="invalid-feedback">
+                                    {{ $errors->first('last_use') }}
+                                </div>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.asset.fields.last_use_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -213,13 +317,13 @@
     var uploadedPhotosMap = {}
 Dropzone.options.photosDropzone = {
     url: '{{ route('frontend.assets.storeMedia') }}',
-    maxFilesize: 2, // MB
+    maxFilesize: 5, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2
+      size: 5
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="photos[]" value="' + response.name + '">')
@@ -244,6 +348,62 @@ Dropzone.options.photosDropzone = {
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="photos[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedFilesMap = {}
+Dropzone.options.filesDropzone = {
+    url: '{{ route('frontend.assets.storeMedia') }}',
+    maxFilesize: 10, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 10
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="files[]" value="' + response.name + '">')
+      uploadedFilesMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedFilesMap[file.name]
+      }
+      $('form').find('input[name="files[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($asset) && $asset->files)
+          var files =
+            {!! json_encode($asset->files) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="files[]" value="' + file.file_name + '">')
             }
 @endif
     },

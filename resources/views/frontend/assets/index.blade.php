@@ -30,13 +30,13 @@
                                         {{ trans('cruds.asset.fields.id') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.asset.fields.is_available') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.asset.fields.category') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.asset.fields.name') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.asset.fields.serial_number') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.asset.fields.photos') }}
@@ -48,13 +48,46 @@
                                         {{ trans('cruds.asset.fields.location') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.asset.fields.actual_holder') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.email') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.asset.fields.notes') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.asset.fields.internal_notes') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.asset.fields.assigned_to') }}
+                                        {{ trans('cruds.asset.fields.data_1') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.data_1_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.data_2') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.data_2_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.files') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_a') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_a_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_b') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.link_b_description') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.asset.fields.last_use') }}
                                     </th>
                                     <th>
                                         &nbsp;
@@ -67,15 +100,14 @@
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
+                                    </td>
+                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($asset_categories as $key => $item)
                                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                         <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -99,18 +131,49 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
-                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                    </td>
-                                    <td>
                                         <select class="search">
                                             <option value>{{ trans('global.all') }}</option>
                                             @foreach($users as $key => $item)
                                                 <option value="{{ $item->name }}">{{ $item->name }}</option>
                                             @endforeach
                                         </select>
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    </td>
+                                    <td>
+                                        <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                     </td>
                                     <td>
                                     </td>
@@ -123,13 +186,14 @@
                                             {{ $asset->id ?? '' }}
                                         </td>
                                         <td>
+                                            <span style="display:none">{{ $asset->is_available ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $asset->is_available ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
                                             {{ $asset->category->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $asset->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $asset->serial_number ?? '' }}
                                         </td>
                                         <td>
                                             @foreach($asset->photos as $key => $media)
@@ -145,13 +209,50 @@
                                             {{ $asset->location->name ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $asset->actual_holder->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->actual_holder->email ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $asset->notes ?? '' }}
                                         </td>
                                         <td>
                                             {{ $asset->internal_notes ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $asset->assigned_to->name ?? '' }}
+                                            {{ $asset->data_1 ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->data_1_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->data_2 ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->data_2_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($asset->files as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $asset->link_a ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->link_a_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->link_b ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->link_b_description ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $asset->last_use ?? '' }}
                                         </td>
                                         <td>
                                             @can('asset_show')

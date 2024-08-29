@@ -9,6 +9,10 @@
                         <a class="btn btn-success" href="{{ route('frontend.claims.create') }}">
                             {{ trans('global.add') }} {{ trans('cruds.claim.title_singular') }}
                         </a>
+                        <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                            {{ trans('global.app_csvImport') }}
+                        </button>
+                        @include('csvImport.modal', ['model' => 'Claim', 'route' => 'admin.claims.parseCsvImport'])
                     </div>
                 </div>
             @endcan
@@ -26,12 +30,6 @@
                                         {{ trans('cruds.claim.fields.id') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.claim.fields.proforma_number') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.proforma.fields.description') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.claim.fields.claim_date') }}
                                     </th>
                                     <th>
@@ -47,12 +45,6 @@
                                     <tr data-entry-id="{{ $claim->id }}">
                                         <td>
                                             {{ $claim->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $claim->proforma_number->proforma_number ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $claim->proforma_number->description ?? '' }}
                                         </td>
                                         <td>
                                             {{ $claim->claim_date ?? '' }}

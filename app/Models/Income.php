@@ -23,10 +23,12 @@ class Income extends Model
     ];
 
     protected $fillable = [
+        'employee_id',
         'income_category_id',
         'entry_date',
-        'amount',
         'description',
+        'amount',
+        'is_accounted',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -35,6 +37,11 @@ class Income extends Model
     protected function serializeDate(DateTimeInterface $date)
     {
         return $date->format('Y-m-d H:i:s');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id');
     }
 
     public function income_category()

@@ -36,6 +36,18 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.marina.fields.marina_photo') }}
+                                    </th>
+                                    <td>
+                                        @if($marina->marina_photo)
+                                            <a href="{{ $marina->marina_photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $marina->marina_photo->getUrl('thumb') }}">
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.marina.fields.coordinates') }}
                                     </th>
                                     <td>
@@ -44,10 +56,36 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.marina.fields.contacts') }}
+                                    </th>
+                                    <td>
+                                        @foreach($marina->contacts as $key => $contacts)
+                                            <span class="label label-info">{{ $contacts->contact_first_name }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.marina.fields.contact_docs') }}
+                                    </th>
+                                    <td>
+                                        {{ $marina->contact_docs->contact_first_name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.marina.fields.link') }}
                                     </th>
                                     <td>
                                         {{ $marina->link }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.marina.fields.link_description') }}
+                                    </th>
+                                    <td>
+                                        {{ $marina->link_description }}
                                     </td>
                                 </tr>
                                 <tr>

@@ -28,6 +28,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.expense.fields.is_accounted') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $expense->is_accounted ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.expense.fields.employee') }}
+                                    </th>
+                                    <td>
+                                        {{ $expense->employee->id_employee ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.expense.fields.expense_category') }}
                                     </th>
                                     <td>
@@ -44,14 +60,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.expense.fields.amount') }}
-                                    </th>
-                                    <td>
-                                        {{ $expense->amount }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.expense.fields.description') }}
                                     </th>
                                     <td>
@@ -60,26 +68,42 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.expense.fields.file') }}
+                                        {{ trans('cruds.expense.fields.amount') }}
                                     </th>
                                     <td>
-                                        @if($expense->file)
-                                            <a href="{{ $expense->file->getUrl() }}" target="_blank">
-                                                {{ trans('global.view_file') }}
-                                            </a>
-                                        @endif
+                                        {{ $expense->amount }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.expense.fields.photo') }}
+                                        {{ trans('cruds.expense.fields.files') }}
                                     </th>
                                     <td>
-                                        @if($expense->photo)
-                                            <a href="{{ $expense->photo->getUrl() }}" target="_blank" style="display: inline-block">
-                                                <img src="{{ $expense->photo->getUrl('thumb') }}">
+                                        @foreach($expense->files as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
                                             </a>
-                                        @endif
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.expense.fields.photos') }}
+                                    </th>
+                                    <td>
+                                        @foreach($expense->photos as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $media->getUrl('thumb') }}">
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.expense.fields.notes') }}
+                                    </th>
+                                    <td>
+                                        {{ $expense->notes }}
                                     </td>
                                 </tr>
                             </tbody>
