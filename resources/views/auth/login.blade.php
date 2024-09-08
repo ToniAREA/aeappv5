@@ -10,7 +10,7 @@
     </div>
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">
+            <p class="login-box-msg" style="text-transform: uppercase;">
                 {{ trans('global.login') }}
             </p>
 
@@ -41,6 +41,12 @@
                             {{ $errors->first('password') }}
                         </div>
                     @endif
+                </div>
+
+                <!-- Checkbox para mostrar/ocultar contraseña -->
+                <div class="form-group">
+                    <input type="checkbox" id="show-password">
+                    <label for="show-password">{{ trans('global.show_password') }}</label>
                 </div>
 
 
@@ -78,4 +84,17 @@
         <!-- /.login-card-body -->
     </div>
 </div>
+
+<!-- JavaScript para mostrar/ocultar la contraseña -->
+<script>
+    document.getElementById('show-password').addEventListener('change', function() {
+        var passwordInput = document.getElementById('password');
+        if (this.checked) {
+            passwordInput.type = 'text';
+        } else {
+            passwordInput.type = 'password';
+        }
+    });
+</script>
+
 @endsection

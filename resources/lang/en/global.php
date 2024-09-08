@@ -17,6 +17,7 @@ return [
     'entries'                        => 'Entries',
     'filterDate'                     => 'Filter by date',
     'forgot_password'                => 'Forgot your password?',
+    'show_password'                  => 'Show password',
     'home'                           => 'Home',
     'list'                           => 'List',
     'login'                          => 'Login',
