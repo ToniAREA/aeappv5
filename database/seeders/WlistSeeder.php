@@ -80,6 +80,16 @@ class WlistSeeder extends Seeder
                         $wlist->status = 'verifying';
                     } */
 
+                    /*
+                    OLD STATUSES= working, done, pending, cancelled
+                    NEW STATUSES= pending 1, in progress 2, completed 3, on hold 4, cancelled 5, awaiting approval 6
+                    */
+
+                    if ($wlist->status == 'working') { $wlistStatus_id = 2; }
+                    elseif ($wlist->status == 'done') { $wlistStatus_id = 3; }
+                    elseif ($wlist->status == 'pending') { $wlistStatus_id = 1; }
+                    elseif ($wlist->status == 'cancelled') { $wlistStatus_id = 5; }
+                    else { $wlistStatus_id = 5; }
 
                     //insert record in new db
                     DB::table('wlists')->insert([
@@ -95,6 +105,8 @@ class WlistSeeder extends Seeder
                         'deadline' => $wlist->deadline,
                         'boat_id' => $wlist->boat_id,
                         'priority' => 4,
+                        'for_employee_id' => $forUser,
+                        'status_id' => $wlistStatus_id,
                     ]);
 
                     //insert in db role_wlist
@@ -103,13 +115,8 @@ class WlistSeeder extends Seeder
                         'wlist_id' => $i,
                     ]);
 
-                    //insert in db user_wlist
-                    if ($forUser != null) {
-                        DB::table('user_wlist')->insert([
-                            'user_id' => $forUser,
-                            'wlist_id' => $i,
-                        ]);
-                    }
+                    $this->command->line("<info>{$i} is inserted in new database</info>");
+
                 } else {
                     $this->command->line("<error>{$i} is not same ID</error>");
                 }
@@ -129,7 +136,10 @@ class WlistSeeder extends Seeder
                     'client_id' => 1,
                     'boat_id' => 1,
                     'priority' => 4,
+                    'for_employee_id' => 1,
+                    'status_id' => 5,
                 ]);
+
                 $this->command->line("<info>BLANK {$i} is inserted in new database</info>");
             }
         }

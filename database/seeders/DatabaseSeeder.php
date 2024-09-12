@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             BoatsSeeder::class,
             ClientsSeeder::class,
             BoatClientPivotSeeder::class,
+            WlistStatusesTableSeeder::class,
             WlistSeeder::class,
             WlogSeeder::class,
         ]);
