@@ -1,219 +1,594 @@
-@media (min-width: 768px) {
-    .owncard-field {
-        width: 48%;
-        display: inline-block;
-        vertical-align: top;
-    }
+/* ============================================================
+   Paleta de colores (Tema Náutico)
+   ============================================================ */
+:root {
+    --primary-color: #2E8BC0;
+    /* Azul Marino */
+    --secondary-color: #145DA0;
+    /* Azul Profundo */
+    --accent-color: #0C2D48;
+    /* Azul Marino Oscuro */
+    --background-color: #ddd;
+    /* Azul Muy Claro */
+    --text-color: #0C2D48;
+    /* Azul Marino Oscuro */
+    --heading-color: #145DA0;
+    /* Azul Profundo */
+    --link-color: #2E8BC0;
+    /* Azul Marino */
+    --link-hover-color: #145DA0;
+    /* Azul Profundo */
+    --border-color: #D4E4F7;
+    /* Azul Claro */
+    --button-color: #2E8BC0;
+    /* Azul Marino */
+    --button-hover-color: #145DA0;
+    /* Azul Profundo */
+    --badge-green: #3AAFA9;
+    /* Verde Agua */
+    --badge-red: #FF6F61;
+    /* Coral */
+    --badge-gray: #A9A9A9;
+    /* Gris */
+    --input-background: #FFFFFF;
+    /* Blanco */
+    --input-border: #CCCCCC;
+    /* Gris Claro */
+    --table-header-bg: #B1D4E0;
+    /* Azul Claro */
+    --table-row-hover-bg: #EAF6F6;
+    /* Azul Muy Claro */
+    --navbar-background-color: #145DA0;
+    /* Fondo del navbar */
+    --navbar-text-color: #fff;
+    /* Color del texto del navbar */
+    --navbar-hover-text-color: #888;
+    /* Color del texto al pasar el mouse */
+    --navbar-toggler-border-color: var(--navbar-background-color);
+    /* Color del borde del toggler */
+    --dropdown-menu-background: #eee;
+    /* Fondo del menú desplegable */
+    --dropdown-item-color: var(--text-color);
+    /* Color del texto de los ítems del dropdown */
+    --dropdown-item-hover-background: var(--background-color);
+    /* Fondo al pasar el mouse por los ítems */
+    --alert-success-bg: #D4EDDA;
+    /* Fondo de alerta de éxito */
+    --alert-success-text: #155724;
+    /* Texto de alerta de éxito */
+    --alert-success-border: #C3E6CB;
+    /* Borde de alerta de éxito */
+    --alert-danger-bg: #F8D7DA;
+    /* Fondo de alerta de error */
+    --alert-danger-text: #721C24;
+    /* Texto de alerta de error */
+    --alert-danger-border: #F5C6CB;
+    /* Borde de alerta de error */
 }
 
-@media (min-width: 992px) {
-    .owncard-field {
-        width: 32%;
-        display: inline-block;
-        vertical-align: top;
-    }
-}
-
-/* Adjustments for mobile view */
-@media (max-width: 767px) {
-    .owncard-row {
-        display: block;
-    }
-
-    .owncard-field {
-        width: 100%;
-        display: block;
-    }
-}
-
+/* ============================================================
+   Estilos base
+   ============================================================ */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: var(--background-color);
+    color: var(--text-color);
 }
 
-.dashcard {
+a {
+    color: var(--link-color);
+}
+
+a:hover {
+    color: var(--link-hover-color);
+    text-decoration: none;
+}
+
+/* ============================================================
+   Estilos del Layout y elementos globales
+   ============================================================ */
+/* ----- Navbar ----- */
+.navbar {
+    background-color: var(--navbar-background-color);
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link,
+.navbar .navbar-text {
+    color: var(--navbar-text-color);
+}
+
+.navbar .nav-link:hover,
+.navbar .navbar-brand:hover {
+    color: var(--navbar-hover-text-color);
+}
+
+.navbar .dropdown-menu {
+    background-color: var(--dropdown-menu-background);
+}
+
+.navbar .dropdown-item {
+    color: var(--dropdown-item-color);
+}
+
+.navbar .dropdown-item:hover {
+    background-color: var(--dropdown-item-hover-background);
+}
+
+.navbar .navbar-toggler {
+    border-color: var(--navbar-toggler-border-color);
+}
+
+/* ----- Centrar el ícono del toggler ----- */
+.navbar .navbar-toggler-icon {
     display: flex;
     align-items: center;
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 3px;
+    justify-content: center;
+    color: var(--navbar-text-color);
+}
+
+
+/* ----- Contenido principal ----- */
+main {
+    padding: 2px;
     margin: 3px;
 }
 
+/* ----- Alertas ----- */
+.alert {
+    border-radius: 5px;
+}
+
+.alert-success {
+    background-color: var(--alert-success-bg);
+    color: var(--alert-success-text);
+    border: 1px solid var(--alert-success-border);
+}
+
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+    color: var(--alert-danger-text);
+    border: 1px solid var(--alert-danger-border);
+}
+
+/* ============================================================
+   Estilos comunes para componentes
+   ============================================================ */
+/* ----- Botones ----- */
+.btn-primary {
+    background-color: var(--button-color);
+    border-color: var(--button-color);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+    color: #FFFFFF;
+}
+
+/* ----- Formularios ----- */
+form label {
+    color: var(--text-color);
+}
+
+form input,
+form select,
+form textarea {
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--button-color);
+    outline: none;
+}
+
+/* ----- Tablas ----- */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead th {
+    background-color: var(--table-header-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 8px;
+}
+
+table tbody td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #F9F9F9;
+}
+
+table tbody tr:hover {
+    background-color: var(--table-row-hover-bg);
+}
+
+/* ============================================================
+   Estilos comunes para tarjetas (card-common)
+   ============================================================ */
+.card-common {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+/* ----- Encabezado de las tarjetas ----- */
+.card-common .card-header {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* ----- Cuerpo de las tarjetas ----- */
+.card-common .card-body {
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+/* ----- Pie de página de las tarjetas ----- */
+.card-common .card-footer {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: #FFFFFF;
+}
+
+/* ----- Imágenes dentro de las tarjetas ----- */
+.card-common img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+}
+
+/* ----- Botones dentro de las tarjetas ----- */
+.card-common .btn {
+    margin: 0.2rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+    background-color: var(--button-color);
+    color: #FFFFFF;
+    border: none;
+}
+
+.card-common .btn:hover {
+    background-color: var(--button-hover-color);
+}
+
+/* ----- Enlaces dentro de las tarjetas ----- */
+.card-common a {
+    color: var(--link-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.card-common a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* ----- Títulos y textos ----- */
+.card-common .custom-description {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.card-common .custom-description-link {
+    color: var(--link-color);
+}
+
+.card-common .custom-description-link:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* ----- Botones en grupo dentro de las tarjetas ----- */
+.card-common .btn-group .btn {
+    flex: 1;
+    border-radius: 0;
+    margin: 0;
+}
+
+.card-common .btn-group .btn:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.card-common .btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/* ----- Ajustes generales ----- */
+.card-common * {
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================================
+   Estilos específicos para tarjetas
+   ============================================================ */
+
+/* ----- Estilos para .custom-card ----- */
+.custom-card {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.custom-card .card-header {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.custom-card .card-body {
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.custom-card .card-footer {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: #FFFFFF;
+}
+
+/* ============================================================
+   Estilos para las Dashcards
+   ============================================================ */
+
+/* Contenedor de la dashcard */
+.dashcard {
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 5px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    /* Texto pequeño */
+}
+
+/* Contenido de la dashcard */
 .dashcard-content {
     display: flex;
-    align-items: center;
-    width: 100%;
+    flex-direction: column;
+    gap: 5px;
 }
 
-.dashcard-button {
-    flex: 1;
-    display: block;
-    
-    background-color: #6b6b6b;
-    color: white;
-    border-radius: 5px;
-    padding: 2px;
-    margin: 2px;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    transition: background-color 0.3s ease;
-    a {
-        text-decoration: none;
-        color: whitesmoke;
-        
-    }
+/* Títulos y textos */
+.dashcard h2,
+.dashcard h3,
+.dashcard p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.2;
 }
 
-.dashcard-button:hover {
-    background-color: #6db495;
-}
-
+/* Número de dashcard */
 .dashcard-number {
-    background-color: #4CAF50;
-    color: white;
-    border-radius: 5px;
-    padding: 15px;
-    font-size: 24px;
     font-weight: bold;
-    margin-right: 15px;
-}
-
-.dashcard-info h2 {
-    margin: 0;
-    font-size: 18px;
-    font-weight: bold;
-    color: #444;
-}
-
-.dashcard-info h3 {
-    margin: 0;
-    font-size: 16px;
-    color: #AAA;
-}
-
-.dashcard-info p {
-    margin: 5px 0 0;
-    color: #777;
-}
-
-.dashcard-progress {
-    margin-left: auto;
-    text-align: right;
-}
-
-.dashcard-progress span {
-    display: block;
-    color: #777;
-    font-size: 14px;
-    color: #AAA;
-    margin-right: 5px;
-}
-
-.owncard {
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    width: 100%;
-    max-width: 800px;
-    box-sizing: border-box;
-    margin: 15px;
-    background-color: white;
-}
-
-.owncard h1 {
-    margin: 0;
-    font-size: 24px;
-    color: #007bff;
-}
-
-.back-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 5px;
+    color: var(--heading-color);
     margin-bottom: 5px;
 }
 
+/* Enlaces dentro de las dashcards */
+.dashcard a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.dashcard a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* Sección de progreso */
+.dashcard-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-top: auto;
+    font-size: 0.8rem;
+    /* Texto más pequeño */
+    color: var(--text-color);
+}
+
+/* Botones en la tarjeta de resumen */
+.dashcard-button {
+    flex: 1;
+    text-align: center;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    margin: 1px;
+}
+
+.dashcard-button a {
+    display: block;
+    padding: 10px;
+    color: #FFFFFF;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.dashcard-button a:hover {
+    background-color: var(--button-hover-color);
+    color: #FFFFFF;
+}
+
+/* Ajuste de los márgenes y paddings del row y columnas */
+.container .row {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.container .row>[class*='col-'] {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+/* ----- Estilos para .owncard ----- */
+.owncard {
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+    padding: 10px;
+}
+
+.owncard .card-header {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #FFFFFF;
+    border-bottom: 1px solid var(--border-color);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.owncard .card-body {
+    padding: 0.75rem 1rem;
+    color: var(--text-color);
+    font-size: 0.9rem;
+}
+
+.owncard .card-footer {
+    background-color: var(--secondary-color);
+    padding: 0.5rem 1rem;
+    border-top: 1px solid var(--border-color);
+    text-align: right;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    color: #FFFFFF;
+}
+
+/* ============================================================
+   Estilos para owncard-field
+   ============================================================ */
+/* ----- Estructura de owncard ----- */
 .owncard-details {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 5px;
 }
 
 .owncard-row {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 3px;
+    gap: 5px;
 }
 
 .owncard-field {
     flex: 1 1 100%;
     display: flex;
     flex-direction: column;
-    
 }
 
+/* ----- Labels e inputs ----- */
 .owncard-field label {
     display: block;
     font-weight: bold;
     margin-bottom: 1px;
+    color: var(--text-color);
 }
 
 .owncard-field input,
 .owncard-field textarea,
 .owncard-field span {
-    /*     width: 100%;*/
     flex: 1;
-    padding: 2px;
-    border: 1px solid #999;
+    padding: 5px;
+    border: 1px solid var(--input-border);
     border-radius: 5px;
-    background-color: #f7f7f7;
+    background-color: var(--input-background);
+    color: var(--text-color);
     resize: none;
     box-sizing: border-box;
-    padding-left: 5px;
 }
 
 .owncard-field textarea {
     height: 80px;
 }
 
-.owncard-field .badge {
-    display: block;
-    border-radius: 5px;
-    line-height: 1.5;
+/* ----- Diseño responsivo de owncard-field ----- */
+@media (min-width: 768px) {
+    .owncard-field {
+        flex: 1 1 calc(50% - 10px);
+        /* Dos columnas en tablet */
+    }
 }
 
+@media (min-width: 992px) {
+    .owncard-field {
+        flex: 1 1 calc(33.333% - 10px);
+        /* Tres columnas en PC */
+    }
+}
+
+/* ============================================================
+   Estilos para badges y enlaces especiales
+   ============================================================ */
+/* ----- Badges ----- */
 .badge-green {
-    background-color: #28a745 !important;
-    color: white;
+    background-color: var(--badge-green) !important;
+    color: #FFFFFF;
 }
 
 .badge-red {
-    background-color: #dc3545 !important;
-    color: white;
+    background-color: var(--badge-red) !important;
+    color: #FFFFFF;
 }
 
 .badge-gray {
-    background-color: #c0c0c0 !important;
-    color: rgb(224, 224, 224);
+    background-color: var(--badge-gray) !important;
+    color: #FFFFFF;
 }
 
+/* ----- Enlaces tipo badge ----- */
 .contact-badge,
 .boat-badge {
     display: inline-block;
     padding: 5px 10px;
     margin: 5px 5px 0 0;
-    background-color: #007bff;
-    color: white;
+    background-color: var(--button-color);
+    color: #FFFFFF;
     border-radius: 5px;
     text-decoration: none;
     font-size: 14px;
@@ -221,170 +596,132 @@ body {
 
 .contact-badge:hover,
 .boat-badge:hover {
-    background-color: #0056b3;
+    background-color: var(--button-hover-color);
 }
 
+/* ----- Enlace de FacturaDirecta ----- */
 .link-facturadirecta {
-    color: #007bff;
-    text-decoration: none;
-    margin-bottom: 10px;
-}
-
-input[readonly] {
-    background-color: #e9ecef;
-}
-
-
-.contact-badge {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 5px 5px 0 0;
-    background-color: #6a7a8b;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.boat-badge {
-    display: inline-block;
-    padding: 5px 10px;
-    margin: 5px 5px 0 0;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 14px;
-}
-
-.contact-badge:hover {
-    background-color: #1c1d1f;
-}
-
-.boat-badge:hover {
-    background-color: #0056b3;
-}
-
-.link-facturadirecta {
-    color: #007bff;
+    color: var(--link-color);
     text-decoration: none;
     margin-top: 5px;
     margin-bottom: 10px;
     display: block;
-    /* Ensures it takes up the full width of its container */
 }
 
+.link-facturadirecta:hover {
+    color: var(--link-hover-color);
+}
+
+/* ============================================================
+   Estilos adicionales
+   ============================================================ */
+/* ----- Inputs readonly ----- */
 input[readonly] {
-    background-color: #e9ecef;
+    background-color: #F0F0F0;
+    color: var(--text-color);
 }
 
+/* ----- Editor de texto y textarea ----- */
 .ck-editor__editable,
 textarea {
     min-height: 150px;
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
 }
 
-.datatable {
-    width: 100% !important;
+/* ============================================================
+   Estilos para DataTables
+   ============================================================ */
+/* ----- Estilos básicos ----- */
+.dataTables_wrapper {
+    color: var(--text-color);
 }
 
-table.dataTable tbody td.select-checkbox::before,
-table.dataTable tbody td.select-checkbox::after,
-table.dataTable tbody th.select-checkbox::before,
-table.dataTable tbody th.select-checkbox::after {
-    top: 50%;
-}
-
-.dataTables_length,
-.dataTables_filter,
-.dt-buttons {
-    margin-bottom: 0.333em;
-}
-
-.dt-buttons .btn {
-    margin-left: 0.333em;
-    border-radius: 0;
-}
-
-.table.datatable {
-    box-sizing: border-box;
+table.dataTable {
     border-collapse: collapse;
+    width: 100% !important;
+    background-color: #FFFFFF;
+}
+
+table.dataTable th,
+table.dataTable td {
+    border: 1px solid var(--border-color);
+    padding: 8px;
 }
 
 table.dataTable thead th {
-    border-bottom: 2px solid #dee2e6;
+    background-color: var(--table-header-bg);
+    color: var(--text-color);
 }
 
-.dataTables_wrapper.no-footer .dataTables_scrollBody {
-    border-bottom: 1px solid #dee2e6;
+table.dataTable tbody tr:nth-child(even) {
+    background-color: #F9F9F9;
 }
 
-.select2 {
-    max-width: 100%;
-    width: 100%;
+table.dataTable tbody tr:hover {
+    background-color: var(--table-row-hover-bg);
 }
 
-table.dataTable thead .sorting,
-table.dataTable thead .sorting_asc,
-table.dataTable thead .sorting_desc {
-    background-image: none;
+.dataTables_length label,
+.dataTables_filter label {
+    color: var(--text-color);
 }
 
-.btn-group-xs>.btn,
-.btn-xs {
-    padding: 1px 5px;
-    font-size: 12px;
-    line-height: 1.5;
+.dataTables_paginate .paginate_button {
+    background-color: #fff;
+    color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    padding: 2px;
+    margin: 2px;
     border-radius: 3px;
 }
 
-.searchable-title {
-    font-weight: bold;
+.dataTables_paginate .paginate_button.current {
+    background-color: var(--button-color);
+    color: #FFFFFF;
+    border: 1px solid var(--button-color);
 }
 
-.select2-container--open {
-    z-index: 9999;
+.dataTables_wrapper .dataTables_info {
+    color: var(--text-color);
 }
 
-.searchable-fields {
-    padding-left: 5px;
+.dataTables_wrapper .dataTables_paginate {
+    margin-top: 1px;
 }
 
-.searchable-link {
-    padding: 0 5px 0 5px;
+/* ----- Buscador y selector de registros ----- */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    background-color: var(--input-background);
+    color: var(--text-color);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    padding: 5px;
 }
 
-.searchable-link:hover {
-    cursor: pointer;
-    background: #eaeaea;
+/* ============================================================
+   Estilos para diseño responsivo general
+   ============================================================ */
+/* ----- Ajustes para diferentes tamaños de pantalla ----- */
+@media (min-width: 768px) {
+
+    .card-common .card-header,
+    .card-common .card-body,
+    .card-common .card-footer {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
 }
 
-.select2-results__option {
-    padding-left: 0px;
-    padding-right: 0px;
-}
+@media (min-width: 992px) {
 
-.form-group .required::after {
-    content: " *";
-    color: red;
-}
-
-.form-check.is-invalid~.invalid-feedback {
-    display: block;
-}
-
-.dataTables_length label select {
-    width: 65px !important;
-}
-
-div.dt-button-collection {
-    padding: 0;
-}
-
-.buttons-columnVisibility {
-    display: block;
-}
-
-.buttons-columnVisibility.active {
-    background-color: rgba(128, 128, 128, 0.1);
-    font-weight: bolder;
+    .card-common .card-header,
+    .card-common .card-body,
+    .card-common .card-footer {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
 }

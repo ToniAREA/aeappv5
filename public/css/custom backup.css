@@ -1,0 +1,590 @@
+/* Estilos base */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+}
+
+/* Estilos para Dashcard */
+.dashcard {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 3px;
+    margin: 3px;
+}
+
+.dashcard-content {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.dashcard-button {
+    flex: 1;
+    background-color: #6b6b6b;
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+    margin: 2px;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.dashcard-button a {
+    text-decoration: none;
+    color: whitesmoke;
+}
+
+.dashcard-button:hover {
+    background-color: #6db495;
+}
+
+.dashcard-number {
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    padding: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 15px;
+}
+
+.dashcard-info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: #444;
+}
+
+.dashcard-info h3 {
+    margin: 0;
+    font-size: 16px;
+    color: #AAA;
+}
+
+.dashcard-info p {
+    margin: 5px 0 0;
+    color: #777;
+}
+
+.dashcard-progress {
+    margin-left: auto;
+    text-align: right;
+}
+
+.dashcard-progress span {
+    display: block;
+    font-size: 14px;
+    color: #AAA;
+    margin-right: 5px;
+}
+
+/* Estilos para Owncard */
+.owncard {
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 15px 0;
+    background-color: white;
+}
+
+.owncard h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #007bff;
+}
+
+.back-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.owncard-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.owncard-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.owncard-field {
+    flex: 1 1 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+/* Media Queries para diseño responsivo */
+@media (min-width: 768px) {
+    .owncard-field {
+        flex: 1 1 calc(50% - 10px);
+        /* Dos columnas en tablet */
+    }
+}
+
+@media (min-width: 992px) {
+    .owncard-field {
+        flex: 1 1 calc(33.333% - 10px);
+        /* Tres columnas en PC */
+    }
+}
+
+/* Estilos para labels e inputs */
+.owncard-field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 1px;
+}
+
+.owncard-field input,
+.owncard-field textarea,
+.owncard-field span {
+    flex: 1;
+    padding: 2px;
+    border: 1px solid #999;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    resize: none;
+    box-sizing: border-box;
+    padding-left: 5px;
+}
+
+.owncard-field textarea {
+    height: 80px;
+}
+
+.owncard-field .badge {
+    display: block;
+    border-radius: 5px;
+    line-height: 1.5;
+}
+
+.badge-green {
+    background-color: #28a745 !important;
+    color: white;
+}
+
+.badge-red {
+    background-color: #dc3545 !important;
+    color: white;
+}
+
+.badge-gray {
+    background-color: #c0c0c0 !important;
+    color: rgb(224, 224, 224);
+}
+
+/* Estilos para botones y enlaces */
+.contact-badge,
+.boat-badge {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px 5px 0 0;
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.contact-badge:hover,
+.boat-badge:hover {
+    background-color: #0056b3;
+}
+
+.link-facturadirecta {
+    color: #007bff;
+    text-decoration: none;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: block;
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+}
+
+.ck-editor__editable,
+textarea {
+    min-height: 150px;
+}
+
+/* Estilos para custom-card */
+.custom-card {
+    background-color: #ffffff; /* Fondo blanco */
+    border: none; /* Sin borde */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    margin-bottom: 1rem; /* Espacio inferior */
+    overflow: hidden; /* Ocultar contenido desbordado */
+    transition: transform 0.2s, box-shadow 0.2s; /* Transiciones para efectos */
+}
+
+/* Efecto al pasar el mouse por encima */
+.custom-card:hover {
+    transform: translateY(-5px); /* Levanta la tarjeta ligeramente */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Aumenta la sombra */
+}
+
+/* Estilos para el encabezado de la tarjeta */
+.custom-card .card-header {
+    background-color: #f0f4f8; /* Fondo suave */
+    padding: 1rem 1.5rem; /* Espaciado */
+    font-weight: bold; /* Texto en negrita */
+    font-size: 1.25rem; /* Tamaño de fuente */
+    color: #333; /* Color del texto */
+    border-bottom: 1px solid #e0e6ed; /* Línea inferior */
+}
+
+/* Estilos para el cuerpo de la tarjeta */
+.custom-card .card-body {
+    padding: 1.5rem; /* Espaciado */
+    color: #555; /* Color del texto */
+    font-size: 1rem; /* Tamaño de fuente */
+}
+
+/* Estilos para el pie de página de la tarjeta */
+.custom-card .card-footer {
+    background-color: #f0f4f8; /* Fondo suave */
+    padding: 0.75rem 1.5rem; /* Espaciado */
+    border-top: 1px solid #e0e6ed; /* Línea superior */
+    text-align: right; /* Alinear contenido a la derecha */
+}
+
+/* Estilos para imágenes dentro de la tarjeta */
+.custom-card img {
+    max-width: 100%; /* Imagen responsiva */
+    height: auto; /* Mantener proporción */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-bottom-left-radius: 15px; /* Redondear esquinas inferiores */
+    border-bottom-right-radius: 15px;
+}
+
+/* Estilos para botones dentro de la tarjeta */
+.custom-card .btn {
+    margin: 0.25rem; /* Espacio alrededor de los botones */
+    border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilos para enlaces dentro de la tarjeta */
+.custom-card a {
+    color: #007bff; /* Color del enlace */
+    text-decoration: none; /* Sin subrayado */
+}
+
+.custom-card a:hover {
+    text-decoration: underline; /* Subrayado al pasar el mouse */
+}
+
+/* Estilos para títulos y textos */
+.custom-card .custom-description {
+    font-size: 1rem;
+    color: #666;
+}
+
+.custom-card .custom-description-link {
+    color: #007bff;
+}
+
+.custom-card .custom-description-link:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* Estilos para botones en grupo */
+.custom-card .btn-group .btn {
+    flex: 1;
+    border-radius: 0; /* Sin bordes redondeados en botones individuales */
+    margin: 0; /* Sin margen */
+}
+
+.custom-card .btn-group .btn:first-child {
+    border-top-left-radius: 5px; /* Bordes redondeados en el primer botón */
+    border-bottom-left-radius: 5px;
+}
+
+.custom-card .btn-group .btn:last-child {
+    border-top-right-radius: 5px; /* Bordes redondeados en el último botón */
+    border-bottom-right-radius: 5px;
+}
+
+/* Ajustes para diferentes tamaños de pantalla */
+@media (min-width: 768px) {
+    .custom-card {
+        /* Estilos específicos para tablet si es necesario */
+    }
+}
+
+@media (min-width: 992px) {
+    .custom-card {
+        /* Estilos específicos para PC si es necesario */
+    }
+}
+
+/* Estilos actualizados para custom-card sin efectos de hover y con encabezado redondeado */
+.custom-card {
+    background-color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+    /* Eliminamos overflow: hidden para permitir que se vean las esquinas redondeadas del header */
+    /* overflow: hidden; */
+    /* Comentado o eliminado */
+}
+
+/* Eliminamos el efecto hover */
+.custom-card:hover {
+    /* Sin efectos al pasar el mouse */
+}
+
+/* Estilos para el encabezado de la tarjeta */
+.custom-card .card-header {
+    background-color: #f0f4f8;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333;
+    border-bottom: 1px solid #e0e6ed;
+
+    /* Añadimos bordes redondeados en la parte superior */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Estilos para el cuerpo de la tarjeta */
+.custom-card .card-body {
+    padding: 0.75rem 1rem;
+    color: #555;
+    font-size: 0.9rem;
+}
+
+/* Estilos para el pie de página de la tarjeta */
+.custom-card .card-footer {
+    background-color: #f0f4f8;
+    padding: 0.5rem 1rem;
+    border-top: 1px solid #e0e6ed;
+    text-align: right;
+
+    /* Añadimos bordes redondeados en la parte inferior */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+/* Estilos para imágenes dentro de la tarjeta */
+.custom-card img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* Si deseas que las imágenes tengan esquinas redondeadas */
+    /* border-radius: 15px; */
+}
+
+/* Estilos para botones dentro de la tarjeta */
+.custom-card .btn {
+    margin: 0.2rem;
+    padding: 0.3rem 0.5rem;
+    font-size: 0.85rem;
+    border-radius: 4px;
+}
+
+/* Estilos para enlaces dentro de la tarjeta */
+.custom-card a {
+    color: #007bff;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Eliminamos el efecto hover en los enlaces */
+.custom-card a:hover {
+    /* Sin efectos al pasar el mouse */
+}
+
+/* Estilos para títulos y textos */
+.custom-card .custom-description {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.custom-card .custom-description-link {
+    color: #007bff;
+}
+
+/* Eliminamos el efecto hover en los enlaces personalizados */
+.custom-card .custom-description-link:hover {
+    /* Sin efectos al pasar el mouse */
+}
+
+/* Estilos para botones en grupo */
+.custom-card .btn-group .btn {
+    flex: 1;
+    border-radius: 0;
+    margin: 0;
+}
+
+.custom-card .btn-group .btn:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.custom-card .btn-group .btn:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/* Ajustes generales para reducir márgenes y padding */
+.custom-card * {
+    margin: 0;
+    padding: 0;
+}
+
+/* Ajustes para diferentes tamaños de pantalla */
+@media (min-width: 768px) {
+
+    .custom-card .card-header,
+    .custom-card .card-body,
+    .custom-card .card-footer {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .custom-card .card-header,
+    .custom-card .card-body,
+    .custom-card .card-footer {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+}
+
+/* Estilos para DataTables */
+.datatable {
+    width: 100% !important;
+}
+
+table.dataTable tbody td.select-checkbox::before,
+table.dataTable tbody td.select-checkbox::after,
+table.dataTable tbody th.select-checkbox::before,
+table.dataTable tbody th.select-checkbox::after {
+    top: 50%;
+}
+
+.dataTables_length,
+.dataTables_filter,
+.dt-buttons {
+    margin-bottom: 0.333em;
+}
+
+.dt-buttons .btn {
+    margin-left: 0.333em;
+    border-radius: 0;
+}
+
+.table.datatable {
+    box-sizing: border-box;
+    border-collapse: collapse;
+}
+
+table.dataTable thead th {
+    border-bottom: 2px solid #dee2e6;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+    border-bottom: 1px solid #dee2e6;
+}
+
+.select2 {
+    max-width: 100%;
+    width: 100%;
+}
+
+table.dataTable thead .sorting,
+table.dataTable thead .sorting_asc,
+table.dataTable thead .sorting_desc {
+    background-image: none;
+}
+
+.btn-group-xs>.btn,
+.btn-xs {
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+.searchable-title {
+    font-weight: bold;
+}
+
+.select2-container--open {
+    z-index: 9999;
+}
+
+.searchable-fields {
+    padding-left: 5px;
+}
+
+.searchable-link {
+    padding: 0 5px;
+}
+
+.searchable-link:hover {
+    cursor: pointer;
+    background: #eaeaea;
+}
+
+.select2-results__option {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.form-group .required::after {
+    content: " *";
+    color: red;
+}
+
+.form-check.is-invalid~.invalid-feedback {
+    display: block;
+}
+
+.dataTables_length label select {
+    width: 65px !important;
+}
+
+div.dt-button-collection {
+    padding: 0;
+}
+
+.buttons-columnVisibility {
+    display: block;
+}
+
+.buttons-columnVisibility.active {
+    background-color: rgba(128, 128, 128, 0.1);
+    font-weight: bolder;
+}

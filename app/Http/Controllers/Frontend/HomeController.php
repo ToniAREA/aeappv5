@@ -14,8 +14,11 @@ class HomeController
     {
         /* abort_if(Gate::denies('home_access'), Response::HTTP_FORBIDDEN, '403 Forbidden'); */
 
-        $wlistsNotDone = Wlist::all();
-        $clientsCount = Client::count();
+        $wlistsNotDone = Wlist::with('client', 'status')
+    ->whereHas('status', function ($query) {
+        $query->where('name', '!=', 'completed');
+    })->get();
+    $clientsCount = Client::count();
         $boatsCount = Boat::count();
         $wlistsCount = Wlist::count();
 

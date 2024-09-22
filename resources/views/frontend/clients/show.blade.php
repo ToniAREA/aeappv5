@@ -22,20 +22,20 @@
             <div class="owncard-details">
 
                 <div class="row">
-                    <div class="col-12 col-md-4 owncard-field m-1">
+                    <div class="col-4 owncard-field">
                         <span class="badge {{ $client->has_active_vip_plan ? 'badge-green' : 'badge-gray' }}">
                             {{-- <input type="checkbox" disabled="disabled" {{ $client->has_active_vip_plan ? 'checked' : '' }}> --}}
                             {{ trans('cruds.client.fields.has_active_vip_plan') }}
                         </span>
                     </div>
-                    <div class="col-12 col-md-4 owncard-field m-1">
+                    <div class="col-4 owncard-field">
                         <span class="badge {{ $client->has_active_maintenance_plan ? 'badge-green' : 'badge-gray' }}">
                             {{-- <input type="checkbox" disabled="disabled"
                                 {{ $client->has_active_maintenance_plan ? 'checked' : '' }}> --}}
                             {{ trans('cruds.client.fields.has_active_maintenance_plan') }}
                         </span>
                     </div>
-                    <div class="col-12 col-md-4 owncard-field m-1">
+                    <div class="col-4 owncard-field">
                         <span class="badge {{ $client->defaulter ? 'badge-red' : 'badge-gray' }}">
                             {{-- <input type="checkbox" disabled="disabled" {{ $client->defaulter ? 'checked' : '' }}> --}}
                             {{ trans('cruds.client.fields.defaulter') }}

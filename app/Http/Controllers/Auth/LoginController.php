@@ -24,12 +24,12 @@ class LoginController extends Controller
     {
         Log::info('Redirecting user', ['user_id' => auth()->user()->id]);
 
-        if (auth()->user()->is_admin) {
+        /* if (auth()->user()->is_admin) {
             Log::info('User is admin, redirecting to /admin');
             return '/admin';
         }
 
-        Log::info('User is not admin, redirecting to /home');
+        Log::info('User is not admin, redirecting to /home'); */
         return '/home';
     }
 
