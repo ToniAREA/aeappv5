@@ -218,6 +218,282 @@ table tbody tr:hover {
 }
 
 /* ============================================================
+   Estilos para la página de login y registro (Estilo Marino)
+   ============================================================ */
+
+/* Contenedor principal del login */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+/* Caja de login */
+.login-box {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+/* Logo o título en el login */
+.login-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-logo a {
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Mensaje de login */
+.login-box-msg {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Formulario de login */
+.login-box .form-group {
+    margin-bottom: 15px;
+}
+
+.login-box .form-control {
+    background-color: var(--input-background);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--text-color);
+}
+
+.login-box .form-control:focus {
+    border-color: var(--button-color);
+    box-shadow: none;
+}
+
+/* ============================================================
+   Estilos para las páginas de autenticación (Estilo Marino)
+   ============================================================ */
+
+/* Contenedor principal */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: var(--background-color);
+}
+
+/* Caja de login */
+.login-box {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Logo o título */
+.login-logo {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-logo a {
+    color: var(--primary-color);
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/* Mensaje principal */
+.login-box-msg {
+    text-align: center;
+    margin-bottom: 10px;
+    color: var(--text-color);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Mensaje secundario */
+.text-muted {
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+/* Formulario */
+.login-box .form-group {
+    margin-bottom: 15px;
+}
+
+.login-box .form-control {
+    background-color: var(--input-background);
+    border: 1px solid var(--input-border);
+    border-radius: 5px;
+    padding: 10px;
+    color: var(--text-color);
+}
+
+.login-box .form-control:focus {
+    border-color: var(--button-color);
+    box-shadow: none;
+}
+
+/* Botón primario */
+.btn-primary {
+    background-color: var(--button-color);
+    border-color: var(--button-color);
+    color: #FFFFFF;
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+    color: #FFFFFF;
+}
+
+/* Botones secundarios */
+.btn-secondary {
+    background-color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    color: #FFFFFF;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-right: 5px;
+}
+
+.btn-secondary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+    color: #FFFFFF;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: #FFFFFF;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    color: #FFFFFF;
+}
+
+/* Enlaces */
+.login-box a {
+    color: var(--link-color);
+}
+
+.login-box a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* Mensajes de alerta */
+.alert {
+    border-radius: 5px;
+}
+
+.alert-info {
+    background-color: var(--alert-success-bg);
+    color: var(--alert-success-text);
+    border: 1px solid var(--alert-success-border);
+}
+
+.alert-danger {
+    background-color: var(--alert-danger-bg);
+    color: var(--alert-danger-text);
+    border: 1px solid var(--alert-danger-border);
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 576px) {
+    .login-box {
+        padding: 20px;
+    }
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+    color: #FFFFFF;
+}
+
+/* Enlaces de la página de login */
+.login-box a {
+    color: var(--link-color);
+}
+
+.login-box a:hover {
+    color: var(--link-hover-color);
+    text-decoration: underline;
+}
+
+/* Checkbox y labels */
+.show-password,
+.remember-login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.custom-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.custom-checkbox input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.custom-checkbox label {
+    margin: 0;
+    color: var(--text-color);
+}
+
+/* Mensajes de alerta */
+.alert {
+    border-radius: 5px;
+}
+
+.alert-info {
+    background-color: var(--alert-success-bg);
+    color: var(--alert-success-text);
+    border: 1px solid var(--alert-success-border);
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 576px) {
+    .login-box {
+        padding: 20px;
+    }
+}
+
+/* ============================================================
    Estilos comunes para tarjetas (card-common)
    ============================================================ */
 .card-common {
@@ -372,85 +648,125 @@ table tbody tr:hover {
 }
 
 /* ============================================================
-   Estilos para las Dashcards
+   Styles for Dashcards (Marine Theme)
    ============================================================ */
 
-/* Contenedor de la dashcard */
+/* Dashcard Container */
 .dashcard {
     background-color: #FFFFFF;
     border: 1px solid var(--border-color);
     border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    color: var(--text-color);
-    font-size: 0.9rem;
-    /* Texto pequeño */
-}
-
-/* Contenido de la dashcard */
-.dashcard-content {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    height: 100%;
 }
 
-/* Títulos y textos */
-.dashcard h2,
-.dashcard h3,
-.dashcard p {
+/* Dashcard Header */
+.dashcard-header {
+    background-color: var(--primary-color);
+    color: #FFFFFF;
+    padding: 10px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
+
+.dashcard-header-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.dashcard-header-button .btn {
+    font-size: 0.8rem;
+}
+
+.dashcard-title {
     margin: 0;
-    padding: 0;
-    line-height: 1.2;
-}
-
-/* Número de dashcard */
-.dashcard-number {
+    font-size: 1.2rem;
     font-weight: bold;
-    color: var(--heading-color);
-    margin-bottom: 5px;
 }
 
-/* Enlaces dentro de las dashcards */
-.dashcard a {
+.dashcard-title a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.dashcard-title a:hover {
+    color: var(--link-hover-color);
+}
+
+.dashcard-subtitle {
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Dashcard Body */
+.dashcard-body {
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.dashcard-body p {
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+.dashcard-body a {
     color: var(--link-color);
     text-decoration: none;
 }
 
-.dashcard a:hover {
+.dashcard-body a:hover {
     color: var(--link-hover-color);
-    text-decoration: underline;
 }
 
-/* Sección de progreso */
-.dashcard-progress {
+/* Dashcard Footer */
+.dashcard-footer {
+    padding: 10px;
+    background-color: var(--secondary-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     display: flex;
     justify-content: space-between;
-    margin-top: auto;
-    font-size: 0.8rem;
-    /* Texto más pequeño */
-    color: var(--text-color);
+    align-items: center;
 }
 
-/* Botones en la tarjeta de resumen */
-.dashcard-button {
-    flex: 1;
-    text-align: center;
-    background-color: var(--primary-color);
-    border-radius: 5px;
-    margin: 1px;
-}
-
-.dashcard-button a {
-    display: block;
-    padding: 10px;
-    color: #FFFFFF;
-    font-weight: bold;
+.edit-icon {
+    color: var(--button-color);
+    font-size: 1.2rem;
     text-decoration: none;
 }
 
-.dashcard-button a:hover {
-    background-color: var(--button-hover-color);
+.edit-icon:hover {
+    color: var(--button-hover-color);
+}
+
+.dashcard-footer .btn {
+    font-size: 0.8rem;
+}
+
+.dashcard-footer .btn-primary {
+    background-color: var(--button-color);
+    border-color: var(--button-color);
     color: #FFFFFF;
+}
+
+.dashcard-footer .btn-primary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
+}
+
+.dashcard-footer .btn-secondary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #FFFFFF;
+}
+
+.dashcard-footer .btn-secondary:hover {
+    background-color: var(--button-hover-color);
+    border-color: var(--button-hover-color);
 }
 
 /* Ajuste de los márgenes y paddings del row y columnas */
@@ -463,6 +779,7 @@ table tbody tr:hover {
     padding-left: 5px;
     padding-right: 5px;
 }
+
 /* ----- Estilos para .owncard ----- */
 .owncard {
     background-color: #FFFFFF;
@@ -545,21 +862,6 @@ table tbody tr:hover {
 
 .owncard-field textarea {
     height: 80px;
-}
-
-/* ----- Diseño responsivo de owncard-field ----- */
-@media (min-width: 768px) {
-    .owncard-field {
-        flex: 1 1 calc(50% - 10px);
-        /* Dos columnas en tablet */
-    }
-}
-
-@media (min-width: 992px) {
-    .owncard-field {
-        flex: 1 1 calc(33.333% - 10px);
-        /* Tres columnas en PC */
-    }
 }
 
 /* ============================================================
@@ -706,6 +1008,17 @@ table.dataTable tbody tr:hover {
    Estilos para diseño responsivo general
    ============================================================ */
 /* ----- Ajustes para diferentes tamaños de pantalla ----- */
+
+@media (max-width: 576px) {
+    .dashcard-title {
+        font-size: 1rem;
+    }
+
+    .dashcard-footer .btn {
+        margin-bottom: 5px;
+    }
+}
+
 @media (min-width: 768px) {
 
     .card-common .card-header,
@@ -713,6 +1026,11 @@ table.dataTable tbody tr:hover {
     .card-common .card-footer {
         padding-left: 0.75rem;
         padding-right: 0.75rem;
+    }
+
+    .owncard-field {
+        flex: 1 1 calc(50% - 10px);
+        /* Dos columnas en tablet */
     }
 }
 
@@ -723,5 +1041,10 @@ table.dataTable tbody tr:hover {
     .card-common .card-footer {
         padding-left: 0.5rem;
         padding-right: 0.5rem;
+    }
+
+    .owncard-field {
+        flex: 1 1 calc(33.333% - 10px);
+        /* Tres columnas en PC */
     }
 }

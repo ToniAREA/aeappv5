@@ -1,83 +1,76 @@
 @extends('layouts.app')
 
-@section('styles')
-<style>
-    .lockscreen-image-fallback {
-        width: 70px;
-        height: 70px;
-        background: #3c8dbc;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 18px;
-    }
-    input[type="password"], button {
-        outline: none;
-        box-shadow:none !important;
-        border: 0;
-    }
-</style>
-@endsection
-
 @section('content')
 
-<div class="lockscreen">
-    <div class="lockscreen-wrapper">
-        <div class="lockscreen-logo">
-            <a href="{{ route('admin.home') }}">
+<div class="login-container">
+    <div class="login-box">
+        <!-- Logo o título -->
+        <div class="login-logo">
+            <a href="{{ url('/') }}">
                 {{ trans('panel.site_title') }}
             </a>
         </div>
 
-        <div class="lockscreen-name">
-            {{ auth()->user()->name ?? '' }}
-        </div>
-
-        <div class="lockscreen-item">
-            <div class="lockscreen-image">
-                {{-- <img src="https://adminlte.io/themes/AdminLTE/dist/img/user1-128x128.jpg" alt="User Image"> --}}
-
-                <div class="lockscreen-image-fallback text-uppercase text-white">
+        <!-- Información del usuario -->
+        <div class="user-info text-center">
+            <!-- Avatar o iniciales del usuario -->
+            <div class="user-avatar">
+                <div class="avatar-initials">
                     @if(auth()->user()->name)
                         {{ substr(auth()->user()->name, 0, 2) }}
                     @endif
                 </div>
             </div>
-
-            <form method="POST" action="{{ route('password.confirm') }}" class="lockscreen-credentials">
-                @csrf
-
-                <div class="input-group">
-                    <input id="password" type="password" name="password" class="form-control" placeholder="{{ __('Confirm Password') }}" required>
-
-                    <div class="input-group-append">
-                        <button type="submit" class="btn">
-                            <i class="fas fa-arrow-right text-muted"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
+            <!-- Nombre del usuario -->
+            <div class="user-name">
+                {{ auth()->user()->name ?? '' }}
+            </div>
         </div>
 
+        <!-- Mensaje -->
+        <p class="login-box-msg">
+            {{ __('Please confirm your password before continuing.') }}
+        </p>
+
+        <!-- Mensaje de error -->
         @error('password')
-            <div class="help-block text-center text-danger">
+            <div class="alert alert-danger text-center">
                 {{ $message }}
             </div>
         @enderror
 
-        <div class="help-block text-center">
-            {{ __('Please confirm your password before continuing.') }}
-        </div>
+        <!-- Formulario -->
+        <form method="POST" action="{{ route('password.confirm') }}">
+            @csrf
 
-        <div class="text-center">
+            <!-- Campo de contraseña -->
+            <div class="form-group">
+                <input id="password" type="password" name="password" class="form-control" placeholder="{{ __('Confirm Password') }}" required>
+            </div>
+
+            <!-- Checkbox para mostrar/ocultar contraseña -->
+            <div class="form-group show-password">
+                <input type="checkbox" id="show-password">
+                <label for="show-password">{{ trans('global.show_password') }}</label>
+            </div>
+
+            <!-- Botón de confirmación -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block">
+                    {{ __('Confirm Password') }}
+                </button>
+            </div>
+        </form>
+
+        <!-- Enlace a "Olvidé mi contraseña" -->
+        <p class="mb-0 text-center">
             @if(Route::has('password.request'))
                 <a href="{{ route('password.request') }}">
                     {{ trans('global.forgot_password') }}
                 </a>
             @endif
-        </div>
+        </p>
     </div>
 </div>
 
-@endsection
+<!-- JavaScript para mostrar/ocultar​⬤
