@@ -55,9 +55,115 @@
                                 CHARGE<br>MATERIAL
                             </a>
                         </div>
+                        <!-- Dashcard Footer -->
+                        <div class="dashcard-footer text-white">
+                            <!-- Puerto donde está el barco y distancia -->
+                            <p class="marina-info" data-marina-coordinates="{{ $boat->marina->coordinates ?? '' }}">
+                                <strong>Marina:</strong>
+                                @if ($boat && $boat->marina)
+                                    {{ $boat->marina->name ?? '---' }}
+                                    <!-- Aquí agregaremos la distancia desde JavaScript -->
+                                @else
+                                    ---
+                                @endif
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="col-12 col-sm-6 col-lg-4 p-1">
+                    <div class="dashcard">
+                        <!-- Dashcard Header -->
+                        <div class="dashcard-header">
+                            <h2 class="dashcard-title">
+                                <a href="{{ route('frontend.boats.show', $boat->id) }}">
+                                    {{ $boat_namecomplete ?? '---' }}
+                                </a>
+                            </h2>
+                            <!-- Botón para ver detalles -->
+                            <div class="dashcard-header-button">
+                                <a href="{{ route('frontend.wlists.show', $boat->id) }}" class="btn btn-sm btn-secondary">
+                                    Details
+                                </a>
+                            </div>
+                            <div class="dashcard-subtitle">
+                                ID: {{ $boat->id }} &nbsp;|&nbsp;
+                                
+                            </div>
+                        </div>
+
+                        <!-- Dashcard Body -->
+                        <div class="dashcard-body">
+                            <p>
+                                <strong>Work description:</strong><br>
+                                {{ $description ?? '---' }}
+                            </p>
+                            
+                            <div class="row">
+                                <!-- Due Date -->
+                                <div class="col-6">
+                                    <strong>Due Date:</strong>
+                                </div>
+
+                                <div class="col-6">
+                                    {{ $deadline ?? '---' }}
+                                </div>
+
+                                <!-- Priority -->
+                                <div class="col-6">
+                                    <strong>Priority:</strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ $priority ?? '---' }}
+                                </div>
+
+                                <!-- Order Type -->
+                                <div class="col-6">
+                                    <strong>Order Type:</strong>
+                                </div>
+                                <div class="col-6">
+                                    
+                                </div>
+
+                                <!-- Status -->
+                                <div class="col-6">
+                                    <strong>Status:</strong>
+                                </div>
+                                <div class="col-6">
+                                    
+                                </div>
+
+                                <!-- Wlogs -->
+                                <div class="col-6">
+                                    <strong>Wlogs:</strong>
+                                </div>
+                                <div class="col-6">
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Dashcard Footer -->
+                        <div class="dashcard-footer text-white">
+                            <!-- Puerto donde está el barco y distancia -->
+                            <p class="marina-info" data-marina-coordinates="{{ $boat->marina->coordinates ?? '' }}">
+                                <strong>Marina:</strong>
+                                @if ($boat && $boat->marina)
+                                    {{ $boat->marina->name ?? '---' }}
+                                    <!-- Aquí agregaremos la distancia desde JavaScript -->
+                                @else
+                                    ---
+                                @endif
+                            </p>
+
+                            <!-- Icono para editar -->
+                            <a href="" class="edit-icon">
+                                <i class="fas fa-pencil-alt"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
             <!-- Segundo Card -->
             <div class="col-12 col-sm-6 col-lg-4">

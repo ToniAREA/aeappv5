@@ -20,6 +20,8 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
+
 
 class WlistController extends Controller
 {
@@ -45,30 +47,56 @@ class WlistController extends Controller
 
         $finalcial_documents = FinalcialDocument::get();
 
+
         return view('frontend.wlists.index', compact('boats', 'clients', 'employees', 'finalcial_documents', 'roles', 'users', 'wlist_statuses', 'wlists'));
     }
 
-    public function create()
-    {
-        abort_if(Gate::denies('wlist_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+   public function create(Request $request)
+{
+    abort_if(Gate::denies('wlist_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+    // Obtener boat_id y client_id de la URL
+    $boat_id = $request->input('boat_id');
+    $client_id = $request->input('client_id');
+
+    // Obtener el barco
+    $boat = Boat::find($boat_id);
+
+    // Obtener los clientes vinculados al barco
+    if ($boat) {
+        $clients = $boat->clients()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+    } else {
         $clients = Client::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $boats = Boat::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $from_users = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $for_roles = Role::pluck('title', 'id');
-
-        $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('frontend.wlists.create', compact('boats', 'clients', 'financial_documents', 'for_employees', 'for_roles', 'from_users', 'statuses'));
     }
 
+    // Obtener otros datos necesarios
+    $for_roles = Role::pluck('title', 'id');
+
+    $statuses = WlistStatus::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    $financial_documents = FinalcialDocument::pluck('reference_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    // Obtener el ID del usuario actual
+    $from_user_id = auth()->user()->id;
+
+    // Utilizamos el campo 'namecomplete' directamente
+    $for_employees = Employee::pluck('namecomplete', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    $default_role_ids = [3]; // ID de los roles por defecto
+
+    return view('frontend.wlists.create', compact(
+        'boat',
+        'boat_id',
+        'clients',
+        'client_id',
+        'financial_documents',
+        'for_employees',
+        'for_roles',
+        'from_user_id',
+        'statuses',
+        'default_role_ids'
+    ));
+}
     public function store(StoreWlistRequest $request)
     {
         $wlist = Wlist::create($request->all());

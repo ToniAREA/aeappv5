@@ -48,7 +48,7 @@
     /* Color del borde del toggler */
     --dropdown-menu-background: #eee;
     /* Fondo del menú desplegable */
-    --dropdown-item-color: var(--text-color);
+    --dropdown-item-color: #333;
     /* Color del texto de los ítems del dropdown */
     --dropdown-item-hover-background: var(--background-color);
     /* Fondo al pasar el mouse por los ítems */

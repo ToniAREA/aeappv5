@@ -70,7 +70,7 @@ class ClientsController extends Controller
         $client->contacts()->sync($request->input('contacts', []));
         $client->boats()->sync($request->input('boats', []));
 
-        return redirect()->route('frontend.clients.index');
+        return redirect()->route('frontend.home');
     }
 
     public function show(Client $client)

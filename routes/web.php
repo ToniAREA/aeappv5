@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\Frontend\HomeController;
 
 // Ruta para email de test
 Route::get('/send-mail', function () {
