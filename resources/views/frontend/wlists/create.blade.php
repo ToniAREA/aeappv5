@@ -99,9 +99,9 @@
                                                 <label for="for_roles">{{ trans('cruds.wlist.fields.for_role') }}</label>
                                                 <div style="padding-bottom: 4px">
                                                     <span class="btn btn-info btn-xs select-all"
-                                                        style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                                        style="border-radius: 10">{{ trans('global.select_all') }}</span>
                                                     <span class="btn btn-info btn-xs deselect-all"
-                                                        style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                                                        style="border-radius: 10">{{ trans('global.deselect_all') }}</span>
                                                 </div>
                                                 <select class="form-control select2" name="for_roles[]" id="for_roles"
                                                     multiple>
@@ -148,7 +148,7 @@
                                     <div class="form-group">
                                         <label class="required"
                                             for="description">{{ trans('cruds.wlist.fields.description') }}</label>
-                                        <textarea class="form-control" name="description" id="description" required>{{ old('description', '') }}</textarea>
+                                        <textarea class="form-control" name="description" id="description" required minlength="5"></textarea>
                                         @if ($errors->has('description'))
                                             <div class="invalid-feedback">
                                                 {{ $errors->first('description') }}
@@ -177,10 +177,10 @@
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="deadline">{{ trans('cruds.wlist.fields.deadline') }}</label>
+                                                <label for="deadline">{{ trans('cruds.wlist.fields.deadline') }}</label> {{ \Carbon\Carbon::now()->format('d-m-Y') }}
                                                 <input class="form-control date" type="text" name="deadline"
                                                     id="deadline"
-                                                    value="{{ old('deadline', \Carbon\Carbon::now()->addWeeks(2)->format('Y-m-d')) }}">
+                                                    value="{{ old('deadline', \Carbon\Carbon::now()->addWeeks(2)->format('d-m-Y')) }}">
                                                 @if ($errors->has('deadline'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('deadline') }}
