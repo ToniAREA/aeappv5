@@ -16,64 +16,65 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 mt-2 text-center">
                 <p class="fs-5 text-muted">
-                    To deliver top-tier yacht electronics services exclusively on the island of Mallorca, we focus on a select group of VIP clients, limiting new memberships. You can join this exclusive group via a waiting list. We offer two VIP membership plans: SILVER and GOLD, both with limited availability due to high demand and our dedication to excellence. If your preferred plan is full, join the waiting list to enjoy benefits like preferential rates, fixed pricing, and priority service. This ensures each client receives the best care for their yacht's electronics.
+                    To deliver top-tier yacht electronics services exclusively on the island of Mallorca, we focus on a select group of VIP clients, limiting new memberships.<br>You can join this exclusive group via a waiting list. We offer two VIP membership plans: SILVER and GOLD, both with limited availability due to high demand and our dedication to excellence. If your preferred plan is full, join the waiting list to enjoy benefits like preferential rates, fixed pricing, and priority service.<br>This ensures each client receives the best care for their yacht's electronics.
                 </p>
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                <div class="row row-cols-1 row-cols-md-2 text-center">
-                    <!-- VIP SILVER Membership -->
-                    <div class="col">
-                        <div class="card mb-4 rounded-3 shadow-sm">
-                            <div class="card-header py-3">
-                                <h2 class="my-0 fw-normal">VIP SILVER</h2>
+                @if(Auth::check())
+                    <div class="row row-cols-1 row-cols-md-2 text-center">
+                        <!-- VIP SILVER Membership -->
+                        <div class="col">
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                                <div class="card-header py-3">
+                                    <h2 class="my-0 fw-normal">VIP SILVER</h2>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title pricing-card-title">€200<small class="text-muted fw-light">/month</small></h3>
+                                    <small class="text-muted fw-light">Anual plan. One payment.</small><br>
+                                    <small class="text-muted fw-light">€2.400</small>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>Guaranteed assistance<br>within 7 business days in Mallorca.</li><br>
+                                        <li>€60 normal rate per hour</li>
+                                        <li>€120 overtime rate per hour</li>
+                                        <li>10% discount on all materials</li>
+                                    </ul>
+                                    <button type="button" id="joinSilverButton" class="w-100 btn btn-lg btn-outline-secondary">Join SILVER</button>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <h3 class="card-title pricing-card-title">€200<small class="text-muted fw-light">/month</small>
-                                </h3>
+                        </div>
 
-                                <small class="text-muted fw-light">Anual plan. One payment.</small><br>
-                                <small class="text-muted fw-light">€2.400</small>
-
-                                <ul class="list-unstyled mt-3 mb-4">
-                                    <li>Guaranteed assistance<br>within 7 business days in Mallorca.</li><br>
-                                    <li>€60 normal rate per hour</li>
-                                    <li>€120 overtime rate per hour</li>
-                                    <li>10% discount on all materials</li>
-                                </ul>
-                                <button type="button" id="joinSilverButton"
-                                    class="w-100 btn btn-lg btn-outline-secondary">Join SILVER</button>
+                        <!-- VIP GOLD Membership -->
+                        <div class="col">
+                            <div class="card rounded-3 shadow-sm border-warning">
+                                <div class="card-header py-3 text-white bg-warning border-warning">
+                                    <h2 class="my-0 fw-normal">VIP GOLD</h2>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title pricing-card-title">€500<small class="text-muted fw-light">/month</small></h3>
+                                    <small class="text-muted fw-light">Bi-Anual plan. One payment.</small><br>
+                                    <small class="text-muted fw-light">€12.000</small>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>48-hour<br>guaranteed assistance in Mallorca.</li><br>
+                                        <li>€50 normal rate per hour</li>
+                                        <li>€100 overtime rate per hour</li>
+                                        <li>20% discount on all materials</li>
+                                    </ul>
+                                    <button type="button" id="joinGoldButton" class="w-100 btn btn-lg btn-warning">Join GOLD</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- VIP GOLD Membership -->
-                    <div class="col">
-                        <div class="card rounded-3 shadow-sm border-warning">
-                            <div class="card-header py-3 text-white bg-warning border-warning">
-                                <h2 class="my-0 fw-normal">VIP GOLD</h2>
-                            </div>
-                            <div class="card-body">
-                                <h3 class="card-title pricing-card-title">€500<small class="text-muted fw-light">/month</small>
-                                </h3>
-                                <small class="text-muted fw-light">Bi-Anual plan. One payment.</small><br>
-                                <small class="text-muted fw-light">€12.000</small>
-                                
-                                <ul class="list-unstyled mt-3 mb-4">
-                                    <li>48-hour<br>guaranteed assistance in Mallorca.</li><br>
-                                    <li>€50 normal rate per hour</li>
-                                    <li>€100 overtime rate per hour</li>
-                                    <li>20% discount on all materials</li>
-                                </ul>
-                                <button type="button" id="joinGoldButton" class="w-100 btn btn-lg btn-warning">Join
-                                    GOLD</button>
-                            </div>
-                        </div>
+                @else
+                    <div class="text-center">
+                        <img class="img-fluid rounded" src="images/gallery/memberships_hidden.png" alt="VIP Membership Placeholder" />
                     </div>
-
-                </div>
+                    <p class="fs-5 text-muted mt-2 text-center">
+                        To view membership prices, please <a href="{{ route('login') }}">log in</a>.
+                    </p>
+                @endif
             </div>
 
             <div class="row justify-content-center">
