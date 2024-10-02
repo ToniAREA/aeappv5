@@ -67,12 +67,26 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8 text-center">
+                            <p class="fs-5 text-muted">
+                                For any inquiries or further information, please contact us at:
+                            </p>
+                            <p class="fs-5 text-muted">
+                                <a href="mailto:areaelectronica@protonmail.com">areaelectronica@protonmail.com</a><br>
+                                <a href="tel:+34620480228">+34 620 480 228</a><br>
+                                Port de Mallorca, 07012 Palma, Illes Balears, Spain
+                            </p>
+                        </div>
+                    </div>
+                    
                 @else
                     <div class="text-center">
                         <img class="img-fluid rounded" src="images/gallery/memberships_hidden.png" alt="VIP Membership Placeholder" />
                     </div>
                     <p class="fs-5 text-muted mt-2 text-center">
-                        To view membership prices, please <a href="{{ route('login') }}">log in</a>.
+                        To view membership prices or contact details, please <a href="{{ route('login') }}">log in</a>.
                     </p>
                 @endif
             </div>
