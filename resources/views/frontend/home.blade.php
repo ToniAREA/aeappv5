@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        @include('partials.smallmenu')
+        {{-- @include('partials.smallmenu') --}}
         <div class="row">
             @foreach ($wlistsNotDone as $wlnd)
                 <div class="col-12 col-sm-6 col-lg-4 p-1" data-priority="{{ $wlnd->priority }}">

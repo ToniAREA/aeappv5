@@ -9,14 +9,12 @@
         <div class="container-fluid px-lg-5">
             <div class="p-4 p-lg-5 bg-light rounded-3 text-center bg-image">
                 <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 20px;">
-                    <h2 class="display-5 fw-bold">Welcome to Area Electronica</h2>
+                    <h1 class="display-5 fw-bold">Area Electronica - Marine Electronics Experts for Yachts</h1>
                     <p class="fs-5">
-                        ...where I specialize in bespoke electronic services tailored exclusively
-                        for private yachts. My dedication is to provide unparalleled quality and personalized service. If
-                        you have any questions or need assistance, I'm here to help – just a message away.
+                        ...where we offer bespoke electronic services tailored for private yachts. Dedicated to unparalleled quality and personalized service. If you have questions or need assistance, we're just a message away.
                     </p>
                     <!-- resources/views/your-view.blade.php -->
-                    <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20me%20at%20your%20earliest%20convenience."
+                    <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20us%20at%20your%20earliest%20convenience."
                         target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">Contact by WhatsApp</a>
                 </div>
             </div>
@@ -29,7 +27,7 @@
             <!-- Clients Count -->
             <div class="col-lg-3 col-md-3 col-6 mb-4">
                 <div class="counter">
-                    <h2 class="timer count-title count-number" data-to="{{ $clientsCount }}" data-speed="5000"></h2>
+                    <h3 class="timer count-title count-number" data-to="{{ $clientsCount }}" data-speed="5000"></h3>
                     <p class="count-text">Clients</p>
                 </div>
             </div>
@@ -37,7 +35,7 @@
             <!-- Boats Worked On Count -->
             <div class="col-lg-3 col-md-3 col-6 mb-4">
                 <div class="counter">
-                    <h2 class="timer count-title count-number" data-to="{{ $boatsCount }}" data-speed="5000"></h2>
+                    <h3 class="timer count-title count-number" data-to="{{ $boatsCount }}" data-speed="5000"></h3>
                     <p class="count-text">Boats Worked On</p>
                 </div>
             </div>
@@ -45,7 +43,7 @@
             <!-- Jobs Done Count -->
             <div class="col-lg-3 col-md-3 col-6 mb-4">
                 <div class="counter">
-                    <h2 class="timer count-title count-number" data-to="{{ $worksCount }}" data-speed="5000"></h2>
+                    <h3 class="timer count-title count-number" data-to="{{ $worksCount }}" data-speed="5000"></h3>
                     <p class="count-text">Projects Completed</p>
                 </div>
             </div>
@@ -53,7 +51,7 @@
             <!-- Years of Experience Count -->
             <div class="col-lg-3 col-md-3 col-6 mb-4">
                 <div class="counter">
-                    <h2 class="timer count-title count-number" data-to="{{ $yearsSince }}" data-speed="5000"></h2>
+                    <h3 class="timer count-title count-number" data-to="{{ $yearsSince }}" data-speed="5000"></h3>
                     <p class="count-text">Years of Experience</p>
                 </div>
             </div>
@@ -67,15 +65,10 @@
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-calendar3"></i></div>
-                        <h2 class="fs-4 fw-bold">Decades of Expertise</h2>
-                        <p class="mb-0">With over <b>{{ $yearsSince }}</b> years of experience in marine electronics, I
-                            specialize in delivering bespoke solutions for yachts and boats.</p>
-                        <p>Since 1996, I have been passionately devoted to electronics, electricity, and computing, with a
-                            focus on maritime technology. My expertise primarily lies in servicing private vessels,
-                            including both sailboats and motorboats. Renowned for my adept troubleshooting skills, I excel
-                            in crafting tailor-made technological solutions that uniquely cater to each case or client.</p>
-                        <p>My preferred brands include Pepwave, Raymarine, Mastervolt, KVH, Victron, Furuno, Maretron,
-                            Fusion, Airmar, among others, ensuring quality and reliability in every project.</p>
+                        <h2 class="fs-4 fw-bold">Decades of Expertise in Marine Electronics</h2>
+                        <p class="mb-0">With over <b>{{ $yearsSince }}</b> years in marine electronics, we provide bespoke solutions for yachts and boats.</p>
+                        <p>Since 1996, we've been devoted to electronics, electricity, and computing in maritime technology. Our expertise covers servicing private vessels—both sailboats and motorboats. Known for our troubleshooting skills, we craft tailor-made technological solutions for each client.</p>
+                        <p>Our preferred brands include Pepwave, Raymarine, Mastervolt, KVH, Victron, Furuno, Maretron, Fusion, Airmar, among others, ensuring quality and reliability in every project.</p>
 
                     </div>
                 </div>
@@ -89,9 +82,8 @@
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-people"></i></div>
-                        <h2 class="fs-4 fw-bold">Trusted by Clients</h2>
-                        <p class="mb-0">With a strong clientele of <b>{{ $clientsCount }}</b>, I take great pride in
-                            delivering exceptional service to each and every one of my customers.</p>
+                        <h3 class="fs-4 fw-bold">Trusted by {{ $clientsCount }} Clients</h3>
+                        <p class="mb-0">We take pride in delivering exceptional service to every customer.</p>
                     </div>
                 </div>
             </div>
@@ -101,11 +93,8 @@
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-speedometer2"></i></div>
-                        <h2 class="fs-4 fw-bold">Boats Serviced</h2>
-                        <p class="mb-0">I've successfully assisted and repaired <b>{{ $boatsCount }}</b> boats,
-                            providing top-notch technology solutions and expertise.</p>
-
-
+                        <h3 class="fs-4 fw-bold">Serviced {{ $boatsCount }} Boats</h3>
+                        <p class="mb-0">Providing top-notch technology solutions for a variety of vessels.</p>
 
                     </div>
                 </div>
@@ -116,9 +105,8 @@
                     <div class="card-body text-center p-4 p-lg-5 pt-0 pt-lg-0">
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-journal-check"></i></div>
-                        <h2 class="fs-4 fw-bold">Projects Completed</h2>
-                        <p class="mb-0">I have completed a total of <b>{{ $worksCount }}</b> installations to date,
-                            reflecting my extensive experience and dedication to quality.</p>
+                        <h3 class="fs-4 fw-bold">Completed {{ $worksCount }} Projects</h3>
+                        <p class="mb-0">Reflecting our extensive experience and dedication to quality.</p>
 
                     </div>
                 </div>
@@ -131,22 +119,19 @@
 
             <div class="col-lg-7">
                 <img class="img-fluid custom-img-size rounded mb-4 mb-lg-0"
-                    src="images/photos/marine-electronics-main-bridge-04.jpeg" alt="Yacht Connectivity Solutions" />
+                    src="images/photos/marine-electronics-main-bridge-04.jpeg" alt="Marine Electronics Systems on Yacht Bridge" />
             </div>
 
 
             <div class="col-lg-5 d-flex flex-column align-items-center text-center">
-                <h1 class="font-weight-light">Tailored Marine Electronics</h1>
-                <p>I specialize in bespoke electronic systems for luxury yachts, delivering robust internet connectivity,
-                    advanced navigation aids, and solar power solutions. My expertise is in crafting personalized solutions
-                    to enhance your maritime experience.</p>
+                <h2 class="font-weight-light">Tailored Marine Electronics Solutions for Yachts</h2>
+                <p>We specialize in custom electronic systems for luxury yachts, offering robust internet connectivity, advanced navigation aids, and solar power solutions. Our expertise enhances your maritime experience.</p>
             </div>
         </div>
         <!-- Call to Action -->
         <div class="card text-white bg-secondary my-5 py-4 text-center">
             <div class="card-body">
-                <p class="text-white m-0">Transform your yachting experience with my expert help in custom electronic
-                    projects. Unveil the future of maritime technology with Area Electronica.</p>
+                <p class="text-white m-0">Transform your yachting experience with our custom electronic solutions. Unveil the future of maritime technology with Area Electronica.</p>
             </div>
 
         </div>
@@ -157,14 +142,13 @@
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">Internet & Connectivity</h2>
-                        <p class="card-text">Stay connected wherever the seas may take you with my high-speed internet
-                            solutions for yachts. Seamless communication and entertainment at your fingertips.</p>
+                        <h3 class="card-title">Internet & Connectivity Solutions</h3>
+                        <p class="card-text">Stay connected at sea with our high-speed internet solutions. Seamless communication and entertainment at your fingertips.</p>
                     </div>
-                    <!-- Contenedor de la imagen -->
+                    <!-- Image container -->
                     <div class="image-container">
                         <img src="images/photos/internet-onboard-yacht-01.jpeg" class="card-img-bottom"
-                            alt="Descripción de la imagen">
+                            alt="High-Speed Internet on Luxury Yacht">
                     </div>
                 </div>
             </div>
@@ -172,14 +156,13 @@
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">Solar & Battery Systems</h2>
-                        <p class="card-text">Embrace the power of the sun with my advanced solar panel installations and
-                            lithium battery systems, designed for efficiency and reliability on the open sea.</p>
+                        <h3 class="card-title">Solar & Battery Systems</h3>
+                        <p class="card-text">Embrace solar power with our advanced solar panels and lithium batteries, designed for efficiency and reliability at sea.</p>
                     </div>
-                    <!-- Contenedor de la imagen -->
+                    <!-- Image container -->
                     <div class="image-container">
                         <img src="images/photos/boat-solar-panels-01.jpeg" class="card-img-bottom"
-                            alt="Solar panels on motor yacht">
+                            alt="Solar Panels Installed on Motor Yacht">
                     </div>
                 </div>
             </div>
@@ -187,14 +170,13 @@
             <div class="col-md-4 mb-3">
                 <div class="card h-100">
                     <div class="card-body">
-                        <h2 class="card-title">Custom Electronic Design</h2>
-                        <p class="card-text">From navigation aids to onboard network systems, PLC automation, and remote
-                            monitoring, I design and implement tailored solutions to meet your unique needs.</p>
+                        <h3 class="card-title">Custom Electronic Design</h3>
+                        <p class="card-text">From navigation aids to network systems, PLC automation, and remote monitoring, we design and implement tailored solutions for your unique needs.</p>
                     </div>
-                    <!-- Contenedor de la imagen -->
+                    <!-- Image container -->
                     <div class="image-container">
                         <img src="images/photos/marine-custom-electronics-01.jpeg" class="card-img-bottom"
-                            alt="Custom electronic PCB for boat alarm system">
+                            alt="Custom Electronic PCB for Boat Alarm System">
                     </div>
                 </div>
             </div>

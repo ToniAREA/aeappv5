@@ -2,7 +2,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\WelcomeController;
+
 use App\Http\Controllers\Frontend\HomeController;
 
 // Ruta para email de test
@@ -16,6 +18,12 @@ Route::get('/send-mail', function () {
 
 // Ruta para la página de inicio
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+//Ruta para Membership Plans
+
+Route::post('/send-verification-code', 'App\Http\Controllers\MembershipController@sendVerificationCode')->name('send.verification.code');
+Route::post('/verify-code-and-submit', 'App\Http\Controllers\MembershipController@verifyCodeAndSubmit')->name('verify.code.and.submit');
+
 
 // Ruta para la sección "Portfolio"
 Route::get('/portfolio', function () {
