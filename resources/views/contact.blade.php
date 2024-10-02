@@ -16,7 +16,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 mt-2 text-center">
                 <p class="fs-5 text-muted">
-                    To deliver top-tier yacht electronics services exclusively on the island of Mallorca, we focus on a select group of VIP clients, limiting new memberships.<br>You can join this exclusive group via a waiting list. We offer two VIP membership plans: SILVER and GOLD, both with limited availability due to high demand and our dedication to excellence. If your preferred plan is full, join the waiting list to enjoy benefits like preferential rates, fixed pricing, and priority service.<br>This ensures each client receives the best care for their yacht's electronics.
+                    To deliver top-tier yacht electronics services exclusively on the island of Mallorca, we focus on a select group of VIP clients, limiting new memberships.<br><br>You can join this exclusive group via a waiting list. We offer two VIP membership plans: SILVER and GOLD, both with limited availability due to high demand and our dedication to excellence. If your preferred plan is full, join the waiting list to enjoy benefits like preferential rates, fixed pricing, and priority service.<br><br><strong>It's like having your part-time ETO! (Electro-Technical Officer)</strong><br><br>This ensures each client receives the best care for their yacht's electronics.<br>
                 </p>
             </div>
         </div>
