@@ -7,23 +7,17 @@ use App\Http\Controllers\WelcomeController;
 
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 
-// Google OAuth routes
-Route::get('auth/google', [LoginController::class, 'redirectToGoogle']);
-Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+// Registro normal
+Route::post('register', [RegisterController::class, 'register'])->name('register');
 
-/* // Apple OAuth routes
-Route::get('auth/apple', [LoginController::class, 'redirectToApple']);
-Route::get('auth/apple/callback', [LoginController::class, 'handleAppleCallback']);
+// Verificación de email
+Route::get('register/verify/{token}', [RegisterController::class, 'verifyEmail'])->name('register.verify');
 
-// Facebook OAuth routes
-Route::get('auth/facebook', [LoginController::class, 'redirectToFacebook']);
-Route::get('auth/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
- */
-// Ruta para completar el registro
-Route::get('register/complete', [RegisterController::class, 'showCompleteForm'])->name('register.complete');
-Route::post('register/complete', [RegisterController::class, 'completeRegistration']);
-
+// Google OAuth login
+Route::get('auth/google', [RegisterController::class, 'redirectToGoogle'])->name('google.login');
+Route::get('auth/google/callback', [RegisterController::class, 'handleGoogleCallback']);
 // Ruta para email de test
 Route::get('/send-mail', function () {
     \Mail::raw('This is a test email', function ($message) {

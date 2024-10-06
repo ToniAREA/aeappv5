@@ -3,37 +3,41 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\RegistrationVerification;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Log;
+use App\Providers\RouteServiceProvider;
+
 
 class RegisterController extends Controller
 {
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
+     * Redirect to home after registration
      *
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
     /**
-     * Create a new controller instance.
-     *
-     * @return void
+     * Constructor
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('completeRegistration');
+        $this->middleware('guest')->except('verifyEmail');
     }
 
     /**
-     * Get a validator for an incoming registration request.
+     * Validator for registration request
      *
      * @param  array  $data
      * @return \Illuminate\Contracts\Validation\Validator
@@ -43,52 +47,107 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'mobilephone' => ['required', 'regex:/^\+\d{1,3}\d{9,15}$/'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     * Handle the registration request
      *
-     * @param  array  $data
-     * @return \App\Models\User
+     * @param  Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    protected function create(array $data)
+    public function register(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        // Validate registration data
+        $this->validator($request->all())->validate();
+
+        // Generate verification token
+        $token = Str::random(64);
+
+        // Store user data temporarily in session (could be stored in cache or DB)
+        session([
+            'registration_data' => [
+                'name' => $request->name,
+                'email' => $request->email,
+                'mobilephone' => $request->mobilephone,
+                'password' => Hash::make($request->password),
+                'token' => $token,
+            ]
         ]);
+
+        // Send verification email
+        Mail::to($request->email)->send(new RegistrationVerification($token));
+
+        // Redirect to a view that informs the user to check their email
+        return view('auth.check-email')->with('status', 'We have sent you a verification link, please check your email.');
     }
 
     /**
-     * Complete the registration with additional information.
+     * Verify email after user clicks on the verification link
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  string  $token
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function completeRegistration(Request $request)
+    public function verifyEmail($token)
     {
-        // Validar los datos adicionales
-        $request->validate([
-            'mobilephone' => 'required|regex:/^\+\d{1,3}\d{9,15}$/',
-            'role' => 'required|in:client,provider,employee', // Solo permite los roles especificados
-            'comments' => 'nullable|string|max:1000',
-        ]);
+        $registrationData = session('registration_data');
 
-        // Obtener el usuario autenticado
-        $user = Auth::user();
-        if (!$user) {
-            return redirect()->route('login')->withErrors(['msg' => 'Por favor, inicia sesión para completar tu registro.']);
+        if (!$registrationData || $registrationData['token'] !== $token) {
+            return redirect()->route('register')->withErrors(['msg' => 'Invalid or expired verification token.']);
         }
 
-        // Actualizar los datos del usuario
-        $user->mobilephone = $request->mobilephone;
-        $user->role = $request->role;
-        $user->comments = $request->comments;
-        $user->save();
+        // Create and save the user in the DB
+        $user = User::create([
+            'name' => $registrationData['name'],
+            'email' => $registrationData['email'],
+            'mobilephone' => $registrationData['mobilephone'],
+            'password' => $registrationData['password'],
+        ]);
 
-        return redirect()->route('home')->with('status', 'Registration complete!');
+        // Forget registration data from session
+        session()->forget('registration_data');
+
+        // Log the user in and redirect to the home page
+        Auth::login($user);
+
+        return redirect()->route('home')->with('status', 'Your email has been verified and your account has been created.');
+    }
+
+    /**
+     * Redirect the user to Google's OAuth page for registration or login
+     */
+    public function redirectToGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    /**
+     * Handle the callback from Google's OAuth API
+     */
+    public function handleGoogleCallback()
+    {
+        try {
+            $googleUser = Socialite::driver('google')->stateless()->user();
+
+            // Check if the user already exists in the DB
+            $user = User::firstOrCreate(
+                ['email' => $googleUser->getEmail()],
+                [
+                    'name' => $googleUser->getName(),
+                    'google_id' => $googleUser->getId(),
+                    'password' => Hash::make(Str::random(16)), // Generate a random password
+                    'avatar' => $googleUser->getAvatar(),
+                ]
+            );
+
+            Auth::login($user);
+
+            return redirect()->route('home');
+        } catch (Exception $e) {
+            Log::error('Google login failed: ' . $e->getMessage());
+            return redirect('/login')->withErrors(['msg' => 'Failed to login with Google.']);
+        }
     }
 }

@@ -9,9 +9,9 @@
 
 
             <!-- Mensaje de registro -->
-            <p class="login-box-msg">
+            {{-- <p class="login-box-msg">
                 {{ trans('global.register') }}
-            </p>
+            </p> --}}
 
             <!-- Mensajes de alerta -->
             @if (session()->has('message'))
@@ -46,14 +46,15 @@
                     @enderror
                 </div>
 
-                
+
 
                 <!-- Campo de contraseña -->
 
                 <!-- Campo de teléfono móvil -->
                 <div class="form-group">
-                    <input type="tel" name="mobilephone" class="form-control @error('mobilephone') is-invalid @enderror" required
-                        placeholder="{{ trans('global.mobilephone') }} (e.g., +1234567890)" value="{{ old('mobilephone', null) }}">
+                    <input type="tel" name="mobilephone" class="form-control @error('mobilephone') is-invalid @enderror"
+                        required placeholder="{{ trans('global.mobilephone') }} (e.g., +1234567890)"
+                        value="{{ old('mobilephone', null) }}">
                     @error('mobilephone')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -83,12 +84,22 @@
                     <label for="show-password">{{ trans('global.show_password') }}</label>
                 </div>
 
-                <!-- Botón de registro -->
+                <!-- Botón de registro con loader -->
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <button type="submit" class="btn btn-primary btn-block" id="register-btn">
                         {{ trans('global.register') }}
                     </button>
+                    <div id="loading-spinner" style="display:none;">
+                        <img src="{{ asset('spinner.gif') }}" alt="Loading..." />
+                    </div>
                 </div>
+
+                <script>
+                    document.querySelector('form').addEventListener('submit', function() {
+                        document.getElementById('register-btn').disabled = true;
+                        document.getElementById('loading-spinner').style.display = 'block';
+                    });
+                </script>
             </form>
 
             <!-- Enlace a la página de inicio de sesión -->
