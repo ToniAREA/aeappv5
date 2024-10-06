@@ -8,20 +8,11 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
-
     use RegistersUsers;
 
     /**
@@ -38,7 +29,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest')->except('completeRegistration');
     }
 
     /**
@@ -60,7 +51,7 @@ class RegisterController extends Controller
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
-     * @return \App\User
+     * @return \App\Models\User
      */
     protected function create(array $data)
     {
@@ -71,6 +62,12 @@ class RegisterController extends Controller
         ]);
     }
 
+    /**
+     * Complete the registration with additional information.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function completeRegistration(Request $request)
     {
         // Validar los datos adicionales
@@ -80,8 +77,13 @@ class RegisterController extends Controller
             'comments' => 'nullable|string|max:1000',
         ]);
 
-        // Actualizar los datos del usuario autenticado
+        // Obtener el usuario autenticado
         $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->withErrors(['msg' => 'Por favor, inicia sesión para completar tu registro.']);
+        }
+
+        // Actualizar los datos del usuario
         $user->mobilephone = $request->mobilephone;
         $user->role = $request->role;
         $user->comments = $request->comments;

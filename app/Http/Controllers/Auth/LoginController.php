@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str; // Para el uso de Str::random
 use Exception;
 
 class LoginController extends Controller
@@ -27,7 +28,6 @@ class LoginController extends Controller
     public function redirectTo()
     {
         Log::info('Redirecting user', ['user_id' => auth()->user()->id]);
-
         return '/home';
     }
 
@@ -91,8 +91,8 @@ class LoginController extends Controller
                 [
                     'name' => $googleUser->getName(),
                     'google_id' => $googleUser->getId(),
-                    'password' => bcrypt(str_random(16)), // Genera una contraseña aleatoria
-                    'avatar' => $googleUser->getAvatar(),
+                    'password' => bcrypt(Str::random(16)), // Genera una contraseña aleatoria segura
+                    'avatar' => $googleUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar
                 ]
             );
 
@@ -128,8 +128,8 @@ class LoginController extends Controller
                 [
                     'name' => $appleUser->getName(),
                     'apple_id' => $appleUser->getId(),
-                    'password' => bcrypt(str_random(16)), // Genera una contraseña aleatoria
-                    'avatar' => $appleUser->getAvatar(),
+                    'password' => bcrypt(Str::random(16)), // Genera una contraseña aleatoria segura
+                    'avatar' => $appleUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar
                 ]
             );
 
@@ -161,8 +161,8 @@ class LoginController extends Controller
                 [
                     'name' => $facebookUser->getName(),
                     'facebook_id' => $facebookUser->getId(),
-                    'password' => bcrypt(str_random(16)), // Genera una contraseña aleatoria
-                    'avatar' => $facebookUser->getAvatar(),
+                    'password' => bcrypt(Str::random(16)), // Genera una contraseña aleatoria segura
+                    'avatar' => $facebookUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar
                 ]
             );
 
