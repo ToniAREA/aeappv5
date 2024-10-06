@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Log;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 
 
 class RegisterController extends Controller
@@ -92,10 +93,15 @@ class RegisterController extends Controller
      */
     public function verifyEmail($token)
     {
+        Log::info('Verifying email with token: ' . $token);
         $registrationData = session('registration_data');
 
+        // Check if the token is valid
         if (!$registrationData || $registrationData['token'] !== $token) {
             return redirect()->route('register')->withErrors(['msg' => 'Invalid or expired verification token.']);
+            Log::error('Invalid or expired verification token.');
+        }else{
+            Log::info('Token is valid. Proceeding with user creation.');
         }
 
         // Create and save the user in the DB
@@ -104,6 +110,8 @@ class RegisterController extends Controller
             'email' => $registrationData['email'],
             'mobilephone' => $registrationData['mobilephone'],
             'password' => $registrationData['password'],
+            'email_verified_at' => Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format')),
+        // other fields...
         ]);
 
         // Forget registration data from session

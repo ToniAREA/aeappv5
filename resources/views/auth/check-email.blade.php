@@ -9,9 +9,8 @@
             <p>{{ __('We have sent you a verification link. Please check your email to complete your registration.') }}
             </p>
 
-            <p>{{ __('If you did not receive the email') }}, <a
-                    {{-- href="{{ route('verification.resend', ['email' => request('email')]) }}">{{ __('click here to request another') }}</a>.</p>
- --}}
+            <p>{{ __('If you did not receive the email') }}, 
+                {{--<a href="{{ route('verification.resend', ['email' => request('email')]) }}">{{ __('click here to request another') }}</a>.</p>--}}
         </div>
     </div>
 @endsection
