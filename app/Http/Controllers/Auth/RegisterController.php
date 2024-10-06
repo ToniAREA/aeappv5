@@ -50,24 +50,43 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name'     => ['required', 'string', 'max:255'],
-            'email'    => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
-         /**
-          * Create a new user instance after a valid registration.
-          *
-          * @param  array  $data
-          * @return \App\User
-          */
-         protected function create(array $data)
-         {
-             return User::create([
-                 'name'     => $data['name'],
-                 'email'    => $data['email'],
-                 'password' => Hash::make($data['password']),
-             ]);
-         }
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function create(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
+
+    public function completeRegistration(Request $request)
+    {
+        // Validar los datos adicionales
+        $request->validate([
+            'mobilephone' => 'required|regex:/^\+\d{1,3}\d{9,15}$/',
+            'role' => 'required|in:client,provider,employee', // Solo permite los roles especificados
+            'comments' => 'nullable|string|max:1000',
+        ]);
+
+        // Actualizar los datos del usuario autenticado
+        $user = Auth::user();
+        $user->mobilephone = $request->mobilephone;
+        $user->role = $request->role;
+        $user->comments = $request->comments;
+        $user->save();
+
+        return redirect()->route('home')->with('status', 'Registration complete!');
+    }
 }

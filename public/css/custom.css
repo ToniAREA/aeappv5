@@ -226,8 +226,13 @@ table tbody tr:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 80px);
+    /* Ajuste considerando los márgenes */
     background-color: var(--background-color);
+    margin: 0 20px;
+    /* Agrupando los márgenes laterales */
+    margin-top: 30px;
+    margin-bottom: 50px;
 }
 
 /* Caja de login */

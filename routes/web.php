@@ -6,6 +6,23 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\WelcomeController;
 
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Auth\LoginController;
+
+// Google OAuth routes
+Route::get('auth/google', [LoginController::class, 'redirectToGoogle']);
+Route::get('auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+
+// Apple OAuth routes
+Route::get('auth/apple', [LoginController::class, 'redirectToApple']);
+Route::get('auth/apple/callback', [LoginController::class, 'handleAppleCallback']);
+
+// Facebook OAuth routes
+Route::get('auth/facebook', [LoginController::class, 'redirectToFacebook']);
+Route::get('auth/facebook/callback', [LoginController::class, 'handleFacebookCallback']);
+
+// Ruta para completar el registro
+Route::get('register/complete', [RegisterController::class, 'showCompleteForm'])->name('register.complete');
+Route::post('register/complete', [RegisterController::class, 'completeRegistration']);
 
 // Ruta para email de test
 Route::get('/send-mail', function () {

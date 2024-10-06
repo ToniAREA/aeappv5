@@ -3,12 +3,7 @@
 @section('content')
     <div class="login-container">
         <div class="login-box">
-            <!-- Logo o título -->
-            <div class="login-logo">
-                <a href="{{ url('/') }}">
-                    {{ trans('panel.site_title') }}
-                </a>
-            </div>
+            @include('partials.logo')
 
             <!-- Mensaje -->
             <p class="login-box-msg">
@@ -16,7 +11,7 @@
             </p>
 
             <!-- Mensajes de alerta -->
-            @if(session('status'))
+            @if (session('status'))
                 <div class="alert alert-info" role="alert">
                     {{ session('status') }}
                 </div>
@@ -28,7 +23,9 @@
 
                 <!-- Campo de email -->
                 <div class="form-group">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" value="{{ old('email') }}">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        name="email" required autocomplete="email" autofocus
+                        placeholder="{{ trans('global.login_email') }}" value="{{ old('email') }}">
 
                     @error('email')
                         <div class="invalid-feedback">

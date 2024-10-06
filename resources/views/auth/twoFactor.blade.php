@@ -3,12 +3,7 @@
 @section('content')
     <div class="login-container">
         <div class="login-box">
-            <!-- Logo o título -->
-            <div class="login-logo">
-                <a href="{{ url('/') }}">
-                    {{ trans('panel.site_title') }}
-                </a>
-            </div>
+            @include('partials.logo')
 
             <!-- Mensaje de la página -->
             <p class="login-box-msg">
@@ -16,7 +11,7 @@
             </p>
 
             <!-- Mensajes de alerta -->
-            @if(session()->has('message'))
+            @if (session()->has('message'))
                 <div class="alert alert-info">
                     {{ session()->get('message') }}
                 </div>
@@ -39,7 +34,9 @@
                                 <i class="fa fa-lock"></i>
                             </span>
                         </div>
-                        <input name="two_factor_code" type="text" class="form-control @error('two_factor_code') is-invalid @enderror" required autofocus placeholder="{{ trans('global.two_factor.code') }}">
+                        <input name="two_factor_code" type="text"
+                            class="form-control @error('two_factor_code') is-invalid @enderror" required autofocus
+                            placeholder="{{ trans('global.two_factor.code') }}">
                         @error('two_factor_code')
                             <div class="invalid-feedback">
                                 {{ $message }}
@@ -60,7 +57,8 @@
                     <a class="btn btn-secondary" href="{{ route('twoFactor.resend') }}">
                         {{ __('global.two_factor.resend') }}
                     </a>
-                    <a class="btn btn-danger" href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                    <a class="btn btn-danger" href="#"
+                        onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
                         {{ trans('global.logout') }}
                     </a>
                 </div>

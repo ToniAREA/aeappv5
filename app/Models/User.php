@@ -47,6 +47,8 @@ class User extends Authenticatable implements HasMedia
         'name',
         'email',
         'email_verified_at',
+        'mobilephone',
+        'mobilephone_verified_at',
         'password',
         'two_factor',
         'verified',
@@ -58,6 +60,11 @@ class User extends Authenticatable implements HasMedia
         'updated_at',
         'deleted_at',
         'two_factor_expires_at',
+        'google_id',
+        'apple_id',
+        'facebook_id',
+        'avatar',
+        'nickname',
     ];
 
     protected function serializeDate(DateTimeInterface $date)

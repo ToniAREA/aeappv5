@@ -238,6 +238,8 @@ return [
     'phone'                          => 'Phone',
     'phone1'                         => 'Phone 1',
     'phone2'                         => 'Phone 2',
+    'mobilephone'                    => 'Mobile phone',
+    'phone_validation_notice'        => 'We may call this number to verify your account.',
     'photo'                          => 'Photo (max 8mb)',
     'photo1'                         => 'Photo1',
     'photo2'                         => 'Photo2',

@@ -3,6 +3,14 @@
 @section('content')
     <div class="container-fluid">
         {{-- @include('partials.smallmenu') --}}
+
+        @can('wlist_create')
+            <div class="row">
+                <div class="col-12">
+                    <a href="{{ route('frontend.wlists.create') }}" class="btn btn-primary">
+            
+        @endcan
+        
         <div class="row">
             @foreach ($wlistsNotDone as $wlnd)
                 <div class="col-12 col-sm-6 col-lg-4 p-1" data-priority="{{ $wlnd->priority }}">

@@ -3,12 +3,10 @@
 @section('content')
     <div class="login-container">
         <div class="login-box">
+
             <!-- Logo o título -->
-            <div class="login-logo">
-                <a href="{{ url('/') }}">
-                    {{ trans('panel.site_title') }}
-                </a>
-            </div>
+            @include('partials.logo')
+
 
             <!-- Mensaje de registro -->
             <p class="login-box-msg">
@@ -28,7 +26,8 @@
 
                 <!-- Campo de nombre -->
                 <div class="form-group">
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" required autofocus placeholder="{{ trans('global.user_name') }}" value="{{ old('name', null) }}">
+                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" required
+                        autofocus placeholder="{{ trans('global.user_name') }}" value="{{ old('name', null) }}">
                     @error('name')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -38,7 +37,8 @@
 
                 <!-- Campo de email -->
                 <div class="form-group">
-                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" required placeholder="{{ trans('global.login_email') }}" value="{{ old('email', null) }}">
+                    <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" required
+                        placeholder="{{ trans('global.login_email') }}" value="{{ old('email', null) }}">
                     @error('email')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -46,9 +46,24 @@
                     @enderror
                 </div>
 
+                
+
                 <!-- Campo de contraseña -->
+
+                <!-- Campo de teléfono móvil -->
                 <div class="form-group">
-                    <input id="password" type="password" name="password" class="form-control @error('password') is-invalid @enderror" required placeholder="{{ trans('global.login_password') }}">
+                    <input type="tel" name="mobilephone" class="form-control @error('mobilephone') is-invalid @enderror" required
+                        placeholder="{{ trans('global.mobilephone') }} (e.g., +1234567890)" value="{{ old('mobilephone', null) }}">
+                    @error('mobilephone')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <input id="password" type="password" name="password"
+                        class="form-control @error('password') is-invalid @enderror" required
+                        placeholder="{{ trans('global.login_password') }}">
                     @error('password')
                         <div class="invalid-feedback">
                             {{ $message }}
@@ -58,7 +73,8 @@
 
                 <!-- Campo de confirmación de contraseña -->
                 <div class="form-group">
-                    <input id="password-confirm" type="password" name="password_confirmation" class="form-control" required placeholder="{{ trans('global.login_password_confirmation') }}">
+                    <input id="password-confirm" type="password" name="password_confirmation" class="form-control" required
+                        placeholder="{{ trans('global.login_password_confirmation') }}">
                 </div>
 
                 <!-- Checkbox para mostrar/ocultar contraseña -->
@@ -81,6 +97,16 @@
                     {{ trans('global.login') }}
                 </a>
             </p>
+            <p class="text-center">
+                -- Or access with --
+            </p>
+
+            <!-- Botón de Google para acceso -->
+            <div class="text-center">
+                <a href="{{ url('auth/google') }}" class="btn btn-primary text-white btn-block mb-2">
+                    <i class="fab fa-google"></i> {{ __('Google') }}
+                </a>
+            </div>
         </div>
     </div>
 

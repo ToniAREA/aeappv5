@@ -3,12 +3,7 @@
 @section('content')
     <div class="login-container">
         <div class="login-box">
-            <!-- Logo o título -->
-            <div class="login-logo">
-                <a href="{{ url('/') }}">
-                    {{ trans('panel.site_title') }}
-                </a>
-            </div>
+            @include('partials.logo')
 
             <!-- Mensaje de restablecimiento de contraseña -->
             <p class="login-box-msg">
@@ -30,7 +25,9 @@
 
                 <!-- Campo de email -->
                 <div class="form-group">
-                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}">
+                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                        name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus
+                        placeholder="{{ trans('global.login_email') }}">
 
                     @error('email')
                         <div class="invalid-feedback">
@@ -41,7 +38,8 @@
 
                 <!-- Campo de contraseña -->
                 <div class="form-group">
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required placeholder="{{ trans('global.login_password') }}">
+                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                        name="password" required placeholder="{{ trans('global.login_password') }}">
 
                     @error('password')
                         <div class="invalid-feedback">
@@ -52,7 +50,8 @@
 
                 <!-- Campo de confirmación de contraseña -->
                 <div class="form-group">
-                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required placeholder="{{ trans('global.login_password_confirmation') }}">
+                    <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required
+                        placeholder="{{ trans('global.login_password_confirmation') }}">
                 </div>
 
                 <!-- Checkbox para mostrar/ocultar contraseñas -->

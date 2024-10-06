@@ -82,8 +82,46 @@
                     </div>
                     
                 @else
-                    <div class="text-center">
-                        <img class="img-fluid rounded" src="images/gallery/memberships_hidden.png" alt="VIP Membership Placeholder" />
+                    <div class="row row-cols-1 row-cols-md-2 text-center">
+                        <!-- VIP SILVER Membership -->
+                        <div class="col">
+                            <div class="card mb-4 rounded-3 shadow-sm">
+                                <div class="card-header py-3">
+                                    <h2 class="my-0 fw-normal">VIP SILVER</h2>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title pricing-card-title">€XXX<small class="text-muted fw-light">/month</small></h3>
+                                    <small class="text-muted fw-light">Anual plan. One payment.</small><br>
+                                    <small class="text-muted fw-light">€XXX</small>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>Guaranteed assistance<br>within 7 business days in Mallorca.</li><br>
+                                        <li>€XX normal rate per hour</li>
+                                        <li>€XX overtime rate per hour</li>
+                                        <li>10% discount on all materials</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- VIP GOLD Membership -->
+                        <div class="col">
+                            <div class="card rounded-3 shadow-sm border-warning">
+                                <div class="card-header py-3 text-white bg-warning border-warning">
+                                    <h2 class="my-0 fw-normal">VIP GOLD</h2>
+                                </div>
+                                <div class="card-body">
+                                    <h3 class="card-title pricing-card-title">€XXX<small class="text-muted fw-light">/month</small></h3>
+                                    <small class="text-muted fw-light">Bi-Anual plan. One payment.</small><br>
+                                    <small class="text-muted fw-light">€XXX</small>
+                                    <ul class="list-unstyled mt-3 mb-4">
+                                        <li>48-hour<br>guaranteed assistance in Mallorca.</li><br>
+                                        <li>€XX normal rate per hour</li>
+                                        <li>€XX overtime rate per hour</li>
+                                        <li>20% discount on all materials</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <p class="fs-5 text-muted mt-2 text-center">
                         To view membership prices or contact details, please <a href="{{ route('login') }}">log in</a>.

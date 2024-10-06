@@ -3,12 +3,7 @@
 @section('content')
     <div class="login-container">
         <div class="login-box">
-            <!-- Logo o título -->
-            <div class="login-logo">
-                <a href="{{ url('/') }}">
-                    {{ trans('panel.site_title') }}
-                </a>
-            </div>
+            @include('partials.logo')
 
             <!-- Mensaje de inicio de sesión -->
             <p class="login-box-msg">
@@ -61,8 +56,8 @@
                     <button type="submit" class="btn btn-primary btn-block">
                         {{ trans('global.login') }}
                     </button>
-                </div>
-                
+            </div>
+
                 <div class="form-group remember-login">
                     <div class="custom-checkbox">
                         <input type="checkbox" name="remember" id="remember">
@@ -79,12 +74,23 @@
                     </a>
                 </p>
             @endif
-            <p class="mb-0">
+            <p class="">
                 <a href="{{ route('register') }}">
                     {{ trans('global.register') }}
                 </a>
             </p>
+            <p class="text-center">
+                -- Or access with --
+            </p>
+
+            <!-- Botón de Google para acceso -->
+            <div class="text-center">
+                <a href="{{ url('auth/google') }}" class="btn btn-primary text-white btn-block mb-2">
+                    <i class="fab fa-google"></i> {{ __('Google') }}
+                </a>
+            </div>
         </div>
+        
     </div>
 
     <!-- JavaScript para mostrar/ocultar la contraseña -->

@@ -4,12 +4,7 @@
 
 <div class="login-container">
     <div class="login-box">
-        <!-- Logo o título -->
-        <div class="login-logo">
-            <a href="{{ url('/') }}">
-                {{ trans('panel.site_title') }}
-            </a>
-        </div>
+        @include('partials.logo')
 
         <!-- Información del usuario -->
         <div class="user-info text-center">
