@@ -10,8 +10,8 @@
             </p>
 
             <p>{{ __('If you did not receive the email') }}, <a
-                    href="{{ route('verification.resend', ['email' => request('email')]) }}">{{ __('click here to request another') }}</a>.</p>
-
+                    {{-- href="{{ route('verification.resend', ['email' => request('email')]) }}">{{ __('click here to request another') }}</a>.</p>
+ --}}
         </div>
     </div>
 @endsection
