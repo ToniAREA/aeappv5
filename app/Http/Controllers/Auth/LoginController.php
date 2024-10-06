@@ -93,6 +93,8 @@ class LoginController extends Controller
                     'google_id' => $googleUser->getId(),
                     'password' => bcrypt(Str::random(16)), // Genera una contraseña aleatoria segura
                     'avatar' => $googleUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar
+                    'nickname' => $googleUser->getNickname(), // Asegura que siempre haya un nickname
+                    'email_verified_at' => now()->format('Y-m-d H:i:s'), // Asegura que el email esté verificado
                 ]
             );
 
@@ -130,6 +132,9 @@ class LoginController extends Controller
                     'apple_id' => $appleUser->getId(),
                     'password' => bcrypt(Str::random(16)), // Genera una contraseña aleatoria segura
                     'avatar' => $appleUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar
+                    'email_verified_at' => now()->format('Y-m-d H:i:s'), // Asegura que el email esté verificado
+                    'nickname' => $appleUser->getNickname(), // Asegura que siempre haya un nickname
+
                 ]
             );
 
@@ -162,7 +167,9 @@ class LoginController extends Controller
                     'name' => $facebookUser->getName(),
                     'facebook_id' => $facebookUser->getId(),
                     'password' => bcrypt(Str::random(16)), // Genera una contraseña aleatoria segura
-                    'avatar' => $facebookUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar
+                    'avatar' => $facebookUser->getAvatar() ?? 'default-avatar.png', // Asegura que siempre haya un avatar   
+                    'email_verified_at' => now()->format('Y-m-d H:i:s'), // Asegura que el email esté verificado
+                    'nickname' => $facebookUser->getNickname(), // Asegura que siempre haya un nickname
                 ]
             );
 

@@ -31,10 +31,8 @@ Route::get('/send-mail', function () {
 Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
 //Ruta para Membership Plans
-
 Route::post('/send-verification-code', 'App\Http\Controllers\MembershipController@sendVerificationCode')->name('send.verification.code');
 Route::post('/verify-code-and-submit', 'App\Http\Controllers\MembershipController@verifyCodeAndSubmit')->name('verify.code.and.submit');
-
 
 // Ruta para la sección "Portfolio"
 Route::get('/portfolio', function () {
@@ -46,9 +44,8 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
 
-
 Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
-Auth::routes();
+Auth::routes(['verify' => false]);
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
     Route::get('/', 'HomeController@index')->name('home');

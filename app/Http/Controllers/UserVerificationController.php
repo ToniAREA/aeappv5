@@ -15,6 +15,7 @@ class UserVerificationController extends Controller
 
         $user->verified           = 1;
         $user->verified_at        = Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+        $user->email_verified_at  = Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format'));
         $user->verification_token = null;
         $user->save();
 

@@ -93,42 +93,37 @@ class User extends Authenticatable implements HasMedia
         return $this->roles()->where('id', 1)->exists();
     }
 
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-        self::created(function (self $user) {
-            if (auth()->check()) {
-                $user->verified    = 1;
-                $user->verified_at = Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format'));
-                $user->save();
-            } elseif (! $user->verification_token) {
-                $token     = Str::random(64);
+    protected static function boot()
+{
+    parent::boot();
+
+    static::created(function (self $user) {
+        if (auth()->check()) {
+            $user->verified = 1;
+            $user->verified_at = Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format'));
+            $user->save();
+        } elseif (!$user->verification_token && !$user->email_verified_at) {
+            // Solo envía la verificación si el email no ha sido verificado
+            $token = Str::random(64);
+            $usedToken = self::where('verification_token', $token)->first();
+
+            while ($usedToken) {
+                $token = Str::random(64);
                 $usedToken = self::where('verification_token', $token)->first();
-
-                while ($usedToken) {
-                    $token     = Str::random(64);
-                    $usedToken = self::where('verification_token', $token)->first();
-                }
-
-                $user->verification_token = $token;
-                $user->save();
-
-                $registrationRole = config('panel.registration_default_role');
-                if (! $user->roles()->get()->contains($registrationRole)) {
-                    $user->roles()->attach($registrationRole);
-                }
-
-                $user->notify(new VerifyUserNotification($user));
             }
-        });
-    }
-    
 
-    public static function boot()
-    {
-        parent::boot();
-        self::observe(new \App\Observers\UserActionObserver);
-    }
+            $user->verification_token = $token;
+            $user->save();
+
+            $registrationRole = config('panel.registration_default_role');
+            if (!$user->roles()->get()->contains($registrationRole)) {
+                $user->roles()->attach($registrationRole);
+            }
+
+            $user->notify(new VerifyUserNotification($user));
+        }
+    });
+}
 
     public function registerMediaConversions(Media $media = null): void
     {

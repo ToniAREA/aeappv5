@@ -80,6 +80,7 @@ class RegisterController extends Controller
 
         // Send verification email
         Mail::to($request->email)->send(new RegistrationVerification($token));
+        Log::info('Verification email sent to ' . $request->email);
 
         // Redirect to a view that informs the user to check their email
         return view('auth.check-email')->with('status', 'We have sent you a verification link, please check your email.');
@@ -111,6 +112,7 @@ class RegisterController extends Controller
             'mobilephone' => $registrationData['mobilephone'],
             'password' => $registrationData['password'],
             'email_verified_at' => Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format')),
+            'verified' => 1,
         // other fields...
         ]);
 
