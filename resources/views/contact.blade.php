@@ -1,7 +1,7 @@
 @extends('layouts.public')
 @section('content')
     <!-- Page Content-->
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="row justify-content-center">
             <div class="col-lg-8 m-3 text-center">
@@ -10,20 +10,27 @@
         </div>
         <div class="row justify-content-center">
             <div class="mb-3 col-lg-8 col-12 d-flex">
-                <img class="img-fluid rounded" src="images/gallery/vip-header-01.png" alt="VIP Yacht Electronics Service in Mallorca" />
+                <img class="img-fluid rounded" src="images/gallery/vip-header-01.png"
+                    alt="VIP Yacht Electronics Service in Mallorca" />
             </div>
         </div>
         <div class="row justify-content-center">
             <div class="col-lg-8 mt-2 text-center">
                 <p class="fs-5 text-muted">
-                    To deliver top-tier yacht electronics services exclusively on the island of Mallorca, we focus on a select group of VIP clients, limiting new memberships.<br><br>You can join this exclusive group via a waiting list. We offer two VIP membership plans: SILVER and GOLD, both with limited availability due to high demand and our dedication to excellence. If your preferred plan is full, join the waiting list to enjoy benefits like preferential rates, fixed pricing, and priority service.<br><br><strong>It's like having your part-time ETO! (Electro-Technical Officer)</strong><br><br>This ensures each client receives the best care for their yacht's electronics.<br>
+                    To deliver top-tier yacht electronics services exclusively on the island of Mallorca, we focus on a
+                    select group of VIP clients, limiting new memberships.<br><br>You can join this exclusive group via a
+                    waiting list. We offer two VIP membership plans: SILVER and GOLD, both with limited availability due to
+                    high demand and our dedication to excellence. If your preferred plan is full, join the waiting list to
+                    enjoy benefits like preferential rates, fixed pricing, and priority service.<br><br><strong>It's like
+                        having your part-time ETO! (Electro-Technical Officer)</strong><br><br>This ensures each client
+                    receives the best care for their yacht's electronics.<br>
                 </p>
             </div>
         </div>
 
         <div class="row justify-content-center">
             <div class="col-lg-8">
-                @if(Auth::check())
+                @if (Auth::check())
                     <div class="row row-cols-1 row-cols-md-2 text-center">
                         <!-- VIP SILVER Membership -->
                         <div class="col">
@@ -32,7 +39,8 @@
                                     <h2 class="my-0 fw-normal">VIP SILVER</h2>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="card-title pricing-card-title">€200<small class="text-muted fw-light">/month</small></h3>
+                                    <h3 class="card-title pricing-card-title">€200<small
+                                            class="text-muted fw-light">/month</small></h3>
                                     <small class="text-muted fw-light">Anual plan. One payment.</small><br>
                                     <small class="text-muted fw-light">€2.400</small>
                                     <ul class="list-unstyled mt-3 mb-4">
@@ -41,7 +49,8 @@
                                         <li>€120 overtime rate per hour</li>
                                         <li>10% discount on all materials</li>
                                     </ul>
-                                    <button type="button" id="joinSilverButton" class="w-100 btn btn-lg btn-outline-secondary">Join SILVER</button>
+                                    <button type="button" id="joinSilverButton"
+                                        class="w-100 btn btn-lg btn-outline-secondary">Join SILVER</button>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +62,8 @@
                                     <h2 class="my-0 fw-normal">VIP GOLD</h2>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="card-title pricing-card-title">€500<small class="text-muted fw-light">/month</small></h3>
+                                    <h3 class="card-title pricing-card-title">€500<small
+                                            class="text-muted fw-light">/month</small></h3>
                                     <small class="text-muted fw-light">Bi-Anual plan. One payment.</small><br>
                                     <small class="text-muted fw-light">€12.000</small>
                                     <ul class="list-unstyled mt-3 mb-4">
@@ -62,7 +72,8 @@
                                         <li>€100 overtime rate per hour</li>
                                         <li>20% discount on all materials</li>
                                     </ul>
-                                    <button type="button" id="joinGoldButton" class="w-100 btn btn-lg btn-warning">Join GOLD</button>
+                                    <button type="button" id="joinGoldButton" class="w-100 btn btn-lg btn-warning">Join
+                                        GOLD</button>
                                 </div>
                             </div>
                         </div>
@@ -80,7 +91,6 @@
                             </p>
                         </div>
                     </div>
-                    
                 @else
                     <div class="row row-cols-1 row-cols-md-2 text-center">
                         <!-- VIP SILVER Membership -->
@@ -90,7 +100,8 @@
                                     <h2 class="my-0 fw-normal">VIP SILVER</h2>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="card-title pricing-card-title">€XXX<small class="text-muted fw-light">/month</small></h3>
+                                    <h3 class="card-title pricing-card-title">€XXX<small
+                                            class="text-muted fw-light">/month</small></h3>
                                     <small class="text-muted fw-light">Anual plan. One payment.</small><br>
                                     <small class="text-muted fw-light">€XXX</small>
                                     <ul class="list-unstyled mt-3 mb-4">
@@ -110,7 +121,8 @@
                                     <h2 class="my-0 fw-normal">VIP GOLD</h2>
                                 </div>
                                 <div class="card-body">
-                                    <h3 class="card-title pricing-card-title">€XXX<small class="text-muted fw-light">/month</small></h3>
+                                    <h3 class="card-title pricing-card-title">€XXX<small
+                                            class="text-muted fw-light">/month</small></h3>
                                     <small class="text-muted fw-light">Bi-Anual plan. One payment.</small><br>
                                     <small class="text-muted fw-light">€XXX</small>
                                     <ul class="list-unstyled mt-3 mb-4">
@@ -132,7 +144,8 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8 text-center">
                     <p class="fs-5 text-muted mt-2">
-                        Secure your spot in this exclusive circle!<br>Limited VIP Memberships available.<br>VAT not included.
+                        Secure your spot in this exclusive circle!<br>Limited VIP Memberships available.<br>VAT not
+                        included.
                     </p>
                 </div>
             </div>
@@ -154,7 +167,8 @@
                         <!-- Step 1: User Inputs -->
                         <div id="silverFormStep1">
                             <div class="mb-3 text-center">
-                                <img class="img-fluid rounded" src="images/gallery/vip-silver-header-01.webp" alt="VIP SILVER Yacht Electronics Service in Mallorca" />
+                                <img class="img-fluid rounded" src="images/gallery/vip-silver-header-01.webp"
+                                    alt="VIP SILVER Yacht Electronics Service in Mallorca" />
                             </div>
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Full Name</label>
@@ -181,7 +195,8 @@
                         <div id="silverFormStep2" style="display: none;">
                             <div class="mb-3">
                                 <label for="verificationCode" class="form-label">Enter Verification Code</label>
-                                <input type="text" class="form-control" id="verificationCode" name="verificationCode" required disabled>
+                                <input type="text" class="form-control" id="verificationCode" name="verificationCode"
+                                    required disabled>
                                 <div class="form-text">A verification code has been sent to your email.</div>
                             </div>
                         </div>
@@ -191,7 +206,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="silverFormBackButton" class="btn btn-secondary" style="display: none;">Back</button>
+                        <button type="button" id="silverFormBackButton" class="btn btn-secondary"
+                            style="display: none;">Back</button>
                         <button type="submit" id="silverFormSubmitButton" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
@@ -213,15 +229,18 @@
                         <!-- Step 1: User Inputs -->
                         <div id="goldFormStep1">
                             <div class="mb-3 text-center">
-                                <img class="img-fluid rounded" src="images/gallery/vip-gold-header-01.webp" alt="VIP GOLD Yacht Electronics Service in Mallorca" />
+                                <img class="img-fluid rounded" src="images/gallery/vip-gold-header-01.webp"
+                                    alt="VIP GOLD Yacht Electronics Service in Mallorca" />
                             </div>
                             <div class="mb-3">
                                 <label for="goldFullName" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="goldFullName" name="goldFullName" required>
+                                <input type="text" class="form-control" id="goldFullName" name="goldFullName"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="goldBoatName" class="form-label">Boat Name</label>
-                                <input type="text" class="form-control" id="goldBoatName" name="goldBoatName" required>
+                                <input type="text" class="form-control" id="goldBoatName" name="goldBoatName"
+                                    required>
                             </div>
                             <div class="mb-3">
                                 <label for="goldMmsi" class="form-label">MMSI</label>
@@ -233,14 +252,16 @@
                             </div>
                             <div class="mb-3">
                                 <label for="goldMobilePhone" class="form-label">Mobile Phone</label>
-                                <input type="tel" class="form-control" id="goldMobilePhone" name="goldMobilePhone" required>
+                                <input type="tel" class="form-control" id="goldMobilePhone" name="goldMobilePhone"
+                                    required>
                             </div>
                         </div>
                         <!-- Step 2: Verification Code Input -->
                         <div id="goldFormStep2" style="display: none;">
                             <div class="mb-3">
                                 <label for="goldVerificationCode" class="form-label">Enter Verification Code</label>
-                                <input type="text" class="form-control" id="goldVerificationCode" name="goldVerificationCode" required disabled>
+                                <input type="text" class="form-control" id="goldVerificationCode"
+                                    name="goldVerificationCode" required disabled>
                                 <div class="form-text">A verification code has been sent to your email.</div>
                             </div>
                         </div>
@@ -250,7 +271,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="goldFormBackButton" class="btn btn-secondary" style="display: none;">Back</button>
+                        <button type="button" id="goldFormBackButton" class="btn btn-secondary"
+                            style="display: none;">Back</button>
                         <button type="submit" id="goldFormSubmitButton" class="btn btn-primary">Submit</button>
                     </div>
                 </form>
@@ -283,152 +305,153 @@
         });
     </script>
 
-   <script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    const silverForm = document.getElementById('silverMembershipForm');
-    const silverFormStep1 = document.getElementById('silverFormStep1');
-    const silverFormStep2 = document.getElementById('silverFormStep2');
-    const silverFormSuccess = document.getElementById('silverFormSuccess');
-    const silverFormSubmitButton = document.getElementById('silverFormSubmitButton');
-    const silverFormBackButton = document.getElementById('silverFormBackButton');
-    const verificationCodeInput = document.getElementById('verificationCode');
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const silverForm = document.getElementById('silverMembershipForm');
+            const silverFormStep1 = document.getElementById('silverFormStep1');
+            const silverFormStep2 = document.getElementById('silverFormStep2');
+            const silverFormSuccess = document.getElementById('silverFormSuccess');
+            const silverFormSubmitButton = document.getElementById('silverFormSubmitButton');
+            const silverFormBackButton = document.getElementById('silverFormBackButton');
+            const verificationCodeInput = document.getElementById('verificationCode');
 
-    let verificationSent = false;
+            let verificationSent = false;
 
-    silverForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+            silverForm.addEventListener('submit', function(e) {
+                e.preventDefault();
 
-        if (!verificationSent) {
-            // First step: Validate inputs and send verification code
-            const fullName = document.getElementById('fullName').value.trim();
-            const boatName = document.getElementById('boatName').value.trim();
-            const mmsi = document.getElementById('mmsi').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const mobilePhone = document.getElementById('mobilePhone').value.trim();
+                if (!verificationSent) {
+                    // First step: Validate inputs and send verification code
+                    const fullName = document.getElementById('fullName').value.trim();
+                    const boatName = document.getElementById('boatName').value.trim();
+                    const mmsi = document.getElementById('mmsi').value.trim();
+                    const email = document.getElementById('email').value.trim();
+                    const mobilePhone = document.getElementById('mobilePhone').value.trim();
 
-            // Client-side validation
-            if (!fullName || !boatName || !mmsi || !email || !mobilePhone) {
-                alert('Please fill in all fields.');
-                return;
-            }
+                    // Client-side validation
+                    if (!fullName || !boatName || !mmsi || !email || !mobilePhone) {
+                        alert('Please fill in all fields.');
+                        return;
+                    }
 
-            // Validate MMSI (should be a 9-digit number starting with 2-7)
-            const mmsiRegex = /^[2-7]\d{8}$/;
-            if (!mmsiRegex.test(mmsi)) {
-                alert('Please enter a valid MMSI number.');
-                return;
-            }
+                    // Validate MMSI (should be a 9-digit number starting with 2-7)
+                    const mmsiRegex = /^[2-7]\d{8}$/;
+                    if (!mmsiRegex.test(mmsi)) {
+                        alert('Please enter a valid MMSI number.');
+                        return;
+                    }
 
-            // Validate email
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                alert('Please enter a valid email address.');
-                return;
-            }
+                    // Validate email
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailRegex.test(email)) {
+                        alert('Please enter a valid email address.');
+                        return;
+                    }
 
-            // Validate mobile phone (basic validation)
-            const phoneRegex = /^\+?\d{7,15}$/;
-            if (!phoneRegex.test(mobilePhone)) {
-                alert('Please enter a valid mobile phone number.');
-                return;
-            }
+                    // Validate mobile phone (basic validation)
+                    const phoneRegex = /^\+?\d{7,15}$/;
+                    if (!phoneRegex.test(mobilePhone)) {
+                        alert('Please enter a valid mobile phone number.');
+                        return;
+                    }
 
-            // Send AJAX request to send verification code
-            fetch('{{ route('send.verification.code') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify({
-                    email: email
-                })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                verificationSent = true;
-                silverFormStep1.style.display = 'none';
-                silverFormStep2.style.display = 'block';
-                silverFormBackButton.style.display = 'inline-block';
-                verificationCodeInput.disabled = false; // Enable the input
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                if (error.errors) {
-                    alert('Validation error: ' + Object.values(error.errors).join(', '));
+                    // Send AJAX request to send verification code
+                    fetch('{{ route('send.verification.code') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                email: email
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(err => {
+                                    throw err;
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            verificationSent = true;
+                            silverFormStep1.style.display = 'none';
+                            silverFormStep2.style.display = 'block';
+                            silverFormBackButton.style.display = 'inline-block';
+                            verificationCodeInput.disabled = false; // Enable the input
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            if (error.errors) {
+                                alert('Validation error: ' + Object.values(error.errors).join(', '));
+                            } else {
+                                alert('An error occurred. Please try again.');
+                            }
+                        });
+
                 } else {
-                    alert('An error occurred. Please try again.');
+                    // Second step: Verify code and submit form
+                    const verificationCode = document.getElementById('verificationCode').value.trim();
+                    if (!verificationCode) {
+                        alert('Please enter the verification code.');
+                        return;
+                    }
+
+                    // Send AJAX request to verify code and submit form data
+                    const formData = {
+                        fullName: document.getElementById('fullName').value.trim(),
+                        boatName: document.getElementById('boatName').value.trim(),
+                        mmsi: document.getElementById('mmsi').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        mobilePhone: document.getElementById('mobilePhone').value.trim(),
+                        verificationCode: verificationCode
+                    };
+
+                    fetch('{{ route('verify.code.and.submit') }}', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify(formData)
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                return response.json().then(err => {
+                                    throw err;
+                                });
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            verificationSent = false;
+                            silverFormStep2.style.display = 'none';
+                            silverFormBackButton.style.display = 'none';
+                            silverFormSubmitButton.style.display = 'none';
+                            silverFormSuccess.style.display = 'block';
+                            verificationCodeInput.disabled = true; // Disable the input
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            if (error.errors) {
+                                alert('Validation error: ' + Object.values(error.errors).join(', '));
+                            } else if (error.message) {
+                                alert(error.message);
+                            } else {
+                                alert('An error occurred. Please try again.');
+                            }
+                        });
                 }
             });
 
-        } else {
-            // Second step: Verify code and submit form
-            const verificationCode = document.getElementById('verificationCode').value.trim();
-            if (!verificationCode) {
-                alert('Please enter the verification code.');
-                return;
-            }
-
-            // Send AJAX request to verify code and submit form data
-            const formData = {
-                fullName: document.getElementById('fullName').value.trim(),
-                boatName: document.getElementById('boatName').value.trim(),
-                mmsi: document.getElementById('mmsi').value.trim(),
-                email: document.getElementById('email').value.trim(),
-                mobilePhone: document.getElementById('mobilePhone').value.trim(),
-                verificationCode: verificationCode
-            };
-
-            fetch('{{ route('verify.code.and.submit') }}', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(err => { throw err; });
-                }
-                return response.json();
-            })
-            .then(data => {
+            silverFormBackButton.addEventListener('click', function() {
                 verificationSent = false;
+                silverFormStep1.style.display = 'block';
                 silverFormStep2.style.display = 'none';
                 silverFormBackButton.style.display = 'none';
-                silverFormSubmitButton.style.display = 'none';
-                silverFormSuccess.style.display = 'block';
                 verificationCodeInput.disabled = true; // Disable the input
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                if (error.errors) {
-                    alert('Validation error: ' + Object.values(error.errors).join(', '));
-                } else if (error.message) {
-                    alert(error.message);
-                } else {
-                    alert('An error occurred. Please try again.');
-                }
             });
-        }
-    });
-
-    silverFormBackButton.addEventListener('click', function() {
-        verificationSent = false;
-        silverFormStep1.style.display = 'block';
-        silverFormStep2.style.display = 'none';
-        silverFormBackButton.style.display = 'none';
-        verificationCodeInput.disabled = true; // Disable the input
-    });
-});
-</script>
-
-
-
+        });
+    </script>
 @endsection

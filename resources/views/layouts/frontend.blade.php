@@ -582,7 +582,7 @@
 
         <main>
             @if (session('message'))
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-success" role="alert">{{ session('message') }}</div>
@@ -591,7 +591,7 @@
                 </div>
             @endif
             @if ($errors->count() > 0)
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="alert alert-danger">

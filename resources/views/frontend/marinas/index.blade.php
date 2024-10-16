@@ -24,7 +24,7 @@
                                     'model' => 'Marina',
                                     'route' => 'admin.marinas.parseCsvImport',
                                 ])
-                                
+
                             </span>
                         @endcan
                     </div>
@@ -49,13 +49,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($marinas as $marina)
-                                        <tr data-entry-id="{{ $marina->id }}"  onclick="window.location.href='{{ route('frontend.marinas.show', $marina->id) }}'"
+                                    @foreach ($marinas as $marina)
+                                        <tr data-entry-id="{{ $marina->id }}"
+                                            onclick="window.location.href='{{ route('frontend.marinas.show', $marina->id) }}'"
                                             style="cursor: pointer;">
                                             <td style="text-align: center">{{ $marina->id ?? '' }}</td>
                                             <td>{{ $marina->name ?? '' }}</td>
                                             {{-- <td>
-                                                @if($marina->marina_photo)
+                                                @if ($marina->marina_photo)
                                                     <a href="{{ $marina->marina_photo->getUrl() }}" target="_blank" style="display: inline-block">
                                                         <img src="{{ $marina->marina_photo->getUrl('thumb') }}">
                                                     </a>
@@ -63,7 +64,7 @@
                                             </td>
                                             <td>{{ $marina->coordinates ?? '' }}</td>
                                             <td>
-                                                @foreach($marina->contacts as $item)
+                                                @foreach ($marina->contacts as $item)
                                                     <span>{{ $item->contact_first_name }}</span>
                                                 @endforeach
                                             </td>
@@ -91,15 +92,17 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             @can('marina_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
                 let deleteButton = {
                     text: deleteButtonTrans,
                     url: "{{ route('frontend.marinas.massDestroy') }}",
                     className: 'btn-danger',
-                    action: function (e, dt, node, config) {
-                        var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
+                    action: function(e, dt, node, config) {
+                        var ids = $.map(dt.rows({
+                            selected: true
+                        }).nodes(), function(entry) {
                             return $(entry).data('entry-id')
                         });
 
@@ -111,12 +114,19 @@
 
                         if (confirm('{{ trans('global.areYouSure') }}')) {
                             $.ajax({
-                                headers: {'x-csrf-token': _token},
-                                method: 'POST',
-                                url: config.url,
-                                data: { ids: ids, _method: 'DELETE' }
-                            })
-                            .done(function () { location.reload() })
+                                    headers: {
+                                        'x-csrf-token': _token
+                                    },
+                                    method: 'POST',
+                                    url: config.url,
+                                    data: {
+                                        ids: ids,
+                                        _method: 'DELETE'
+                                    }
+                                })
+                                .done(function() {
+                                    location.reload()
+                                })
                         }
                     }
                 }
@@ -125,17 +135,21 @@
 
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'asc' ]],
+                order: [
+                    [1, 'asc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-Marina:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
-            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            let table = $('.datatable-Marina:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
                 $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
             });
-            
+
             let visibleColumnsIndexes = null;
-            $('.datatable thead').on('input', '.search', function () {
+            $('.datatable thead').on('input', '.search', function() {
                 let strict = $(this).attr('strict') || false
                 let value = strict && this.value ? "^" + this.value + "$" : this.value
 

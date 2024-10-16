@@ -113,8 +113,12 @@ class RegisterController extends Controller
             'password' => $registrationData['password'],
             'email_verified_at' => Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format')),
             'verified' => 1,
+            'verified_at' => Carbon::now()->format(config('panel.date_format') . ' ' . config('panel.time_format')),
         // other fields...
+        
         ]);
+
+        Log::info('User created with email: ' . $registrationData['email']);
 
         // Forget registration data from session
         session()->forget('registration_data');

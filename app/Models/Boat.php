@@ -68,6 +68,11 @@ class Boat extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function users()
+{
+    return $this->belongsToMany(User::class, 'user_boat')->withTimestamps();
+}
+
     public function boatWlists()
     {
         return $this->hasMany(Wlist::class, 'boat_id', 'id');

@@ -52,24 +52,24 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($appointments as $appointment)
+                                    @foreach ($appointments as $appointment)
                                         <tr data-entry-id="{{ $appointment->id }}">
                                             <td style="text-align: center">{{ $appointment->id ?? '' }}</td>
                                             <td>{{ $appointment->client->name ?? '' }}</td>
                                             <td>{{ $appointment->client->lastname ?? '' }}</td>
                                             <td>{{ $appointment->boat->name ?? '' }}</td>
                                             <td>
-                                                @foreach($appointment->wlists as $item)
+                                                @foreach ($appointment->wlists as $item)
                                                     <span>{{ $item->description }}</span>
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @foreach($appointment->for_roles as $item)
+                                                @foreach ($appointment->for_roles as $item)
                                                     <span>{{ $item->title }}</span>
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @foreach($appointment->for_employees as $item)
+                                                @foreach ($appointment->for_employees as $item)
                                                     <span>{{ $item->id_employee }}</span>
                                                 @endforeach
                                             </td>
@@ -86,22 +86,29 @@
                                             <td>{{ $appointment->coordinates ?? '' }}</td>
                                             <td>
                                                 @can('appointment_show')
-                                                    <a class="btn btn-xs btn-primary" href="{{ route('frontend.appointments.show', $appointment->id) }}">
+                                                    <a class="btn btn-xs btn-primary"
+                                                        href="{{ route('frontend.appointments.show', $appointment->id) }}">
                                                         {{ trans('global.view') }}
                                                     </a>
                                                 @endcan
 
                                                 @can('appointment_edit')
-                                                    <a class="btn btn-xs btn-info" href="{{ route('frontend.appointments.edit', $appointment->id) }}">
+                                                    <a class="btn btn-xs btn-info"
+                                                        href="{{ route('frontend.appointments.edit', $appointment->id) }}">
                                                         {{ trans('global.edit') }}
                                                     </a>
                                                 @endcan
 
                                                 @can('appointment_delete')
-                                                    <form action="{{ route('frontend.appointments.destroy', $appointment->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <form
+                                                        action="{{ route('frontend.appointments.destroy', $appointment->id) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                                        style="display: inline-block;">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                        <input type="submit" class="btn btn-xs btn-danger"
+                                                            value="{{ trans('global.delete') }}">
                                                     </form>
                                                 @endcan
 
@@ -127,11 +134,15 @@
 
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-Appointment:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-Appointment:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

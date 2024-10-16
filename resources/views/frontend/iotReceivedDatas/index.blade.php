@@ -44,12 +44,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($iotReceivedDatas as $iotReceivedData)
+                                    @foreach ($iotReceivedDatas as $iotReceivedData)
                                         <tr data-entry-id="{{ $iotReceivedData->id }}">
                                             <td style="text-align: center">{{ $iotReceivedData->id ?? '' }}</td>
                                             <td>{{ $iotReceivedData->device->name ?? '' }}</td>
                                             <td>
-                                                @if($iotReceivedData->device)
+                                                @if ($iotReceivedData->device)
                                                     {{ $iotReceivedData->device::STATUS_RADIO[$iotReceivedData->device->status] ?? '' }}
                                                 @endif
                                             </td>
@@ -60,11 +60,13 @@
                                             <td>{{ $iotReceivedData->engine_2_voltage ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $iotReceivedData->bilge_alarm ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $iotReceivedData->bilge_alarm ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $iotReceivedData->bilge_alarm ? 'checked' : '' }}>
                                             </td>
                                             <td>
                                                 <span style="display:none">{{ $iotReceivedData->shore_alarm ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $iotReceivedData->shore_alarm ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $iotReceivedData->shore_alarm ? 'checked' : '' }}>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -83,14 +85,18 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-IotReceivedData:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-          
+            let table = $('.datatable-IotReceivedData:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

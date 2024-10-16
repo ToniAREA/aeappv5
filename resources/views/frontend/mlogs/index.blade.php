@@ -54,7 +54,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($mlogs as $key => $mlog)
+                                    @foreach ($mlogs as $key => $mlog)
                                         <tr data-entry-id="{{ $mlog->id }}">
                                             <td style="text-align: center">{{ $mlog->id ?? '' }}</td>
                                             <td>{{ $mlog->boat->name ?? '' }}</td>
@@ -67,8 +67,9 @@
                                             <td>{{ $mlog->product->name ?? '' }}</td>
                                             <td>{{ $mlog->description ?? '' }}</td>
                                             <td>
-                                                @foreach($mlog->photos as $key => $media)
-                                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                @foreach ($mlog->photos as $key => $media)
+                                                    <a href="{{ $media->getUrl() }}" target="_blank"
+                                                        style="display: inline-block">
                                                         <img src="{{ $media->getUrl('thumb') }}">
                                                     </a>
                                                 @endforeach
@@ -77,12 +78,13 @@
                                             <td>{{ $mlog->price_unit ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $mlog->invoiced_line ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $mlog->invoiced_line ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $mlog->invoiced_line ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $mlog->internal_notes ?? '' }}</td>
                                             <td>{{ $mlog->financial_document->reference_number ?? '' }}</td>
                                             <td>
-                                                @if($mlog->financial_document)
+                                                @if ($mlog->financial_document)
                                                     {{ $mlog->financial_document::DOC_TYPE_RADIO[$mlog->financial_document->doc_type] ?? '' }}
                                                 @endif
                                             </td>
@@ -103,14 +105,18 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-Mlog:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-Mlog:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

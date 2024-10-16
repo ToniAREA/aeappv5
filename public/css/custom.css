@@ -169,6 +169,49 @@ main {
     color: #FFFFFF;
 }
 
+/* Asegura que los botones tengan un ancho uniforme */
+.btn-xs {
+    font-size: 12px !important;
+    padding: 5px 10px !important;
+    border-radius: 5px !important;
+    display: inline-block !important;
+    width: auto !important;
+    /* Evitar que los botones se expandan a lo largo de la celda */
+    margin-right: 5px !important;
+    /* Añadir separación entre botones */
+}
+
+/* Forzar que las celdas que contienen los botones solo ocupen el ancho necesario */
+td {
+    white-space: nowrap !important;
+    /* Evitar que el contenido se divida en varias líneas */
+    vertical-align: middle !important;
+    /* Centra verticalmente el contenido en las celdas */
+    text-align: left !important;
+    /* Alinear el contenido de las celdas a la izquierda */
+    width: 1px !important;
+    /* Asegurar que la celda solo ocupe el ancho necesario */
+}
+
+/* Controlar que los botones no se estiren */
+.table td {
+    text-align: center !important;
+    white-space: nowrap !important;
+    vertical-align: middle !important;
+    width: 1px !important;
+    /* Evita que la celda crezca innecesariamente */
+}
+
+/* Alinear los botones en una fila */
+.btn-container {
+    display: flex !important;
+    gap: 5px !important;
+    flex-wrap: nowrap !important;
+    /* Asegura que los botones se mantengan en una sola fila */
+    justify-content: flex-start !important;
+    align-items: center !important;
+}
+
 /* ----- Formularios ----- */
 form label {
     color: var(--text-color);
@@ -217,6 +260,8 @@ table tbody tr:hover {
     background-color: var(--table-row-hover-bg);
 }
 
+
+
 /* ============================================================
    Estilos para la página de login y registro (Estilo Marino)
    ============================================================ */
@@ -231,7 +276,7 @@ table tbody tr:hover {
     background-color: var(--background-color);
     margin: 0 20px;
     /* Agrupando los márgenes laterales */
-    margin-top: 30px;
+    margin-top: 20px;
     margin-bottom: 50px;
 }
 
@@ -1006,7 +1051,6 @@ table.dataTable tbody tr:hover {
     color: var(--text-color);
     border: 1px solid var(--input-border);
     border-radius: 5px;
-    padding: 5px;
 }
 
 /* ============================================================

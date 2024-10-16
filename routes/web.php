@@ -1,16 +1,31 @@
 <?php
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 
-use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\WelcomeController;
-
-use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\ConfirmPasswordController;
+use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\UserVerificationController;
 
-// Registro normal
-Route::post('register', [RegisterController::class, 'register'])->name('register');
+// Rutas de autenticación
+// ----------------------
+
+// Inicio de sesión
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+
+// Cierre de sesión
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+// Registro de usuarios
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
 
 // Verificación de email
 Route::get('register/verify/{token}', [RegisterController::class, 'verifyEmail'])->name('register.verify');
@@ -18,35 +33,53 @@ Route::get('register/verify/{token}', [RegisterController::class, 'verifyEmail']
 // Google OAuth login
 Route::get('auth/google', [RegisterController::class, 'redirectToGoogle'])->name('google.login');
 Route::get('auth/google/callback', [RegisterController::class, 'handleGoogleCallback']);
-// Ruta para email de test
+
+// Restablecimiento de contraseña
+Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+
+// Confirmación de contraseña
+Route::get('password/confirm', [ConfirmPasswordController::class, 'showConfirmForm'])->name('password.confirm');
+Route::post('password/confirm', [ConfirmPasswordController::class, 'confirm']);
+
+// Verificación de correo electrónico
+Route::get('email/verify', [VerificationController::class, 'show'])->name('verification.notice');
+Route::get('email/verify/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify');
+Route::post('email/resend', [VerificationController::class, 'resend'])->name('verification.resend');
+
+// Aprobación de usuario
+Route::get('userVerification/{token}', [UserVerificationController::class, 'approve'])->name('userVerification');
+
+// Rutas de la aplicación
+// -----------------------
+
+// Página de inicio
+Route::get('/', [WelcomeController::class, 'index'])->name('home');
+
+// Membership Plans
+Route::post('/send-verification-code', [MembershipController::class, 'sendVerificationCode'])->name('send.verification.code');
+Route::post('/verify-code-and-submit', [MembershipController::class, 'verifyCodeAndSubmit'])->name('verify.code.and.submit');
+
+// Sección "Portfolio"
+Route::get('/portfolio', function () {
+    return view('portfolio');
+})->name('portfolio');
+
+// Sección "Contact"
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+// Envío de email de prueba
 Route::get('/send-mail', function () {
-    \Mail::raw('This is a test email', function ($message) {
+    Mail::raw('This is a test email', function ($message) {
         $message->to('areaelectronica@protonmail.com')->subject('Test Email');
     });
 
     return 'A test email has been sent!';
 });
-
-// Ruta para la página de inicio
-Route::get('/', [WelcomeController::class, 'index'])->name('home');
-
-//Ruta para Membership Plans
-Route::post('/send-verification-code', 'App\Http\Controllers\MembershipController@sendVerificationCode')->name('send.verification.code');
-Route::post('/verify-code-and-submit', 'App\Http\Controllers\MembershipController@verifyCodeAndSubmit')->name('verify.code.and.submit');
-
-// Ruta para la sección "Portfolio"
-Route::get('/portfolio', function () {
-    return view('portfolio');
-})->name('portfolio');
-
-// Ruta para la sección "Contact"
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact');
-
-Route::get('userVerification/{token}', 'UserVerificationController@approve')->name('userVerification');
-Auth::routes(['verify' => false]);
-
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth', '2fa', 'admin']], function () {
     Route::get('/', 'HomeController@index')->name('home');
     // Permissions

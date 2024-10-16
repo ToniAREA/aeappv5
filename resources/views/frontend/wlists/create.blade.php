@@ -1,6 +1,6 @@
 @extends('layouts.frontend')
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
 
@@ -177,7 +177,8 @@
 
                                         <div class="col">
                                             <div class="form-group">
-                                                <label for="deadline">{{ trans('cruds.wlist.fields.deadline') }}</label> {{ \Carbon\Carbon::now()->format('d-m-Y') }}
+                                                <label for="deadline">{{ trans('cruds.wlist.fields.deadline') }}</label>
+                                                {{ \Carbon\Carbon::now()->format('d-m-Y') }}
                                                 <input class="form-control date" type="text" name="deadline"
                                                     id="deadline"
                                                     value="{{ old('deadline', \Carbon\Carbon::now()->addWeeks(2)->format('d-m-Y')) }}">
@@ -195,11 +196,12 @@
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
                                                 <label for="priority">{{ trans('cruds.wlist.fields.priority') }}</label>
-                                                <output id="priorityOutput" style="font-weight: bold; margin-left: 5px;">{{ old('priority', 5) }}</output>
+                                                <output id="priorityOutput"
+                                                    style="font-weight: bold; margin-left: 5px;">{{ old('priority', 5) }}</output>
                                                 <input class="form-control" type="range" name="priority"
                                                     id="priority" value="{{ old('priority', 5) }}" min="0"
                                                     max="10" step="1">
-                                                
+
                                                 @if ($errors->has('priority'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('priority') }}
@@ -327,7 +329,8 @@
                                             <div class="form-group">
                                                 <label for="last_use">{{ trans('cruds.wlist.fields.last_use') }}</label>
                                                 <input class="form-control datetime" type="text" name="last_use"
-                                                    id="last_use" value="{{ old('last_use', \Carbon\Carbon::now()->format('Y-m-d H:i:s')) }}">
+                                                    id="last_use"
+                                                    value="{{ old('last_use', \Carbon\Carbon::now()->format('Y-m-d H:i:s')) }}">
                                                 @if ($errors->has('last_use'))
                                                     <div class="invalid-feedback">
                                                         {{ $errors->first('last_use') }}

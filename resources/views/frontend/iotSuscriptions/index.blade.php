@@ -58,28 +58,31 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($iotSuscriptions as $iotSuscription)
-                                        <tr data-entry-id="{{ $iotSuscription->id }}"  onclick="window.location.href='{{ route('frontend.iot-suscriptions.show', $iotSuscription->id) }}'"
+                                    @foreach ($iotSuscriptions as $iotSuscription)
+                                        <tr data-entry-id="{{ $iotSuscription->id }}"
+                                            onclick="window.location.href='{{ route('frontend.iot-suscriptions.show', $iotSuscription->id) }}'"
                                             style="cursor: pointer;">
                                             <td style="text-align: center">{{ $iotSuscription->id ?? '' }}</td>
                                             <td>{{ $iotSuscription->user->name ?? '' }}</td>
                                             <td>{{ $iotSuscription->user->email ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $iotSuscription->is_active ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $iotSuscription->is_active ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $iotSuscription->is_active ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $iotSuscription->client->name ?? '' }}</td>
                                             <td>{{ $iotSuscription->client->lastname ?? '' }}</td>
                                             <td>
-                                                @foreach($iotSuscription->boats as $item)
+                                                @foreach ($iotSuscription->boats as $item)
                                                     <span>{{ $item->name }}</span>
                                                 @endforeach
                                             </td>
                                             <td>{{ $iotSuscription->plan->plan_name ?? '' }}</td>
                                             <td>{{ $iotSuscription->plan->short_description ?? '' }}</td>
                                             <td>
-                                                @if($iotSuscription->signed_contract)
-                                                    <a href="{{ $iotSuscription->signed_contract->getUrl() }}" target="_blank">
+                                                @if ($iotSuscription->signed_contract)
+                                                    <a href="{{ $iotSuscription->signed_contract->getUrl() }}"
+                                                        target="_blank">
                                                         {{ trans('global.view_file') }}
                                                     </a>
                                                 @endif
@@ -98,28 +101,35 @@
                                             <td>{{ $iotSuscription->completed_at ?? '' }}</td>
                                             <td>{{ $iotSuscription->financial_document->reference_number ?? '' }}</td>
                                             <td>
-                                                @if($iotSuscription->financial_document)
+                                                @if ($iotSuscription->financial_document)
                                                     {{ $iotSuscription->financial_document::DOC_TYPE_RADIO[$iotSuscription->financial_document->doc_type] ?? '' }}
                                                 @endif
                                             </td>
                                             <td>
                                                 @can('iot_suscription_show')
-                                                    <a class="btn btn-xs btn-primary" href="{{ route('frontend.iot-suscriptions.show', $iotSuscription->id) }}">
+                                                    <a class="btn btn-xs btn-primary"
+                                                        href="{{ route('frontend.iot-suscriptions.show', $iotSuscription->id) }}">
                                                         {{ trans('global.view') }}
                                                     </a>
                                                 @endcan
 
                                                 @can('iot_suscription_edit')
-                                                    <a class="btn btn-xs btn-info" href="{{ route('frontend.iot-suscriptions.edit', $iotSuscription->id) }}">
+                                                    <a class="btn btn-xs btn-info"
+                                                        href="{{ route('frontend.iot-suscriptions.edit', $iotSuscription->id) }}">
                                                         {{ trans('global.edit') }}
                                                     </a>
                                                 @endcan
 
                                                 @can('iot_suscription_delete')
-                                                    <form action="{{ route('frontend.iot-suscriptions.destroy', $iotSuscription->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <form
+                                                        action="{{ route('frontend.iot-suscriptions.destroy', $iotSuscription->id) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                                        style="display: inline-block;">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                        <input type="submit" class="btn btn-xs btn-danger"
+                                                            value="{{ trans('global.delete') }}">
                                                     </form>
                                                 @endcan
 
@@ -142,14 +152,18 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-IotSuscription:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-IotSuscription:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

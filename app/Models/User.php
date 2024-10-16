@@ -131,6 +131,16 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function boats()
+    {
+        return $this->belongsToMany(Boat::class, 'user_boat')->withTimestamps();
+    }
+
+    public function clients()
+    {
+        return $this->belongsToMany(Client::class, 'user_client')->withTimestamps();
+    }
+
     public function userEmployees()
     {
         return $this->hasMany(Employee::class, 'user_id', 'id');

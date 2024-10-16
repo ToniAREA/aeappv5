@@ -11,7 +11,9 @@
                 <div class="m-4 m-lg-5" style="background: rgba(255, 255, 255, 0.8); border-radius: 20px;">
                     <h1 class="display-5 fw-bold">Area Electronica - Marine Electronics Experts for Yachts</h1>
                     <p class="fs-5">
-                        ...where we offer bespoke electronic services tailored for private yachts. Dedicated to unparalleled quality and personalized service. If you have questions or need assistance, we're just a message away.
+                        ...where we offer bespoke electronic services tailored for private yachts. Dedicated to unparalleled
+                        quality and personalized service. If you have questions or need assistance, we're just a message
+                        away.
                     </p>
                     <!-- resources/views/your-view.blade.php -->
                     <a href="https://wa.me/34620480228?text=Please%20reach%20out%20to%20us%20at%20your%20earliest%20convenience."
@@ -22,7 +24,7 @@
     </header>
 
     <!-- Page Content-->
-    <div class="container px-lg-5 py-3">
+    <div class="container-fluid px-lg-5 py-3">
         <div class="row text-center">
             <!-- Clients Count -->
             <div class="col-lg-3 col-md-3 col-6 mb-4">
@@ -66,9 +68,13 @@
                         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-4 mt-n4"><i
                                 class="bi bi-calendar3"></i></div>
                         <h2 class="fs-4 fw-bold">Decades of Expertise in Marine Electronics</h2>
-                        <p class="mb-0">With over <b>{{ $yearsSince }}</b> years in marine electronics, we provide bespoke solutions for yachts and boats.</p>
-                        <p>Since 1996, we've been devoted to electronics, electricity, and computing in maritime technology. Our expertise covers servicing private vessels—both sailboats and motorboats. Known for our troubleshooting skills, we craft tailor-made technological solutions for each client.</p>
-                        <p>Our preferred brands include Pepwave, Raymarine, Mastervolt, KVH, Victron, Furuno, Maretron, Fusion, Airmar, among others, ensuring quality and reliability in every project.</p>
+                        <p class="mb-0">With over <b>{{ $yearsSince }}</b> years in marine electronics, we provide
+                            bespoke solutions for yachts and boats.</p>
+                        <p>Since 1996, we've been devoted to electronics, electricity, and computing in maritime technology.
+                            Our expertise covers servicing private vessels—both sailboats and motorboats. Known for our
+                            troubleshooting skills, we craft tailor-made technological solutions for each client.</p>
+                        <p>Our preferred brands include Pepwave, Raymarine, Mastervolt, KVH, Victron, Furuno, Maretron,
+                            Fusion, Airmar, among others, ensuring quality and reliability in every project.</p>
 
                     </div>
                 </div>
@@ -119,19 +125,23 @@
 
             <div class="col-lg-7">
                 <img class="img-fluid custom-img-size rounded mb-4 mb-lg-0"
-                    src="images/photos/marine-electronics-main-bridge-04.jpeg" alt="Marine Electronics Systems on Yacht Bridge" />
+                    src="images/photos/marine-electronics-main-bridge-04.jpeg"
+                    alt="Marine Electronics Systems on Yacht Bridge" />
             </div>
 
 
             <div class="col-lg-5 d-flex flex-column align-items-center text-center">
                 <h2 class="font-weight-light">Tailored Marine Electronics Solutions for Yachts</h2>
-                <p>We specialize in custom electronic systems for luxury yachts, offering robust internet connectivity, advanced navigation aids, and solar power solutions. Our expertise enhances your maritime experience.</p>
+                <p>We specialize in custom electronic systems for luxury yachts, offering robust internet connectivity,
+                    advanced navigation aids, and solar power solutions. Our expertise enhances your maritime experience.
+                </p>
             </div>
         </div>
         <!-- Call to Action -->
         <div class="card text-white bg-secondary my-5 py-4 text-center">
             <div class="card-body">
-                <p class="text-white m-0">Transform your yachting experience with our custom electronic solutions. Unveil the future of maritime technology with Area Electronica.</p>
+                <p class="text-white m-0">Transform your yachting experience with our custom electronic solutions. Unveil
+                    the future of maritime technology with Area Electronica.</p>
             </div>
 
         </div>
@@ -143,7 +153,8 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h3 class="card-title">Internet & Connectivity Solutions</h3>
-                        <p class="card-text">Stay connected at sea with our high-speed internet solutions. Seamless communication and entertainment at your fingertips.</p>
+                        <p class="card-text">Stay connected at sea with our high-speed internet solutions. Seamless
+                            communication and entertainment at your fingertips.</p>
                     </div>
                     <!-- Image container -->
                     <div class="image-container">
@@ -157,7 +168,8 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h3 class="card-title">Solar & Battery Systems</h3>
-                        <p class="card-text">Embrace solar power with our advanced solar panels and lithium batteries, designed for efficiency and reliability at sea.</p>
+                        <p class="card-text">Embrace solar power with our advanced solar panels and lithium batteries,
+                            designed for efficiency and reliability at sea.</p>
                     </div>
                     <!-- Image container -->
                     <div class="image-container">
@@ -171,7 +183,8 @@
                 <div class="card h-100">
                     <div class="card-body">
                         <h3 class="card-title">Custom Electronic Design</h3>
-                        <p class="card-text">From navigation aids to network systems, PLC automation, and remote monitoring, we design and implement tailored solutions for your unique needs.</p>
+                        <p class="card-text">From navigation aids to network systems, PLC automation, and remote
+                            monitoring, we design and implement tailored solutions for your unique needs.</p>
                     </div>
                     <!-- Image container -->
                     <div class="image-container">

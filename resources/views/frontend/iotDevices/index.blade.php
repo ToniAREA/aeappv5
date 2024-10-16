@@ -49,12 +49,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($iotDevices as $key => $iotDevice)
+                                    @foreach ($iotDevices as $key => $iotDevice)
                                         <tr data-entry-id="{{ $iotDevice->id }}">
                                             <td style="text-align: center">{{ $iotDevice->id ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $iotDevice->is_active ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $iotDevice->is_active ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $iotDevice->is_active ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $iotDevice->name ?? '' }}</td>
                                             <td>{{ $iotDevice->device ?? '' }}</td>
@@ -86,14 +87,18 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-IotDevice:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-IotDevice:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

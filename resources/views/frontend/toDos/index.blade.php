@@ -40,20 +40,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($toDos as $key => $toDo)
-                                        <tr data-entry-id="{{ $toDo->id }}"  onclick="window.location.href='{{ route('frontend.to-dos.show', $toDo->id) }}'"
+                                    @foreach ($toDos as $key => $toDo)
+                                        <tr data-entry-id="{{ $toDo->id }}"
+                                            onclick="window.location.href='{{ route('frontend.to-dos.show', $toDo->id) }}'"
                                             style="cursor: pointer;">
                                             <td style="text-align: center">{{ $toDo->id ?? '' }}</td>
                                             <td>{{ $toDo->task ?? '' }}</td>
                                             <td>
-                                                @foreach($toDo->photos as $key => $media)
-                                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                @foreach ($toDo->photos as $key => $media)
+                                                    <a href="{{ $media->getUrl() }}" target="_blank"
+                                                        style="display: inline-block">
                                                         <img src="{{ $media->getUrl('thumb') }}">
                                                     </a>
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @foreach($toDo->for_roles as $key => $item)
+                                                @foreach ($toDo->for_roles as $key => $item)
                                                     <span>{{ $item->title }}</span>
                                                 @endforeach
                                             </td>
@@ -63,10 +65,12 @@
                                             <td>{{ $toDo->priority ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $toDo->is_repetitive ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $toDo->is_repetitive ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $toDo->is_repetitive ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $toDo->repeat_interval_value ?? '' }}</td>
-                                            <td>{{ App\Models\ToDo::REPEAT_INTERVAL_UNIT_SELECT[$toDo->repeat_interval_unit] ?? '' }}</td>
+                                            <td>{{ App\Models\ToDo::REPEAT_INTERVAL_UNIT_SELECT[$toDo->repeat_interval_unit] ?? '' }}
+                                            </td>
                                             <td>{{ $toDo->internal_notes ?? '' }}</td>
                                             <td>{{ $toDo->completed_at ?? '' }}</td>
                                         </tr>
@@ -89,11 +93,15 @@
 
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-ToDo:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-ToDo:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

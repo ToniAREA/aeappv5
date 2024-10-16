@@ -58,6 +58,11 @@ class Client extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_client')->withTimestamps();
+    }
+
     public function clientWlists()
     {
         return $this->hasMany(Wlist::class, 'client_id', 'id');

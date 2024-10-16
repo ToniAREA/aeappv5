@@ -48,19 +48,21 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($iotPlans as $iotPlan)
+                                    @foreach ($iotPlans as $iotPlan)
                                         <tr data-entry-id="{{ $iotPlan->id }}">
                                             <td style="text-align: center">{{ $iotPlan->id ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $iotPlan->is_online ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $iotPlan->is_online ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $iotPlan->is_online ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $iotPlan->plan_name ?? '' }}</td>
                                             <td>{{ $iotPlan->short_description ?? '' }}</td>
                                             <td>{{ $iotPlan->description ?? '' }}</td>
                                             <td>
-                                                @if($iotPlan->photo)
-                                                    <a href="{{ $iotPlan->photo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                @if ($iotPlan->photo)
+                                                    <a href="{{ $iotPlan->photo->getUrl() }}" target="_blank"
+                                                        style="display: inline-block">
                                                         <img src="{{ $iotPlan->photo->getUrl('thumb') }}">
                                                     </a>
                                                 @endif
@@ -71,7 +73,7 @@
                                             <td>{{ $iotPlan->seo_meta_description ?? '' }}</td>
                                             <td>{{ $iotPlan->seo_slug ?? '' }}</td>
                                             <td>
-                                                @if($iotPlan->contract)
+                                                @if ($iotPlan->contract)
                                                     <a href="{{ $iotPlan->contract->getUrl() }}" target="_blank">
                                                         {{ trans('global.view_file') }}
                                                     </a>
@@ -96,14 +98,18 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-IotPlan:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-IotPlan:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection

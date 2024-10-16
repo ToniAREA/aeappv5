@@ -60,22 +60,23 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($products as $product)
+                                    @foreach ($products as $product)
                                         <tr data-entry-id="{{ $product->id }}">
                                             <td style="text-align: center">{{ $product->id ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $product->is_online ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $product->is_online ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $product->is_online ? 'checked' : '' }}>
                                             </td>
                                             <td>
-                                                @foreach($product->categories as $item)
+                                                @foreach ($product->categories as $item)
                                                     <span>{{ $item->name }}</span>
                                                 @endforeach
                                             </td>
                                             <td>{{ $product->brand->brand ?? '' }}</td>
                                             <td>{{ $product->ref_manu ?? '' }}</td>
                                             <td>
-                                                @foreach($product->providers as $item)
+                                                @foreach ($product->providers as $item)
                                                     <span>{{ $item->name }}</span>
                                                 @endforeach
                                             </td>
@@ -83,8 +84,9 @@
                                             <td>{{ $product->model ?? '' }}</td>
                                             <td>{{ $product->name ?? '' }}</td>
                                             <td>
-                                                @foreach($product->photos as $media)
-                                                    <a href="{{ $media->getUrl() }}" target="_blank" style="display: inline-block">
+                                                @foreach ($product->photos as $media)
+                                                    <a href="{{ $media->getUrl() }}" target="_blank"
+                                                        style="display: inline-block">
                                                         <img src="{{ $media->getUrl('thumb') }}">
                                                     </a>
                                                 @endforeach
@@ -94,14 +96,15 @@
                                             <td>{{ $product->purchase_price ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $product->has_stock ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $product->has_stock ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $product->has_stock ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $product->stock ?? '' }}</td>
                                             <td>{{ $product->local_stock ?? '' }}</td>
                                             <td>{{ $product->product_location->name ?? '' }}</td>
                                             <td>{{ $product->product_location->description ?? '' }}</td>
                                             <td>
-                                                @foreach($product->tags as $item)
+                                                @foreach ($product->tags as $item)
                                                     <span>{{ $item->name }}</span>
                                                 @endforeach
                                             </td>
@@ -114,22 +117,28 @@
                                             <td>{{ $product->seo_slug ?? '' }}</td>
                                             <td>
                                                 @can('product_show')
-                                                    <a class="btn btn-xs btn-primary" href="{{ route('frontend.products.show', $product->id) }}">
+                                                    <a class="btn btn-xs btn-primary"
+                                                        href="{{ route('frontend.products.show', $product->id) }}">
                                                         {{ trans('global.view') }}
                                                     </a>
                                                 @endcan
 
                                                 @can('product_edit')
-                                                    <a class="btn btn-xs btn-info" href="{{ route('frontend.products.edit', $product->id) }}">
+                                                    <a class="btn btn-xs btn-info"
+                                                        href="{{ route('frontend.products.edit', $product->id) }}">
                                                         {{ trans('global.edit') }}
                                                     </a>
                                                 @endcan
 
                                                 @can('product_delete')
-                                                    <form action="{{ route('frontend.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <form action="{{ route('frontend.products.destroy', $product->id) }}"
+                                                        method="POST"
+                                                        onsubmit="return confirm('{{ trans('global.areYouSure') }}');"
+                                                        style="display: inline-block;">
                                                         <input type="hidden" name="_method" value="DELETE">
                                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                        <input type="submit" class="btn btn-xs btn-danger"
+                                                            value="{{ trans('global.delete') }}">
                                                     </form>
                                                 @endcan
 
@@ -152,14 +161,17 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-           
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-Product:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+            let table = $('.datatable-Product:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
         })
-
     </script>
 @endsection

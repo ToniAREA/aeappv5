@@ -47,30 +47,32 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($providers as $key => $provider)
+                                    @foreach ($providers as $key => $provider)
                                         <tr data-entry-id="{{ $provider->id }}">
                                             <td style="text-align: center">{{ $provider->id ?? '' }}</td>
                                             <td>
                                                 <span style="display:none">{{ $provider->is_active ?? '' }}</span>
-                                                <input type="checkbox" disabled="disabled" {{ $provider->is_active ? 'checked' : '' }}>
+                                                <input type="checkbox" disabled="disabled"
+                                                    {{ $provider->is_active ? 'checked' : '' }}>
                                             </td>
                                             <td>{{ $provider->name ?? '' }}</td>
                                             <td>{{ $provider->company->company_name ?? '' }}</td>
                                             <td>
-                                                @if($provider->provider_logo)
-                                                    <a href="{{ $provider->provider_logo->getUrl() }}" target="_blank" style="display: inline-block">
+                                                @if ($provider->provider_logo)
+                                                    <a href="{{ $provider->provider_logo->getUrl() }}" target="_blank"
+                                                        style="display: inline-block">
                                                         <img src="{{ $provider->provider_logo->getUrl('thumb') }}">
                                                     </a>
                                                 @endif
                                             </td>
                                             <td>{{ $provider->provider_url ?? '' }}</td>
                                             <td>
-                                                @foreach($provider->brands as $key => $item)
+                                                @foreach ($provider->brands as $key => $item)
                                                     <span>{{ $item->brand }}</span>
                                                 @endforeach
                                             </td>
                                             <td>
-                                                @foreach($provider->price_lists as $key => $media)
+                                                @foreach ($provider->price_lists as $key => $media)
                                                     <a href="{{ $media->getUrl() }}" target="_blank">
                                                         {{ trans('global.view_file') }}
                                                     </a>
@@ -98,14 +100,18 @@
     <script>
         $(function() {
             let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-         
+
             $.extend(true, $.fn.dataTable.defaults, {
                 orderCellsTop: true,
-                order: [[ 1, 'desc' ]],
+                order: [
+                    [1, 'desc']
+                ],
                 pageLength: 10,
             });
-            let table = $('.datatable-Provider:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-            
+            let table = $('.datatable-Provider:not(.ajaxTable)').DataTable({
+                buttons: dtButtons
+            })
+
         })
     </script>
 @endsection
