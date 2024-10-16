@@ -23,6 +23,8 @@ class DatabaseSeeder extends Seeder
             WlistStatusesTableSeeder::class,
             WlistSeeder::class,
             WlogSeeder::class,
+            ProductCategorySeeder::class,
+            BrandSeeder::class,
         ]);
     }
 }
