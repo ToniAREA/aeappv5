@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Brand;
 use Illuminate\Support\Str;
 
-class BrandSeeder extends Seeder
+class BrandsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
