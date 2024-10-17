@@ -2,68 +2,68 @@
    Paleta de colores (Tema Náutico)
    ============================================================ */
 :root {
-    --primary-color: #2E8BC0;
-    /* Azul Marino */
-    --secondary-color: #145DA0;
-    /* Azul Profundo */
-    --accent-color: #0C2D48;
-    /* Azul Marino Oscuro */
-    --background-color: #ddd;
-    /* Azul Muy Claro */
-    --text-color: #0C2D48;
-    /* Azul Marino Oscuro */
-    --heading-color: #145DA0;
-    /* Azul Profundo */
-    --link-color: #2E8BC0;
-    /* Azul Marino */
-    --link-hover-color: #145DA0;
-    /* Azul Profundo */
-    --border-color: #D4E4F7;
-    /* Azul Claro */
-    --button-color: #2E8BC0;
-    /* Azul Marino */
-    --button-hover-color: #145DA0;
-    /* Azul Profundo */
-    --badge-green: #3AAFA9;
-    /* Verde Agua */
-    --badge-red: #FF6F61;
-    /* Coral */
-    --badge-gray: #A9A9A9;
-    /* Gris */
-    --input-background: #FFFFFF;
-    /* Blanco */
-    --input-border: #CCCCCC;
-    /* Gris Claro */
-    --table-header-bg: #B1D4E0;
-    /* Azul Claro */
-    --table-row-hover-bg: #EAF6F6;
-    /* Azul Muy Claro */
-    --navbar-background-color: #145DA0;
-    /* Fondo del navbar */
-    --navbar-text-color: #fff;
-    /* Color del texto del navbar */
-    --navbar-hover-text-color: #888;
-    /* Color del texto al pasar el mouse */
-    --navbar-toggler-border-color: var(--navbar-background-color);
-    /* Color del borde del toggler */
-    --dropdown-menu-background: #eee;
-    /* Fondo del menú desplegable */
-    --dropdown-item-color: #333;
-    /* Color del texto de los ítems del dropdown */
-    --dropdown-item-hover-background: var(--background-color);
-    /* Fondo al pasar el mouse por los ítems */
-    --alert-success-bg: #D4EDDA;
-    /* Fondo de alerta de éxito */
-    --alert-success-text: #155724;
-    /* Texto de alerta de éxito */
-    --alert-success-border: #C3E6CB;
-    /* Borde de alerta de éxito */
-    --alert-danger-bg: #F8D7DA;
-    /* Fondo de alerta de error */
-    --alert-danger-text: #721C24;
-    /* Texto de alerta de error */
-    --alert-danger-border: #F5C6CB;
-    /* Borde de alerta de error */
+    --primary-color: #707070;
+    /* Dark Black */
+    --secondary-color: #a0a0a0;
+    /* Darker Gray */
+    --accent-color: #4A4A4A;
+    /* Medium Gray */
+    --background-color: #f0f0f0;
+    /* Pure Black */
+    --text-color: #4a4b58;
+    /* Light Gray for text */
+    --heading-color: #CCCCCC;
+    /* Light Gray for headings */
+    --link-color: #09109d;
+    /* Light Gray for links */
+    --link-hover-color: #FFFFFF;
+    /* White for hovered links */
+    --border-color: #444444;
+    /* Dark Gray for borders */
+    --button-color: #333333;
+    /* Dark Gray for buttons */
+    --button-hover-color: #555555;
+    /* Lighter Gray on hover */
+    --badge-green: #28A745;
+    /* Green for success badges */
+    --badge-red: #DC3545;
+    /* Red for error badges */
+    --badge-gray: #6C757D;
+    /* Mid Gray for neutral badges */
+    --input-background: #f0f0f0;
+    /* Dark Gray for input fields */
+    --input-border: #444444;
+    /* Dark Gray for input borders */
+    --table-header-bg: #BBB;
+    /* Dark Gray for table headers */
+    --table-row-hover-bg: #333333;
+    /* Lighter Gray for table row hover */
+    --navbar-background-color: #333;
+    /* Very Dark Gray for navbar */
+    --navbar-text-color: #EAEAEA;
+    /* Light Gray for navbar text */
+    --navbar-hover-text-color: #FFFFFF;
+    /* White for navbar text hover */
+    --navbar-toggler-border-color: #333333;
+    /* Darker Gray for navbar toggler */
+    --dropdown-menu-background: #1A1A1A;
+    /* Dark background for dropdown menu */
+    --dropdown-item-color: #EAEAEA;
+    /* Light Gray for dropdown items */
+    --dropdown-item-hover-background: #333333;
+    /* Darker Gray for dropdown item hover */
+    --alert-success-bg: #155724;
+    /* Dark Green for success alert background */
+    --alert-success-text: #EAEAEA;
+    /* Light Gray for success alert text */
+    --alert-success-border: #1C7430;
+    /* Darker Green for success alert border */
+    --alert-danger-bg: #721C24;
+    /* Dark Red for danger alert background */
+    --alert-danger-text: #EAEAEA;
+    /* Light Gray for danger alert text */
+    --alert-danger-border: #92202E;
+    /* Darker Red for danger alert border */
 }
 
 /* ============================================================
@@ -1022,7 +1022,7 @@ table.dataTable tbody tr:hover {
 }
 
 .dataTables_paginate .paginate_button {
-    background-color: #fff;
+    background-color: #fff !important;
     color: #FFFFFF;
     border: 1px solid var(--border-color);
     padding: 2px;
