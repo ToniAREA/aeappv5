@@ -224,7 +224,7 @@
                     {{ trans('global.login') }}
                 </a>
             </p>
-            <p class="text-center">
+            {{-- <p class="text-center">
                 -- Or login with --
             </p>
 
@@ -233,7 +233,7 @@
                 <a href="{{ url('auth/google') }}" class="btn btn-primary text-white btn-block mb-2">
                     <i class="fab fa-google"></i> {{ __('Google') }}
                 </a>
-            </div>
+            </div> --}}
         </div>
     </div>
 @endsection
