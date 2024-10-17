@@ -9,7 +9,7 @@
 
     <title>{{ trans('panel.site_title') }}</title>
     
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico" />
 
     <!-- Styles -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" />

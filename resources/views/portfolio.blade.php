@@ -4,8 +4,8 @@
 @section('content')
     <!-- Page Content-->
 
-    <div class="container-fluid p-3 p-lg-4">
-        <div class="row">
+    <div class="container-fluid">
+        {{--  <div class="row">
             <div>
                 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
                     <!-- Carousel content here -->
@@ -32,7 +32,8 @@
                 </div>
             </div>
 
-        </div>
+        </div> --}}
+
         <div class="row gx-4 gx-lg-5">
             <div class="py-3 text-center">
                 <h1>Our Recent Projects</h1>
@@ -42,79 +43,57 @@
         </div>
 
         <div class="row gx-4 gx-lg-5">
-            <!-- Project Card 1 -->
-            <div class="col-sm-6 col-md-4 mb-5">
-                <div class="card h-100">
-                    <img src="images/portfolio/project1.jpg" class="card-img-top" alt="Luxury Yacht Automation">
-                    <div class="card-body">
-                        <h2 class="card-title">Luxury Yacht Automation</h2>
-                        <p class="card-text">Implemented advanced automation systems on a luxury yacht, enhancing comfort
-                            and efficiency for the crew and guests.</p>
+            @foreach ($pages as $page)
+                <div class="col-sm-6 col-md-4 mb-5">
+                    <div class="card h-100">
+                        <!-- Cada carrusel necesita un id único -->
+                        <div id="carousel-{{ $page->id }}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                @foreach ($page->featured_image as $key => $media)
+                                    <!-- Solo el primer elemento debe ser "active" -->
+                                    <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                        <img src="{{ $media->getUrl() }}" class="card-img-top"
+                                            alt="{{ $page->seo_title ?: $page->title }} - Featured Image"
+                                            title="{{ $page->seo_title ?: $page->title }} - {{ $media->name }} image">
+                                    </div>
+                                @endforeach
+                            </div>
+
+                            <!-- Botones para controlar el carrusel -->
+                            <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carousel-{{ $page->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button"
+                                data-bs-target="#carousel-{{ $page->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+
+                        <div class="card-body">
+                            <h2 class="card-title">{{ $page->title }}</h2>
+
+                            <!-- Meta description personalizada para SEO -->
+                            <meta name="description"
+                                content="{{ $page->seo_meta_description ?: Str::limit(strip_tags($page->excerpt), 160) }}">
+                            {!! $page->excerpt !!}
+                        </div>
+
+                        <div class="card-footer">
+                            <!-- Usamos el SEO slug si está disponible -->
+                            <a class="btn btn-primary btn-sm" href="{{ url($page->seo_slug ?: $page->link) }}"
+                                title="Read more about {{ $page->seo_title ?: $page->title }}">
+                                Read more
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">View Details</a></div>
                 </div>
-            </div>
-            <!-- Project Card 2 -->
-            <div class="col-sm-6 col-md-4 mb-5">
-                <div class="card h-100">
-                    <img src="images/portfolio/project2.jpg" class="card-img-top" alt="Solar Energy Integration">
-                    <div class="card-body">
-                        <h2 class="card-title">Solar Energy Integration</h2>
-                        <p class="card-text">Integrated solar panels and battery storage systems into a motor yacht,
-                            reducing reliance on traditional power sources.</p>
-                    </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">View Details</a></div>
-                </div>
-            </div>
-            <!-- Project Card 3 -->
-            <div class="col-sm-6 col-md-4 mb-5">
-                <div class="card h-100">
-                    <img src="images/portfolio/project3.jpg" class="card-img-top" alt="Onboard Internet Solutions">
-                    <div class="card-body">
-                        <h2 class="card-title">Onboard Internet Solutions</h2>
-                        <p class="card-text">Provided high-speed internet connectivity solutions for a fleet of sailing
-                            yachts, ensuring seamless communication at sea.</p>
-                    </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">View Details</a></div>
-                </div>
-            </div>
-            <!-- Project Card 4 -->
-            <div class="col-sm-6 col-md-4 mb-5">
-                <div class="card h-100">
-                    <img src="images/portfolio/project4.jpg" class="card-img-top" alt="Navigation System Upgrade">
-                    <div class="card-body">
-                        <h2 class="card-title">Navigation System Upgrade</h2>
-                        <p class="card-text">Upgraded the navigation systems on a commercial vessel, improving safety and
-                            operational efficiency.</p>
-                    </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">View Details</a></div>
-                </div>
-            </div>
-            <!-- Project Card 5 -->
-            <div class="col-sm-6 col-md-4 mb-5">
-                <div class="card h-100">
-                    <img src="images/portfolio/project5.jpg" class="card-img-top" alt="Custom PLC Automation">
-                    <div class="card-body">
-                        <h2 class="card-title">Custom PLC Automation</h2>
-                        <p class="card-text">Developed a custom PLC automation system for a superyacht, streamlining onboard
-                            operations.</p>
-                    </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">View Details</a></div>
-                </div>
-            </div>
-            <!-- Project Card 6 -->
-            <div class="col-sm-6 col-md-4 mb-5">
-                <div class="card h-100">
-                    <img src="images/portfolio/project6.jpg" class="card-img-top" alt="Marine Alarm Systems">
-                    <div class="card-body">
-                        <h2 class="card-title">Marine Alarm Systems</h2>
-                        <p class="card-text">Installed advanced alarm and monitoring systems on a fleet of boats, enhancing
-                            security and safety.</p>
-                    </div>
-                    <div class="card-footer"><a class="btn btn-primary btn-sm" href="#!">View Details</a></div>
-                </div>
-            </div>
-            <!-- Additional projects can be added similarly -->
+            @endforeach
         </div>
+
+
+
     </div>
 @endsection

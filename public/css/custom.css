@@ -195,8 +195,8 @@ td {
 
 /* Controlar que los botones no se estiren */
 .table td {
-    text-align: center !important;
-    white-space: nowrap !important;
+/*     text-align: center !important;
+ */    white-space: nowrap !important;
     vertical-align: middle !important;
     width: 1px !important;
     /* Evita que la celda crezca innecesariamente */

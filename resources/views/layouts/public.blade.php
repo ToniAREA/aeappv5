@@ -8,7 +8,7 @@
     <meta name="author" content="Area Electronica" /> <!-- Completa con el nombre del autor o empresa -->
     <title>Area Electronica, bespoke marine electronics for yachts.</title>
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="images/icons/favicon.ico" />
     <!-- Core theme CSS (includes Bootstrap) -->
     <link href="css/styles.css" rel="stylesheet" />
     @yield('styles')
