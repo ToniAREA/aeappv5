@@ -153,7 +153,7 @@ class WlistController extends Controller
             }
         }
 
-        return redirect()->route('frontend.wlists.index');
+        return redirect()->route('frontend.home');
     }
 
     public function show(Wlist $wlist)

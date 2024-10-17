@@ -20,6 +20,10 @@
                     <a class="nav-link {{ Request::routeIs('contact') ? 'active' : '' }}"
                         href="{{ route('contact') }}">Contact</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ Request::routeIs('faq') ? 'active' : '' }}"
+                        href="{{ route('faq') }}">FAQs</a>
+                </li>
             </ul>
 
             <div class="text-end ms-2 mb-2 mb-lg-0">

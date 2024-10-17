@@ -19,7 +19,7 @@ class HomeController extends Controller
 
         $wlistsNotDone = Wlist::with('client', 'status')
             ->whereHas('status', function ($query) {
-                $query->where('name', '!=', 'completed');
+                $query->where('name', '=', 'pending');
             })->get();
 
         $clientsCount = Client::count();

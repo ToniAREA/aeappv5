@@ -65,6 +65,14 @@ Route::post('/verify-code-and-submit', [MembershipController::class, 'verifyCode
 // Sección "Portfolio"
 Route::get('/portfolio', [App\Http\Controllers\PortfolioController::class, 'index'])->name('portfolio');
 
+// Seccion FAQ
+Route::get('/faq', [App\Http\Controllers\FaqController::class, 'index'])->name('faq');
+
+// Seccion LEGAL
+Route::get('/legal', function () {
+    return view('legal');
+})->name('legal');
+
 // Sección "Contact"
 Route::get('/contact', function () {
     return view('contact');

@@ -12,7 +12,7 @@
                         <span>
                             {{ trans('cruds.wlist.title_singular') }} {{ trans('global.list') }}
                         </span>
-                        @can('wlist_create')
+                        {{-- @can('wlist_create')
                             <span>
                                 <a class="btn btn-success btn-sm" href="{{ route('frontend.wlists.create') }}">
                                     {{ trans('global.add') }} {{ trans('cruds.wlist.title_singular') }}
@@ -26,7 +26,7 @@
                                 ])
 
                             </span>
-                        @endcan
+                        @endcan --}}
                     </div>
 
 

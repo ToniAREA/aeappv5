@@ -15,6 +15,9 @@
                                 <a class="btn btn-default" href="{{ route('frontend.wlists.index') }}">
                                     {{ trans('global.back_to_list') }}
                                 </a>
+                                <a class="btn btn-default" href="{{ route('frontend.wlists.edit', $wlist->id) }}">
+                                    {{ trans('global.edit') }}
+                                </a>
                             </div>
                             <table class="table table-bordered table-striped">
                                 <tbody>
