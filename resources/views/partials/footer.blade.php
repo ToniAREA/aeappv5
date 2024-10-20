@@ -7,5 +7,5 @@
       <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link px-2 text-secondary">Contact</a></li>
       <li class="nav-item"><a href="{{ route('legal') }}" class="nav-link px-2 text-secondary">LEGAL</a></li>
     </ul>
-    <p class="text-center text-body-secondary">Copyright &copy; Area Electronica de Sistemas S.L. 2023</p>
+    <p class="text-center text-body-secondary">Copyright &copy; Area Electronica de Sistemas S.L. 2024</p>
   </footer>

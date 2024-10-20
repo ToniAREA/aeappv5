@@ -40,7 +40,9 @@ class ToDoController extends Controller
 
         $for_employees = Employee::pluck('id_employee', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('frontend.toDos.create', compact('for_employees', 'for_roles'));
+        $default_role_ids = [3]; // ID de los roles por defecto
+
+        return view('frontend.toDos.create', compact('for_employees', 'for_roles', 'default_role_ids'));
     }
 
     public function store(StoreToDoRequest $request)
