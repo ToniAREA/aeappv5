@@ -983,6 +983,15 @@ textarea {
     border-radius: 5px;
 }
 
+/* Carousel */
+.carousel-inner {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    max-height: 300px !important;
+    /* Set the maximum height */
+}
+
 /* ============================================================
    Estilos para DataTables
    ============================================================ */
