@@ -3,6 +3,7 @@
 
     <!-- Page Content-->
     <div class="container-fluid">
+        
         <div class="row gx-4 gx-lg-5">
             <div class="py-3 text-center">
                 <h1>Frequently Asked Questions</h1>
@@ -16,7 +17,7 @@
                     <div class="card h-100">
                         <div class="card-body">
                             <h2 class="card-title">{{ $faq->question }}</h2>
-                            <p class="card-text">{{ $faq->answer }}</p>
+                            {!! $faq->answer !!}
                         </div>
                     </div>
                 </div>

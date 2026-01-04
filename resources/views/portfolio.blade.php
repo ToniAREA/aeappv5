@@ -3,6 +3,7 @@
 @extends('layouts.public')
 @section('content')
     <!-- Page Content-->
+    
 
     <div class="container-fluid">
         {{--  <div class="row">
@@ -42,6 +43,8 @@
             </div>
         </div>
 
+        
+
         <div class="row gx-4 gx-lg-5">
             @foreach ($pages as $page)
                 <div class="col-sm-6 col-md-4 mb-5">
@@ -54,7 +57,7 @@
                                     <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
                                         <img src="{{ $media->getUrl() }}" class="card-img-top"
                                             alt="{{ $page->seo_title ?: $page->title }} - Featured Image"
-                                            title="{{ $page->seo_title ?: $page->title }} - {{ $media->name }} image">
+                                            title="{{ $page->seo_title ?: $page->title }} - {{ $media->name }} image" loading="lazy">
                                     </div>
                                 @endforeach
                             </div>

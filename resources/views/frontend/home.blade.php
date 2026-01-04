@@ -184,9 +184,14 @@
                     </div>
                 @endforeach
             </div>
-        @else
+        @elseif (auth()->check() && auth()->user()->roles->contains('title', 'Client'))
             <!-- Si no tiene el rol 'Admin' -->
             <h2>Welcome, {{ auth()->user()->name }}!</h2>
+            <p>Here you can see the list of your boats and their work orders.</p>
+
+        @else
+            <!-- Si no está autenticado -->
+            <h2>Welcome!</h2>
         @endif
 
 
